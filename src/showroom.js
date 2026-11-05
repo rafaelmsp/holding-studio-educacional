@@ -13,16 +13,29 @@ const config={step:0,rules:E?E.FALLBACK:null,loadStatus:"contingência",caseName
 const titles=[
  ["Abertura · O patrimônio","Tudo começa com uma pergunta.","Escolha um caso para apresentar à turma."],
  ["Etapa 2 · A renda","Patrimônio não é a mesma coisa que aluguel.","Preencha e acompanhe a fórmula de receita."],
- ["Etapa 3 · Pessoa física","Primeiro, quanto se paga sem a holding?","Explique o efeito dos aluguéis no IRPF."],
- ["Etapa 4 · Custos da holding","Nenhuma estrutura é gratuita.","Mostre honorários, abertura e manutenção."],
- ["Etapa 5 · Tributos da empresa","Entenda os impostos da pessoa jurídica.","IRPJ, CSLL, PIS e Cofins separados."],
- ["Etapa 6 · ITBI e viabilidade","Uma economia pode desaparecer na implantação.","Compare os cenários tributários."],
- ["Etapa 7 · Sucessão","Nem tudo depende da economia de aluguel.","Compare doar, estruturar e inventariar."],
+ ["Etapa 3 · Custos dos imóveis","IPTU e condomínio também entram na conta.","Separe impostos, despesas e quem realmente paga."],
+ ["Etapa 4 · Pessoa física","Primeiro, quanto se paga sem a holding?","Explique o efeito dos aluguéis no IRPF."],
+ ["Etapa 5 · Custos da holding","Nenhuma estrutura é gratuita.","Mostre honorários, abertura e manutenção."],
+ ["Etapa 6 · Tributos da empresa","Entenda os impostos da pessoa jurídica.","IRPJ, CSLL, PIS e Cofins separados."],
+ ["Etapa 7 · ITBI e viabilidade","Uma economia pode desaparecer na implantação.","Compare os cenários tributários."],
+ ["Etapa 8 · Sucessão","Nem tudo depende da economia de aluguel.","Compare doar, estruturar e inventariar."],
  ["Conclusão · Resultado final","A holding realmente vale a pena?","Revele a conclusão com os números preenchidos."]
 ];
 if(!E){doc.body.innerHTML='<h1>Motor de cálculo não carregou</h1><p>Confira a rede e atualize a página. Os dados não foram enviados a nenhum servidor.</p>';return;}
 function read(){
- const property=safe("property"),rent=safe("rent"),occ=clamp(safe("occupancy"),0,100),expenses=safe("expenses");
+ const property=safe("property"),rent=safe("rent"),occ=clamp(safe("occupancy"),0,100);
+ const ownerIptu=$("iptuPayer").value==="dono"?safe("iptuAnnual"):0;
+ const ownerCondo=$("condoPayer").value==="dono"?safe("condoMonthly")*12:0;
+ const otherFees=safe("municipalFeesAnnual");
+ const agency=safe("agencyMonthly")*12;
+ const insurance=safe("insuranceAnnual"),repairs=safe("repairsAnnual");
+ // No cenário didático, encargos pagos diretamente pelo inquilino não são recebidos pela empresa.
+ // Na prática, reembolsos ou encargos cobrados pela PJ podem integrar a receita bruta tributável.
+ const deductibleAnnual=ownerIptu+ownerCondo+otherFees+agency;
+ const totalOwnerAnnual=deductibleAnnual+insurance+repairs;
+ const expenses=deductibleAnnual/12;
+ const rawDelta=Number($("costPjDifference").value);
+ const propertyCostDifferenceAnnual=Number.isFinite(rawDelta)?rawDelta:0;
  const city=$("municipality").value, rawRate=$("itbiRate").value.trim(), rateMissing=city==="outro"&&(rawRate===""||!Number.isFinite(Number(rawRate)));
  const rate=city==="rio"?3:clamp(safe("itbiRate"),0,20);
  const rules=JSON.parse(JSON.stringify(config.rules));rules.rj.itbiMunicipalRate=rate/100;
@@ -32,11 +45,12 @@ function read(){
   otherIncomeMonthly:safe("otherIncome"),pfDeductionMode:$("deductionMode").value,otherLegalDeductionYear:0,
   legalFees:safe("legalFees"),corporateRegistry:safe("corporateRegistry"),propertyRegistry:safe("propertyRegistry"),otherTransferTax:0,
   monthlyAccounting:safe("accounting"),annualOtherCompany:safe("annualOther"),
+  propertyCostDifferenceAnnual,
   capitalPercent:100,itbiTreatment:$("itbiTreatment").value,
   horizon:clamp(Math.round(safe("horizon")||10),1,30),annualRentGrowth:0,annualCostGrowth:0,
   discountRate:clamp(safe("discountRate"),0,30),successionEnabled:false,scenarioName:config.caseName
  };
- return {s,rules,rate,rateMissing,city,property,rent,occ};
+ return {s,rules,rate,rateMissing,city,property,rent,occ,ownerIptu,ownerCondo,otherFees,agency,insurance,repairs,deductibleAnnual,totalOwnerAnnual,propertyCostDifferenceAnnual};
 }
 function inherit(r,rule,ready){
  const n=clamp(Math.round(safe("heirs")||1),1,20);
@@ -77,12 +91,19 @@ function render(){
  let r;
  try{r=E.run(s,rule);}catch(err){$("sourceBadge").textContent="Erro no cálculo";return;}
  const annualRent=r.monthlyGross*12,annualExpense=r.monthlyExpenses*12,annualMaint=s.monthlyAccounting*12+s.annualOtherCompany;
+ const ownerCosts=data.totalOwnerAnnual;
+ const pjOwnerCosts=ownerCosts+data.propertyCostDifferenceAnnual;
  const pf=E.irpfIncrementalRental(annualRent,Math.min(annualExpense,annualRent),s.otherIncomeMonthly,s.owners,s.pfDeductionMode,0,rule);
  const tax=r.firstYear?.pjDetails||E.pjTaxes(annualRent,rule);
  const opening=r.initialBase,annualGain=r.firstYearNet;
  const succession=inherit(r,rule,ready);
  const calc={
   property:fmt(r.totalValue), annualRent:fmt(annualRent),effectiveRent:fmt(r.monthlyGross),annualExpenses:fmt(annualExpense),
+  annualPropertyCosts:fmt(ownerCosts),ownerIptu:fmt(data.ownerIptu),ownerCondo:fmt(data.ownerCondo),
+  otherPropertyCosts:fmt(data.otherFees+data.agency+data.insurance+data.repairs),
+  deductibleCosts:fmt(data.deductibleAnnual),propertyCostDelta:fmt(data.propertyCostDifferenceAnnual),
+  netPfRent:fmt(annualRent-ownerCosts-r.firstYearPf),
+  netPjRent:fmt(annualRent-pjOwnerCosts-r.firstYearPj-annualMaint),
   pfBefore:fmt(pf.before),pfAfter:fmt(pf.after),pfTax:fmt(r.firstYearPf),
   opening:fmt(opening),monthlyAccounting:fmt(s.monthlyAccounting),annualMaintenance:fmt(annualMaint),
   irpj:fmt(tax.irpj+tax.additionalIrpj),csll:fmt(tax.csll),pis:fmt(tax.pis),cofins:fmt(tax.cofins),pjTax:fmt(r.firstYearPj),
@@ -95,14 +116,20 @@ function render(){
  for(const [k,v]of Object.entries(calc))bind(k,v);
  $("propertyFormula").innerHTML="1 imóvel × "+fmt(s.assets[0].value)+" = <strong>"+fmt(r.totalValue)+"</strong>.<span class='sub'>Valor patrimonial não é renda tributável de aluguel. Nesta aula, começamos com um único imóvel.</span>";
  $("rentFormula").innerHTML=fmt(s.assets[0].rent)+" × 12 × "+asPct(s.assets[0].occupancy)+" = <strong>"+fmt(annualRent)+"</strong><span class='sub'>Receita efetivamente recebida no ano (sem atualização de aluguel).</span>";
+ $("propertyCostsFormula").innerHTML=
+  "IPTU "+fmt(data.ownerIptu)+" + condomínio "+fmt(data.ownerCondo)+
+  " + taxas "+fmt(data.otherFees)+" + administração "+fmt(data.agency)+
+  " + seguro "+fmt(data.insurance)+" + reparos "+fmt(data.repairs)+
+  " = <strong>"+fmt(ownerCosts)+" por ano</strong>.<span class='sub'>Exclusão potencial no rendimento tributável da PF: "+
+  fmt(data.deductibleAnnual)+". Os encargos só entram como despesa do proprietário se efetivamente pagos por ele. Na PJ não se presumiu redução automática dos custos.</span>";
  $("pfFormula").innerHTML=fmt(pf.after)+" − "+fmt(pf.before)+" = <strong>"+fmt(pf.tax)+"</strong><span class='sub'>Comparação anual, considerando "+s.owners+" titular(es) e o modelo de dedução selecionado.</span>";
- $("openingFormula").innerHTML=fmt(s.legalFees)+" + "+fmt(s.corporateRegistry)+" + "+fmt(s.propertyRegistry)+" = <strong>"+fmt(opening)+"</strong><span class='sub'>Sem ITBI. Contabilidade: "+fmt(s.monthlyAccounting)+" × 12 + "+fmt(s.annualOtherCompany)+" = "+fmt(annualMaint)+"/ano.</span>";
+ $("openingFormula").innerHTML=fmt(s.legalFees)+" + "+fmt(s.corporateRegistry)+" + "+fmt(s.propertyRegistry)+" = <strong>"+fmt(opening)+"</strong><span class='sub'>Sem ITBI. Contabilidade: "+fmt(s.monthlyAccounting)+" × 12 + "+fmt(s.annualOtherCompany)+" = "+fmt(annualMaint)+"/ano. Diferença de gastos dos imóveis na PJ (informada): "+fmt(data.propertyCostDifferenceAnnual)+"/ano.</span>";
  let irBase=annualRent*rule.pj.presumedIrpj, csBase=annualRent*rule.pj.presumedCsll;
  $("pjFormula").innerHTML="Receita anual "+fmt(annualRent)+". IRPJ: "+fmt(tax.irpj)+" + adicional "+fmt(tax.additionalIrpj)+". CSLL: "+fmt(tax.csll)+". PIS: "+fmt(tax.pis)+". Cofins: "+fmt(tax.cofins)+".<span class='sub'>Bases presumidas usuais: IRPJ "+asPct(rule.pj.presumedIrpj*100)+" e CSLL "+asPct(rule.pj.presumedCsll*100)+". Aplica-se o regime e as faixas do motor tributário 2026; receitas altas podem ter ajustes de presunção.</span>";
  $("itbiFormula").innerHTML=ready?
-  fmt(r.totalValue)+" × "+asPct(data.rate)+" = <strong>"+fmt(r.itbi.fullTax)+"</strong> se a transmissão for totalmente tributável.<span class='sub'>Economia operacional anual: IRPF "+fmt(r.firstYearPf)+" − PJ "+fmt(r.firstYearPj)+" − manutenção "+fmt(annualMaint)+" = "+fmt(annualGain)+". VPL = − implantação e ITBI + ganhos anuais trazidos a valor presente.</span>":
+  fmt(r.totalValue)+" × "+asPct(data.rate)+" = <strong>"+fmt(r.itbi.fullTax)+"</strong> se a transmissão for totalmente tributável.<span class='sub'>Economia operacional anual: IRPF "+fmt(r.firstYearPf)+" − PJ "+fmt(r.firstYearPj)+" − manutenção "+fmt(annualMaint)+" − mudança nos custos dos imóveis "+fmt(data.propertyCostDifferenceAnnual)+" = "+fmt(annualGain)+". VPL = − implantação e ITBI + ganhos anuais trazidos a valor presente.</span>":
   "Informe primeiro a alíquota do ITBI da prefeitura. <span class='sub'>Não é correto presumir 3% fora do Município do Rio.</span>";
- $("finalFormula").innerHTML="IRPF "+fmt(r.firstYearPf)+" − PJ "+fmt(r.firstYearPj)+" − manutenção "+fmt(annualMaint)+" = <strong>"+fmt(annualGain)+" por ano</strong>.<span class='sub'>VPL = soma dos ganhos anuais trazidos a valor presente − abertura − ITBI. Hipóteses jurídicas e tributárias podem alterar o resultado.</span>";
+ $("finalFormula").innerHTML="IRPF "+fmt(r.firstYearPf)+" − PJ "+fmt(r.firstYearPj)+" − manutenção "+fmt(annualMaint)+" − mudança nos custos do imóvel "+fmt(data.propertyCostDifferenceAnnual)+" = <strong>"+fmt(annualGain)+" por ano</strong>.<span class='sub'>VPL = soma dos ganhos anuais trazidos a valor presente − abertura − ITBI. Hipóteses jurídicas e tributárias podem alterar o resultado.</span>";
  $("successionFormula").innerHTML=fmt(r.totalValue)+" ÷ "+succession.n+" = "+fmt(r.totalValue/succession.n)+" por beneficiário, hipótese de partes iguais.<span class='sub'>ITD direto estimado: "+asPct(succession.directRate*100)+" por transmissão, sujeito a hipóteses legais, isenções e bases específicas. Total: "+fmt(succession.directITD)+".</span>";
  // Narrativa final
  const goal=$("goal").value;
@@ -118,7 +145,7 @@ function render(){
  const v=$("verdict");v.style.color=type==="good"?"#a5f1ce":type==="bad"?"#f2c2aa":"#f4e7c6";
  $("itbiLesson").textContent=!ready?"Não foi informada alíquota municipal: VPL e custo completo da doação de quotas não serão exibidos como números confiáveis.":
  "VPL com ITBI integral: "+fmt(-opening-r.itbi.fullTax+sumDiscounts(r))+". VPL na hipótese de imunidade modelada: "+fmt(-opening-r.itbi.partialTax+sumDiscounts(r))+". Esses são cenários, não reconhecimento automático de imunidade. A decisão também depende de regras sobre a operação.";
- if(config.step===7){
+ if(config.step===8){
   const minRent=annualRent>0&&ready?E.minViableRent(s,rule):null;
   const minPat=annualRent>0&&ready?searchMinPatrimony(s,rule):null;
   bind("minRent",!ready?"ITBI pendente":annualRent===0?"Sem aluguel":minRent===null?"Não encontrado":fmt(minRent)+"/mês");
@@ -166,19 +193,19 @@ function scheduleFit(){
  if(window.requestAnimationFrame)window.requestAnimationFrame(fitSlide);
 }
 function go(n){
- const old=config.step;const next=clamp(n,0,7);config.step=next;
+ const old=config.step;const next=clamp(n,0,8);config.step=next;
  doc.querySelectorAll(".stage").forEach(stage=>{
   const yes=Number(stage.dataset.step)===next;
   stage.classList.toggle("active",yes);stage.hidden=!yes;
  });
  const [k,title,note]=titles[next];
  $("chapterKicker").textContent=k;$("chapterTitle").textContent=title;$("chapterNote").textContent=note;
- $("stepLabel").textContent="ETAPA "+(next+1)+" DE 8";
- const percent=Math.round((next+1)/8*100);
+ $("stepLabel").textContent="ETAPA "+(next+1)+" DE 9";
+ const percent=Math.round((next+1)/9*100);
  $("percent").textContent=percent+"%";$("progressBar").style.width=percent+"%";
  $("previous").disabled=next===0;
- $("next").textContent=next===7?"Rever desde o início ↻":"Continuar →";
- $("footerStep").textContent="Etapa "+(next+1)+": "+(next===7?"conclusão e comparação":"preencha, confira a conta e avance");
+ $("next").textContent=next===8?"Rever desde o início ↻":"Continuar →";
+ $("footerStep").textContent="Etapa "+(next+1)+": "+(next===8?"conclusão e comparação":"preencha, confira a conta e avance");
  $("announce").textContent="Etapa "+(next+1)+": "+title;
  doc.querySelectorAll(".pane").forEach(pane=>{pane.scrollTop=0;});
  window.scrollTo?.({top:0,behavior:"auto"});
@@ -197,7 +224,7 @@ function preset(name,clicked){
 }
 function bindControls(){
  $("previous").addEventListener("click",()=>go(config.step-1));
- $("next").addEventListener("click",()=>go(config.step===7?0:config.step+1));
+ $("next").addEventListener("click",()=>go(config.step===8?0:config.step+1));
  $("restart").addEventListener("click",()=>{
   if(!window.confirm("Recomeçar o showroom com o exemplo de R$ 150 mil? Os valores atuais serão substituídos."))return;
   window.location.reload();
