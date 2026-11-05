@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102b3d">
+<meta name="description" content="Calculadora educativa e explicada: compare manter imóveis na pessoa física, constituir holding e planejar doação no RJ.">
+<title>Holding Studio 2.0 | Calculadora de Viabilidade</title>
+<link rel="stylesheet" href="src/calculadora-v2.css">
+<script defer src="src/tax-engine.js"></script>
+<script defer src="src/calculadora-v2.js"></script>
+</head><body>
+<header class="site-header">
+  <div class="brand">HOLDING <span>STUDIO</span><small>Calculadora de viabilidade explicada · Edição 2.0</small></div>
+  <nav class="header-links" aria-label="Links úteis">
+    <a href="#resultado">Ver resultados</a>
+    <a href="simulador.html">Versão anterior</a>
+    <a href="https://www.oabrj.org.br/tabela-honorarios" target="_blank" rel="noopener">Tabela OAB-RJ</a>
+  </nav>
+</header>
+<section class="hero">
+  <div class="eyebrow">Uma decisão importante, explicada passo a passo</div>
+  <h1>Vale a pena criar uma holding para os seus imóveis?</h1>
+  <p>Coloque seus valores, veja o que muda nos impostos e descubra se os custos compensam. Também compare doação direta, doação de quotas e um inventário futuro. <strong>Você não precisa entender de contabilidade para começar.</strong></p>
+  <nav class="steps" aria-label="Etapas da calculadora"><a href="#patrimonio">1. Seus imóveis</a><a href="#estrutura">2. Custos da holding</a><a href="#sucessao">3. Doação e herança</a><a href="#resultado">4. Resultado explicado</a></nav>
+</section>
+<main class="workspace">
+<div class="column">
+<section class="panel" id="patrimonio">
+ <div class="panel-header"><div><h2>1. Conte o que você tem</h2><p>Comece pequeno. Não existe patrimônio mínimo universal para uma holding compensar.</p></div><span class="step-number">01</span></div>
+ <p class="subline"><strong>Quer testar rapidamente?</strong> Escolha um exemplo. Depois você pode alterar qualquer campo.</p>
+ <div class="preset-row" role="group" aria-label="Exemplos de patrimônio">
+  <button type="button" class="preset" data-preset="semrenda">R$ 150 mil sem aluguel</button>
+  <button type="button" class="preset" data-preset="pequeno">R$ 150 mil com aluguel</button>
+  <button type="button" class="preset" data-preset="medio">R$ 500 mil</button>
+  <button type="button" class="preset" data-preset="maior">R$ 1,5 milhão</button>
+ </div>
+ <div class="field wide" style="margin-bottom:18px"><label for="goal">O que você quer resolver?</label><select id="goal"><option value="ambos">Quero comparar economia de impostos e sucessão</option><option value="renda">Quero saber se compensa para receber aluguéis</option><option value="sucessao">Quero organizar a herança ou fazer doação</option></select><small>Uma holding pode ajudar na organização familiar mesmo sem produzir economia tributária. Os dois resultados serão separados.</small></div>
+ <div id="assets" aria-label="Lista de imóveis"><noscript>Ative o JavaScript para usar a calculadora.</noscript></div>
+ <button type="button" class="button button-light" id="addAsset">+ Adicionar outro imóvel</button>
+ <div class="hintbar"><strong>O que é o patrimônio?</strong> É a soma do valor aproximado dos bens. O aluguel é uma informação separada: um imóvel caro pode não gerar renda.</div>
+ <details class="accordion"><summary>Mais detalhes sobre o imposto da pessoa física</summary><div>
+  <p>Estas informações são importantes porque o IRPF depende da renda total, de quem recebe os aluguéis e das deduções admitidas.</p>
+  <div class="field-grid">
+   <div class="field"><label for="owners">Quantas pessoas recebem os aluguéis?</label><input type="number" id="owners" min="1" max="20" step="1" value="1"><small>O cálculo divide a receita igualmente entre elas. Se isso não ocorrer, é necessária análise individual.</small></div>
+   <div class="field"><label for="otherIncome">Outras rendas tributáveis por pessoa, por mês (R$)</label><input type="number" id="otherIncome" min="0" step="100" value="3000"><small>Exemplo: salário tributável. Não inclua rendas isentas ou que já tenham tributação definitiva.</small></div>
+   <div class="field"><label for="deductionMode">Como estimar as deduções do IR?</label><select id="deductionMode"><option value="auto">Escolher a menor apuração estimada</option><option value="simplificado">Desconto simplificado</option><option value="legal">Deduções legais</option></select><small>O motor compara hipóteses anuais; isso não substitui a declaração ou o carnê-leão.</small></div>
+   <div class="field"><label for="otherLegal">Outras deduções legais anuais por pessoa (R$)</label><input type="number" id="otherLegal" min="0" step="100" value="0"><small>Somente valores legalmente dedutíveis e comprovados.</small></div>
+  </div></div></details>
+</section>
+<section class="panel" id="estrutura">
+ <div class="panel-header"><div><h2>2. Quanto custa abrir e manter?</h2><p>A economia de imposto só faz sentido depois de descontar advogado, registros e contador.</p></div><span class="step-number">02</span></div>
+ <h3 class="section-title">Custos de abertura (uma vez)</h3>
+ <div class="field-grid">
+  <div class="field"><label for="legalFees">Honorários advocatícios (R$)</label><input id="legalFees" type="number" min="0" step="100" value="6000"><small>Valor ilustrativo, editável. Consulte proposta profissional e a <a href="https://www.oabrj.org.br/tabela-honorarios" target="_blank" rel="noopener">tabela da OAB-RJ</a>.</small></div>
+  <div class="field"><label for="corporateRegistry">Abertura e registro da empresa (R$)</label><input id="corporateRegistry" type="number" min="0" step="100" value="1800"><small>Junta Comercial e despesas de constituição. Orce para o caso.</small></div>
+  <div class="field"><label for="propertyRegistry">Registro e transferência dos imóveis (R$)</label><input id="propertyRegistry" type="number" min="0" step="100" value="2500"><small>Emolumentos e despesas cartorárias estimadas. Não inclui ITBI.</small></div>
+  <div class="field"><label for="otherTransferTax">Outros custos iniciais (R$)</label><input id="otherTransferTax" type="number" min="0" step="100" value="0"><small>Certidões, avaliações ou outros gastos comprovados.</small></div>
+ </div>
+ <h3 class="section-title">Custos todos os anos</h3>
+ <div class="field-grid">
+  <div class="field"><label for="accounting">Contabilidade por mês (R$)</label><input id="accounting" type="number" min="0" step="50" value="450"><small>A empresa normalmente exige obrigações contábeis e fiscais.</small></div>
+  <div class="field"><label for="annualCompany">Outras despesas anuais da holding (R$)</label><input id="annualCompany" type="number" min="0" step="100" value="1200"><small>Certificados, obrigações acessórias e outras despesas administrativas estimadas.</small></div>
+ </div>
+ <div class="separator"></div>
+ <h3 class="section-title">ITBI: o imposto sobre a transmissão do imóvel</h3>
+ <div class="field-grid">
+  <div class="field"><label for="municipality">Onde está o imóvel?</label><select id="municipality"><option value="rio">Município do Rio de Janeiro</option><option value="outro">Outro município: informar a alíquota</option></select><small>O ITBI é municipal. Não aplique automaticamente a alíquota do Rio a Duque de Caxias ou outra cidade.</small></div>
+  <div class="field"><label for="itbiRate">Alíquota do ITBI do município (%)</label><input id="itbiRate" type="number" min="0" max="20" step="0.1" value="3"><small id="itbiRateHelp">Rio de Janeiro: 3%, conforme a Secretaria Municipal de Fazenda.</small></div>
+  <div class="field wide"><label for="itbiTreatment">A imunidade do ITBI já foi reconhecida para esta operação?</label><select id="itbiTreatment"><option value="pendente">Ainda não sei — mostrar os dois cenários</option><option value="reconhecida">Sim — reconhecimento/documentação disponível</option><option value="tributavel">Não — considerar tributação integral</option></select><small>Integralizar imóveis no capital pode envolver imunidade constitucional, mas depende dos limites e fatos da operação. A hipótese otimista não é garantia.</small></div>
+ </div>
+ <details class="accordion"><summary>Quero ajustar o prazo e os parâmetros financeiros</summary><div class="field-grid">
+  <div class="field"><label for="horizon">Em quantos anos comparar?</label><input id="horizon" type="number" min="1" max="30" step="1" value="10"><small>Horizonte usado para projeção de ganhos e custos.</small></div>
+  <div class="field"><label for="discount">Taxa de desconto anual (%)</label><input id="discount" type="number" min="0" max="30" step="0.5" value="5"><small>Representa o valor do dinheiro no tempo; é hipótese financeira, não tributo.</small></div>
+  <div class="field"><label for="rentGrowth">Crescimento anual dos aluguéis (%)</label><input id="rentGrowth" type="number" min="-10" max="30" step="0.5" value="0"><small>Hipótese de projeção, sem previsão garantida.</small></div>
+  <div class="field"><label for="costGrowth">Crescimento anual dos custos (%)</label><input id="costGrowth" type="number" min="0" max="30" step="0.5" value="0"><small>Contabilidade e manutenção ao longo do tempo.</small></div>
+  <div class="field"><label for="capitalPercent">Percentual dos bens no capital social (%)</label><input id="capitalPercent" type="number" min="0" max="100" step="5" value="100"><small>Parâmetro de cenários do motor. O tratamento do ITBI depende da operação.</small></div>
+ </div></details>
+ <div class="hintbar"><strong>Por que existem dois resultados?</strong> Quando o ITBI depende de confirmação, você verá um cenário com tributação integral e outro com a hipótese de imunidade, sem apresentar uma resposta jurídica automática.</div>
+</section>
+<section class="panel" id="sucessao">
+ <div class="panel-header"><div><h2>3. E se a família quiser doar os bens?</h2><p>A doação direta não exige criar uma holding. Vamos comparar os custos estimados de cada caminho.</p></div><span class="step-number">03</span></div>
+ <div class="field-grid">
+  <div class="field"><label for="heirs">Número de beneficiários</label><input id="heirs" type="number" min="1" max="20" step="1" value="2"><small>Exemplo simplificado de divisão em partes iguais, sem isenções específicas.</small></div>
+  <div class="field"><label for="quotaBase">Valor tributável estimado das quotas (R$)</label><input id="quotaBase" type="number" min="0" step="1000" placeholder="Em branco: igual ao valor dos imóveis"><small>O valor fiscal das quotas pode exigir avaliação própria. Não há desconto automático por usar holding.</small></div>
+ </div>
+ <div class="succession-grid" id="successionCards" aria-live="polite"></div>
+ <details class="accordion"><summary>Ajustar honorários e cartórios da doação e do inventário</summary><div>
+  <p>Os números abaixo são exemplos editáveis, não preços oficiais ou valores obrigatórios. A simulação compara valores nominais; não prevê mudanças futuras de alíquotas.</p>
+  <div class="field-grid">
+   <div class="field"><label for="donationFees">Advogado: doação direta (R$)</label><input id="donationFees" type="number" min="0" step="100" value="2500"></div>
+   <div class="field"><label for="donationRegistry">Escritura e registro da doação (R$)</label><input id="donationRegistry" type="number" min="0" step="100" value="1500"></div>
+   <div class="field"><label for="quotaFees">Advogado: doação de quotas (R$)</label><input id="quotaFees" type="number" min="0" step="100" value="2000"></div>
+   <div class="field"><label for="quotaRegistry">Instrumentos e registros das quotas (R$)</label><input id="quotaRegistry" type="number" min="0" step="100" value="500"></div>
+   <div class="field"><label for="inventoryFees">Advogado: inventário futuro (R$)</label><input id="inventoryFees" type="number" min="0" step="100" value="4500"></div>
+   <div class="field"><label for="inventoryRegistry">Cartório e outras despesas de inventário (R$)</label><input id="inventoryRegistry" type="number" min="0" step="100" value="2500"></div>
+  </div>
+ </div></details>
+ <p class="note" style="margin-top:15px"><strong>Importante:</strong> doação com reserva de usufruto, legítima, meação, colação, isenções, possível ganho de capital e custos de inventário exigem análise própria. O quadro não presume que a holding elimina ITD ou inventário. Os valores de quotas e imóveis podem ter bases tributárias distintas.</p>
+</section>
+</div>
+<aside class="column side">
+ <section class="panel" id="resultado" aria-label="Resultado da simulação">
+  <div class="result-head"><h2>4. O que os números dizem?</h2><span id="status" class="badge warn" aria-live="polite">Calculando…</span></div>
+  <p class="subline">Resultado automático para os valores que você preencheu.</p>
+  <div class="main-figure"><span>Diferença anual entre PF e holding, após manutenção</span><strong id="annualDifference" aria-live="polite">—</strong><p id="differenceLegend">O valor positivo indica possível economia operacional.</p></div>
+  <div class="summary-list">
+    <div class="summary-row"><span>Patrimônio total</span><strong id="totalValue">—</strong></div>
+    <div class="summary-row"><span>Aluguéis recebidos por ano</span><strong id="yearRent">—</strong></div>
+    <div class="summary-row"><span>IRPF estimado sobre aluguéis por ano</span><strong id="pfTax">—</strong></div>
+    <div class="summary-row"><span>Tributos da holding por ano</span><strong id="pjTax">—</strong></div>
+    <div class="summary-row"><span>Contador + manutenção por ano</span><strong id="maintenance">—</strong></div>
+    <div class="summary-row"><span>Custo de abertura sem ITBI</span><strong id="initialBase">—</strong></div>
+    <div class="summary-row"><span>ITBI: com tributação integral</span><strong id="itbiFull">—</strong></div>
+    <div class="summary-row"><span>Resultado em <span id="horizonLabel">10</span> anos, com ITBI (VPL)</span><strong id="npvCon">—</strong></div>
+    <div class="summary-row"><span>Resultado em <span id="horizonLabel2">10</span> anos, hipótese de imunidade (VPL)</span><strong id="npvOpt">—</strong></div>
+    <div class="summary-row"><span>Aluguel mensal mínimo estimado para viabilizar</span><strong id="minRent">—</strong></div>
+  </div>
+  <div id="decision" class="result-message warn" aria-live="polite">Preencha seus imóveis para iniciar a comparação.</div>
+  <h3 class="mini-heading">Entenda cada conta</h3>
+  <p class="subline">Toque em uma pergunta para ver números, fórmulas e o motivo da cobrança.</p>
+  <div id="explanations"></div>
+  <div class="actions"><button type="button" class="button" id="printButton">Imprimir resultado</button><button type="button" class="button button-outline" id="resetButton">Recomeçar</button></div>
+  <p class="source" id="rulesSource" style="margin-top:15px">Carregando as regras tributárias de referência…</p>
+  <p class="note"><strong>Uso educacional:</strong> números de custos são hipóteses que você pode editar. Os impostos usam uma referência normativa datada de 2026, não APIs tributárias em tempo real. Não equivale a parecer jurídico nem a orçamento.</p>
+ </section>
+</aside>
+</main>
+<footer class="footnote">Holding Studio 2.0 · Comparador educativo de cenários · Estado do RJ · <a href="https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2026" target="_blank" rel="noopener">Tabela IRPF</a> · <a href="https://fazenda.prefeitura.rio/calculo-itbi/" target="_blank" rel="noopener">ITBI Rio</a> · <a href="https://www.oabrj.org.br/tabela-honorarios" target="_blank" rel="noopener">Honorários OAB-RJ</a></footer>
+</body></html>
