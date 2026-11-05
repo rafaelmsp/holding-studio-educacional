@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1925">
+<meta name="description" content="Showroom acadêmico do Holding Studio: preencha, avance e entenda cada cálculo ao vivo no projetor.">
+<title>Holding Studio | Showroom Acadêmico Interativo</title>
+<link rel="stylesheet" href="src/showroom.css">
+<script defer src="src/tax-engine.js"></script>
+<script defer src="src/showroom.js"></script></head>
+<body><div class="app">
+<header class="top">
+ <div class="brand"><strong>HOLDING <em>STUDIO</em></strong><small>Showroom acadêmico • Direito de Família e Sucessões</small></div>
+ <div class="toptools"><span class="data-badge" id="sourceBadge">Regras 2026 · verificando</span><button id="restart" class="utility" type="button" title="Voltar aos valores do exemplo">↻ Reiniciar</button><button id="full" class="utility" type="button" title="Usar tela cheia para projetor">⛶ Tela cheia</button></div>
+</header>
+<div class="progress-wrap" aria-label="Progresso da demonstração"><span class="progress-label" id="stepLabel">ETAPA 1 DE 8</span><div class="progress-track"><div class="progress-fill" id="progressBar" style="width:12.5%"></div></div><span class="progress-percent" id="percent">13%</span></div>
+<main class="main">
+<div class="chapter"><div><div class="chapter-kicker" id="chapterKicker">Abertura · O patrimônio</div><h1 class="chapter-title" id="chapterTitle">Tudo começa com uma pergunta.</h1></div><div class="chapter-note" id="chapterNote">Apresente a situação à turma e altere os números ao vivo.</div></div>
+
+<!-- 1: o problema concreto -->
+<section class="stage active" data-step="0" aria-label="Caso inicial">
+<div class="pane">
+ <div class="kicker"><span class="squircle">1</span> O caso real começa aqui</div>
+ <h2>Quanto vale o patrimônio desta família?</h2>
+ <p>Vamos descobrir se uma pessoa deve <strong>continuar com o imóvel no próprio nome</strong>, criar uma holding ou antecipar a sucessão por doação.</p>
+ <p class="prompt">Escolha um exemplo para começar a aula:</p>
+ <div class="preset" id="presetGroup" role="group" aria-label="Exemplos para apresentar">
+  <button type="button" class="choice active" data-case="150"><b>R$ 150 mil</b><small>Patrimônio pequeno</small></button>
+  <button type="button" class="choice" data-case="500"><b>R$ 500 mil</b><small>Um imóvel</small></button>
+  <button type="button" class="choice" data-case="1500"><b>R$ 1,5 milhão</b><small>Imóvel de maior valor</small></button>
+ </div>
+ <div class="fields"><div class="field"><label for="property">Valor atual do imóvel (R$)</label><input id="property" type="number" min="0" step="1000" value="150000" inputmode="decimal"><small>Preço aproximado do imóvel hoje; não é o aluguel.</small></div>
+ <div class="field"><label for="goal">O principal objetivo da família</label><select id="goal"><option value="ambos">Economizar e planejar sucessão</option><option value="renda">Reduzir custo dos aluguéis</option><option value="sucessao">Organizar herança e doação</option></select><small>Os objetivos serão avaliados separadamente.</small></div></div>
+ <div class="hint"><strong>Para explicar em sala:</strong> não existe um patrimônio mínimo legal universal para uma holding. O que importa é o custo da estrutura, as receitas e a finalidade.</div>
+</div>
+<div class="pane right">
+ <div class="kicker"><span class="squircle">?</span> O que estamos investigando</div>
+ <h2>Três caminhos para o mesmo patrimônio</h2>
+ <div class="hero-value"><span>Patrimônio a analisar</span><strong data-bind="property">R$ 150.000</strong><p>Um imóvel inicialmente, com valores editáveis.</p></div>
+ <div class="bigline"><span>Continuar como pessoa física</span><strong>Sem criar empresa</strong></div>
+ <div class="bigline"><span>Criar uma holding patrimonial</span><strong>Empresa e custos próprios</strong></div>
+ <div class="bigline"><span>Planejar sucessão</span><strong>Doação ou herança</strong></div>
+ <p class="reason" style="margin-top:17px"><strong>O que ensinamos?</strong> Uma holding não é um benefício fiscal garantido. A decisão exige comparação do que acontece antes e depois de criar a empresa.</p>
+ <div class="formula">Pergunta da aula: a vantagem projetada paga os custos para abrir e manter a empresa?</div>
+</div></section>
+
+<!-- 2: renda -->
+<section class="stage" data-step="1" aria-label="Aluguel e despesas">
+<div class="pane">
+ <div class="kicker"><span class="squircle">2</span> A renda do imóvel</div>
+ <h2>Esse imóvel gera aluguel?</h2>
+ <p>O valor do imóvel é patrimônio. O aluguel é <strong>dinheiro recebido periodicamente</strong>. São coisas diferentes.</p>
+ <div class="fields">
+  <div class="field"><label for="rent">Aluguel por mês (R$)</label><input id="rent" type="number" min="0" step="50" value="900"><small>Não recebe aluguel? Digite zero.</small></div>
+  <div class="field"><label for="occupancy">Ocupação do imóvel (%)</label><input id="occupancy" type="number" min="0" max="100" step="5" value="100"><small>100% = alugado todos os 12 meses.</small></div>
+  <div class="field"><label for="expenses">Despesas dedutíveis da locação por mês (R$)</label><input id="expenses" type="number" min="0" step="50" value="0"><small>Somente despesas permitidas por lei, pagas pelo locador e comprovadas.</small></div>
+  <div class="field"><label for="owners">Pessoas que recebem esses aluguéis</label><input id="owners" type="number" min="1" max="20" step="1" value="1"><small>O exemplo divide a renda igualmente entre os titulares.</small></div>
+  <div class="field full"><label for="otherIncome">Outras rendas tributáveis, por titular, por mês (R$)</label><input id="otherIncome" type="number" min="0" step="100" value="3000"><small>Ex.: salário. O imposto pessoal depende também dessas rendas.</small></div>
+ </div>
+ <div class="hint"><strong>Experimente na aula:</strong> troque o aluguel para R$ 0. Observe: imóvel sem renda não gera economia recorrente de impostos de aluguel.</div>
+</div>
+<div class="pane right">
+ <div class="kicker"><span class="squircle">Σ</span> O cálculo acontece agora</div>
+ <h2>Da renda mensal à renda anual</h2>
+ <div class="hero-value"><span>Receita anual estimada de aluguel</span><strong data-bind="annualRent">—</strong><p>Receita antes de impostos e despesas.</p></div>
+ <div class="formula" id="rentFormula">Aluguel mensal × 12 × ocupação = receita anual</div>
+ <div class="bigline"><span>Renda mensal efetiva</span><strong data-bind="effectiveRent">—</strong></div>
+ <div class="bigline"><span>Despesas informadas em 12 meses</span><strong data-bind="annualExpenses">—</strong></div>
+ <p class="reason"><strong>Por que calculamos assim?</strong> A vacância reduz os meses recebidos. A possibilidade de deduzir despesas depende de sua natureza e da legislação.</p>
+ <p class="source">Premissa didática: renda uniforme e ocupação média. Não representa a apuração mensal oficial do carnê-leão.</p>
+</div></section>
+
+<!-- 3: tributação PF -->
+<section class="stage" data-step="2" aria-label="Impostos da pessoa física">
+<div class="pane">
+ <div class="kicker"><span class="squircle">3</span> Primeiro cenário · pessoa física</div>
+ <h2>Quanto imposto a pessoa paga pelo aluguel?</h2>
+ <p>O aluguel recebido pela pessoa física pode entrar no imposto de renda. Mas <strong>não basta multiplicar por 27,5%</strong>: precisamos considerar a renda tributável e as deduções.</p>
+ <div class="steps-grid">
+  <div class="info-line"><b>1.</b><span>Calculamos o IR sobre as outras rendas do titular.</span></div>
+  <div class="info-line"><b>2.</b><span>Acrescentamos os aluguéis e eventuais despesas dedutíveis.</span></div>
+  <div class="info-line"><b>3.</b><span>A diferença entre as duas apurações é o efeito estimado dos aluguéis.</span></div>
+ </div>
+ <div class="fields"><div class="field full"><label for="deductionMode">Método de dedução para a simulação</label><select id="deductionMode"><option value="auto">Aplicar o menor imposto estimado</option><option value="simplificado">Desconto simplificado</option><option value="legal">Deduções legais</option></select><small>Modelo anual aproximado; há hipóteses específicas de apuração real.</small></div></div>
+ <div class="hint"><strong>Fale para a turma:</strong> a mesma renda de aluguel pode produzir efeitos diferentes para pessoas que têm outros rendimentos diferentes.</div>
+</div>
+<div class="pane right">
+ <div class="kicker"><span class="squircle">IRPF</span> A conta explicada</div>
+ <h2>O que mudou no imposto?</h2>
+ <div class="split">
+ <div class="metric"><small>Sem os aluguéis</small><strong data-bind="pfBefore">—</strong><span>IRPF anual estimado</span></div>
+ <div class="metric"><small>Com os aluguéis</small><strong data-bind="pfAfter">—</strong><span>IRPF anual estimado</span></div>
+ </div>
+ <div class="hero-value"><span>IRPF adicional atribuível aos aluguéis</span><strong data-bind="pfTax">—</strong><p>Diferença estimada entre os dois cenários.</p></div>
+ <div class="formula" id="pfFormula">Imposto com aluguel − imposto sem aluguel = efeito do aluguel no IRPF</div>
+ <p class="reason">O resultado <strong>não</strong> equivale automaticamente ao imposto mensal efetivamente devido. É uma comparação anual educacional com os dados fornecidos.</p>
+ <p class="source">Fonte: <a target="_blank" rel="noopener" href="https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2026">Receita Federal · Tabelas de IRPF 2026</a>. Regras normativas versionadas.</p>
+</div></section>
+
+<!-- 4: custos abertura -->
+<section class="stage" data-step="3" aria-label="Custos da holding">
+<div class="pane">
+ <div class="kicker"><span class="squircle">4</span> Segundo cenário · uma empresa</div>
+ <h2>Criar uma holding custa dinheiro.</h2>
+ <p>Uma holding patrimonial costuma ser uma sociedade usada para organizar bens. Ela pode ter despesas de constituição, registros e manutenção. <strong>Honorários advocatícios não são uma alíquota tributária.</strong></p>
+ <div class="fields">
+ <div class="field"><label for="legalFees">Advogado para estruturação (R$)</label><input id="legalFees" type="number" min="0" step="100" value="6000"><small>Estimativa editável. Considere complexidade e tabela OAB-RJ.</small></div>
+ <div class="field"><label for="corporateRegistry">Abertura e registro (R$)</label><input id="corporateRegistry" type="number" min="0" step="100" value="1800"><small>Junta Comercial e despesas estimadas.</small></div>
+ <div class="field"><label for="propertyRegistry">Registro dos imóveis (R$)</label><input id="propertyRegistry" type="number" min="0" step="100" value="2500"><small>Cartório e emolumentos, sem ITBI.</small></div>
+ <div class="field"><label for="accounting">Contabilidade por mês (R$)</label><input id="accounting" type="number" min="0" step="50" value="450"><small>Custo recorrente de serviços contábeis.</small></div>
+ <div class="field"><label for="annualOther">Outras despesas anuais (R$)</label><input id="annualOther" type="number" min="0" step="100" value="1200"><small>Despesas administrativas e obrigações.</small></div>
+ </div>
+ <div class="hint"><strong>Ponto didático:</strong> esses valores são hipóteses que o aluno altera, não preços oficiais ou honorários obrigatórios.</div>
+</div>
+<div class="pane right">
+ <div class="kicker"><span class="squircle">R$</span> A conta explicada</div>
+ <h2>Antes de economizar, é preciso investir.</h2>
+ <div class="hero-value"><span>Investimento inicial, ainda sem ITBI</span><strong data-bind="opening">—</strong><p>Valor pago para estruturar e registrar.</p></div>
+ <div class="bigline"><span>Manutenção mensal</span><strong data-bind="monthlyAccounting">—</strong></div>
+ <div class="bigline"><span>Manutenção anual</span><strong data-bind="annualMaintenance">—</strong></div>
+ <div class="formula" id="openingFormula">Honorários + abertura + registros = investimento inicial</div>
+ <p class="reason">Uma aparente economia de imposto pode desaparecer quando somamos custos de contabilidade e o valor de implantação.</p>
+ <p class="source">Honorários: <a href="https://www.oabrj.org.br/tabela-honorarios" target="_blank" rel="noopener">referência OAB-RJ</a>. Os valores digitados são estimativas fornecidas pelo apresentador.</p>
+</div></section>
+
+<!-- 5: PJ taxes -->
+<section class="stage" data-step="4" aria-label="Impostos da pessoa jurídica">
+<div class="pane">
+ <div class="kicker"><span class="squircle">5</span> Tributação da holding</div>
+ <h2>Que impostos a empresa paga pelo aluguel?</h2>
+ <p>Neste exemplo, consideramos <strong>locação de imóveis próprios por sociedade no lucro presumido</strong>. Não é uma regra que sirva para toda holding.</p>
+ <div class="steps-grid">
+ <div class="info-line"><b>IRPJ</b><span>Imposto de renda da pessoa jurídica; pode haver adicional.</span></div>
+ <div class="info-line"><b>CSLL</b><span>Contribuição sobre o lucro, calculada sobre base presumida.</span></div>
+ <div class="info-line"><b>PIS</b><span>Contribuição calculada sobre as receitas, quando aplicável.</span></div>
+ <div class="info-line"><b>Cofins</b><span>Contribuição sobre as receitas, conforme o regime adotado.</span></div>
+ </div>
+ <div class="hint"><strong>Experimente:</strong> volte à etapa do aluguel e aumente a receita. Depois retorne aqui: os tributos serão recalculados, inclusive a análise do adicional de IRPJ.</div>
+ <p class="edu"><b>Atenção:</b> receitas elevadas, distribuição de dividendos, ganho de capital e alterações futuras da reforma tributária podem exigir análises complementares.</p>
+</div>
+<div class="pane right">
+ <div class="kicker"><span class="squircle">PJ</span> Cada tributo tem uma função</div>
+ <h2>Veja os impostos separados</h2>
+ <div class="bigline"><span>IRPJ, inclusive adicional</span><strong data-bind="irpj">—</strong></div>
+ <div class="bigline"><span>CSLL</span><strong data-bind="csll">—</strong></div>
+ <div class="bigline"><span>PIS</span><strong data-bind="pis">—</strong></div>
+ <div class="bigline"><span>Cofins</span><strong data-bind="cofins">—</strong></div>
+ <div class="hero-value"><span>Tributos anuais da holding</span><strong data-bind="pjTax">—</strong><p>Sem incluir contador ou outras despesas administrativas.</p></div>
+ <div class="formula" id="pjFormula">IRPJ + CSLL + PIS + Cofins = total anual da pessoa jurídica.</div>
+ <p class="source">Fontes: <a href="https://normas.receita.fazenda.gov.br/sijut2consulta/link.action?idAto=81268" target="_blank" rel="noopener">IN RFB 1700/2017</a> e referências tributárias da Receita Federal no arquivo de regras de 2026.</p>
+</div></section>
+
+<!-- 6: ITBI and viability -->
+<section class="stage" data-step="5" aria-label="ITBI e viabilidade">
+<div class="pane">
+ <div class="kicker"><span class="squircle">6</span> O imposto da transferência</div>
+ <h2>E para passar o imóvel à holding?</h2>
+ <p>Precisamos verificar o <strong>ITBI</strong> (imposto municipal sobre transmissão de imóveis) e a possível imunidade aplicável à integralização de capital. Não vamos presumir que o imposto é sempre zero.</p>
+ <div class="fields">
+  <div class="field full"><label for="municipality">Município do imóvel no Estado do RJ</label><select id="municipality"><option value="rio">Rio de Janeiro — alíquota de exemplo 3%</option><option value="outro">Outro município do RJ — informar alíquota</option></select><small>A alíquota varia conforme o município. Informe a regra de sua prefeitura.</small></div>
+  <div class="field"><label for="itbiRate">Alíquota municipal do ITBI (%)</label><input id="itbiRate" type="number" min="0" max="20" step="0.1" value="3" readonly><small id="rateHint">Alíquota de referência da Prefeitura do Rio.</small></div>
+  <div class="field"><label for="itbiTreatment">Situação da imunidade de ITBI</label><select id="itbiTreatment"><option value="pendente">Ainda não confirmada · comparar hipóteses</option><option value="reconhecida">Reconhecida para a operação</option><option value="tributavel">Considerar transmissão tributável</option></select><small>É preciso analisar juridicamente os fatos da operação.</small></div>
+  <div class="field"><label for="horizon">Prazo da comparação (anos)</label><input id="horizon" type="number" min="1" max="30" step="1" value="10"><small>Quanto tempo queremos projetar?</small></div>
+  <div class="field"><label for="discountRate">Taxa de desconto anual (%)</label><input id="discountRate" type="number" min="0" max="30" step="0.5" value="5"><small>Hipótese financeira do valor do dinheiro no tempo.</small></div>
+ </div>
+ <div class="hint"><strong>Mostre o impacto:</strong> alterne entre ITBI tributável e imunidade reconhecida. O resultado financeiro muda, mas a escolha jurídica precisa corresponder a uma situação real.</div>
+</div>
+<div class="pane right">
+ <div class="kicker"><span class="squircle">VPL</span> A holding se paga?</div>
+ <h2>Economia ou gasto adicional?</h2>
+ <div class="bigline"><span>ITBI se a transmissão for integralmente tributada</span><strong data-bind="itbiFull">—</strong></div>
+ <div class="bigline"><span>Resultado operacional anual (PF − PJ − manutenção)</span><strong data-bind="annualGain">—</strong></div>
+ <div class="split" style="margin:14px 0">
+  <div class="metric"><small>VPL com tributação integral do ITBI</small><strong data-bind="vplTax">—</strong></div>
+  <div class="metric"><small>VPL na hipótese de imunidade modelada</small><strong data-bind="vplImmunity">—</strong></div>
+ </div>
+ <div class="formula" id="itbiFormula">Custo inicial + ITBI × receitas e despesas projetadas = avaliação de viabilidade.</div>
+ <p class="reason" id="itbiLesson">O VPL transforma os ganhos futuros em valores equivalentes de hoje e desconta a implantação. VPL positivo indica resultado econômico favorável nas hipóteses usadas, não certeza jurídica.</p>
+ <p class="source">Referência: <a href="https://fazenda.prefeitura.rio/calculo-itbi/" target="_blank" rel="noopener">ITBI Rio</a> e CF/88, art. 156, § 2º, I. O enquadramento deve considerar os Temas 796 e 1.348 do STF.</p>
+</div></section>
+
+<!-- 7: sucessão -->
+<section class="stage" data-step="6" aria-label="Doação e herança">
+<div class="pane">
+ <div class="kicker"><span class="squircle">7</span> Planejamento sucessório</div>
+ <h2>É melhor doar os bens diretamente?</h2>
+ <p>Além da tributação de aluguéis, existe outra pergunta: <strong>como transmitir o patrimônio à família?</strong> A doação direta não exige, por si só, criar holding.</p>
+ <div class="fields">
+ <div class="field"><label for="heirs">Número de beneficiários</label><input id="heirs" type="number" min="1" max="20" value="2" step="1"><small>Exemplo com partes iguais.</small></div>
+ <div class="field"><label for="quotaBase">Base tributável das quotas (R$)</label><input id="quotaBase" type="number" min="0" step="1000" placeholder="Padrão: valor do imóvel"><small>Preencha só se houver avaliação específica; não há desconto automático.</small></div>
+ <div class="field"><label for="donFees">Advogado: doação direta (R$)</label><input id="donFees" type="number" min="0" step="100" value="2500"></div>
+ <div class="field"><label for="donReg">Cartório: doação direta (R$)</label><input id="donReg" type="number" min="0" step="100" value="1500"></div>
+ <div class="field"><label for="quotaFees">Advogado: doação de quotas (R$)</label><input id="quotaFees" type="number" min="0" step="100" value="2000"></div>
+ <div class="field"><label for="quotaReg">Instrumentos e registros de quotas (R$)</label><input id="quotaReg" type="number" min="0" step="100" value="500"></div>
+ <div class="field"><label for="invFees">Advogado: inventário (R$)</label><input id="invFees" type="number" min="0" step="100" value="4500"></div>
+ <div class="field"><label for="invReg">Cartório e demais despesas (R$)</label><input id="invReg" type="number" min="0" step="100" value="2500"></div>
+ </div>
+ <div class="hint"><strong>Questão jurídica:</strong> doação com usufruto, legítima, meação, colação e eventual imposto sobre ganho de capital precisam de análise própria. O sistema não presume redução de ITD pela criação de holding.</div>
+</div>
+<div class="pane right">
+ <div class="kicker"><span class="squircle">ITD</span> Compare alternativas</div>
+ <h2>Quanto custaria cada caminho?</h2>
+ <div class="bigline"><span>ITD estimado: doação direta</span><strong data-bind="itdDirect">—</strong></div>
+ <div class="bigline"><span>Doação direta, com custos informados</span><strong data-bind="directTotal">—</strong></div>
+ <div class="bigline"><span>Doação de quotas + abertura de nova holding</span><strong data-bind="quotaTotal">—</strong></div>
+ <div class="bigline"><span>Inventário futuro, pela regra atual</span><strong data-bind="inventoryTotal">—</strong></div>
+ <div class="formula" id="successionFormula">ITD estimado + honorários + cartório = custo direto de transmissão.</div>
+ <div class="stat-note"><strong>Doação com usufruto:</strong> o doador pode reservar determinados direitos, mas isso exige modelagem jurídica e tributária específica. Não aplicamos desconto fiscal automático. <strong>Inventário futuro</strong> é mera simulação nominal com regras atuais.</div>
+ <p class="source">Fonte: Lei Estadual RJ nº 7.174/2015 e base de UFIR-RJ 2026. Podem existir isenções, bases e regras especiais não contempladas.</p>
+</div></section>
+
+<!-- 8: resultado -->
+<section class="stage" data-step="7" aria-label="Conclusão da aula">
+<div class="pane">
+ <div class="kicker"><span class="squircle">8</span> A decisão explicada</div>
+ <h2>Agora podemos responder à pergunta inicial.</h2>
+ <p>Não existe obrigação de criar uma holding. Nosso trabalho demonstra <strong>em que situação a estrutura pode ou não compensar</strong> e quais dados ainda exigem análise profissional.</p>
+ <div class="hero-value" id="verdictBox"><span>Diagnóstico financeiro educacional</span><strong id="verdict" style="font-size:clamp(23px,2.2vw,36px)">Avaliando…</strong><p id="verdictReason">Preencha os dados para comparar.</p></div>
+ <div class="steps-grid">
+  <div class="info-line"><b>1.</b><span>Comparamos a tributação anual da pessoa física com a da sociedade.</span></div>
+  <div class="info-line"><b>2.</b><span>Subtraímos custos iniciais, impostos de transferência e despesas anuais.</span></div>
+  <div class="info-line"><b>3.</b><span>Mostramos doação direta, quotas e inventário como alternativas sucessórias, sem transformar isso em promessa de economia.</span></div>
+ </div>
+ <p class="edu"><b>Mensagem para encerrar a apresentação:</b> a melhor estratégia não é necessariamente a que tem a menor alíquota. É a que equilibra custos, objetivos familiares, obrigações legais e viabilidade no cenário concreto.</p>
+ <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="btn primary" type="button" id="print" style="min-width:0">Imprimir conclusão</button><a class="utility" href="calculadora-v2.html" style="text-decoration:none">Abrir modo livre</a></div>
+</div>
+<div class="pane right">
+ <div class="kicker"><span class="squircle">✓</span> Demonstrativo final</div>
+ <h2>Todos os números, no mesmo lugar</h2>
+ <table class="summary-table" aria-label="Quadro-resumo"><tbody>
+  <tr><td>Patrimônio</td><td data-bind="property">—</td></tr>
+  <tr><td>Aluguel anual</td><td data-bind="annualRent">—</td></tr>
+  <tr><td>IRPF adicional estimado</td><td data-bind="pfTax">—</td></tr>
+  <tr><td>Tributos anuais da holding</td><td data-bind="pjTax">—</td></tr>
+  <tr><td>Manutenção anual da holding</td><td data-bind="annualMaintenance">—</td></tr>
+  <tr><td>Custos iniciais sem ITBI</td><td data-bind="opening">—</td></tr>
+  <tr><td>Diferença anual PF × holding</td><td data-bind="annualGain">—</td></tr>
+  <tr><td>VPL mais cauteloso</td><td data-bind="vplCon">—</td></tr>
+  <tr><td>Aluguel mínimo estimado</td><td data-bind="minRent">—</td></tr>
+  <tr><td>Patrimônio de equilíbrio no cenário</td><td data-bind="minPatrimony">—</td></tr>
+ </tbody></table>
+ <p class="source" id="finalSources">Regras tributárias de referência 2026; valores editáveis e cálculo em tempo real no navegador, sem atualização legislativa automática. Sem parecer jurídico.</p>
+</div></section>
+</main>
+<footer class="bottom">
+ <div class="buttons"><button id="previous" class="btn" type="button" disabled>← Voltar</button><button id="next" class="btn primary" type="button">Continuar →</button></div>
+ <div class="bottom-center"><span id="footerStep">Preencha os dados, avance e acompanhe a explicação.</span><br><span style="opacity:.75">Teclas ← → avançam fora dos campos • F ativa tela cheia</span></div>
+ <span style="font-size:12px;color:#a8bbc5">Simulação acadêmica · regras versionadas</span>
+</footer>
+</div><div id="announce" aria-live="polite" class="assistive"></div></body></html>
