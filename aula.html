@@ -22,11 +22,18 @@ header{display:flex;align-items:center;justify-content:space-between;gap:15px;bo
 .controls{display:flex;justify-content:space-between;align-items:center;gap:14px;border-top:2px solid var(--line);padding-top:1.5vh}.controlbuttons{display:flex;gap:10px}button.primary{background:var(--navy);color:white;border:0;padding:clamp(12px,1.1vw,20px) clamp(17px,1.7vw,32px);border-radius:10px;font-size:clamp(14px,1.08vw,20px);font-weight:800}button.secondary{background:white;color:var(--navy);border:1px solid #c7d2db;padding:clamp(12px,1.1vw,20px) clamp(17px,1.7vw,32px);border-radius:10px;font-size:clamp(14px,1.08vw,20px);font-weight:750}button:disabled{opacity:.33;cursor:default}.progress{display:flex;align-items:center;gap:8px}.progress button{height:11px;width:clamp(17px,2.8vw,54px);background:#d1dce2;border:0;border-radius:20px}.progress button.active{background:var(--gold)}.foot{font-size:clamp(10px,.73vw,14px);color:var(--muted)}.badge{background:#f7ebd5;color:#8b6225;padding:6px 9px;border-radius:7px;font-weight:750;display:inline-block;margin-bottom:9px;font-size:clamp(12px,.95vw,17px)}
 #toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--navy);color:white;padding:12px 22px;border-radius:9px;display:none}
 @media(max-width:880px){#app{height:auto;min-height:100vh}.stage{grid-template-columns:1fr}.panel{min-height:380px}.lesson-head{align-items:flex-start}.topright .pill{display:none}.controls{flex-wrap:wrap}.foot{width:100%}}@media(max-height:720px) and (min-width:881px){#app{gap:1vh}.panel{padding:16px}.help{margin-bottom:7px}.row{padding:7px 0}.formula{padding:10px}.fields{gap:8px}.bigval{font-size:clamp(34px,3.8vw,68px)}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Apoio artístico: não substitui os resultados calculados no navegador. */
+#visualLessonDialog{width:min(95vw,1600px);max-height:96vh;margin:auto;padding:15px;border:1px solid #cab07c;border-radius:16px;background:#f8f9fa;box-shadow:0 30px 90px #0008;color:#102e49}
+#visualLessonDialog::backdrop{background:#071523e8}.viewer-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:2px 5px 14px}.viewer-head strong{font-size:clamp(16px,1.55vw,27px)}
+#visualLessonDialog img{display:block;width:100%;max-height:78vh;aspect-ratio:16/9;object-fit:contain;border-radius:9px}
+#visualLessonDialog p{margin:12px 5px 0;font-size:clamp(12px,.9vw,16px);color:#586d7c}
+@media(max-width:900px){.topright{flex-wrap:wrap;justify-content:flex-end;gap:6px}#showIllustration{font-size:12px;padding:7px 9px}}
 </style>
 </head>
 <body>
 <main id="app">
-<header><div class="brand">HOLDING <span>STUDIO</span><small>LABORATÓRIO JURÍDICO • DIREITO DE FAMÍLIA E SUCESSÕES</small></div><div class="topright"><span class="pill">● SIMULAÇÃO AO VIVO</span><button id="fullscreen" class="secondary" type="button">⛶ Tela cheia</button><a class="link" href="apresentacao.html">Galeria de 8 telas</a> <a class="link" href="index.html">Abrir laboratório completo</a></div></header>
+<header><div class="brand">HOLDING <span>STUDIO</span><small>LABORATÓRIO JURÍDICO • DIREITO DE FAMÍLIA E SUCESSÕES</small></div><div class="topright"><span class="pill">● SIMULAÇÃO AO VIVO</span><button id="showIllustration" class="secondary" type="button">◉ Ver slide da etapa</button><button id="fullscreen" class="secondary" type="button">⛶ Tela cheia</button><a class="link" href="apresentacao.html">Galeria de 8 telas</a> <a class="link" href="index.html">Abrir laboratório completo</a></div></header>
 <div class="lesson-head"><div><div class="eyebrow">AULA INTERATIVA COM CÁLCULO EM TEMPO REAL</div><h1 id="title">Quanto vale a pena criar uma holding?</h1><p id="subtitle">Digite os valores e veja a resposta acontecer ao vivo.</p></div><span class="step-num" id="counter">01 / 05</span></div>
 <div class="stage">
 <section class="panel" aria-label="Dados da simulação"><h2 id="leftTitle">1. Vamos criar um caso realista</h2><p class="help" id="leftHelp">Os valores são hipotéticos e editáveis.</p><div id="inputs" class="fields"></div><div class="explain" id="explain"></div></section>
@@ -34,6 +41,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:15px;bo
 </div>
 <nav class="controls" aria-label="Navegar na aula"><div class="controlbuttons"><button class="secondary" id="back" type="button">← Voltar</button><button class="primary" id="forward" type="button">Próxima etapa →</button></div><div class="progress" id="progress"></div><span class="foot">Use ← → no teclado · dados fictícios · tributos com base normativa de 2026</span></nav>
 </main>
+<dialog id="visualLessonDialog" aria-label="Ilustração educativa da etapa"><div class="viewer-head"><strong id="visualLessonTitle">Apoio visual da aula</strong><button id="hideIllustration" class="secondary" type="button">Fechar ×</button></div><img id="visualLessonImage" alt="Slide artístico explicativo do estudo de viabilidade patrimonial"><p>Imagem conceitual: os valores desenhados são exemplos, não resultados da simulação. Para cálculos, use os campos da aula ao vivo e confira as fontes.</p></dialog>
 <div id="toast" role="status"></div>
 <script src="src/tax-engine.js"></script>
 <script>
@@ -136,6 +144,20 @@ refresh();
 el("back").addEventListener("click",()=>{if(step>0){step--;render()}});
 el("forward").addEventListener("click",()=>{if(step<4){step++;render()}});
 document.addEventListener("keydown",e=>{if(["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName))return;if(e.key==="ArrowRight"&&step<4){step++;render()}if(e.key==="ArrowLeft"&&step>0){step--;render()}});
+
+const illustrations=[
+["Entrada de patrimônio e receitas","assets/telas/02_ENTRADA_PATRIMONIO_E_RECEITAS.webp"],
+["Pessoa física: como o IRPF entra no estudo","assets/telas/03_CALCULO_PESSOA_FISICA_IRPF.webp"],
+["Holding: IRPJ, CSLL, PIS e Cofins","assets/telas/04_CALCULO_HOLDING_LUCRO_PRESUMIDO.webp"],
+["Custos de implantação e ITBI","assets/telas/05_CUSTOS_E_ITBI.webp"],
+["VPL, projeções e cenários","assets/telas/07_VPL_PROJECAO_E_CENARIOS.webp"]
+];
+el("showIllustration").addEventListener("click",()=>{
+ const item=illustrations[step];el("visualLessonTitle").textContent=item[0];
+ el("visualLessonImage").src=item[1];el("visualLessonImage").alt=item[0];
+ const dlg=el("visualLessonDialog");if(typeof dlg.showModal==="function")dlg.showModal();else dlg.setAttribute("open","");
+});
+el("hideIllustration").addEventListener("click",()=>{const dlg=el("visualLessonDialog");if(typeof dlg.close==="function")dlg.close();else dlg.removeAttribute("open");});
 el("fullscreen").addEventListener("click",()=>{if(document.fullscreenElement){document.exitFullscreen()}else{document.documentElement.requestFullscreen?.()}});
 fetch("tax-rules.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(x=>{if(x&&x.schemaVersion===1&&x.irpf&&x.pj&&x.rj){tax=x;refresh()}}).catch(()=>{});
 render();
