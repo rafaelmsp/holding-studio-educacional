@@ -1,3 +1,27 @@
+# Holding Studio 2.0 — Calculadora explicada
+
+**Nova entrada:** https://rafaelmsp.github.io/holding-studio-educacional/ (redireciona para calculadora-v2.html).
+
+A versão 2.0 é uma calculadora de decisão, não um slide. A pessoa informa o valor dos imóveis e seus aluguéis; depois ajusta os custos para comparar **pessoa física x holding patrimonial** e visualizar **doação direta x doação de quotas x inventário futuro**. Cada fórmula é explicada na interface e acompanha a alteração dos campos.
+
+- **Comece com um imóvel de R$ 150 mil**, inclusive sem renda de aluguel; use os exemplos editáveis.
+- Compare **IRPF incremental, IRPJ, adicional de IRPJ, CSLL, PIS, Cofins, ITBI, manutenção da PJ, VPL e aluguel mínimo de equilíbrio**.
+- Explore uma **estimativa matemática de patrimônio mínimo por cenário**, não um limite legal ou recomendação automática.
+- Faça a comparação sucessória em seção separada. **Doação com usufruto não recebe tratamento fiscal presumido**: exige avaliação específica.
+- **Honorários advocatícios, abertura, cartórios, contabilidade e custos de sucessão são hipóteses editáveis**, não tabela oficial de preços.
+- Calcula instantaneamente no navegador; usa src/tax-engine.js e a **base jurídica de referência tax-rules.json, ano 2026, atualização manual/versionada**. Isso não é atualização de impostos por API em tempo real.
+- Municípios diferentes do Rio exigem preenchimento manual de alíquota do ITBI. Não se presume imunidade sem análise da operação.
+- As explicações exibem o passo a passo, as premissas, os valores e links às fontes oficiais.
+- O botão de impressão permite imprimir o resultado ou salvá-lo como PDF pelo navegador.
+
+**Conservação do trabalho anterior:** simulador.html, aula.html, apresentacao.html continuam acessíveis; a antiga raiz Modo Palco foi preservada em legado/index-modo-palco-2026.html.
+
+Para testar cálculos no Node.js, execute: node tests/tax-engine-v2.test.js.
+
+**Limites legais:** projeções financeiras não modelam todas as hipóteses de ganho de capital, tributação de dividendos e rendas elevadas, reforma tributária futura, regimes de bens, legítima, doação com usufruto e valorização futura. Comparações de inventário usam regras e valores presentes como *estimativa nominal*, não previsão de transmissão futura.
+
+---
+
 ## Modo Palco — apresentação acadêmica 16:9
 
 Acesse a **página inicial** em https://rafaelmsp.github.io/holding-studio-educacional/ para exibir a aula interativa no projetor. Também disponível em `apresentacao.html`.
