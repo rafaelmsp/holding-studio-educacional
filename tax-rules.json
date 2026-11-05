@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "year": 2026,
+  "state": "RJ",
+  "municipality": "Rio de Janeiro",
+  "reviewedAt": "2026-11-04",
+  "effectiveFrom": "2026-01-01",
+  "status": "snapshot_verificado_manualmente",
+  "notice": "Alíquotas são instantâneo normativo de 2026, não atualização tributária automática. Indicadores econômicos são consultados em API pública separadamente. Confirmar alterações antes de decisão profissional.",
+  "irpf": {
+    "annualBrackets": [
+      {"upTo": 29145.60, "rate": 0, "deduction": 0},
+      {"upTo": 33919.80, "rate": 0.075, "deduction": 2185.92},
+      {"upTo": 45012.60, "rate": 0.15, "deduction": 4729.91},
+      {"upTo": 55976.16, "rate": 0.225, "deduction": 8105.85},
+      {"upTo": null, "rate": 0.275, "deduction": 10904.66}
+    ],
+    "simplifiedDiscountRate": 0.20,
+    "simplifiedDiscountMax": 17640,
+    "annualReduction": {"exemptGrossMax": 60000, "partialGrossMax": 88200, "maxCredit": 2694.15, "partialIntercept": 8429.73, "partialSlope": 0.095575},
+    "highIncomeMinAnnualThreshold": 600000,
+    "notes": "Comparação incremental no ajuste anual; não equivale ao carnê-leão mensal e não modela tributação mínima de altas rendas."
+  },
+  "pj": {
+    "regime": "lucro_presumido_locacao_imoveis_proprios",
+    "presumedIrpj": 0.32,
+    "presumedCsll": 0.32,
+    "irpjRate": 0.15,
+    "csllRate": 0.09,
+    "pisRate": 0.0065,
+    "cofinsRate": 0.03,
+    "irpjAdditionalRate": 0.10,
+    "irpjAdditionalBaseAnnual": 240000,
+    "revenuePresumptionIncreaseThresholdAnnual": 5000000,
+    "presumptionIncreaseFactor": 1.10,
+    "dividendMonthlyThresholdPerBeneficiary": 50000,
+    "dividendWithholdingRate": 0.10,
+    "notes": "Apuração estimada anual com receita uniforme por trimestre. Não contempla ganho de capital, rendimentos financeiros, IBS/CBS futuros nem efeitos definitivos do IRRF sobre dividendos."
+  },
+  "rj": {
+    "ufir": 4.9604,
+    "itbiMunicipalRate": 0.03,
+    "itdBands": [
+      {"upToUfir": 70000, "rate": 0.04},
+      {"upToUfir": 100000, "rate": 0.045},
+      {"upToUfir": 200000, "rate": 0.05},
+      {"upToUfir": 300000, "rate": 0.06},
+      {"upToUfir": 400000, "rate": 0.07},
+      {"upToUfir": null, "rate": 0.08}
+    ],
+    "itdMethod": "alíquota_da_faixa_aplicada_ao_valor_total",
+    "itbiNotes": "Imunidade de integralização de capital: STF Tema 1348 e limite do Tema 796, ressalva de fraude/simulação. A avaliação do município e os procedimentos administrativos devem ser verificados.",
+    "itdNotes": "ITD é tributo estadual para transmissão gratuita; simulação é ilustrativa, sem isenções e sem atribuir economia automática à holding."
+  },
+  "sources": [
+    {"name":"Receita Federal — IRPF 2026","url":"https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2026","type":"federal"},
+    {"name":"Receita Federal — CSLL / base presumida locação","url":"https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/CSLL","type":"federal"},
+    {"name":"IN RFB 1700/2017 — IRPJ locação 32%","url":"https://normas.receita.fazenda.gov.br/sijut2consulta/link.action?idAto=81268","type":"federal"},
+    {"name":"Receita Federal — LC 224/2025 e receita > R$ 5 milhões","url":"https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/perguntas-e-respostas/beneficios-fiscais/perguntas-e-respostas-reducao-dos-incentivos-e-beneficios-tributarios.pdf/@@download/file","type":"federal"},
+    {"name":"Prefeitura do Rio — cálculo do ITBI","url":"https://fazenda.prefeitura.rio/calculo-itbi/","type":"municipal"},
+    {"name":"STF — Tema 1348 integralização de capital","url":"https://portal.stf.jus.br/jurisprudenciaRepercussao/verAndamentoProcesso.asp?classeProcesso=RE&incidente=6929423&numeroProcesso=1495108&numeroTema=1348","type":"jurisprudencia"},
+    {"name":"Lei RJ 7.174/2015, art. 26 — ITD","url":"https://www.legisweb.com.br/legislacao/?id=314557","type":"estadual"},
+    {"name":"Resolução SEFAZ-RJ 849/2025 — UFIR 2026","url":"https://portal.fazenda.rj.gov.br/tecnologia-informacao/wp-content/uploads/sites/7/2026/01/RESOLUCAO-SEFAZ-No-848-DE-22-DE-DEZEMBRO-DE-2025.pdf","type":"estadual"},
+    {"name":"Banco Central — API de séries temporais","url":"https://dadosabertos.bcb.gov.br/dataset/432-taxa-de-juros---meta-selic-definida-pelo-copom","type":"indicador"}
+  ]
+}
