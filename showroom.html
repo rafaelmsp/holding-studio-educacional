@@ -10,7 +10,7 @@
 <body><div class="app">
 <header class="top">
  <div class="brand"><strong>HOLDING <em>STUDIO</em></strong><small>Showroom acadêmico • Direito de Família e Sucessões</small></div>
- <div class="toptools"><span class="data-badge" id="sourceBadge">Regras 2026 · verificando</span><button id="restart" class="utility" type="button" title="Voltar aos valores do exemplo">↻ Reiniciar</button><button id="full" class="utility" type="button" title="Usar tela cheia para projetor">⛶ Tela cheia</button></div>
+ <div class="toptools"><span class="data-badge" id="sourceBadge">Regras 2026 · verificando</span><span class="data-badge">FORMATO 16:9 · PROJETOR</span><button id="restart" class="utility" type="button" title="Voltar aos valores do exemplo">↻ Reiniciar</button><button id="full" class="utility" type="button" title="Usar tela cheia para projetor">⛶ Tela cheia</button></div>
 </header>
 <div class="progress-wrap" aria-label="Progresso da demonstração"><span class="progress-label" id="stepLabel">ETAPA 1 DE 8</span><div class="progress-track"><div class="progress-fill" id="progressBar" style="width:12.5%"></div></div><span class="progress-percent" id="percent">13%</span></div>
 <main class="main">
@@ -40,7 +40,7 @@
  <div class="bigline"><span>Criar uma holding patrimonial</span><strong>Empresa e custos próprios</strong></div>
  <div class="bigline"><span>Planejar sucessão</span><strong>Doação ou herança</strong></div>
  <p class="reason" style="margin-top:17px"><strong>O que ensinamos?</strong> Uma holding não é um benefício fiscal garantido. A decisão exige comparação do que acontece antes e depois de criar a empresa.</p>
- <div class="formula">Pergunta da aula: a vantagem projetada paga os custos para abrir e manter a empresa?</div>
+ <div class="formula" id="propertyFormula">1 imóvel × valor declarado = patrimônio total em análise.</div>
 </div></section>
 
 <!-- 2: renda -->
@@ -238,12 +238,13 @@
   <tr><td>Aluguel mínimo estimado</td><td data-bind="minRent">—</td></tr>
   <tr><td>Patrimônio de equilíbrio no cenário</td><td data-bind="minPatrimony">—</td></tr>
  </tbody></table>
+ <div class="formula" id="finalFormula">Diferença anual = IRPF − tributos da holding − manutenção. VPL = ganhos futuros descontados − abertura e ITBI.</div>
  <p class="source" id="finalSources">Regras tributárias de referência 2026; valores editáveis e cálculo em tempo real no navegador, sem atualização legislativa automática. Sem parecer jurídico.</p>
 </div></section>
 </main>
 <footer class="bottom">
  <div class="buttons"><button id="previous" class="btn" type="button" disabled>← Voltar</button><button id="next" class="btn primary" type="button">Continuar →</button></div>
  <div class="bottom-center"><span id="footerStep">Preencha os dados, avance e acompanhe a explicação.</span><br><span style="opacity:.75">Teclas ← → avançam fora dos campos • F ativa tela cheia</span></div>
- <span style="font-size:12px;color:#a8bbc5">Simulação acadêmica · regras versionadas</span>
+ <span style="font-size:12px;color:#a8bbc5">Cada tela: dados + fórmula + explicação</span>
 </footer>
 </div><div id="announce" aria-live="polite" class="assistive"></div></body></html>
