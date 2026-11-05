@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula ao vivo | Holding Studio</title>
+<meta name="description" content="Aula interativa de viabilidade de holding patrimonial com simulações ao vivo.">
+<style>
+:root{--navy:#102e49;--gold:#ad7929;--muted:#62768b;--green:#147d63;--red:#bc4d43;--paper:#f5f6f4;--line:#dbe1e5;font-family:Inter,"Segoe UI",Arial,sans-serif;color:var(--navy)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #cfb075;outline-offset:2px}
+#app{height:100dvh;min-height:650px;display:flex;flex-direction:column;padding:2vh 3vw 2vh;gap:1.5vh;background:radial-gradient(ellipse at top right,#f2ebd9 0,transparent 36%),#f8f9f8}
+header{display:flex;align-items:center;justify-content:space-between;gap:15px;border-bottom:2px solid var(--line);padding-bottom:1.5vh}
+.brand{font-size:clamp(16px,1.6vw,26px);font-weight:850;letter-spacing:.07em}.brand span{color:var(--gold)}.brand small{display:block;font-size:clamp(10px,.75vw,13px);color:var(--muted);font-weight:500;letter-spacing:.13em;margin-top:4px}
+.topright{display:flex;align-items:center;gap:15px}.pill{background:#e8f3ee;color:#187458;border-radius:999px;font-size:clamp(10px,.78vw,14px);font-weight:750;padding:9px 13px}.link{color:var(--navy);text-decoration:none;font-size:clamp(11px,.85vw,16px);border:1px solid #cad4db;padding:9px 12px;border-radius:9px}
+.lesson-head{display:flex;align-items:flex-end;justify-content:space-between;gap:15px}.eyebrow{color:var(--gold);font-weight:850;letter-spacing:.15em;font-size:clamp(10px,1vw,16px)}h1{font-family:Georgia,serif;font-size:clamp(30px,3.2vw,57px);font-weight:650;margin:5px 0;letter-spacing:-.035em;line-height:1.08}#subtitle{color:var(--muted);font-size:clamp(15px,1.28vw,23px);margin:6px 0}.step-num{font-size:clamp(17px,1.45vw,27px);font-weight:800;white-space:nowrap;color:var(--gold)}
+.stage{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:1.5vw}.panel{min-width:0;border:1px solid #d8dfe3;border-radius:18px;background:white;box-shadow:0 8px 25px #16344b0d;padding:clamp(16px,1.8vw,35px);display:flex;flex-direction:column;overflow:auto}
+.panel h2{font-size:clamp(18px,1.6vw,30px);margin:0 0 12px;font-weight:800;line-height:1.2}.help{font-size:clamp(14px,1.02vw,20px);line-height:1.48;color:#4c6275;margin:2px 0 15px}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,1.1vw,22px)}.field{display:flex;flex-direction:column;gap:7px;min-width:0}.field label{font-size:clamp(12px,1vw,19px);font-weight:750}.field input,.field select{width:100%;height:clamp(48px,4vw,76px);font-size:clamp(18px,1.6vw,31px);font-weight:750;border:2px solid #cfdce4;border-radius:10px;padding:0 12px;color:#153a55;background:#fafdfd;min-width:0}
+.field small{color:var(--muted);font-size:clamp(11px,.79vw,14px)}.lesson-tag{display:inline-block;color:#946820;background:#fff2d9;padding:8px 11px;border-radius:8px;font-size:clamp(12px,.9vw,16px);font-weight:750;margin-top:10px}
+.explain{background:#f0f5f7;border-left:5px solid var(--gold);border-radius:8px;padding:14px 16px;font-size:clamp(14px,1.08vw,21px);line-height:1.5;margin-top:auto}.explain strong{display:block;margin-bottom:5px}
+.biglabel{color:#617589;font-size:clamp(12px,1vw,18px);font-weight:800;letter-spacing:.04em}.bigval{font-size:clamp(35px,4.4vw,84px);font-weight:850;letter-spacing:-.045em;line-height:1.12;margin:8px 0}.bigval.positive{color:var(--green)}.bigval.negative{color:var(--red)}.row{display:flex;justify-content:space-between;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid var(--line);font-size:clamp(14px,1.12vw,22px)}.row b{white-space:nowrap;font-size:clamp(17px,1.35vw,27px)}.formula{border-radius:12px;background:#f5f5ed;padding:15px;margin-top:15px;font-size:clamp(14px,1.05vw,20px);line-height:1.55}.formula b{display:block;margin-bottom:6px}.formula code{white-space:normal;font-size:clamp(13px,1.12vw,23px);font-weight:780;color:#0e4463}
+.chart{flex:1;width:100%;min-height:125px;max-height:290px;margin-top:8px}.chart svg{width:100%;height:100%}.chart text{font-size:13px;fill:#63778a}.chart .axis{stroke:#9cb0be;stroke-width:1}.chart .line{stroke:#ad7929;fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.chart .zero{stroke:#b0bcc5;stroke-dasharray:5 4}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:14px;border-top:2px solid var(--line);padding-top:1.5vh}.controlbuttons{display:flex;gap:10px}button.primary{background:var(--navy);color:white;border:0;padding:clamp(12px,1.1vw,20px) clamp(17px,1.7vw,32px);border-radius:10px;font-size:clamp(14px,1.08vw,20px);font-weight:800}button.secondary{background:white;color:var(--navy);border:1px solid #c7d2db;padding:clamp(12px,1.1vw,20px) clamp(17px,1.7vw,32px);border-radius:10px;font-size:clamp(14px,1.08vw,20px);font-weight:750}button:disabled{opacity:.33;cursor:default}.progress{display:flex;align-items:center;gap:8px}.progress button{height:11px;width:clamp(17px,2.8vw,54px);background:#d1dce2;border:0;border-radius:20px}.progress button.active{background:var(--gold)}.foot{font-size:clamp(10px,.73vw,14px);color:var(--muted)}.badge{background:#f7ebd5;color:#8b6225;padding:6px 9px;border-radius:7px;font-weight:750;display:inline-block;margin-bottom:9px;font-size:clamp(12px,.95vw,17px)}
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--navy);color:white;padding:12px 22px;border-radius:9px;display:none}
+@media(max-width:880px){#app{height:auto;min-height:100vh}.stage{grid-template-columns:1fr}.panel{min-height:380px}.lesson-head{align-items:flex-start}.topright .pill{display:none}.controls{flex-wrap:wrap}.foot{width:100%}}@media(max-height:720px) and (min-width:881px){#app{gap:1vh}.panel{padding:16px}.help{margin-bottom:7px}.row{padding:7px 0}.formula{padding:10px}.fields{gap:8px}.bigval{font-size:clamp(34px,3.8vw,68px)}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main id="app">
+<header><div class="brand">HOLDING <span>STUDIO</span><small>LABORATÓRIO JURÍDICO • DIREITO DE FAMÍLIA E SUCESSÕES</small></div><div class="topright"><span class="pill">● SIMULAÇÃO AO VIVO</span><button id="fullscreen" class="secondary" type="button">⛶ Tela cheia</button><a class="link" href="index.html">Abrir laboratório completo</a></div></header>
+<div class="lesson-head"><div><div class="eyebrow">AULA INTERATIVA COM CÁLCULO EM TEMPO REAL</div><h1 id="title">Quanto vale a pena criar uma holding?</h1><p id="subtitle">Digite os valores e veja a resposta acontecer ao vivo.</p></div><span class="step-num" id="counter">01 / 05</span></div>
+<div class="stage">
+<section class="panel" aria-label="Dados da simulação"><h2 id="leftTitle">1. Vamos criar um caso realista</h2><p class="help" id="leftHelp">Os valores são hipotéticos e editáveis.</p><div id="inputs" class="fields"></div><div class="explain" id="explain"></div></section>
+<section class="panel" aria-label="Cálculo e resultado ao vivo"><span class="badge" id="rightBadge">A CONTA EXPLICADA</span><h2 id="rightTitle">Renda imobiliária</h2><span class="biglabel" id="mainLabel">Receita anual estimada</span><div class="bigval" id="mainValue">R$ 0</div><div id="rows"></div><div class="formula" id="formula"></div><div class="chart" id="chart"></div></section>
+</div>
+<nav class="controls" aria-label="Navegar na aula"><div class="controlbuttons"><button class="secondary" id="back" type="button">← Voltar</button><button class="primary" id="forward" type="button">Próxima etapa →</button></div><div class="progress" id="progress"></div><span class="foot">Use ← → no teclado · dados fictícios · tributos com base normativa de 2026</span></nav>
+</main>
+<div id="toast" role="status"></div>
+<script src="src/tax-engine.js"></script>
+<script>
+(function(){
+"use strict";
+const E=window.HoldingTaxEngine;
+if(!E){document.getElementById("toast").textContent="Motor de cálculo não carregado";document.getElementById("toast").style.display="block";return;}
+let tax=E.FALLBACK,step=0;
+const model={value:3200000,rent:20000,occupancy:95,expenses:600,owners:1,otherIncomeMonthly:0,legalFees:22000,corporateRegistry:2000,propertyRegistry:4500,monthlyAccounting:800,annualOtherCompany:1200,capitalPercent:100,itbiTreatment:"pendente",horizon:10,discountRate:5};
+const n=v=>Number.isFinite(Number(v))?Number(v):0;
+const currency=v=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0}).format(n(v));
+const percent=v=>(100*n(v)).toFixed(1).replace(".",",")+"%";
+const el=id=>document.getElementById(id);
+const input=(key,label,min,max,stepvalue,help)=>{
+const w=document.createElement("div");w.className="field";
+const l=document.createElement("label");l.textContent=label;l.htmlFor="in-"+key;w.appendChild(l);
+const i=document.createElement("input");i.type="number";i.id="in-"+key;i.min=min;i.max=max;i.step=stepvalue;i.value=model[key];i.setAttribute("aria-label",label);
+i.addEventListener("input",()=>{const value=n(i.value);model[key]=Math.max(min,Math.min(max,value));refresh();});w.appendChild(i);
+if(help){const h=document.createElement("small");h.textContent=help;w.appendChild(h);}return w;
+};
+function selector(key,label,items){
+const w=document.createElement("div");w.className="field";const l=document.createElement("label");l.textContent=label;w.appendChild(l);
+const s=document.createElement("select");s.setAttribute("aria-label",label);
+items.forEach(item=>{const o=document.createElement("option");o.value=item[0];o.textContent=item[1];s.appendChild(o)});
+s.value=model[key];s.addEventListener("change",()=>{model[key]=s.value;refresh()});w.appendChild(s);return w;
+}
+const lessons=[
+{title:"Vamos montar o patrimônio",subtitle:"A turma escolhe os valores. O sistema faz as contas.",left:"01 · Patrimônio e aluguel",help:"Digite o valor total dos imóveis e a renda bruta dos aluguéis.",fields:[["value","Valor total dos imóveis (R$)",0,999999999,10000],["rent","Aluguéis mensais (R$)",0,99999999,1000],["occupancy","Taxa de ocupação (%)",0,100,1],["expenses","Despesas mensais dedutíveis da PF (R$)",0,9999999,50]],explain:"Antes de calcular impostos, precisamos descobrir quanto a carteira realmente recebe. Vacância significa meses sem locatário; um aluguel anunciado não é necessariamente uma receita recebida."},
+{title:"Quanto a pessoa física paga?",subtitle:"A tributação depende também de outras rendas e deduções.",left:"02 · IRPF sobre os aluguéis",help:"Simule um proprietário ou vários coproprietários com parcelas iguais.",fields:[["owners","Número de coproprietários",1,20,1],["otherIncomeMonthly","Outras rendas tributáveis/mês por titular (R$)",0,99999999,1000]],explain:"O cálculo considera o IRPF anual adicional atribuído aos aluguéis: compara o imposto da pessoa física com e sem essa receita. A apuração real do carnê-leão é mensal e pode ser diferente desta estimativa anual."},
+{title:"E se fosse uma holding?",subtitle:"Compare os tributos federais sobre locação no lucro presumido.",left:"03 · Pessoa jurídica",help:"Mantenha os aluguéis e altere o custo mensal de manter a holding.",fields:[["monthlyAccounting","Contabilidade/mês (R$)",0,999999,50],["annualOtherCompany","Outros custos anuais da PJ (R$)",0,9999999,200]],explain:"No lucro presumido, consideramos IRPJ e CSLL com presunção sobre receita, além de PIS e Cofins. Há adicional de IRPJ quando a base supera o limite legal. A conta não é simplesmente comparar alíquotas máximas."},
+{title:"Quanto custa implantar?",subtitle:"O imposto de transferência e os honorários podem alterar tudo.",left:"04 · Implantação e ITBI",help:"Compare uma hipótese de imunidade de ITBI com a possibilidade de cobrança.",fields:[["legalFees","Honorários jurídicos iniciais (R$)",0,99999999,1000],["corporateRegistry","Constituição e registros (R$)",0,99999999,500],["propertyRegistry","Registros imobiliários (R$)",0,99999999,500],["capitalPercent","Parcela integralizada no capital (%)",0,100,1],["itbiTreatment","Tratamento ITBI"]],explain:"O ITBI é municipal. A imunidade de integralização não deve ser presumida sem conferir as condições jurídicas, o capital integralizado e o procedimento aplicável. ITD e custos sucessórios são avaliações distintas."},
+{title:"A holding realmente compensa?",subtitle:"A resposta aparece com retorno, custo inicial e fluxo ao longo dos anos.",left:"05 · Conclusão da simulação",help:"Mude o prazo e a taxa de desconto para observar o ponto de equilíbrio.",fields:[["horizon","Período de análise (anos)",1,30,1],["discountRate","Taxa de desconto ao ano (%)",0,30,.5]],explain:"VPL (valor presente líquido) positivo sugere vantagem econômica apenas dentro das premissas. Um diagnóstico jurídico completo precisa considerar ITD, sucessão, venda futura dos imóveis, dividendos, registros e possíveis mudanças tributárias."}
+];
+const state=()=>({assets:[{id:1,name:"Carteira da aula",value:model.value,rent:model.rent,expenses:model.expenses,occupancy:model.occupancy}],owners:model.owners,otherIncomeMonthly:model.otherIncomeMonthly,pfDeductionMode:"auto",otherLegalDeductionYear:0,legalFees:model.legalFees,corporateRegistry:model.corporateRegistry,propertyRegistry:model.propertyRegistry,monthlyAccounting:model.monthlyAccounting,annualOtherCompany:model.annualOtherCompany,capitalPercent:model.capitalPercent,itbiTreatment:model.itbiTreatment,horizon:model.horizon,discountRate:model.discountRate,annualRentGrowth:0,annualCostGrowth:0,successionEnabled:false});
+const row=(label,value)=>{const d=document.createElement("div");d.className="row";const a=document.createElement("span");a.textContent=label;const b=document.createElement("b");b.textContent=value;d.append(a,b);el("rows").appendChild(d);};
+const line=(formula,explanation)=>{
+const f=el("formula");f.textContent="";
+const b=document.createElement("b");b.textContent=formula;const c=document.createElement("code");c.textContent=explanation;f.append(b,c);
+};
+function plot(r){
+const box=el("chart");box.textContent="";
+if(step!==4)return;
+const ns="http://www.w3.org/2000/svg",svg=document.createElementNS(ns,"svg");svg.setAttribute("viewBox","0 0 650 200");svg.setAttribute("role","img");svg.setAttribute("aria-label","Vantagem acumulada da holding ao longo dos anos");
+const pts=[-r.initConservative,...r.lines.map(x=>x.cumulativeCon)];const min=Math.min(0,...pts),max=Math.max(0,...pts);
+const lo=min-Math.max(1000,(max-min)*.08),hi=max+Math.max(1000,(max-min)*.08);
+const x=i=>45+i*575/(pts.length-1),y=v=>15+(hi-v)/(hi-lo)*155;
+const zero=document.createElementNS(ns,"line");for(const[k,v]of Object.entries({x1:45,x2:620,y1:y(0),y2:y(0),stroke:"#9aaab5","stroke-dasharray":"5 5"}))zero.setAttribute(k,v);svg.appendChild(zero);
+const pl=document.createElementNS(ns,"polyline");pl.setAttribute("points",pts.map((v,i)=>x(i)+","+y(v)).join(" "));pl.setAttribute("class","line");svg.appendChild(pl);
+const lbl=document.createElementNS(ns,"text");lbl.setAttribute("x","48");lbl.setAttribute("y","193");lbl.textContent="Início";svg.appendChild(lbl);
+const end=document.createElementNS(ns,"text");end.setAttribute("x","590");end.setAttribute("y","193");end.textContent="Ano "+r.years;svg.appendChild(end);box.appendChild(svg);
+}
+function refresh(){
+const r=E.run(state(),tax),first=r.firstYear||{pjTax:0,pfTax:0,maintenance:0,annualGain:0,pjDetails:{}};
+const p=first.pjDetails||{};
+el("rows").textContent="";el("mainValue").className="bigval";
+el("chart").textContent="";
+let badge="A CONTA EXPLICADA",main="",mainlabel="",title="",formula="",calc="";
+if(step===0){
+title="Patrimônio em funcionamento";mainlabel="Aluguéis efetivos por ano";main=currency(first.revenue);
+row("Patrimônio",currency(model.value));row("Aluguel mensal contratado",currency(model.rent));row("Ocupação",String(model.occupancy)+"%");row("Aluguel mensal efetivo",currency(r.monthlyGross));
+formula="Receita mensal × ocupação × 12";calc=currency(model.rent)+" × "+model.occupancy+"% × 12 = "+currency(first.revenue);
+}else if(step===1){
+title="Imposto da pessoa física";mainlabel="IRPF incremental anual";main=currency(first.pfTax);
+row("Renda total de aluguéis",currency(first.revenue));row("Coproprietários iguais",String(model.owners));row("Outras rendas tributáveis/mês",currency(model.otherIncomeMonthly));row("IRPF estimado",currency(first.pfTax));
+formula="IRPF com aluguel − IRPF sem aluguel";calc="Imposto incremental anual do conjunto: "+currency(first.pfTax);
+}else if(step===2){
+title="Tributos da sociedade";mainlabel="Total PJ estimado por ano";main=currency(first.pjTax);
+row("IRPJ",currency(p.irpj));row("Adicional IRPJ",currency(p.additionalIrpj));row("CSLL",currency(p.csll));row("PIS + Cofins",currency(n(p.pis)+n(p.cofins)));
+row("Custo anual da empresa",currency(first.maintenance));
+formula="IRPJ + adicional + CSLL + PIS + Cofins";calc=currency(p.irpj)+" + "+currency(p.additionalIrpj)+" + "+currency(p.csll)+" + "+currency(n(p.pis)+n(p.cofins))+" = "+currency(first.pjTax);
+}else if(step===3){
+title="Custo de abertura da holding";mainlabel="Investimento inicial conservador";main=currency(r.initConservative);
+row("Honorários e registros",currency(r.initialBase));row("ITBI com imunidade até o capital",currency(r.itbi.optimistic));row("ITBI no cenário conservador",currency(r.itbi.conservative));row("ITD e inventário", "Não incluídos automaticamente");
+formula="Honorários + registros + ITBI estimado";calc=currency(r.initialBase)+" + "+currency(r.itbi.conservative)+" = "+currency(r.initConservative);
+}else{
+title="Decisão e ponto de equilíbrio";mainlabel="Valor presente líquido (VPL)";main=currency(r.npvConservative);
+el("mainValue").className="bigval "+(r.npvConservative>=0?"positive":"negative");
+badge=r.npvConservative>0?"POTENCIALMENTE VIÁVEL":"VIABILIDADE NÃO DEMONSTRADA";
+row("Economia anual após manutenção",currency(first.annualGain));
+row("Investimento inicial conservador",currency(r.initConservative));
+row("VPL com imunidade, se aplicável",currency(r.npvOptimistic));
+row("Retorno nominal",r.paybackCon===null?"Não alcançado":r.paybackCon.toFixed(1).replace(".",",")+" anos");
+formula="VPL = − investimento + economias futuras descontadas";calc=currency(r.npvConservative)+" em "+String(r.years)+" anos, taxa de "+String(model.discountRate).replace(".",",")+"% a.a.";
+plot(r);
+}
+el("rightBadge").textContent=badge;el("rightTitle").textContent=title;el("mainLabel").textContent=mainlabel;el("mainValue").textContent=main;line(formula,calc);
+}
+function render(){
+const l=lessons[step];
+el("title").textContent=l.title;el("subtitle").textContent=l.subtitle;
+el("counter").textContent=String(step+1).padStart(2,"0")+" / 05";
+el("leftTitle").textContent=l.left;el("leftHelp").textContent=l.help;
+el("explain").textContent=l.explain;const fields=el("inputs");fields.textContent="";
+l.fields.forEach(f=>{if(f[0]==="itbiTreatment")fields.appendChild(selector("itbiTreatment","Tratamento do ITBI",[["pendente","Pendente · dois cenários"],["reconhecida","Imunidade considerada"],["tributavel","Tributável integralmente"]]));else fields.appendChild(input(f[0],f[1],f[2],f[3],f[4],f[5]));});
+el("back").disabled=step===0;el("forward").disabled=step===4;
+const dots=el("progress");dots.textContent="";
+for(let i=0;i<5;i++){const b=document.createElement("button");b.className=i===step?"active":"";b.title="Ir para etapa "+(i+1);b.setAttribute("aria-label",b.title);b.addEventListener("click",()=>{step=i;render()});dots.appendChild(b)}
+refresh();
+}
+el("back").addEventListener("click",()=>{if(step>0){step--;render()}});
+el("forward").addEventListener("click",()=>{if(step<4){step++;render()}});
+document.addEventListener("keydown",e=>{if(["INPUT","SELECT","TEXTAREA"].includes(document.activeElement.tagName))return;if(e.key==="ArrowRight"&&step<4){step++;render()}if(e.key==="ArrowLeft"&&step>0){step--;render()}});
+el("fullscreen").addEventListener("click",()=>{if(document.fullscreenElement){document.exitFullscreen()}else{document.documentElement.requestFullscreen?.()}});
+fetch("tax-rules.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(x=>{if(x&&x.schemaVersion===1&&x.irpf&&x.pj&&x.rj){tax=x;refresh()}}).catch(()=>{});
+render();
+})();
+</script>
+</body>
+</html>
