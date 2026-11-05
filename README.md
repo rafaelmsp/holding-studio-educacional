@@ -1,5 +1,15 @@
 # Showroom Acadêmico — versão guiada
 
+## Formato de slides para projetor (16:9)
+
+O arquivo showroom.html foi ajustado para caber **inteiramente no formato de apresentação 16:9**, ocupando a maior área possível da tela (inclui margens quando o monitor tem outra proporção). Cada uma das oito etapas exibe simultaneamente o preenchimento e uma explicação do cálculo. As fórmulas são recalculadas ao editar os dados e **não necessitam de slides separados**.
+
+- Painel esquerdo: pergunta, dados e orientação para a fala.
+- Painel direito: valores numéricos, fórmula aplicada, resultado, explicação e fonte/restrições.
+- Ativar **Tela cheia** na barra superior; usar **setas** fora dos campos para passar ou voltar etapas.
+- O layout do projetor reduz o espaçamento automaticamente e busca acomodar o conteúdo sem rolagem. Em telas móveis, permanece o modo responsivo.
+- Teste estrutural: node tests/showroom-layout.test.js.
+
 **Página principal:** https://rafaelmsp.github.io/holding-studio-educacional/ — abre **showroom.html**.
 
 Esta é a modalidade própria para **apresentação de faculdade**. Em vez de uma galeria de slides estáticos, o professor/aluno preenche dados em um fluxo de **8 etapas** e os valores são recalculados no navegador, enquanto a interface ensina a fórmula, a natureza do tributo, as limitações e as fontes.
