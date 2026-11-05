@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0b1725" />
+<meta name="description" content="Estudo de viabilidade econômica, tributária e sucessória de holding familiar no Rio de Janeiro. Simulador interativo com dados normativos e indicadores públicos." />
+<title>Holding Studio | Laboratório de Viabilidade Patrimonial</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+<link rel="stylesheet" href="src/styles.css" />
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h.01M15 10h.01M9 14h.01M15 14h.01M10 21v-4h4v4"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-4 3 2 6-7"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 7h14M3 21h18M5 7l-3 5h6L5 7Zm14 0-3 5h6l-3-5Z"/></symbol>
+  <symbol id="i-coins" viewBox="0 0 24 24"><path d="M3 6c0-2 4-3 7-3s7 1 7 3-4 3-7 3-7-1-7-3Zm0 0v5c0 2 4 3 7 3M3 11v5c0 2 4 3 7 3m7-13v5M14 15c0-2 3-3 5-3s4 1 4 3-2 3-4 3-5-1-5-3Zm0 0v5c0 2 3 3 5 3s4-1 4-3v-5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 8 4v6c0 5-3 8-8 10-5-2-8-5-8-10V6l8-4Zm-3 10 2 2 4-4"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6V2Zm8 0v5h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 18h18M3 8l6 6 4-4 3 2 5-6M17 6h4v4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 10v7M12 7h.01"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 14h10l1-14M10 11v6m4-6v6"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-5L3 9m0-6v6h6M4 13a8 8 0 0 0 14 5l3-3m0 6v-6h-6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m12 3 10 18H2L12 3Zm0 7v4m0 3v.01"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2 7 7 3-7 2-2 8-2-8-7-2 7-3 2-7"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-9 4 3-1 1-3-2-3 3-2 3 2 3-1 1-3h4l1 3 3 1 3-2 3 2-2 3 1 3 3 1v4l-3 1-1 3 2 3-3 2-3-2-3 1-1 3h-4l-1-3-3-1-3 2-3-2 2-3-1-3-3-1v-4"/></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v7c0 2 4 4 9 4s9-2 9-4V5M3 12v7c0 2 4 3 9 3s9-1 9-3v-7"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></symbol>
+</defs></svg>
+<canvas id="webgl-canvas" aria-hidden="true"></canvas>
+<div class="ambient-glow" aria-hidden="true"></div>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar" aria-label="Navegação do laboratório">
+    <a class="brand" href="#inicio"><span class="brand-mark"><svg><use href="#i-scale"/></svg></span><span class="brand-text"><strong>HOLDING<span> STUDIO</span></strong><small>INTELLIGENCE LAB · RJ</small></span></a>
+    <div class="side-divider"></div>
+    <div class="side-title">LABORATÓRIO</div>
+    <nav class="side-nav" id="step-nav" aria-label="Etapas do estudo"></nav>
+    <div class="side-divider"></div>
+    <div class="side-title">INTELIGÊNCIA DE DADOS</div>
+    <div class="data-source-card"><span class="status-dot" id="rules-dot"></span><div><strong id="rules-status">Regras 2026</strong><small id="rules-updated">Snapshot tributário</small></div></div>
+    <div class="data-source-card"><span class="status-dot muted" id="bcb-dot"></span><div><strong id="bcb-status">Indicadores BCB</strong><small id="bcb-updated">Consultando API...</small></div></div>
+    <div class="sidebar-bottom">
+      <div class="mini-rule"></div>
+      <div class="side-kicker">JURISDIÇÃO DE REFERÊNCIA</div>
+      <strong>Rio de Janeiro / RJ</strong>
+      <small>Modelo 2026 · Locação de imóveis próprios</small>
+      <button class="side-link" id="sources-button" type="button"><svg><use href="#i-doc"/></svg> Fontes e metodologia</button>
+    </div>
+  </aside>
+  <div class="workspace" id="inicio">
+    <header class="topbar"><div class="breadcrumbs"><span>ESTUDOS</span><span class="crumb-slash">/</span><strong>Viabilidade patrimonial</strong></div><div class="top-actions"><span class="chip"><span class="chip-dot"></span> AMBIENTE DE SIMULAÇÃO</span><button id="reset-button" type="button" class="icon-btn" title="Reiniciar estudo" aria-label="Reiniciar estudo"><svg><use href="#i-refresh"/></svg></button><button id="export-button" type="button" class="btn btn-small ghost"><svg><use href="#i-download"/></svg> Exportar</button></div></header>
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-visual"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="hero-monogram">H</span></div>
+        <div class="hero-text"><div class="eyebrow"><svg><use href="#i-spark"/></svg> PLANEJAMENTO PATRIMONIAL INTELIGENTE</div><h1 id="hero-title">O patrimônio certo.<br><em>A estrutura certa.</em></h1><p>Diagnóstico tributário, financeiro e sucessório para comparar a titularidade na pessoa física com uma holding familiar no lucro presumido.</p><div class="hero-tags"><span><svg><use href="#i-check"/></svg> IRPF × IRPJ</span><span><svg><use href="#i-check"/></svg> ITBI / ITD RJ</span><span><svg><use href="#i-check"/></svg> Projeção em até 30 anos</span></div></div>
+        <div class="hero-side"><div class="hero-year">2026<span>ANO-BASE NORMATIVO</span></div><span class="hero-sidenote">ESTUDO TÉCNICO <b>01 / RJ</b></span></div>
+      </section>
+      <section class="education-intro" aria-labelledby="educ-title">
+        <div class="educ-head"><div><span class="educ-kicker">APRENDA ANTES DE DECIDIR</span><h2 id="educ-title">Uma jornada pelo planejamento patrimonial</h2><p>Explore casos fictícios, altere o patrimônio e descubra de onde vem cada resultado.</p></div><button type="button" class="educ-action" id="go-classroom">Começar aula interativa →</button></div>
+        <div class="educ-path" role="list">
+          <div role="listitem"><span>01</span><strong>O que é uma holding?</strong><small>Conceito e objetivos</small></div>
+          <div role="listitem"><span>02</span><strong>Como funciona?</strong><small>Imóveis e receitas</small></div>
+          <div role="listitem"><span>03</span><strong>Quanto custa?</strong><small>Impostos e implantação</small></div>
+          <div role="listitem"><span>04</span><strong>Vale a pena?</strong><small>VPL, riscos e alternativas</small></div>
+        </div>
+        <details class="educ-concept"><summary>Entenda o conceito de holding patrimonial familiar <span>ABRIR EXPLICAÇÃO</span></summary><p>Holding é a função exercida por uma sociedade que concentra bens ou participações. A expressão <b>holding familiar</b> descreve uma estratégia de organização e administração patrimonial; não é um tipo societário autônomo e não elimina tributos por si só. A escolha depende da renda, dos custos, da sucessão e da governança.</p><p>O estudo compara o resultado de receber aluguéis como pessoa física com o cenário de uma sociedade no lucro presumido. A organização sucessória é um objetivo diferente da economia tributária e precisa de análise própria.</p></details>
+      </section>
+      <section class="ticker" aria-label="Indicadores e contexto do estudo"><div class="ticker-item"><span>UFIR-RJ 2026</span><strong id="ticker-ufir">R$ 4,9604</strong></div><div class="ticker-item"><span>ITBI · RIO</span><strong id="ticker-itbi">3,00%</strong></div><div class="ticker-item"><span>ITD · RJ</span><strong>4% – 8%</strong></div><div class="ticker-item"><span>SELIC · BCB</span><strong id="ticker-selic">API pendente</strong></div><div class="ticker-item"><span>IPCA · 12M</span><strong id="ticker-ipca">API pendente</strong></div><button type="button" class="ticker-refresh" id="refresh-button" title="Atualizar indicadores pelo Banco Central"><svg><use href="#i-refresh"/></svg></button></section>
+      <section class="workbench-header"><div><span class="section-label">MESA DE ANÁLISE</span><h2 id="current-step-title">01. Composição do patrimônio</h2><p id="current-step-subtitle">Cadastre imóveis, receitas e custos recorrentes.</p></div><div class="progress-mini"><span id="progress-label">PASSO 01 / 04</span><div class="progress-bar"><span id="progress-fill"></span></div></div></section>
+      <div class="workbench-grid">
+        <section class="form-card" id="wizard-panel" aria-label="Etapas da simulação"><div id="teacher-panel" class="teacher-panel" aria-live="polite"></div><div id="step-content"></div><div class="wizard-actions"><button type="button" class="btn secondary" id="prev-button">Voltar</button><div class="wizard-stepdots" id="step-dots" aria-hidden="true"></div><button type="button" class="btn primary" id="next-button">Próximo passo <svg><use href="#i-arrow"/></svg></button></div></section>
+        <aside class="insight-column" aria-label="Prévia do estudo"><div id="live-panel"></div></aside>
+      </div>
+      <section class="lesson-board" aria-labelledby="lesson-board-title"><div class="educ-head"><div><span class="educ-kicker">A CONTA EXPLICADA</span><h2 id="lesson-board-title">De onde vem o resultado?</h2><p>Os valores mudam com os dados da simulação. Fórmulas abertas para facilitar a apresentação em sala.</p></div></div><div id="formula-lab" class="formula-lab" aria-live="polite"></div><p class="educ-footnote">Projeções acadêmicas: regras de 2026 mantidas constantes, sem antecipar alterações legais futuras. Custos e aluguéis são hipóteses editáveis. Verifique também tributos de transferência, ganho de capital, dividendos e a reforma tributária antes de uma decisão real.</p></section>
+      <section class="sources-panel" id="sources-panel" hidden><div class="sources-heading"><div><span class="section-label">TRANSPARÊNCIA</span><h2>Fontes, critérios e limitações</h2></div><button class="btn ghost btn-small" id="close-sources" type="button">Fechar</button></div><div id="sources-content"></div></section>
+      <footer class="site-footer"><span>HOLDING STUDIO <b>·</b> LABORATÓRIO DE VIABILIDADE</span><span>Simulação acadêmica e pré-diagnóstico. Não constitui parecer jurídico, contábil ou tributário.</span></footer>
+    </main>
+  </div>
+</div>
+<div class="toast" role="status" aria-live="polite" id="toast"></div>
+<script src="src/tax-engine.js"></script>
+<script src="src/webgl.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>
