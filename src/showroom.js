@@ -93,6 +93,7 @@ function render(){
   vplCon:ready?fmt(r.npvConservative):"ITBI pendente"
  };
  for(const [k,v]of Object.entries(calc))bind(k,v);
+ $("propertyFormula").innerHTML="1 imóvel × "+fmt(s.assets[0].value)+" = <strong>"+fmt(r.totalValue)+"</strong>.<span class='sub'>Valor patrimonial não é renda tributável de aluguel. Nesta aula, começamos com um único imóvel.</span>";
  $("rentFormula").innerHTML=fmt(s.assets[0].rent)+" × 12 × "+asPct(s.assets[0].occupancy)+" = <strong>"+fmt(annualRent)+"</strong><span class='sub'>Receita efetivamente recebida no ano (sem atualização de aluguel).</span>";
  $("pfFormula").innerHTML=fmt(pf.after)+" − "+fmt(pf.before)+" = <strong>"+fmt(pf.tax)+"</strong><span class='sub'>Comparação anual, considerando "+s.owners+" titular(es) e o modelo de dedução selecionado.</span>";
  $("openingFormula").innerHTML=fmt(s.legalFees)+" + "+fmt(s.corporateRegistry)+" + "+fmt(s.propertyRegistry)+" = <strong>"+fmt(opening)+"</strong><span class='sub'>Sem ITBI. Contabilidade: "+fmt(s.monthlyAccounting)+" × 12 + "+fmt(s.annualOtherCompany)+" = "+fmt(annualMaint)+"/ano.</span>";
@@ -101,6 +102,7 @@ function render(){
  $("itbiFormula").innerHTML=ready?
   fmt(r.totalValue)+" × "+asPct(data.rate)+" = <strong>"+fmt(r.itbi.fullTax)+"</strong> se a transmissão for totalmente tributável.<span class='sub'>Economia operacional anual: IRPF "+fmt(r.firstYearPf)+" − PJ "+fmt(r.firstYearPj)+" − manutenção "+fmt(annualMaint)+" = "+fmt(annualGain)+". VPL = − implantação e ITBI + ganhos anuais trazidos a valor presente.</span>":
   "Informe primeiro a alíquota do ITBI da prefeitura. <span class='sub'>Não é correto presumir 3% fora do Município do Rio.</span>";
+ $("finalFormula").innerHTML="IRPF "+fmt(r.firstYearPf)+" − PJ "+fmt(r.firstYearPj)+" − manutenção "+fmt(annualMaint)+" = <strong>"+fmt(annualGain)+" por ano</strong>.<span class='sub'>VPL = soma dos ganhos anuais trazidos a valor presente − abertura − ITBI. Hipóteses jurídicas e tributárias podem alterar o resultado.</span>";
  $("successionFormula").innerHTML=fmt(r.totalValue)+" ÷ "+succession.n+" = "+fmt(r.totalValue/succession.n)+" por beneficiário, hipótese de partes iguais.<span class='sub'>ITD direto estimado: "+asPct(succession.directRate*100)+" por transmissão, sujeito a hipóteses legais, isenções e bases específicas. Total: "+fmt(succession.directITD)+".</span>";
  // Narrativa final
  const goal=$("goal").value;
@@ -124,8 +126,45 @@ function render(){
  }
  const date=rule.reviewedAt||"sem data";
  $("finalSources").textContent="Cálculo instantâneo no navegador; regras tributárias de referência "+rule.year+" revisadas em "+date+" ("+config.loadStatus+"). Sem atualização tributária automática por API. Valores de honorários, cartórios e manutenção são hipóteses editáveis. Não é parecer jurídico nem previsão de tributação futura.";
+ scheduleFit();
 }
 function sumDiscounts(r){return (r.lines||[]).reduce((sum,y)=>sum+y.discountedGain,0);}
+/* Enquadra os dois painéis de cada etapa na área do slide.
+   A compressão é progressiva; no celular mantém rolagem natural. */
+function prepareFit(){
+ if(!doc.createElement)return;
+ for(const pane of doc.querySelectorAll(".stage .pane")){
+  if(pane.querySelector?.(".pane-content"))continue;
+  const inner=doc.createElement("div");
+  inner.className="pane-content";
+  while(pane.firstChild)inner.appendChild(pane.firstChild);
+  pane.appendChild(inner);
+ }
+}
+function fitSlide(){
+ if(!window.matchMedia?.("(min-width:971px)")?.matches||!window.getComputedStyle)return;
+ for(const pane of doc.querySelectorAll(".stage.active .pane")){
+  const inner=pane.querySelector(".pane-content");
+  if(!inner)continue;
+  inner.style.zoom="1";
+  pane.classList.remove("tight");
+  let styles=window.getComputedStyle(pane);
+  let available=pane.clientHeight-parseFloat(styles.paddingTop)-parseFloat(styles.paddingBottom)-3;
+  if(!Number.isFinite(available)||available<=0)return;
+  if(inner.scrollHeight>available+2){
+   pane.classList.add("tight");
+   styles=window.getComputedStyle(pane);
+   available=pane.clientHeight-parseFloat(styles.paddingTop)-parseFloat(styles.paddingBottom)-3;
+  }
+  if(inner.scrollHeight>available+2){
+   const ratio=Math.max(.68,Math.min(1,(available-5)/inner.scrollHeight));
+   inner.style.zoom=ratio.toFixed(3);
+  }
+ }
+}
+function scheduleFit(){
+ if(window.requestAnimationFrame)window.requestAnimationFrame(fitSlide);
+}
 function go(n){
  const old=config.step;const next=clamp(n,0,7);config.step=next;
  doc.querySelectorAll(".stage").forEach(stage=>{
@@ -187,7 +226,8 @@ function bindControls(){
  });
 }
 function boot(){
- bindControls();go(0);
+ prepareFit();bindControls();go(0);
+ window.addEventListener?.("resize",scheduleFit);
  fetch("tax-rules.json",{cache:"no-store"}).then(x=>{if(!x.ok)throw Error("arquivo indisponível");return x.json();}).then(rule=>{
   if(rule.schemaVersion!==1||!rule.irpf||!rule.pj||!rule.rj)throw Error("base incorreta");
   config.rules=rule;config.loadStatus="base local versionada";
