@@ -68,11 +68,14 @@
     const count = Math.max(1, Math.min(20, Math.round(money(owners) || 1)));
     const rentPerOwner = nonneg(annualRent) / count;
     const costsPerOwner = Math.min(nonneg(annualRentalDeductions), nonneg(annualRent)) / count;
+    // Exclusões de aluguel pagas pelo locador reduzem a receita tributável de aluguel,
+    // independentemente da opção por deduções legais ou simplificadas na declaração.
+    const taxableRentPerOwner = Math.max(0, rentPerOwner - costsPerOwner);
     const otherAnnual = nonneg(otherIncomeMonthly) * 12;
     const legalOther = nonneg(otherLegalDeductionYear);
     const before = irpfTotal(otherAnnual, legalOther, mode, rules);
-    const after = irpfTotal(otherAnnual + rentPerOwner, legalOther + costsPerOwner, mode, rules);
-    return { tax: round(Math.max(0, after - before) * count), before: round(before * count), after: round(after * count), incomePerOwner: otherAnnual + rentPerOwner };
+    const after = irpfTotal(otherAnnual + taxableRentPerOwner, legalOther, mode, rules);
+    return { tax: round(Math.max(0, after - before) * count), before: round(before * count), after: round(after * count), incomePerOwner: otherAnnual + taxableRentPerOwner };
   }
   function pjTaxes(annualGross, rules) {
     const c = rules.pj;
