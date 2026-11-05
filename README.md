@@ -1,8 +1,18 @@
 # Showroom Acadêmico — versão guiada
 
+### Custos dos imóveis e tributos recorrentes
+
+O showroom exibe IPTU, condomínio, taxa municipal, administração/cobrança, seguro e reparos individualmente. IPTU e condomínio têm seleção da parte que paga diretamente. A regra base é **não presumir redução de IPTU, condomínio ou seguro pela transferência para holding**. Os custos permanecem iguais em PF e PJ até o usuário informar diferencial de custo comprovável, positivo ou negativo.
+
+Na PF, a calculadora exclui do aluguel bruto as despesas qualificadas por lei quando suportadas pelo locador, independentemente da modalidade de desconto utilizada na estimativa anual. Seguro e reparos comuns são custos financeiros, sem dedução automática de IRPF sobre aluguel. Na PJ no **lucro presumido**, os gastos não reduzem diretamente a base presumida do IRPJ/CSLL; encargos cobrados ou reembolsados ao locatário **podem integrar receita tributável**, conforme a operação concreta. Essa hipótese especial não é automaticamente modelada.
+
+Fontes: [Receita Federal — Rendimentos de aluguel / exclusões](https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/pagamento/carne-leao/rendimentos) e [Solução de Consulta Disit/SRRF06 nº 6074/2024](https://normas.receita.fazenda.gov.br/sijut2consulta/link.action?idAto=141136).
+
+
+
 ## Formato de slides para projetor (16:9)
 
-O arquivo showroom.html foi ajustado para caber **inteiramente no formato de apresentação 16:9**, ocupando a maior área possível da tela (inclui margens quando o monitor tem outra proporção). Cada uma das oito etapas exibe simultaneamente o preenchimento e uma explicação do cálculo. As fórmulas são recalculadas ao editar os dados e **não necessitam de slides separados**.
+O arquivo showroom.html foi ajustado para caber **inteiramente no formato de apresentação 16:9**, ocupando a maior área possível da tela (inclui margens quando o monitor tem outra proporção). Cada uma das nove etapas exibe simultaneamente o preenchimento e uma explicação do cálculo. As fórmulas são recalculadas ao editar os dados e **não necessitam de slides separados**.
 
 - Painel esquerdo: pergunta, dados e orientação para a fala.
 - Painel direito: valores numéricos, fórmula aplicada, resultado, explicação e fonte/restrições.
@@ -12,9 +22,9 @@ O arquivo showroom.html foi ajustado para caber **inteiramente no formato de apr
 
 **Página principal:** https://rafaelmsp.github.io/holding-studio-educacional/ — abre **showroom.html**.
 
-Esta é a modalidade própria para **apresentação de faculdade**. Em vez de uma galeria de slides estáticos, o professor/aluno preenche dados em um fluxo de **8 etapas** e os valores são recalculados no navegador, enquanto a interface ensina a fórmula, a natureza do tributo, as limitações e as fontes.
+Esta é a modalidade própria para **apresentação de faculdade**. Em vez de uma galeria de slides estáticos, o professor/aluno preenche dados em um fluxo de **9 etapas** e os valores são recalculados no navegador, enquanto a interface ensina a fórmula, a natureza do tributo, as limitações e as fontes.
 
-Fluxo: (1) patrimônio e objetivo; (2) aluguel, ocupação, renda e despesas; (3) IRPF incremental; (4) honorários, abertura e contabilidade; (5) IRPJ, adicional, CSLL, PIS/Cofins; (6) ITBI, imunidade e VPL; (7) ITD, doação direta, doação de quotas e inventário; (8) conclusão com aluguel e patrimônio de equilíbrio estimados.
+Fluxo: (1) patrimônio e objetivo; (2) aluguel, ocupação e renda; (3) **IPTU, condomínio, taxas, seguro, reparos e cobrança pagos pelo proprietário**, e quais encargos são excluíveis do aluguel na PF; (4) IRPF incremental; (5) honorários, abertura e contabilidade; (6) IRPJ, adicional, CSLL, PIS/Cofins; (7) ITBI, imunidade e VPL; (8) ITD, doação direta, doação de quotas e inventário; (9) conclusão com aluguel e patrimônio de equilíbrio estimados.
 
 Navegação por **botões / setas ← → / Page Up e Page Down** (fora de campos de edição), tela cheia na tecla **F** e opção de impressão da conclusão. Alterações permanecem durante o percurso; voltar a uma etapa e editar atualiza os resultados seguintes.
 
