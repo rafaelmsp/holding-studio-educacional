@@ -1,3 +1,24 @@
+# Showroom Acadêmico — versão guiada
+
+**Página principal:** https://rafaelmsp.github.io/holding-studio-educacional/ — abre **showroom.html**.
+
+Esta é a modalidade própria para **apresentação de faculdade**. Em vez de uma galeria de slides estáticos, o professor/aluno preenche dados em um fluxo de **8 etapas** e os valores são recalculados no navegador, enquanto a interface ensina a fórmula, a natureza do tributo, as limitações e as fontes.
+
+Fluxo: (1) patrimônio e objetivo; (2) aluguel, ocupação, renda e despesas; (3) IRPF incremental; (4) honorários, abertura e contabilidade; (5) IRPJ, adicional, CSLL, PIS/Cofins; (6) ITBI, imunidade e VPL; (7) ITD, doação direta, doação de quotas e inventário; (8) conclusão com aluguel e patrimônio de equilíbrio estimados.
+
+Navegação por **botões / setas ← → / Page Up e Page Down** (fora de campos de edição), tela cheia na tecla **F** e opção de impressão da conclusão. Alterações permanecem durante o percurso; voltar a uma etapa e editar atualiza os resultados seguintes.
+
+- **Modo livre:** calculadora-v2.html; a versão anterior permanece em simulador.html.
+- **Código do showroom:** showroom.html, src/showroom.css, src/showroom.js.
+- **Motor tributário:** src/tax-engine.js e tax-rules.json.
+- **Valores de honorários, contador e cartórios são hipóteses editáveis**, não preços oficiais.
+- **Tributos NÃO vêm de APIs jurídicas em tempo real.** Os resultados reagem em tempo real aos dados usando base normativa de referência datada de 2026. A solução mantém condições jurídicas incertas como cenários, não certezas.
+- **Limitações:** a comparação de doação/inventário é estimativa nominal; não modela definitivamente usufruto, regimes de bens, meação, legítima, isenções, IR ganho de capital, tributação mínima de altas rendas, dividendos ou reformas futuras.
+
+Testes de integração manual simulada: navegação 1→8, patrimônio de R$ 150 mil, aluguel zero, município com ITBI pendente e alíquota municipal editada.
+
+---
+
 # Holding Studio 2.0 — Calculadora explicada
 
 **Nova entrada:** https://rafaelmsp.github.io/holding-studio-educacional/ (redireciona para calculadora-v2.html).
