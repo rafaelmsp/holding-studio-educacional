@@ -37,7 +37,7 @@ function state(){
   monthlyAccounting:get("accounting"),annualOtherCompany:get("annualCompany"),otherTransferTax:get("otherTransferTax"),
   capitalPercent:only(get("capitalPercent"),0,100),itbiTreatment:el("itbiTreatment").value,
   horizon:only(Math.round(get("horizon")),1,30),discountRate:only(get("discount"),0,30),
-  annualRentGrowth:only(get("rentGrowth"),0,30),annualCostGrowth:only(get("costGrowth"),0,30),
+  annualRentGrowth:only((Number(el("rentGrowth").value)||0),-10,30),annualCostGrowth:only(get("costGrowth"),0,30),
   successionEnabled:false,scenarioName:"Comparação educativa de imóveis no RJ"
  };
 }
@@ -88,7 +88,8 @@ function succession(c,r,s,ready){
  const cards=[
   ["Doação direta",money(directCost),"ITD "+money(direct.total)+" + honorários e registros."],
   ["Doação de quotas com nova holding",ready?money(quoteCost):"ITBI pendente","ITD "+money(quota.total)+" + doação das quotas + abertura/transferência. Não inclui manutenção futura."],
-  ["Inventário futuro",money(inventory),"Referência nominal de ITD atual + custos informados; não prevê regras futuras."]
+  ["Inventário futuro",money(inventory),"Referência nominal de ITD atual + custos informados; não prevê regras futuras."],
+  ["Doação com reserva de usufruto","Análise necessária","Há regras próprias de tributação, controle e frutos dos bens. Não é correto presumir desconto fiscal automático."]
  ];
  el("successionCards").innerHTML=cards.map(a=>'<div class="succession-card"><strong>'+a[0]+'</strong><b>'+a[1]+'</b><small>'+a[2]+'</small></div>').join("");
  return {h,direct,quota,qBase,directCost,quoteCost,inventory,ready};
