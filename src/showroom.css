@@ -22,3 +22,99 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:var(--mint)}butto
 @media(max-width:970px){.stage{grid-template-columns:1fr;gap:14px}.pane{max-height:none;overflow:visible}.chapter-note{display:none}.bottom{position:sticky;bottom:0;background:#102333ec;backdrop-filter:blur(10px);z-index:4}.main{padding-bottom:5px}}
 @media(max-width:570px){.top{flex-wrap:wrap;gap:10px}.toptools{gap:8px}.data-badge{font-size:10px}.utility{padding:8px}.chapter-title{font-size:27px}.fields,.split{grid-template-columns:1fr}.stage{min-height:0}.pane{padding:18px}.bottom{flex-wrap:wrap;justify-content:center}.bottom-center{order:2;width:100%}.progress-wrap{padding-top:9px}}
 @media(print){body{background:#fff;color:#142938}.top,.progress-wrap,.bottom,.choice,.utility{display:none!important}.app{display:block}.main{display:block}.stage{display:none!important;break-inside:avoid}.stage.active{display:grid!important;grid-template-columns:1fr 1fr}.pane{color:#162c3b;border:1px solid #ddd;background:#fff!important;max-height:none!important;overflow:visible}.pane p,.edu,.info-line{color:#263e4b!important}.pane h2,.chapter-title{color:#142838}.chapter{margin:15px 0}.right{background:#fff}.field input,.field select{background:#fff;color:#142838;border-color:#999}a{color:#15665b}}
+
+/* PROJETOR / SLIDE 16:9 — experiência inteira dentro de uma única tela.
+   Aplicado apenas a layouts de apresentação; no celular permanece responsivo. */
+@media screen and (min-width:971px){
+ html,body{width:100%;height:100%;min-height:0;overflow:hidden}
+ body{display:grid;place-items:center}
+ .app{
+   width:min(100vw,177.777778dvh);
+   height:min(100dvh,56.25vw);
+   aspect-ratio:16 / 9;
+   min-height:0;max-width:none;
+   display:grid;
+   grid-template-rows:clamp(49px,5.2vw,73px) clamp(27px,2.55vw,37px) minmax(0,1fr) clamp(48px,4.75vw,66px);
+   overflow:hidden;
+   border:1px solid #254254;
+   background:radial-gradient(circle at 87% 0%,#21435b 0,transparent 35%),var(--bg);
+   box-shadow:0 12px 50px #0007
+ }
+ .top{min-height:0;padding:6px clamp(16px,2.2vw,42px)}
+ .brand strong{font-size:clamp(15px,1.24vw,23px)}
+ .brand small{font-size:clamp(9px,.7vw,12px)}
+ .toptools{gap:9px}
+ .data-badge{font-size:clamp(9px,.67vw,12px);padding:6px 9px}
+ .utility{font-size:clamp(11px,.77vw,14px);padding:7px 11px}
+ .progress-wrap{padding:4px clamp(16px,2.2vw,42px);gap:10px}
+ .main{display:flex;flex-direction:column;padding:1px clamp(16px,2.2vw,42px) 5px;min-height:0;overflow:hidden}
+ .chapter{flex:0 0 auto;min-height:0;max-height:clamp(54px,5.3vw,79px);margin:0 0 8px;gap:10px}
+ .chapter-kicker{font-size:clamp(10px,.7vw,13px);letter-spacing:.13em}
+ .chapter-title{font-size:clamp(25px,2.45vw,44px);line-height:1.08;margin:4px 0 0}
+ .chapter-note{font-size:clamp(11px,.78vw,14px);max-width:215px}
+ .stage,.stage.active{min-height:0;height:100%;max-height:100%;margin:0}
+ .stage{flex:1;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:clamp(10px,1.15vw,22px)}
+ .pane{height:100%;max-height:none;overflow:hidden;padding:clamp(12px,1.24vw,23px);border-radius:clamp(11px,1vw,20px)}
+ .pane-content{transform-origin:top left}
+ .pane h2{font-size:clamp(19px,1.64vw,31px);line-height:1.14;margin:0 0 8px}
+ .pane p{font-size:clamp(12px,.94vw,18px);line-height:1.36;margin:0 0 9px}
+ .pane .minor{font-size:clamp(11px,.72vw,14px)}
+ .kicker{font-size:clamp(10px,.71vw,13px);margin-bottom:7px;gap:7px}
+ .squircle{width:26px;height:26px;border-radius:8px}
+ .fields{gap:clamp(5px,.54vw,10px) clamp(9px,.75vw,15px);margin:8px 0}
+ .field label{font-size:clamp(11px,.78vw,15px);line-height:1.25;margin:0 0 4px}
+ .field input,.field select{min-height:clamp(31px,2.7vw,43px);padding:6px 9px;font-size:clamp(12px,.88vw,16px);border-radius:8px}
+ .field small{font-size:clamp(10px,.64vw,12px);line-height:1.19;margin-top:3px}
+ .hint{font-size:clamp(11px,.8vw,15px);line-height:1.35;padding:9px 11px;margin:8px 0}
+ .prompt{font-size:clamp(14px,1.08vw,20px)!important}
+ .preset{gap:7px;margin:9px 0}
+ .choice{padding:7px 10px;min-width:100px;border-radius:10px;font-size:clamp(11px,.82vw,15px)}
+ .choice small{font-size:clamp(9px,.62vw,12px)}
+ .hero-value{padding:clamp(11px,1vw,19px);border-radius:13px;margin:9px 0}
+ .hero-value span{font-size:clamp(11px,.74vw,14px)}
+ .hero-value strong{font-size:clamp(25px,2.3vw,43px);margin:3px 0}
+ .right .hero-value p{font-size:clamp(11px,.78vw,15px);line-height:1.25}
+ .bigline{padding:clamp(5px,.6vw,10px) 0;font-size:clamp(12px,.85vw,16px)}
+ .bigline strong{font-size:clamp(13px,.97vw,18px)}
+ .formula{font-size:clamp(12px,.85vw,16px);line-height:1.34;margin:8px 0;padding:9px 11px;border-radius:10px}
+ .formula .sub{font-size:clamp(10px,.68vw,13px);line-height:1.25;margin-top:3px}
+ .formula::before{
+  content:"COMO ESTA CONTA FUNCIONA";
+  display:block;font-size:clamp(9px,.58vw,11px);font-weight:900;
+  letter-spacing:.075em;color:#33735f;margin-bottom:4px
+ }
+ .reason{font-size:clamp(11px,.78vw,15px)!important;line-height:1.35!important}
+ .source{font-size:clamp(10px,.66vw,12px)!important;line-height:1.24!important;padding-top:7px;margin-top:8px!important}
+ .metric{padding:clamp(8px,.8vw,15px);border-radius:10px}
+ .metric small{font-size:clamp(10px,.69vw,13px)}
+ .metric strong{font-size:clamp(16px,1.46vw,27px);margin:2px 0}
+ .metric span{font-size:clamp(10px,.64vw,12px)}
+ .split{gap:8px}
+ .steps-grid{gap:clamp(5px,.55vw,10px);margin:8px 0}
+ .info-line{font-size:clamp(12px,.86vw,17px);line-height:1.34;gap:10px;padding:4px 0 4px 10px}
+ .stat-note{font-size:clamp(11px,.73vw,14px);padding:9px 11px;line-height:1.28}
+ .edu{font-size:clamp(10px,.75vw,13px);line-height:1.28;margin:8px 0;padding-top:8px}
+ .summary-table{font-size:clamp(11px,.78vw,15px)}
+ .summary-table td{padding:clamp(4px,.39vw,7px) 2px}
+ .bottom{padding:6px clamp(16px,2.2vw,42px);min-height:0;gap:9px}
+ .bottom-center{font-size:clamp(10px,.68vw,13px)}
+ .btn{padding:9px 14px;font-size:clamp(11px,.77vw,15px);min-width:93px;border-radius:9px}
+ .btn.primary{min-width:122px}
+ /* Há telas mais densas: os controles nunca escondem o cálculo à direita. */
+ .pane.tight{padding:10px 15px}
+ .pane.tight h2{margin-bottom:5px}
+ .pane.tight p{margin-bottom:6px;line-height:1.26}
+ .pane.tight .fields{gap:5px 10px;margin:5px 0}
+ .pane.tight .hint{margin:6px 0;padding:7px 9px}
+ .pane.tight .bigline{padding:4px 0}
+ .pane.tight .source{margin-top:5px!important}
+}
+@media screen and (min-width:971px) and (max-height:690px) {
+ .chapter{margin-bottom:5px}
+ .pane{padding:11px 14px}
+ .pane h2{font-size:clamp(18px,1.55vw,28px)}
+ .fields{gap:4px 9px}
+ .field input,.field select{min-height:31px;padding:4px 8px}
+ .field small{font-size:10px;line-height:1.15}
+ .hint{padding:7px 9px}
+}
