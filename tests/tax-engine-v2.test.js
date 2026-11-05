@@ -36,4 +36,18 @@ const noImmunity=E.run({...example(150000,900),itbiTreatment:"tributavel"},rules
 assert.equal(noImmunity.initConservative,noImmunity.initOptimistic);
 const twoBeneficiaries=E.itd(75000,rules);
 assert.equal(Math.round(twoBeneficiaries.value*2),6000);
-console.log("Holding Studio 2.0: 6 verificações passaram.");
+const mid = example(1500000,10500);
+mid.assets[0].expenses=800; // IPTU, condomínio, taxas e administração admitidos como exclusão do aluguel
+const withCosts=E.run(mid,rules),withoutCosts=E.run({...mid,assets:[{...mid.assets[0],expenses:0}]},rules);
+assert.ok(withCosts.firstYearPf<=withoutCosts.firstYearPf,"Exclusões de aluguel na PF devem diminuir a carga estimada.");
+assert.equal(withCosts.firstYearPj,withoutCosts.firstYearPj,"Despesas não diminuem a presunção fiscal da holding.");
+const cheaperPJ=E.run({...mid,propertyCostDifferenceAnnual:-1200},rules);
+assert.equal(cheaperPJ.firstYearNet,withCosts.firstYearNet+1200,"Só a diferença comprovada de custo muda o resultado anual.");
+const dearerPJ=E.run({...mid,propertyCostDifferenceAnnual:1200},rules);
+assert.equal(dearerPJ.firstYearNet,withCosts.firstYearNet-1200,"Maior custo da PJ reduz viabilidade.");
+const gross=126000;
+const legalCosts=9600;
+const a=E.irpfIncrementalRental(gross,legalCosts,3000,1,"simplificado",0,rules);
+const b=E.irpfIncrementalRental(gross,0,3000,1,"simplificado",0,rules);
+assert.ok(a.tax < b.tax, "Exclusão do aluguel deve funcionar mesmo com desconto simplificado na declaração.");
+console.log("Holding Studio 2.0: cenários de patrimônio, IPTU/despesas, IRPF, holding e ITBI passaram.");
