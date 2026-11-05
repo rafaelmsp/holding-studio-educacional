@@ -116,6 +116,7 @@
       ],
       owners: 1, otherIncomeMonthly: 0, pfDeductionMode: 'auto', otherLegalDeductionYear: 0,
       legalFees: 22000, corporateRegistry: 2000, propertyRegistry: 4500,
+      propertyCostDifferenceAnnual: 0,
       monthlyAccounting: 800, annualOtherCompany: 1200, otherTransferTax: 0,
       capitalPercent: 100, itbiTreatment: 'pendente',
       horizon: 10, annualRentGrowth: 0, annualCostGrowth: 0, discountRate: 5,
@@ -152,9 +153,12 @@
       const pf = irpfIncrementalRental(rent, Math.min(propertyCost, rent), state.otherIncomeMonthly, state.owners, state.pfDeductionMode, state.otherLegalDeductionYear, rules);
       const pj = pjTaxes(rent, rules);
       const maintenance = (nonneg(state.monthlyAccounting) * 12 + nonneg(state.annualOtherCompany)) * Math.pow(1 + costGrowth, year - 1);
+      // Diferencial COMPROVADO: custo do imóvel na holding menos o custo como PF.
+      // Zero por padrão: IPTU, condomínio e seguro não ficam automaticamente mais baratos na PJ.
+      const propertyCostDifference = (Number.isFinite(Number(state.propertyCostDifferenceAnnual)) ? Number(state.propertyCostDifferenceAnnual) : 0) * Math.pow(1 + costGrowth, year - 1);
       const succGain = state.successionEnabled && year === Math.round(money(state.successionYear))
         ? (nonneg(state.successionCostPF) - nonneg(state.successionCostPJ)) : 0;
-      const annualGain = pf.tax - pj.total - maintenance + succGain;
+      const annualGain = pf.tax - pj.total - maintenance - propertyCostDifference + succGain;
       const preCon = cumulativeCon;
       const preOpt = cumulativeOpt;
       cumulativeCon += annualGain;
@@ -167,7 +171,7 @@
       totalPfTax += pf.tax;
       totalPjTax += pj.total;
       totalMaintenance += maintenance;
-      const item = { year, revenue: round(rent), pfTax: pf.tax, pjTax: pj.total, pjDetails: pj, maintenance: round(maintenance), propertyCost: round(propertyCost), succGain: round(succGain), annualGain: round(annualGain), cumulativeCon: round(cumulativeCon), cumulativeOpt: round(cumulativeOpt), discountedGain: round(discountedGain) };
+      const item = { year, revenue: round(rent), pfTax: pf.tax, pjTax: pj.total, pjDetails: pj, maintenance: round(maintenance), propertyCost: round(propertyCost), propertyCostDifference: round(propertyCostDifference), succGain: round(succGain), annualGain: round(annualGain), cumulativeCon: round(cumulativeCon), cumulativeOpt: round(cumulativeOpt), discountedGain: round(discountedGain) };
       if (year === 1) firstYear = item;
       lines.push(item);
     }
@@ -183,6 +187,7 @@
     const dividendMonthlyPerOwner = firstYear ? Math.max(0, (firstYear.revenue - firstYear.pjTax - firstYear.maintenance - firstYear.propertyCost) / (12 * Math.max(1, money(state.owners)))) : 0;
     if (dividendMonthlyPerOwner > rules.pj.dividendMonthlyThresholdPerBeneficiary) warnings.push({ level:'high', label:'Distribuição acima de R$ 50 mil/mês', detail:'Pode incidir IRRF de 10% sobre dividendos pagos a uma mesma pessoa física por uma mesma empresa. O ajuste final e efeitos da tributação mínima não foram modelados.' });
     if (years > 1) warnings.push({ level:'info', label:'Regra tributária congelada em 2026', detail:'Os próximos anos são cenários matemáticos mantendo a legislação-base de 2026. Não são previsão da reforma tributária ou de novas alíquotas.' });
+    if (Math.abs(Number(state.propertyCostDifferenceAnnual)||0) > 0) warnings.push({ level:'info', label:'Diferença comprovada de custos', detail:'O diferencial de encargos dos imóveis entre PF e PJ foi informado pelo usuário. Não é uma redução automática de IPTU, condomínio ou seguro pela constituição da holding.' });
     if (state.pfDeductionMode !== 'simplificado') warnings.push({ level:'info', label:'Deduções da pessoa física', detail:'Confirme a elegibilidade, comprovação e responsabilidade efetiva por IPTU, condomínio e demais despesas declaradas.' });
     if (totalValue <= 0 || monthlyPotential <= 0) warnings.push({ level:'high', label:'Receita insuficiente', detail:'Adicione ao menos um imóvel com valor e receita de aluguel para calcular a viabilidade operacional.' });
     return {
