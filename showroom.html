@@ -12,7 +12,7 @@
  <div class="brand"><strong>HOLDING <em>STUDIO</em></strong><small>Showroom acadêmico • Direito de Família e Sucessões</small></div>
  <div class="toptools"><span class="data-badge" id="sourceBadge">Regras 2026 · verificando</span><span class="data-badge">FORMATO 16:9 · PROJETOR</span><button id="restart" class="utility" type="button" title="Voltar aos valores do exemplo">↻ Reiniciar</button><button id="full" class="utility" type="button" title="Usar tela cheia para projetor">⛶ Tela cheia</button></div>
 </header>
-<div class="progress-wrap" aria-label="Progresso da demonstração"><span class="progress-label" id="stepLabel">ETAPA 1 DE 8</span><div class="progress-track"><div class="progress-fill" id="progressBar" style="width:12.5%"></div></div><span class="progress-percent" id="percent">13%</span></div>
+<div class="progress-wrap" aria-label="Progresso da demonstração"><span class="progress-label" id="stepLabel">ETAPA 1 DE 9</span><div class="progress-track"><div class="progress-fill" id="progressBar" style="width:11.11%"></div></div><span class="progress-percent" id="percent">11%</span></div>
 <main class="main">
 <div class="chapter"><div><div class="chapter-kicker" id="chapterKicker">Abertura · O patrimônio</div><h1 class="chapter-title" id="chapterTitle">Tudo começa com uma pergunta.</h1></div><div class="chapter-note" id="chapterNote">Apresente a situação à turma e altere os números ao vivo.</div></div>
 
@@ -52,7 +52,7 @@
  <div class="fields">
   <div class="field"><label for="rent">Aluguel por mês (R$)</label><input id="rent" type="number" min="0" step="50" value="900"><small>Não recebe aluguel? Digite zero.</small></div>
   <div class="field"><label for="occupancy">Ocupação do imóvel (%)</label><input id="occupancy" type="number" min="0" max="100" step="5" value="100"><small>100% = alugado todos os 12 meses.</small></div>
-  <div class="field"><label for="expenses">Despesas dedutíveis da locação por mês (R$)</label><input id="expenses" type="number" min="0" step="50" value="0"><small>Somente despesas permitidas por lei, pagas pelo locador e comprovadas.</small></div>
+  
   <div class="field"><label for="owners">Pessoas que recebem esses aluguéis</label><input id="owners" type="number" min="1" max="20" step="1" value="1"><small>O exemplo divide a renda igualmente entre os titulares.</small></div>
   <div class="field full"><label for="otherIncome">Outras rendas tributáveis, por titular, por mês (R$)</label><input id="otherIncome" type="number" min="0" step="100" value="3000"><small>Ex.: salário. O imposto pessoal depende também dessas rendas.</small></div>
  </div>
@@ -64,13 +64,45 @@
  <div class="hero-value"><span>Receita anual estimada de aluguel</span><strong data-bind="annualRent">—</strong><p>Receita antes de impostos e despesas.</p></div>
  <div class="formula" id="rentFormula">Aluguel mensal × 12 × ocupação = receita anual</div>
  <div class="bigline"><span>Renda mensal efetiva</span><strong data-bind="effectiveRent">—</strong></div>
- <div class="bigline"><span>Despesas informadas em 12 meses</span><strong data-bind="annualExpenses">—</strong></div>
- <p class="reason"><strong>Por que calculamos assim?</strong> A vacância reduz os meses recebidos. A possibilidade de deduzir despesas depende de sua natureza e da legislação.</p>
+ <div class="bigline"><span>Custos do imóvel pagos pelo dono</span><strong data-bind="annualPropertyCosts">—</strong></div>
+ <p class="reason"><strong>Por que calculamos assim?</strong> A vacância reduz os meses recebidos. Na próxima etapa, calcularemos IPTU, condomínio e demais custos que o proprietário realmente paga.</p>
  <p class="source">Premissa didática: renda uniforme e ocupação média. Não representa a apuração mensal oficial do carnê-leão.</p>
 </div></section>
 
-<!-- 3: tributação PF -->
-<section class="stage" data-step="2" aria-label="Impostos da pessoa física">
+
+<!-- 3: custos e tributos do imóvel -->
+<section class="stage" data-step="2" aria-label="IPTU e custos do imóvel">
+<div class="pane">
+ <div class="kicker"><span class="squircle">3</span> Custos que acompanham o imóvel</div>
+ <h2>Quais despesas o proprietário realmente paga?</h2>
+ <p>Estes custos <strong>não diminuem automaticamente</strong> quando o imóvel passa para uma holding. Informe quem paga os encargos no contrato.</p>
+ <div class="fields">
+  <div class="field"><label for="iptuAnnual">IPTU por ano (R$)</label><input id="iptuAnnual" type="number" min="0" step="100" value="900"><small>Tributo municipal anual sobre o imóvel.</small></div>
+  <div class="field"><label for="iptuPayer">Quem paga o IPTU?</label><select id="iptuPayer"><option value="dono">Proprietário/locador</option><option value="inquilino">Inquilino diretamente</option></select><small>Só conte como custo do dono quando ele paga.</small></div>
+  <div class="field"><label for="condoMonthly">Condomínio por mês (R$)</label><input id="condoMonthly" type="number" min="0" step="50" value="250"><small>Encargos condominiais da unidade.</small></div>
+  <div class="field"><label for="condoPayer">Quem paga o condomínio?</label><select id="condoPayer"><option value="dono">Proprietário/locador</option><option value="inquilino">Inquilino diretamente</option></select><small>Informe a responsabilidade efetiva.</small></div>
+  <div class="field"><label for="municipalFeesAnnual">Taxas municipais por ano (R$)</label><input id="municipalFeesAnnual" type="number" min="0" step="50" value="0"><small>Ex.: taxa de coleta de lixo paga pelo dono.</small></div>
+  <div class="field"><label for="agencyMonthly">Administração/cobrança por mês (R$)</label><input id="agencyMonthly" type="number" min="0" step="25" value="0"><small>Honorários da imobiliária pagos pelo dono.</small></div>
+  <div class="field"><label for="insuranceAnnual">Seguro pago por ano (R$)</label><input id="insuranceAnnual" type="number" min="0" step="50" value="0"><small>Não é dedução automática do IRPF.</small></div>
+  <div class="field"><label for="repairsAnnual">Reparos/manutenção por ano (R$)</label><input id="repairsAnnual" type="number" min="0" step="50" value="0"><small>Custo econômico, não dedução automática.</small></div>
+ </div>
+ <div class="hint"><strong>Importante:</strong> os dados presumem que pagamentos feitos diretamente pelo inquilino não entram na receita da holding. Reembolsos recebidos pela empresa podem integrar sua receita tributável e exigem outro cálculo.</div>
+</div>
+<div class="pane right">
+ <div class="kicker"><span class="squircle">IPTU</span> O dinheiro que sai do patrimônio</div>
+ <h2>Quais custos permanecem?</h2>
+ <div class="bigline"><span>IPTU anual pago pelo dono</span><strong data-bind="ownerIptu">—</strong></div>
+ <div class="bigline"><span>Condomínio anual pago pelo dono</span><strong data-bind="ownerCondo">—</strong></div>
+ <div class="bigline"><span>Taxas, seguro, manutenção e administração</span><strong data-bind="otherPropertyCosts">—</strong></div>
+ <div class="hero-value"><span>Total anual dos custos do imóvel pagos pelo proprietário</span><strong data-bind="annualPropertyCosts">—</strong><p>O mesmo custo para PF e holding, salvo mudança real comprovada.</p></div>
+ <div class="bigline"><span>Parcela potencialmente excluível do aluguel no IRPF</span><strong data-bind="deductibleCosts">—</strong></div>
+ <div class="formula" id="propertyCostsFormula">IPTU + condomínio + taxas + custos de cobrança + seguro + manutenção = despesa anual real.</div>
+ <p class="reason">Quando suportados pelo locador e admitidos pela lei, IPTU, condomínio, taxas e cobrança podem ser excluídos do rendimento do aluguel na PF. <strong>Na holding em lucro presumido, esses pagamentos não reduzem diretamente a base presumida de IRPJ/CSLL.</strong></p>
+ <p class="source">Fontes: <a href="https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/pagamento/carne-leao/rendimentos" target="_blank" rel="noopener">Receita Federal — aluguéis e deduções</a>; <a href="https://normas.receita.fazenda.gov.br/sijut2consulta/link.action?idAto=141136" target="_blank" rel="noopener">Solução de Consulta Disit 6074/2024</a>.</p>
+</div></section>
+
+<!-- 4: tributação PF -->
+<section class="stage" data-step="3" aria-label="Impostos da pessoa física">
 <div class="pane">
  <div class="kicker"><span class="squircle">3</span> Primeiro cenário · pessoa física</div>
  <h2>Quanto imposto a pessoa paga pelo aluguel?</h2>
@@ -97,7 +129,7 @@
 </div></section>
 
 <!-- 4: custos abertura -->
-<section class="stage" data-step="3" aria-label="Custos da holding">
+<section class="stage" data-step="4" aria-label="Custos da holding">
 <div class="pane">
  <div class="kicker"><span class="squircle">4</span> Segundo cenário · uma empresa</div>
  <h2>Criar uma holding custa dinheiro.</h2>
@@ -106,6 +138,7 @@
  <div class="field"><label for="legalFees">Advogado para estruturação (R$)</label><input id="legalFees" type="number" min="0" step="100" value="6000"><small>Estimativa editável. Considere complexidade e tabela OAB-RJ.</small></div>
  <div class="field"><label for="corporateRegistry">Abertura e registro (R$)</label><input id="corporateRegistry" type="number" min="0" step="100" value="1800"><small>Junta Comercial e despesas estimadas.</small></div>
  <div class="field"><label for="propertyRegistry">Registro dos imóveis (R$)</label><input id="propertyRegistry" type="number" min="0" step="100" value="2500"><small>Cartório e emolumentos, sem ITBI.</small></div>
+ <div class="field"><label for="costPjDifference">Mudança comprovada de custos do imóvel na holding (R$/ano)</label><input id="costPjDifference" type="number" step="100" value="0"><small>0 = mesmos custos. Positivo: PJ mais cara; negativo: PJ mais barata, apenas se houver comprovação.</small></div>
  <div class="field"><label for="accounting">Contabilidade por mês (R$)</label><input id="accounting" type="number" min="0" step="50" value="450"><small>Custo recorrente de serviços contábeis.</small></div>
  <div class="field"><label for="annualOther">Outras despesas anuais (R$)</label><input id="annualOther" type="number" min="0" step="100" value="1200"><small>Despesas administrativas e obrigações.</small></div>
  </div>
@@ -117,13 +150,14 @@
  <div class="hero-value"><span>Investimento inicial, ainda sem ITBI</span><strong data-bind="opening">—</strong><p>Valor pago para estruturar e registrar.</p></div>
  <div class="bigline"><span>Manutenção mensal</span><strong data-bind="monthlyAccounting">—</strong></div>
  <div class="bigline"><span>Manutenção anual</span><strong data-bind="annualMaintenance">—</strong></div>
+ <div class="bigline"><span>Diferença de custos do imóvel na holding</span><strong data-bind="propertyCostDelta">—</strong></div>
  <div class="formula" id="openingFormula">Honorários + abertura + registros = investimento inicial</div>
  <p class="reason">Uma aparente economia de imposto pode desaparecer quando somamos custos de contabilidade e o valor de implantação.</p>
  <p class="source">Honorários: <a href="https://www.oabrj.org.br/tabela-honorarios" target="_blank" rel="noopener">referência OAB-RJ</a>. Os valores digitados são estimativas fornecidas pelo apresentador.</p>
 </div></section>
 
 <!-- 5: PJ taxes -->
-<section class="stage" data-step="4" aria-label="Impostos da pessoa jurídica">
+<section class="stage" data-step="5" aria-label="Impostos da pessoa jurídica">
 <div class="pane">
  <div class="kicker"><span class="squircle">5</span> Tributação da holding</div>
  <h2>Que impostos a empresa paga pelo aluguel?</h2>
@@ -150,7 +184,7 @@
 </div></section>
 
 <!-- 6: ITBI and viability -->
-<section class="stage" data-step="5" aria-label="ITBI e viabilidade">
+<section class="stage" data-step="6" aria-label="ITBI e viabilidade">
 <div class="pane">
  <div class="kicker"><span class="squircle">6</span> O imposto da transferência</div>
  <h2>E para passar o imóvel à holding?</h2>
@@ -179,7 +213,7 @@
 </div></section>
 
 <!-- 7: sucessão -->
-<section class="stage" data-step="6" aria-label="Doação e herança">
+<section class="stage" data-step="7" aria-label="Doação e herança">
 <div class="pane">
  <div class="kicker"><span class="squircle">7</span> Planejamento sucessório</div>
  <h2>É melhor doar os bens diretamente?</h2>
@@ -209,7 +243,7 @@
 </div></section>
 
 <!-- 8: resultado -->
-<section class="stage" data-step="7" aria-label="Conclusão da aula">
+<section class="stage" data-step="8" aria-label="Conclusão da aula">
 <div class="pane">
  <div class="kicker"><span class="squircle">8</span> A decisão explicada</div>
  <h2>Agora podemos responder à pergunta inicial.</h2>
@@ -229,6 +263,9 @@
  <table class="summary-table" aria-label="Quadro-resumo"><tbody>
   <tr><td>Patrimônio</td><td data-bind="property">—</td></tr>
   <tr><td>Aluguel anual</td><td data-bind="annualRent">—</td></tr>
+  <tr><td>IPTU e outros custos do imóvel/ano</td><td data-bind="annualPropertyCosts">—</td></tr>
+  <tr><td>Renda líquida PF após imposto e custos do imóvel</td><td data-bind="netPfRent">—</td></tr>
+  <tr><td>Renda líquida PJ após impostos e custos</td><td data-bind="netPjRent">—</td></tr>
   <tr><td>IRPF adicional estimado</td><td data-bind="pfTax">—</td></tr>
   <tr><td>Tributos anuais da holding</td><td data-bind="pjTax">—</td></tr>
   <tr><td>Manutenção anual da holding</td><td data-bind="annualMaintenance">—</td></tr>
