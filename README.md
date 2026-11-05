@@ -1,3 +1,19 @@
+## Modo Palco — apresentação acadêmica 16:9
+
+Acesse a **página inicial** em https://rafaelmsp.github.io/holding-studio-educacional/ para exibir a aula interativa no projetor. Também disponível em `apresentacao.html`.
+
+- Nove telas: abertura, problema de pesquisa, conceito, dados, tributos, custos, viabilidade, limites e conclusão.
+- Fontes legíveis no projetor, navegação com setas direita/esquerda, Page Up/Page Down e tecla **F** para tela cheia.
+- Simulação ao vivo reutilizando o mesmo motor determinístico do projeto (`src/tax-engine.js`) e a base normativa `tax-rules.json`.
+- Exemplo de contraste: alterar ITBI hipotético e observar o impacto no VPL; isso **não** equivale a concluir a incidência tributária no caso real.
+- O **simulador completo** permanece em [simulador.html](simulador.html).
+- Abra diretamente um slide com `?slide=6` (índice começa em 0).
+- Em computadores mais antigos, o efeito WebGL é dispensável; a aula e os cálculos continuam funcionando.
+
+**Uso educacional:** cálculos são hipóteses explícitas com regras-base de 2026, não atualizações legislativas em tempo real nem parecer jurídico.
+
+---
+
 # Holding Studio — Edição Educacional para GitHub Pages
 
 **Objetivo:** ensinar, com demonstrações concretas, como se analisa a viabilidade econômica e sucessória de uma holding patrimonial familiar. Não é uma calculadora de tributos oficial.
