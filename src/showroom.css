@@ -128,3 +128,6 @@ button,input,select{font:inherit}button{cursor:pointer}a{color:var(--mint)}butto
 .quick-value:disabled{opacity:.35;cursor:not-allowed}
 @media(max-width:570px){.quick-value{font-size:11px;padding:7px 9px;min-height:33px}}
 @media(print){.quick-values{display:none!important}}
+
+/* Curso com três módulos: navegação legível também em notebook/projetor. */
+@media(max-width:1400px){.top{flex-wrap:wrap}.toptools{flex-wrap:wrap;justify-content:flex-start;gap:8px}.toptools .utility{font-size:12px}}
