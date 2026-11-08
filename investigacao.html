@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1925">
+<meta name="description" content="Holding sob Investigação: aula interativa sobre práticas abusivas, provas e atuação jurídica em holdings familiares.">
+<title>Holding Studio | Holding sob Investigação</title>
+<link rel="stylesheet" href="src/showroom.css">
+<link rel="stylesheet" href="src/investigacao.css">
+<script defer src="src/investigacao.js"></script>
+</head>
+<body>
+<div class="app audit-app">
+<header class="top">
+  <div class="brand"><strong>HOLDING <em>STUDIO</em></strong><small>Laboratório jurídico · Direito de Família e Sucessões</small></div>
+  <nav class="toptools" aria-label="Navegação">
+    <a class="utility audit-link" href="showroom.html">← Calculadora do showroom</a>
+    <span class="data-badge">CASOS FICTÍCIOS</span>
+    <button class="utility" id="fullscreen" type="button">⛶ Tela cheia</button>
+  </nav>
+</header>
+<main class="audit-main">
+  <div class="audit-head">
+    <div><span class="chapter-kicker">MÓDULO ESPECIAL · AULA INVESTIGATIVA</span>
+      <h1 class="chapter-title">Holding sob <span>Investigação</span></h1>
+      <p class="audit-intro">Acompanhe a sequência dos fatos, compare documentos e identifique quando uma organização patrimonial legítima pode ter sido utilizada de forma abusiva.</p>
+    </div>
+    <div class="audit-rule"><strong>Regra da aula</strong><span>Constituir holding não é crime. A fraude depende dos fatos e das provas; suspeita não equivale a condenação.</span></div>
+  </div>
+  <section aria-label="Selecionar caso" class="audit-selector">
+    <div class="section-heading"><span>Escolha um dossiê</span><span id="caseCounter">1 de 6</span></div>
+    <div class="case-buttons" id="caseButtons" role="group" aria-label="Casos da simulação"></div>
+  </section>
+  <div class="audit-progress" aria-label="Etapa de investigação"><span id="caseStepLabel">Fato 1 de 5</span><div class="audit-track"><div id="auditProgressFill"></div></div><span id="auditPercent">20%</span></div>
+  <div class="audit-grid">
+    <section class="audit-paper" aria-label="Fatos e movimentações">
+      <div class="audit-kicker">01 · CONTEXTO DO CASO</div>
+      <h2 id="caseTitle"></h2>
+      <p id="caseSummary" class="audit-summary"></p>
+      <div class="audit-metrics"><div><small>Patrimônio ilustrativo</small><strong id="caseWealth"></strong></div><div><small>Questão controvertida</small><strong id="caseIssue"></strong></div></div>
+      <div class="audit-lawful"><span class="audit-check">✓</span><div><b>Quando a holding é legítima?</b><p id="caseLawful"></p></div></div>
+      <div class="audit-divider"></div>
+      <div class="audit-kicker">02 · CRONOLOGIA DOS ACONTECIMENTOS</div>
+      <div id="timeline" class="audit-timeline" role="group" aria-label="Selecionar fato da cronologia"></div>
+      <div class="audit-event">
+        <div class="audit-event-head"><span id="eventTime"></span><span id="eventIndex"></span></div>
+        <h3 id="eventTitle"></h3>
+        <p id="eventFact"></p>
+      </div>
+    </section>
+    <section class="audit-paper audit-white" aria-label="Provas e diagnóstico">
+      <div class="audit-kicker">03 · OLHAR DO ADVOGADO</div>
+      <h2>Onde está o problema?</h2>
+      <p class="audit-summary" id="eventConcern"></p>
+      <div class="audit-evidence">
+        <div class="audit-evidence-top"><span>DOCUMENTOS E VESTÍGIOS</span><span id="evidenceCount"></span></div>
+        <ul id="eventDocs"></ul>
+        <button class="audit-reveal" id="reveal" type="button" aria-expanded="false">Revelar a análise do advogado ↓</button>
+        <div id="analysis" class="audit-analysis" hidden></div>
+      </div>
+      <div class="audit-quiz">
+        <span class="audit-kicker">04 · DECISÃO DA TURMA</span>
+        <h3 id="quizQuestion"></h3>
+        <div id="quizOptions" class="audit-answers" role="group" aria-label="Escolha a análise mais adequada"></div>
+        <div id="quizFeedback" class="audit-feedback" aria-live="polite">Escolha uma alternativa para discutir o caso.</div>
+      </div>
+      <div class="audit-basis"><strong>Fundamento jurídico</strong><p id="legalBasis"></p><div id="legalLinks"></div></div>
+    </section>
+  </div>
+  <section class="audit-conclusion" aria-label="Síntese para defesa da tese">
+    <div><span class="audit-kicker">TESE QUE A AULA DEFENDE</span><h2>Planejamento lícito não se confunde com fraude.</h2></div>
+    <p id="caseConclusion"></p>
+  </section>
+</main>
+<footer class="audit-footer">
+  <div class="audit-actions">
+    <button class="btn" id="previousFact" type="button">← Fato anterior</button>
+    <button class="btn primary" id="nextFact" type="button">Próximo fato →</button>
+  </div>
+  <span id="auditFooterStatus">Dossiê 1 · Fato 1</span>
+  <div class="audit-actions"><button class="utility" id="printCase" type="button">Imprimir caso</button><a class="utility audit-link" href="showroom.html">Voltar à viabilidade</a></div>
+</footer>
+<div class="audit-disclaimer">Todos os personagens, documentos e valores são hipotéticos. Simulação educacional de identificação de riscos, não de execução de ilícitos. A conclusão jurídica depende de prova e do contexto concreto.</div>
+</div>
+</body>
+</html>
