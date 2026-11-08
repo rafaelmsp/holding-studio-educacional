@@ -220,8 +220,75 @@ function preset(name,clicked){
  const p=cases[name];if(!p)return;
  config.caseName=p.name;$("property").value=p.property;$("rent").value=p.rent;
  doc.querySelectorAll("[data-case]").forEach(b=>b.classList.toggle("active",b.dataset.case===name));
- render();
+ refreshQuickValues();render();
 }
+
+/* Valores rápidos são cenários didáticos editáveis, nunca preços oficiais. */
+function setupQuickValues(){
+ const presets={
+  property:[150000,300000,500000,1000000,1500000,3000000],
+  rent:[0,900,1500,3000,6000,12000],
+  occupancy:[50,75,90,100],owners:[1,2,3,4],
+  otherIncome:[0,3000,5000,10000],
+  iptuAnnual:[0,900,1800,3600],condoMonthly:[0,250,500,1000],
+  municipalFeesAnnual:[0,250,600],agencyMonthly:[0,200,400,800],
+  insuranceAnnual:[0,600,1500],repairsAnnual:[0,1500,5000],
+  legalFees:[2500,5000,10000,20000],
+  corporateRegistry:[500,1500,3000],propertyRegistry:[1000,3000,7000],
+  costPjDifference:[-1200,0,1200],
+  accounting:[350,700,1200,2000],annualOther:[0,1200,3600,6000],
+  itbiRate:[2,3,4,5],horizon:[5,10,15,20],discountRate:[0,5,10,15],
+  heirs:[1,2,3,4],quotaBase:[150000,500000,1500000],
+  donFees:[2500,5000,10000],donReg:[1000,3000,6000],
+  quotaFees:[2000,5000,10000],quotaReg:[500,1500,4000],
+  invFees:[4500,10000,20000],invReg:[2500,6000,12000]
+ };
+ const plain=new Set(["occupancy","owners","horizon","heirs","discountRate","itbiRate"]);
+ const money=n=>n>=1000000?"R$ "+(n/1000000).toLocaleString("pt-BR")+" mi":n>=1000?"R$ "+(n/1000).toLocaleString("pt-BR")+" mil":"R$ "+n.toLocaleString("pt-BR");
+ for(const [id,values] of Object.entries(presets)){
+  const input=$(id);
+  if(!input)continue;
+  const parent=input.closest(".field");
+  if(!parent)continue;
+  const group=doc.createElement("div");
+  group.className="quick-values";
+  group.setAttribute("role","group");
+  const label=input.labels?.[0]?.textContent||id;
+  group.setAttribute("aria-label","Valores rápidos: "+label);
+  for(const value of values){
+   const btn=doc.createElement("button");
+   btn.type="button";
+   btn.className="quick-value";
+   btn.textContent=plain.has(id)?String(value)+(id==="itbiRate"||id==="discountRate"||id==="occupancy"?"%":""):money(value);
+   btn.dataset.value=String(value);
+   btn.setAttribute("aria-pressed","false");
+   btn.addEventListener("click",()=>{
+    if(input.readOnly||input.disabled)return;
+    input.value=String(value);
+    input.dispatchEvent(new Event("input",{bubbles:true}));
+    input.dispatchEvent(new Event("change",{bubbles:true}));
+    refreshQuickValues();
+   });
+   group.appendChild(btn);
+  }
+  parent.appendChild(group);
+ }
+ refreshQuickValues();
+}
+function refreshQuickValues(){
+ for(const group of doc.querySelectorAll(".quick-values")){
+  const input=group.closest(".field")?.querySelector("input");
+  if(!input)continue;
+  const current=Number(input.value);
+  for(const btn of group.querySelectorAll(".quick-value")){
+   const active=input.value!==""&&Number(btn.dataset.value)===current;
+   btn.classList.toggle("selected",active);
+   btn.setAttribute("aria-pressed",String(active));
+   btn.disabled=Boolean(input.readOnly||input.disabled);
+  }
+ }
+}
+
 function bindControls(){
  $("previous").addEventListener("click",()=>go(config.step-1));
  $("next").addEventListener("click",()=>go(config.step===8?0:config.step+1));
@@ -235,7 +302,7 @@ function bindControls(){
  $("print").addEventListener("click",()=>window.print());
  doc.querySelectorAll("[data-case]").forEach(b=>b.addEventListener("click",()=>preset(b.dataset.case,b)));
  doc.querySelectorAll("input,select").forEach(input=>{
-  input.addEventListener("input",()=>{if(input.id==="property")doc.querySelectorAll("[data-case]").forEach(b=>b.classList.remove("active"));render();});
+  input.addEventListener("input",()=>{if(input.id==="property")doc.querySelectorAll("[data-case]").forEach(b=>b.classList.remove("active"));refreshQuickValues();render();});
   input.addEventListener("change",render);
  });
  $("municipality").addEventListener("change",()=>{
@@ -243,7 +310,7 @@ function bindControls(){
   $("itbiRate").value=isRio?"3":"";
   $("itbiRate").readOnly=isRio;
   $("rateHint").textContent=isRio?"Rio: alíquota de referência de 3%.":"Informe a alíquota municipal aplicável antes de concluir.";
-  render();
+  refreshQuickValues();render();
  });
  doc.addEventListener("keydown",ev=>{
   const tag=ev.target?.tagName?.toLowerCase();if(["input","select","textarea","button"].includes(tag)||ev.altKey||ev.ctrlKey||ev.metaKey)return;
@@ -253,7 +320,7 @@ function bindControls(){
  });
 }
 function boot(){
- prepareFit();bindControls();go(0);
+ prepareFit();setupQuickValues();bindControls();go(0);
  window.addEventListener?.("resize",scheduleFit);
  fetch("tax-rules.json",{cache:"no-store"}).then(x=>{if(!x.ok)throw Error("arquivo indisponível");return x.json();}).then(rule=>{
   if(rule.schemaVersion!==1||!rule.irpf||!rule.pj||!rule.rj)throw Error("base incorreta");
