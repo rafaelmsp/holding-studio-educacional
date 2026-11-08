@@ -220,6 +220,7 @@ function preset(name,clicked){
  const p=cases[name];if(!p)return;
  config.caseName=p.name;$("property").value=p.property;$("rent").value=p.rent;
  doc.querySelectorAll("[data-case]").forEach(b=>b.classList.toggle("active",b.dataset.case===name));
+ doc.querySelectorAll("[data-scenario]").forEach(b=>b.classList.remove("active"));
  refreshQuickValues();render();
 }
 
@@ -289,6 +290,37 @@ function refreshQuickValues(){
  }
 }
 
+
+function selectScenario(name){
+ const scenarios={
+  low:{label:"Patrimônio com baixa renda",property:150000,rent:900,otherIncome:3000,owners:1,accounting:450,annualOther:1200},
+  middle:{label:"Imóvel de renda intermediária",property:1500000,rent:8500,otherIncome:5000,owners:1,accounting:700,annualOther:1200},
+  high:{label:"Patrimônio de alta renda locatícia",property:3000000,rent:20000,otherIncome:12000,owners:1,accounting:700,annualOther:1200}
+ };
+ const chosen=scenarios[name];if(!chosen)return;
+ for(const [id,value]of Object.entries(chosen)){
+  if(id!=="label"&&$(id))$(id).value=String(value);
+ }
+ // Comparação constante: despesas iguais entre PF e PJ e ITBI em análise;
+ // o cenário favorável deve surgir da renda e não de imunidade inventada.
+ $("occupancy").value="100";
+ $("itbiTreatment").value="pendente";
+ $("horizon").value="10";
+ $("discountRate").value="5";
+ $("costPjDifference").value="0";
+ $("municipality").value="rio";
+ $("itbiRate").value="3";$("itbiRate").readOnly=true;
+ $("rateHint").textContent="Rio: alíquota de referência de 3%.";
+ $("goal").value="ambos";
+ config.caseName=chosen.label;
+ doc.querySelectorAll("[data-case]").forEach(b=>b.classList.remove("active"));
+ doc.querySelectorAll("[data-scenario]").forEach(b=>{
+  const active=b.dataset.scenario===name;
+  b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active));
+ });
+ refreshQuickValues();render();
+}
+
 function bindControls(){
  $("previous").addEventListener("click",()=>go(config.step-1));
  $("next").addEventListener("click",()=>go(config.step===8?0:config.step+1));
@@ -301,6 +333,7 @@ function bindControls(){
  });
  $("print").addEventListener("click",()=>window.print());
  doc.querySelectorAll("[data-case]").forEach(b=>b.addEventListener("click",()=>preset(b.dataset.case,b)));
+ doc.querySelectorAll("[data-scenario]").forEach(b=>b.addEventListener("click",()=>selectScenario(b.dataset.scenario)));
  doc.querySelectorAll("input,select").forEach(input=>{
   input.addEventListener("input",()=>{if(input.id==="property")doc.querySelectorAll("[data-case]").forEach(b=>b.classList.remove("active"));refreshQuickValues();render();});
   input.addEventListener("change",render);
