@@ -13,6 +13,7 @@
 <a class="utility" href="showroom.html">01 · Viabilidade</a>
 <a class="utility" href="investigacao.html">02 · Investigação</a>
 <a class="utility current" href="operacoes-clandestinas.html" aria-current="page">03 · Operações clandestinas</a>
+<button class="utility" type="button" id="openDashboard" aria-controls="dashboard" aria-expanded="false" title="Abrir painel de exposição e matriz de provas (P)">▥ Indicadores</button>
 <button class="utility" type="button" id="fullscreen">⛶ Tela cheia</button></nav></header>
 <main class="operations-main">
 <div class="operations-hero">
@@ -44,8 +45,10 @@
  <div class="legal-source"><b>Referências legais para consulta:</b><div id="references"></div></div>
 </section>
 </div>
-<section class="evidence-dashboard" aria-label="Painel de exposição e suficiência informacional">
- <div class="dashboard-head"><div><span class="chapter-kicker">MODELO DIDÁTICO DE SINAIS</span><h2>Exposição investigativa ≠ culpa</h2></div><p>Os números organizam a investigação. Não representam probabilidade de fraude, prognóstico judicial ou presunção de responsabilidade.</p></div>
+<div id="dashboardBackdrop" class="dashboard-backdrop" hidden></div>
+<section class="evidence-dashboard" id="dashboard" role="dialog" aria-modal="true" aria-labelledby="dashboardTitle" aria-label="Painel de exposição e suficiência informacional" hidden>
+<div class="drawer-tools"><span>PAINEL TÉCNICO · MÓDULO F</span><button class="utility" id="closeDashboard" type="button" aria-label="Fechar painel de indicadores">✕ Fechar</button></div>
+ <div class="dashboard-head"><div><span class="chapter-kicker">MODELO DIDÁTICO DE SINAIS</span><h2 id="dashboardTitle">Exposição investigativa ≠ culpa</h2></div><p>Os números organizam a investigação. Não representam probabilidade de fraude, prognóstico judicial ou presunção de responsabilidade.</p></div>
  <div class="dashboard-layout">
   <div class="score-cards"><div class="scorecard"><small>Alertas nos itens verificados</small><strong id="alertScore">—</strong><span id="alertText">Nenhum item verificado</span><div class="s-track"><div id="alertFill"></div></div></div>
   <div class="scorecard"><small>Cobertura de verificação</small><strong id="coverageScore">0%</strong><span id="coverageText">0 de 39 itens</span><div class="s-track"><div id="coverageFill"></div></div></div>
@@ -55,6 +58,6 @@
  <div class="proof-head"><div><h3>Matriz de diligências probatórias</h3><p>Somente sinais classificados são listados; uma hipótese marcada não equivale a documento comprovado.</p></div><div class="proof-actions"><button type="button" class="utility" id="resetChecks">Limpar avaliações</button><button type="button" class="utility" id="print">Imprimir análise</button></div></div>
  <div id="proof" class="proof-table"></div>
 </section>
-<div class="op-footer"><div><button id="previous" type="button" class="btn">← Etapa anterior</button><button id="next" type="button" class="btn primary">Próxima etapa →</button></div><span>Teclas ← → para navegar · F para tela cheia · valores e personagens ilustrativos.</span></div>
+<div class="op-footer"><div><button id="previous" type="button" class="btn">← Etapa anterior</button><button id="next" type="button" class="btn primary">Próxima etapa →</button><button type="button" class="btn" id="openDashboardBottom" aria-controls="dashboard" aria-expanded="false">▥ Indicadores e provas</button></div><span id="stageFooterHint">Role dentro dos painéis para ler. ← → etapas · P indicadores · F tela cheia.</span></div>
 <div class="module-disclaimer">Material acadêmico de prevenção e raciocínio jurídico. A ausência de empregados, a sede residencial, o usufruto e uma estrutura societária complexa podem ser perfeitamente lícitos. Qualquer conclusão exige requisitos legais, elementos de prova e contraditório.</div>
 </main><div id="announce" class="assistive" aria-live="polite"></div></div></body></html>
