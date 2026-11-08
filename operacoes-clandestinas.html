@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1925">
+<meta name="description" content="Curso jurídico interativo: operações clandestinas envolvendo holdings, cronologia fictícia, evidências e análise profissional.">
+<title>Operações clandestinas | Holding Studio</title>
+<link rel="stylesheet" href="src/showroom.css"><link rel="stylesheet" href="src/operacoes-clandestinas.css">
+<script defer src="src/operacoes-clandestinas.js"></script>
+</head>
+<body><div class="app operations-app">
+<header class="top"><div class="brand"><strong>HOLDING <em>STUDIO</em></strong><small>Curso interativo · Direito de Família e Sucessões</small></div>
+<nav class="module-tabs" aria-label="Módulos do curso">
+<a class="utility" href="showroom.html">01 · Viabilidade</a>
+<a class="utility" href="investigacao.html">02 · Investigação</a>
+<a class="utility current" href="operacoes-clandestinas.html" aria-current="page">03 · Operações clandestinas</a>
+<button class="utility" type="button" id="fullscreen">⛶ Tela cheia</button></nav></header>
+<main class="operations-main">
+<div class="operations-hero">
+ <div><span class="chapter-kicker">MÓDULO F · ANATOMIA DA FRAUDE PATRIMONIAL</span>
+ <h1>Operações <span>clandestinas</span></h1>
+ <p>Uma aula investigativa sobre como <strong>esquemas ilícitos envolvendo holdings aparecem nos documentos e nos fluxos patrimoniais</strong>. Acompanhe os fatos de cada operação fictícia, investigue os vestígios e aprenda a distinguir planejamento lícito, irregularidade e fraude comprovada.</p></div>
+ <div class="course-card"><strong>Como usar na aula</strong><span>Escolha um dossiê → percorra 8 etapas → examine os registros → classifique indícios → revele a leitura jurídica → gere uma matriz de diligências.</span><small>Todo conteúdo é fictício, para prevenção e análise jurídica. Não contém instruções operacionais para fraudar, ocultar bens ou burlar controles.</small></div>
+</div>
+<section class="case-section" aria-label="Casos disponíveis">
+ <div class="section-label"><b>Selecione um circuito patrimonial</b><span id="caseLabel">Caso 1 de 6</span></div>
+ <div id="caseButtons" class="case-switches" role="group" aria-label="Selecionar caso"></div>
+</section>
+<div class="flow-progress"><span id="stepLabel">Etapa 1 de 8</span><div class="flow-track"><div id="flowFill"></div></div><span id="coverageShort">0/39 verificados</span></div>
+<div class="op-grid">
+<section class="op-panel story" aria-labelledby="scenarioTitle">
+ <div class="kicker">DOSSIÊ · CRONOLOGIA</div>
+ <h2 id="scenarioTitle">Carregando caso...</h2><p id="scenarioLead" class="case-lead"></p>
+ <div class="metrics"><div><small>Patrimônio ilustrativo</small><strong id="wealth"></strong></div><div><small>Questão central</small><strong id="theme"></strong></div></div>
+ <div class="flow-steps" id="flowSteps" role="group" aria-label="Oito etapas investigativas"></div>
+ <div class="event-card"><div class="event-tag"><span id="stepName"></span><span id="stepNum"></span></div><h3 id="eventTitle"></h3><p id="eventNarrative"></p></div>
+ <div class="lawful"><b>✓ Hipótese de operação regular</b><p id="legitimate"></p></div>
+ <div class="caution"><b>Qual é o limite do exemplo?</b><p id="limitation"></p></div>
+</section>
+<section class="op-panel laboratory" aria-labelledby="labTitle">
+ <div class="kicker">LABORATÓRIO · ADVOCACIA E PROVA</div><h2 id="labTitle">Rastreamento jurídico</h2>
+ <div class="detail"><span class="detail-label">DOCUMENTOS E VESTÍGIOS</span><div id="documents"></div></div>
+ <div class="detail"><span class="detail-label">39 INDICADORES · ETAPA ATUAL</span><p class="helper">Para cada sinal, selecione <b>indício</b>, <b>afastado</b> ou <b>desconhecido</b>. Indício não significa prova de crime; dados desconhecidos não contam como risco confirmado.</p><div id="checks" class="checks-operations"></div></div>
+ <div class="detail"><span class="detail-label">DECISÃO DO ADVOGADO</span><p id="question" class="legal-question"></p><button id="reveal" class="reveal-btn" type="button" aria-expanded="false">⚖ Revelar análise e diligência</button><div id="analysis" class="legal-analysis" hidden></div></div>
+ <div class="legal-source"><b>Referências legais para consulta:</b><div id="references"></div></div>
+</section>
+</div>
+<section class="evidence-dashboard" aria-label="Painel de exposição e suficiência informacional">
+ <div class="dashboard-head"><div><span class="chapter-kicker">MODELO DIDÁTICO DE SINAIS</span><h2>Exposição investigativa ≠ culpa</h2></div><p>Os números organizam a investigação. Não representam probabilidade de fraude, prognóstico judicial ou presunção de responsabilidade.</p></div>
+ <div class="dashboard-layout">
+  <div class="score-cards"><div class="scorecard"><small>Alertas nos itens verificados</small><strong id="alertScore">—</strong><span id="alertText">Nenhum item verificado</span><div class="s-track"><div id="alertFill"></div></div></div>
+  <div class="scorecard"><small>Cobertura de verificação</small><strong id="coverageScore">0%</strong><span id="coverageText">0 de 39 itens</span><div class="s-track"><div id="coverageFill"></div></div></div>
+  <div class="scorecard flags"><small>Hipóteses jurídicas a examinar</small><div id="gates">Nenhuma hipótese destacada.</div></div></div>
+  <div class="mechanisms"><h3>10 mecanismos sob análise</h3><div id="mechs"></div></div>
+ </div>
+ <div class="proof-head"><div><h3>Matriz de diligências probatórias</h3><p>Somente sinais classificados são listados; uma hipótese marcada não equivale a documento comprovado.</p></div><div class="proof-actions"><button type="button" class="utility" id="resetChecks">Limpar avaliações</button><button type="button" class="utility" id="print">Imprimir análise</button></div></div>
+ <div id="proof" class="proof-table"></div>
+</section>
+<div class="op-footer"><div><button id="previous" type="button" class="btn">← Etapa anterior</button><button id="next" type="button" class="btn primary">Próxima etapa →</button></div><span>Teclas ← → para navegar · F para tela cheia · valores e personagens ilustrativos.</span></div>
+<div class="module-disclaimer">Material acadêmico de prevenção e raciocínio jurídico. A ausência de empregados, a sede residencial, o usufruto e uma estrutura societária complexa podem ser perfeitamente lícitos. Qualquer conclusão exige requisitos legais, elementos de prova e contraditório.</div>
+</main><div id="announce" class="assistive" aria-live="polite"></div></div></body></html>
