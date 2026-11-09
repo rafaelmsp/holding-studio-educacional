@@ -2,57 +2,6 @@
 "use strict";
 const doc=document,$=id=>doc.getElementById(id);
 const money=n=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0}).format(n);
-const STAGES=[
-["01","Passivo","Cronologia, dívidas e contexto"],
-["02","Estrutura","Organização societária observada"],
-["03","Substância","Atividade, governança e poderes"],
-["04","Transmissão","Bens, quotas e avaliações"],
-["05","Fluxos","Rendas e movimentos econômicos"],
-["06","Controle","Beneficiários e direitos reais"],
-["07","Documentos","Coerência dos registros"],
-["08","Consequências","Tese, defesa e medidas cabíveis"]
-];
-const MECHS=[["M1","Cronologia"],["M2","Substância"],["M3","Avaliação"],["M4","Usufruto"],["M5","Fluxos"],["M6","Interposição"],["M7","Registros"],["M8","Contabilidade"],["M9","Sucessório"],["M10","Veículo"]];
-const RAW=String.raw`F01|0|M1|3|Passivo conhecido|Contratos e certidões da obrigação
-F02|0|M1|2|Passivo trabalhista, fiscal ou ambiental|Origem e natureza da obrigação
-F03|0|M1|5|Obrigação anterior à reorganização|Cronologia documental
-F04|0|M1|5|Citação anterior ao ato patrimonial|Certidão processual e títulos
-F05|0|M1|4|Proximidade temporal entre cobrança e transferência|Comparação documental de datas
-F06|0|M1|3|Patrimônio remanescente insuficiente|Avaliação do acervo e passivo
-F07|1|M10|3|Camadas societárias sem finalidade esclarecida|Organograma e contratos
-F08|1|M10|3|Estrutura no exterior com propósito controverso|Registros e governança
-F09|1|M10|3|Veículo fiduciário exige exame do controle|Instrumentos e titularidade
-F10|1|M10|2|Custos societários sem justificativa econômica|Contrato, despesas e finalidade
-F11|2|M2|5|Atividade efetiva não demonstrada|Contratos e atos de administração
-F12|2|M2|4|Serviços declarados sem comprovação adequada|Notas e entregas
-F13|2|M2|3|Endereço ou dados cadastrais inconsistentes|Cadastro e prova da sede
-F14|2|M2|4|Capital, bens e quotas sem conciliação|Contrato social e contabilidade
-F15|2|M2|2|Objeto social e atividade não coincidem|Atos e contratos
-F16|2|M2|2|Atos relevantes sem registro exigido|Certidão e atos da junta
-F17|3|M3|4|Avaliação sem suporte técnico adequado|Memória de cálculo e escritura
-F18|3|M3|3|Avaliações sem critério individualizado|Laudos de bens
-F19|3|M3|5|Diferença material de valores sem explicação|Matrícula, guia e avaliação
-F20|3|M4|3|Usufruto relevante para operação questionada|Escritura e beneficiário
-F21|3|M4|2|Usufruto e passivo exigem análise conjunta|Linha do tempo e direitos reais
-F22|4|M5|3|Locação entre vinculadas sem suporte suficiente|Contrato, preço e recibos
-F23|4|M5|3|Preço contratual aparentemente atípico|Comparáveis e avaliações
-F24|4|M5|4|Mútuo intragrupo não conciliado|Contrato e extratos
-F25|4|M5|3|Serviços intragrupo não demonstrados|Notas e relatórios de execução
-F26|4|M5|5|Fluxo financeiro incompatível com operações|Balanço, DRE e conciliação
-F27|5|M6|5|Origem dos recursos do sócio não comprovada|Comprovantes legalmente obtidos
-F28|5|M6|3|Titularidade formal e gestão não esclarecidas|Atos societários e mandatos
-F29|5|M6|4|Mandato e controle efetivo divergentes|Procurações e registros
-F30|5|M7|4|Participação societária omitida em declaração exigível|Declarações pertinentes
-F31|5|M7|3|Registro cartorário e fiscal com divergência|Cartório e obrigação do responsável
-F32|6|M8|3|Divergências documentais relevantes nas datas|Versões e protocolo
-F33|6|M8|3|Lançamento sem suporte documental|Escrituração e contratos
-F34|6|M8|4|Receitas ou despesas pessoais e societárias misturadas|Extratos e conciliação
-F35|7|M5|4|Insolvência após transação questionada|Autos e cronologia do patrimônio
-F36|7|M5|3|Recuperação judicial após operações contestadas|Autos e balanços
-F37|7|M9|4|Direitos de herdeiro possivelmente atingidos|Partilha e documentos familiares
-F38|7|M9|3|Consentimento ou capacidade jurídica contestados|Prova válida e perícia pertinente
-F39|7|M7|4|Origem de recursos não conciliada|Comprovantes e contratos`;
-const CHECKS=RAW.split("\n").filter(Boolean).map(line=>{const [id,stage,mechanism,w,label,docs]=line.split("|");return{id,stage:+stage,mechanism,w:+w,label,docs};});
 const SOURCE=[
 ["Código Civil: arts. 50, 158–167, 544 e 549","https://www.planalto.gov.br/ccivil_03/leis/2002/l10406compilada.htm"],
 ["CPC: arts. 133–137 e 792","https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm"],
@@ -159,210 +108,64 @@ const CASES=[
 }
 ];
 
-const state={case:0,step:0,micro:0,reveal:false,view:"circuito",marks:{}};
+const FLOW=[["01","Contexto"],["02","Ato central"],["03","Manobra"],["04","Efeito"],["05","Conflito"],["06","Apuração"],["07","Consequências"],["08","Desafio"]];
+const MECHANISMS={
+credores:{title:"Transferência patrimonial com possível prejuízo ao credor",narrative:"A simulação representa a hipótese em que um bem é transferido para uma sociedade familiar quando já existe uma obrigação relevante. A sequência permite discutir se a operação foi legítima ou se reduziu, de forma juridicamente relevante, a garantia patrimonial do credor.",explanation:"O núcleo didático é a relação entre a data da obrigação, a situação patrimonial antes e depois do ato e o prejuízo alegado. A mera constituição da holding ou a transferência do imóvel não prova fraude.",impact:"Se os requisitos forem demonstrados, podem ser discutidas fraude contra credores ou fraude à execução, cada qual com pressupostos e efeitos próprios.",label:"Fraude contra credores / fraude à execução"},
+meacao:{title:"Ocultação ou subavaliação de direitos na partilha",narrative:"A simulação apresenta uma holding que concentra bens do casal. No conflito, a participação societária ou o valor econômico declarado não corresponde, em tese, à realidade patrimonial discutida entre os cônjuges.",explanation:"A pessoa jurídica não apaga direitos decorrentes do regime de bens. A hipótese fraudulenta está na eventual ocultação, dissimulação ou manipulação da informação patrimonial, não na existência da holding.",impact:"Conforme os fatos e a prova, podem surgir consequências na partilha, discussão de simulação e, em situação excepcional, desconsideração inversa da personalidade jurídica.",label:"Ocultação patrimonial em contexto de meação"},
+herdeiros:{title:"Cessão aparente e possível doação dissimulada",narrative:"A simulação acompanha uma reorganização de quotas apresentada como negócio oneroso, embora os fatos levantem dúvida sobre a existência de contraprestação real ou sobre o respeito à legítima dos herdeiros necessários.",explanation:"O ponto jurídico é comparar a natureza declarada do negócio com sua realidade econômica, considerando liberalidade, colação, parte disponível e legítima. A desigualdade entre herdeiros, isoladamente, não é fraude.",impact:"Se comprovados os requisitos, podem ser discutidas simulação, colação ou redução de liberalidade inoficiosa, conforme o caso.",label:"Simulação negocial / violação da legítima"},
+itbi:{title:"Declaração incompatível com a operação tributária real",narrative:"A simulação compara o valor dos imóveis, o capital efetivamente integralizado e a natureza jurídica atribuída às parcelas da operação. A hipótese ilícita surge se os documentos não representarem o negócio real e forem usados para obter vantagem fiscal indevida.",explanation:"É preciso separar imunidade constitucional legítima, limite da integralização e eventual simulação. A atividade imobiliária, por si só, não demonstra fraude nem afasta automaticamente a imunidade, conforme a orientação indicada no caso.",impact:"A consequência depende da operação efetiva, da parcela abrangida pela imunidade e da prova de simulação ou fraude à lei. Não há lançamento ou crime automático.",label:"Simulação tributária / fraude à lei"},
+"aluguéis":{title:"Omissão intencional de receitas locatícias (hipótese)",narrative:"A simulação apresenta contratos de locação com um valor total e registros fiscais ou contábeis com valor diferente. A turma acompanha a hipótese de que parte da receita tenha sido deliberadamente omitida, sem confundir divergência aritmética com crime comprovado.",explanation:"O núcleo é a diferença entre receita contratada, efetivamente recebida, competência contábil e valor declarado. Vacância, inadimplência, encargos e erros podem explicar diferenças; a infração exige análise dos elementos legais e da autoria.",impact:"Se a omissão dolosa e os demais requisitos legais forem comprovados, pode haver consequência tributária e, conforme o tipo penal, responsabilização por crime contra a ordem tributária.",label:"Possível sonegação de receita"},
+grupos:{title:"Dissimulação de operações e confusão patrimonial",narrative:"A simulação acompanha operações entre sociedades relacionadas e o uso de ativos por pessoas físicas. O cenário questiona se há negócios reais e documentados ou se a estrutura está sendo usada para dissimular o beneficiário econômico, a origem ou o destino de recursos.",explanation:"Estruturas complexas e transações entre empresas podem ser legítimas. O ponto crítico é a falta de causa econômica real, a mistura patrimonial ou a dissimulação comprovada. Lavagem de dinheiro exige elementos próprios e não decorre automaticamente de uma holding.",impact:"Podem surgir consequências societárias, civis, fiscais e, se comprovados os elementos típicos, penais. A responsabilidade de cada pessoa e empresa deve ser individualizada.",label:"Possível confusão patrimonial / dissimulação de recursos"}
+};
+const state={case:0,step:0,quizChoice:null};
 const current=()=>CASES[state.case];
-const marks=()=>state.marks[current().id]||(state.marks[current().id]={});
 const make=(tag,cls,t)=>{const e=doc.createElement(tag);if(cls)e.className=cls;if(t!==undefined)e.textContent=t;return e;};
-const put=(id,t)=>{$(id).textContent=t;};
-function stageData(c,i){
- const mapped=[0,1,null,2,3,null,4,null][i];
- if(mapped!==null){
-  const s=c.stages[mapped];
-  return{title:s.title,fact:s.fact,concern:s.concern,docs:s.docs,analysis:s.analysis,lawful:c.lawful};
- }
- if(i===2)return{
-  title:"Atividade e substância da holding",
-  fact:c.name+": agora o aluno precisa distinguir administração regular de atos puramente formais. Ausência de empregados, endereço residencial e administração terceirizada podem ser plenamente lícitos.",
-  concern:"Não se presume fraude por características estruturais típicas de sociedades patrimoniais.",
-  docs:["Contratos de gestão e prestação de serviços","Atas e registros de administração","Comprovantes da atividade efetiva"],
-  analysis:"O advogado relaciona objeto social, contratos, pagamentos, administração e realidade econômica. Confusão patrimonial e desvio de finalidade exigem elementos concretos.",
-  lawful:c.lawful
- };
- if(i===5)return{
-  title:"Quem detém direitos e exerce a administração?",
-  fact:"No dossiê "+c.short.toLowerCase()+", a análise passa da titularidade registrada para a diferença entre representação, gestão e direitos econômicos. Procuração ampla ou parentesco não prova interposição fraudulenta.",
-  concern:"Beneficiário formal, titular econômico e gestor podem ser pessoas diferentes por motivos lícitos.",
-  docs:["Quadro societário e cadeia de participações","Procurações e instrumentos de representação","Registros lícitos de recebimentos e distribuições"],
-  analysis:"Identifique quem administra, quem possui quotas e quem recebe benefícios econômicos. Use prova documental obtida de forma legal e preserve contraditório antes de imputar simulação.",
-  lawful:c.lawful
- };
- return{
-  title:"Conclusão e medidas jurídicas",
-  fact:c.conclusion+" Uma conclusão profissional precisa distinguir fatos, suspeitas, explicações alternativas e requisitos para responsabilização.",
-  concern:"O resultado da matriz é didático; não constitui declaração automática de fraude, crime ou direito de penhora.",
-  docs:["Quadro cronológico consolidado","Matriz de documentos, lacunas e contradições","Peças processuais e pronunciamentos, quando existentes"],
-  analysis:c.quiz.why+" Fundamentos para o exercício: "+c.basis,
-  lawful:c.lawful
- };
+const put=(id,t)=>{const el=$(id);if(el)el.textContent=t;};
+function simulationData(c,i){
+ const s=c.stages,m=MECHANISMS[c.id],last=s[s.length-1];
+ if(i===0)return{tag:"CENA 01 · CONTEXTO",title:s[0].title,text:s[0].fact,operationTitle:"Situação de partida",operationText:c.summary,legalTitle:"O que a turma precisa compreender",legalText:s[0].concern,impactTitle:"Questão central",impactText:c.issue,docs:s[0].docs.join(" · ")};
+ if(i===1)return{tag:"CENA 02 · ATO CENTRAL",title:s[1].title,text:s[1].fact,operationTitle:"Instrumento jurídico que aparece",operationText:m.narrative,legalTitle:"A forma não decide o caso",legalText:s[1].concern,impactTitle:"O que muda nesta cena",impactText:"A estrutura societária passa a integrar a história. A validade e os efeitos dependem da realidade do negócio e dos direitos envolvidos.",docs:s[1].docs.join(" · ")};
+ if(i===2)return{tag:"CENA 03 · MANOBRA REPRESENTADA",title:m.title,text:m.narrative,operationTitle:"Explicação da manobra",operationText:m.explanation,legalTitle:"Finalidade ilícita em tese",legalText:"A vantagem indevida possível é descrita em termos jurídicos e conceituais. A simulação não ensina a executar, ocultar ou aperfeiçoar a conduta.",impactTitle:"Classificação didática",impactText:m.label,docs:s[2].docs.join(" · ")};
+ if(i===3)return{tag:"CENA 04 · EFEITO DA OPERAÇÃO",title:s[2].title,text:s[2].fact,operationTitle:"Como a fraude se manifesta no caso",operationText:m.explanation,legalTitle:"O que diferencia irregularidade de crime",legalText:s[2].concern,impactTitle:"Efeito ou prejuízo em discussão",impactText:m.impact,docs:s[2].docs.join(" · ")};
+ if(i===4)return{tag:"CENA 05 · CONFLITO",title:s[3].title,text:s[3].fact,operationTitle:"Quem pode ser afetado",operationText:"A situação chega a quem teve um direito potencialmente atingido: credor, cônjuge, herdeiro, Fisco ou terceiro. A simulação deixa claro qual interesse jurídico está em jogo.",legalTitle:"Limite da conclusão",legalText:s[3].concern,impactTitle:"Consequência em debate",impactText:m.impact,docs:s[3].docs.join(" · ")};
+ if(i===5)return{tag:"CENA 06 · APURAÇÃO DO CASO",title:last.title,text:last.fact,operationTitle:"O que precisa ser demonstrado",operationText:last.analysis,legalTitle:"Documentos que entram na aula",legalText:last.docs.join(" · "),impactTitle:"Explicação alternativa legítima",impactText:c.lawful,docs:last.docs.join(" · ")};
+ if(i===6)return{tag:"CENA 07 · CONSEQUÊNCIAS JURÍDICAS",title:"Enquadramento e consequências",text:c.conclusion,operationTitle:"Possível enquadramento",operationText:m.label+". "+last.analysis,legalTitle:"Fundamentos jurídicos para discussão",legalText:c.basis,impactTitle:"Regra essencial",impactText:"Não se presume fraude, dolo, simulação ou responsabilidade penal. A conclusão depende dos fatos provados, dos requisitos legais e do contraditório.",docs:"Use a cronologia e os documentos citados nas cenas anteriores."};
+ return{tag:"CENA 08 · DESAFIO DA TURMA",title:"O que você conclui a partir da simulação?",text:c.quiz.question,operationTitle:"Escolha a resposta juridicamente adequada",operationText:"Leia as três alternativas e selecione a conclusão que melhor corresponde aos fatos e aos fundamentos apresentados.",legalTitle:"Objetivo da aprendizagem",legalText:"Distinguir o planejamento patrimonial legítimo da conduta ilícita, identificar o bem jurídico afetado e reconhecer os requisitos da responsabilização.",impactTitle:"Fundamento para a resposta",impactText:c.quiz.why,docs:"Caso: "+c.short+" · "+c.range};
 }
-
-const PHASE_NOTES=[
- {mechanism:"No dossiê aparece uma obrigação ou um possível conflito patrimonial, com data e titular identificáveis.",effect:"A sequência temporal pode ser relevante para credores, mas não transforma automaticamente uma sociedade posterior em fraude."},
- {mechanism:"Atos societários passam a indicar sociedades, administradores e participação econômica.",effect:"A existência de uma holding altera a forma de administração dos ativos; ela não elimina, por si, direitos de terceiros."},
- {mechanism:"O contrato social e a atividade efetiva podem convergir ou apresentar discrepâncias.",effect:"Terceirização, sede residencial e ausência de empregados não constituem, isoladamente, simulação."},
- {mechanism:"Uma operação de transferência patrimonial pode aparecer em títulos, registros e participações societárias.",effect:"A contrapartida em quotas, o valor e os direitos de terceiros precisam ser avaliados segundo o negócio concreto."},
- {mechanism:"Aluguéis, empréstimos ou serviços entre sociedades podem constar de contratos e movimentações.",effect:"Inconsistências sem suporte podem indicar operação aparente; pagamentos e contratos reais podem ser legítimos."},
- {mechanism:"Poderes de gestão e titularidade formal podem aparecer em pessoas diferentes.",effect:"Essa diferença pode decorrer de representação válida, mas exige explicação se contradisser a realidade econômica declarada."},
- {mechanism:"Registros documentais e contábeis podem revelar versões, valores ou datas divergentes.",effect:"Diferença documental é sinal para conciliação e perícia, não conclusão automática de falsidade."},
- {mechanism:"Um credor, cônjuge, herdeiro ou autoridade pode questionar atos específicos da estrutura.",effect:"As consequências jurídicas dependem de requisitos diferentes, prova e contraditório; não há responsabilização pelo score."}
-];
-function renderMicro(c,s){
- const phase=PHASE_NOTES[state.step],auditoria=state.view==="auditoria";
- const parts=auditoria?[
-  ["Delimitar o problema",s.concern],
-  ["Localizar as fontes",s.docs.join("; ")+". Obtenha acesso aos documentos pelos meios legalmente admitidos."],
-  ["Confrontar explicação regular",s.lawful],
-  ["Fundamentar a resposta",s.analysis]
- ]:[
-  ["O que o caso relata",s.fact],
-  ["Qual mecanismo é observado",phase.mechanism],
-  ["Qual efeito poderia surgir",phase.effect],
-  ["Onde está o rastro documental",s.docs.join("; ")+". A verificação pode confirmar regularidade ou reforçar uma suspeita."]
- ];
- put("microHeading",auditoria?"AUDITORIA JURÍDICA · SEQUÊNCIA DE ANÁLISE":"RECONSTITUIÇÃO · SEQUÊNCIA DOS FATOS");
- put("microCounter","Detalhe "+(state.micro+1)+" de 4");
- const buttons=$("microButtons");buttons.replaceChildren();
- for(let i=0;i<4;i++){
-  const btn=make("button","micro-btn"+(state.micro===i?" active":""));
-  btn.type="button";btn.textContent=String(i+1);
-  btn.setAttribute("aria-pressed",String(i===state.micro));
-  btn.title=parts[i][0];
-  btn.addEventListener("click",()=>{state.micro=i;renderMicro(c,s);});
-  buttons.append(btn);
- }
- put("microTitle",parts[state.micro][0]);
- put("microText",parts[state.micro][1]);
-}
-
-function renderSwitches(){
+function renderCases(){
  const root=$("caseButtons");root.replaceChildren();
- CASES.forEach((c,i)=>{
-  const b=make("button","case-switch"+(i===state.case?" active":""));
-  b.type="button";b.setAttribute("aria-pressed",String(i===state.case));
-  b.append(make("strong","",c.short),make("small","",c.range));
-  b.addEventListener("click",()=>{state.case=i;state.step=0;state.micro=0;state.reveal=false;render();resetPanelScroll();});
-  root.append(b);
- });
- put("caseLabel","Caso "+(state.case+1)+" de "+CASES.length);
+ CASES.forEach((c,i)=>{const b=make("button","case-tab"+(i===state.case?" active":""));b.type="button";b.setAttribute("aria-pressed",String(i===state.case));b.append(make("strong","",c.short),make("small","",c.range));b.addEventListener("click",()=>{state.case=i;state.step=0;state.quizChoice=null;render();});root.append(b);});
+ put("caseLabel","CENÁRIO "+(state.case+1)+" / "+CASES.length);
 }
-function renderSteps(){
+function renderFlow(){
  const root=$("flowSteps");root.replaceChildren();
- const icons=["oc-clock","oc-building","oc-file","oc-house","oc-move","oc-users","oc-search","oc-scale"];
- STAGES.forEach((s,i)=>{
-  const data=stageData(current(),i);
-  const b=make("button","flow-step"+(i===state.step?" active":"")+(i<state.step?" reviewed":""));
-  b.type="button";b.title=data.title;
-  b.setAttribute("aria-pressed",String(i===state.step));
-  const row=make("span","flow-step-head");
-  row.append(make("b","step-number",s[0]));
-  const ico=document.createElementNS("http://www.w3.org/2000/svg","svg");
-  ico.setAttribute("class","flow-step-icon");ico.setAttribute("aria-hidden","true");
-  const use=document.createElementNS("http://www.w3.org/2000/svg","use");
-  use.setAttribute("href","#"+icons[i]);ico.append(use);row.append(ico);
-  const full=data.fact.trim().replace(/\s+/g," ");
-  const fact=full.length>105?full.slice(0,102).replace(/\s+\S*$/,"")+"…":full;
-  b.append(row,make("strong","flow-step-title",STAGES[i][1]),make("span","flow-step-excerpt",fact));
-  b.addEventListener("click",()=>{state.step=i;state.micro=0;state.reveal=false;render();resetPanelScroll();});
-  root.append(b);
- });
- put("stepLabel","ETAPA "+(state.step+1)+" DE 8");
- $("flowFill").style.width=((state.step+1)*12.5)+"%";
+ FLOW.forEach((step,i)=>{const b=make("button","flow-tab"+(i===state.step?" active":"")+(i<state.step?" passed":""));b.type="button";b.setAttribute("aria-pressed",String(i===state.step));b.append(make("span","flow-num",step[0]),make("strong","",step[1]));b.addEventListener("click",()=>changeStep(i));root.append(b);});
+ put("stepLabel","PASSO "+(state.step+1)+" DE 8");put("stepNum",String(state.step+1).padStart(2,"0")+" / 08");$("simFill").style.width=((state.step+1)/8*100)+"%";
 }
-function renderChecks(){
- const root=$("checks");root.replaceChildren();
- const selected=marks();
- CHECKS.filter(c=>c.stage===state.step).forEach(c=>{
-  const div=make("div","checkrow"),top=make("div","checkrow-top");
-  top.append(make("span","code",c.id),make("span","checktitle",c.label),make("small","",c.mechanism));
-  const tri=make("div","tri");
-  for(const [value,cls,caption]of [["alert","alert","⚠ Indício"],["clear","clear","✓ Afastado"],["unknown","","? Desconhecido"]]){
-   const b=make("button",cls,caption);b.type="button";
-   b.setAttribute("aria-pressed",String((selected[c.id]||"unknown")===value));
-   b.addEventListener("click",()=>{selected[c.id]=value;renderChecks();renderDashboard();});
-   tri.append(b);
-  }
-  div.append(top,tri);root.append(div);
- });
+function renderQuiz(c){
+ const root=$("quizOptions");root.replaceChildren();
+ c.quiz.options.forEach((option,i)=>{const b=make("button","quiz-option"+(state.quizChoice===i?" selected":""));b.type="button";b.append(make("span","quiz-letter",String.fromCharCode(65+i)),make("span","",option));b.setAttribute("aria-pressed",String(state.quizChoice===i));b.addEventListener("click",()=>{state.quizChoice=i;renderQuiz(c);});root.append(b);});
+ const feedback=$("quizFeedback");feedback.hidden=state.quizChoice===null;
+ if(state.quizChoice!==null){const correct=state.quizChoice===c.quiz.correct;feedback.className="quiz-feedback "+(correct?"correct":"review");put("quizResult",correct?"Resposta correta":"Revise esta conclusão");put("quizWhy",c.quiz.why);}
 }
-function renderDashboard(){
- const selected=marks(),reviewed=CHECKS.filter(c=>selected[c.id]==="alert"||selected[c.id]==="clear");
- const positive=reviewed.filter(c=>selected[c.id]==="alert");
- const total=reviewed.reduce((sum,c)=>sum+c.w,0),flags=positive.reduce((sum,c)=>sum+c.w,0);
- const attention=total?Math.round(100*flags/total):null,coverage=Math.round(100*reviewed.length/CHECKS.length);
- put("alertScore",attention===null?"—":attention+"%");
- put("alertText",total?positive.length+" de "+reviewed.length+" itens avaliados":"Nenhum item avaliado ainda");
- $("alertFill").style.width=(attention||0)+"%";
- put("coverageScore",coverage+"%");put("coverageText",reviewed.length+" de "+CHECKS.length+" indicadores");
- $("coverageFill").style.width=coverage+"%";put("coverageShort",reviewed.length+" classificados");
- const root=$("mechs");root.replaceChildren();
- MECHS.forEach(([id,label])=>{
-  const subset=reviewed.filter(c=>c.mechanism===id);
-  const t=subset.reduce((sum,c)=>sum+c.w,0);
-  const a=subset.filter(c=>selected[c.id]==="alert").reduce((sum,c)=>sum+c.w,0);
-  const pct=t?Math.round(a*100/t):0;
-  const div=make("div","mechrow"),track=make("div","mech-track"),fill=make("div","mech-fill");
-  fill.style.width=pct+"%";track.append(fill);div.append(make("span","",label),track,make("b","",t?pct+"%":"—"));root.append(div);
- });
- const gate=$("gates");gate.replaceChildren();
- const themes=[["F04","CPC art. 792 · examinar requisitos"],["F11","CC art. 50 · exigir prova de abuso"],["F19","CC art. 1.055 · avaliar critérios"],["F27","CC art. 167 · investigar simulação"]];
- const active=themes.filter(([id])=>selected[id]==="alert");
- if(!active.length)gate.append(make("span","","Nenhuma hipótese específica destacada."));
- else active.forEach(([,l])=>gate.append(make("span","gate-pill",l)));
- const proof=$("proof");proof.replaceChildren();put("proofCount",reviewed.length+" itens");
- if(!reviewed.length){proof.append(make("div","empty-proof","Nenhuma verificação classificada. Comece examinando os documentos fictícios e classificando os indicadores de cada etapa."));return;}
- const header=make("div","proofrow header");
- ["ID","Indício/questão","Documento ou diligência","Status"].forEach(v=>header.append(make("span","",v)));proof.append(header);
- reviewed.forEach(c=>{
-  const row=make("div","proofrow");
-  const status=selected[c.id]==="alert"?"Indício":"Afastado";
-  row.append(make("span","code",c.id),make("span","",c.label+" · "+c.docs+" · "+status));proof.append(row);
- });
-}
+function renderSources(){const root=$("sourceLinks");root.replaceChildren();SOURCE.forEach(([label,url])=>{const a=make("a","",label+" ↗");a.href=url;a.target="_blank";a.rel="noopener noreferrer";root.append(a);});}
 function render(){
- const c=current(),s=stageData(c,state.step);
- renderSwitches();renderSteps();
- put("scenarioTitle",c.name);put("scenarioLead",c.summary);
- put("wealth",money(c.wealth));put("theme",c.issue);
- put("stepName",STAGES[state.step][2]);put("stepNum",(state.step+1)+"/8");
- put("eventTitle",s.title);
- put("eventNarrative",state.view==="circuito"?s.fact:"Ponto de exame: "+s.concern+" Documentos relevantes: "+s.docs.join("; ")+".");
- put("legitimate",s.lawful);
- renderMicro(c,s);
- for(const [id,v] of [["viewCircuito","circuito"],["viewAuditoria","auditoria"]]){
-  const el=$(id);el.classList.toggle("active",state.view===v);el.setAttribute("aria-pressed",String(state.view===v));
- }
- put("limitation",s.concern);
- const docs=$("documents");docs.replaceChildren();
- s.docs.forEach(v=>docs.append(make("div","doc-item",v)));
- put("question",s.concern);put("analysis",s.analysis);
- $("analysis").hidden=!state.reveal;
- $("reveal").setAttribute("aria-expanded",String(state.reveal));
- $("reveal").textContent=state.reveal?"✓ Ocultar interpretação":"⚖ Revelar análise e diligência";
- const links=$("references");links.replaceChildren();
- SOURCE.forEach(([label,url])=>{const a=make("a","",label+" ↗");a.href=url;a.target="_blank";a.rel="noopener noreferrer";links.append(a);});
- $("previous").disabled=state.step===0;
- $("next").textContent=state.step===7?"Próximo dossiê →":"Próxima etapa →";
- renderChecks();renderDashboard();
- put("announce","Caso "+c.short+", etapa "+(state.step+1)+": "+s.title);
+ const c=current(),d=simulationData(c,state.step);renderCases();renderFlow();
+ put("scenarioTitle",c.name);put("scenarioLead",c.summary);put("wealth",money(c.wealth));put("theme",c.issue);
+ put("sceneTag",d.tag);put("eventTitle",d.title);put("eventNarrative",d.text);
+ put("operationTitle",d.operationTitle);put("operationText",d.operationText);put("legalTitle",d.legalTitle);put("legalText",d.legalText);
+ put("impactTitle",d.impactTitle);put("impactText",d.impactText);put("docsText",d.docs);
+ $("simulationView").hidden=state.step===7;$("quizPanel").hidden=state.step!==7;
+ if(state.step===7){put("quizQuestion",c.quiz.question);renderQuiz(c);}
+ $("previous").disabled=state.step===0;$("next").textContent=state.step===7?(state.case===CASES.length-1?"Reiniciar primeiro caso":"Próximo caso →"):"Próxima cena →";
+ put("announce",c.short+", passo "+(state.step+1)+": "+d.title);
 }
-function resetPanelScroll(){doc.querySelectorAll(".op-panel").forEach(p=>{p.scrollTop=0;});}
-function changeStep(i){state.step=Math.max(0,Math.min(7,i));state.micro=0;state.reveal=false;render();resetPanelScroll();}
-
-$("viewCircuito").addEventListener("click",()=>{state.view="circuito";state.micro=0;render();});
-$("viewAuditoria").addEventListener("click",()=>{state.view="auditoria";state.micro=0;render();});
-
-$("previous").addEventListener("click",()=>changeStep(state.step-1));
-$("next").addEventListener("click",()=>{if(state.step<7)changeStep(state.step+1);else{state.case=(state.case+1)%CASES.length;state.step=0;state.micro=0;state.reveal=false;render();resetPanelScroll();}});
-$("reveal").addEventListener("click",()=>{state.reveal=!state.reveal;render();});
-$("resetChecks").addEventListener("click",()=>{if(!window.confirm("Limpar a análise deste dossiê?"))return;state.marks[current().id]={};renderChecks();renderDashboard();});
-$("print").addEventListener("click",()=>{state.reveal=true;render();window.print();});
+function changeStep(i){state.step=Math.max(0,Math.min(7,i));state.quizChoice=null;render();}
+function advance(){if(state.step<7){changeStep(state.step+1);return;}state.case=(state.case+1)%CASES.length;state.step=0;state.quizChoice=null;render();}
+$("previous").addEventListener("click",()=>changeStep(state.step-1));$("next").addEventListener("click",advance);
+$("restart").addEventListener("click",()=>{state.step=0;state.quizChoice=null;render();});
 $("fullscreen").addEventListener("click",()=>{if(doc.fullscreenElement)doc.exitFullscreen?.();else doc.documentElement.requestFullscreen?.();});
-doc.addEventListener("keydown",ev=>{
- const tag=ev.target?.tagName?.toLowerCase();
- if(["input","textarea","select","button","a","summary"].includes(tag)||ev.altKey||ev.metaKey||ev.ctrlKey)return;
- if(ev.key==="ArrowRight"||ev.key==="PageDown"){ev.preventDefault();$("next").click();}
- if(ev.key==="ArrowLeft"||ev.key==="PageUp"){ev.preventDefault();$("previous").click();}
- if(ev.key.toLowerCase()==="f")$("fullscreen").click();
-});
+$("sourceToggle").addEventListener("click",()=>{const box=$("sourceBox");box.hidden=!box.hidden;$("sourceToggle").setAttribute("aria-expanded",String(!box.hidden));if(!box.hidden)renderSources();});
+doc.addEventListener("keydown",ev=>{const tag=ev.target?.tagName?.toLowerCase();if(["input","textarea","select","button","a","summary"].includes(tag)||ev.altKey||ev.metaKey||ev.ctrlKey)return;if(ev.key==="ArrowRight"||ev.key==="PageDown"){ev.preventDefault();advance();}if(ev.key==="ArrowLeft"||ev.key==="PageUp"){ev.preventDefault();$("previous").click();}if(ev.key.toLowerCase()==="f")$("fullscreen").click();});
 render();
 })();
