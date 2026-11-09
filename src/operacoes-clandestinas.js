@@ -159,7 +159,7 @@ const CASES=[
 }
 ];
 
-const state={case:0,step:0,reveal:false,view:"circuito",marks:{}};
+const state={case:0,step:0,micro:0,reveal:false,view:"circuito",marks:{}};
 const current=()=>CASES[state.case];
 const marks=()=>state.marks[current().id]||(state.marks[current().id]={});
 const make=(tag,cls,t)=>{const e=doc.createElement(tag);if(cls)e.className=cls;if(t!==undefined)e.textContent=t;return e;};
@@ -195,13 +195,52 @@ function stageData(c,i){
   lawful:c.lawful
  };
 }
+
+const PHASE_NOTES=[
+ {mechanism:"No dossiê aparece uma obrigação ou um possível conflito patrimonial, com data e titular identificáveis.",effect:"A sequência temporal pode ser relevante para credores, mas não transforma automaticamente uma sociedade posterior em fraude."},
+ {mechanism:"Atos societários passam a indicar sociedades, administradores e participação econômica.",effect:"A existência de uma holding altera a forma de administração dos ativos; ela não elimina, por si, direitos de terceiros."},
+ {mechanism:"O contrato social e a atividade efetiva podem convergir ou apresentar discrepâncias.",effect:"Terceirização, sede residencial e ausência de empregados não constituem, isoladamente, simulação."},
+ {mechanism:"Uma operação de transferência patrimonial pode aparecer em títulos, registros e participações societárias.",effect:"A contrapartida em quotas, o valor e os direitos de terceiros precisam ser avaliados segundo o negócio concreto."},
+ {mechanism:"Aluguéis, empréstimos ou serviços entre sociedades podem constar de contratos e movimentações.",effect:"Inconsistências sem suporte podem indicar operação aparente; pagamentos e contratos reais podem ser legítimos."},
+ {mechanism:"Poderes de gestão e titularidade formal podem aparecer em pessoas diferentes.",effect:"Essa diferença pode decorrer de representação válida, mas exige explicação se contradisser a realidade econômica declarada."},
+ {mechanism:"Registros documentais e contábeis podem revelar versões, valores ou datas divergentes.",effect:"Diferença documental é sinal para conciliação e perícia, não conclusão automática de falsidade."},
+ {mechanism:"Um credor, cônjuge, herdeiro ou autoridade pode questionar atos específicos da estrutura.",effect:"As consequências jurídicas dependem de requisitos diferentes, prova e contraditório; não há responsabilização pelo score."}
+];
+function renderMicro(c,s){
+ const phase=PHASE_NOTES[state.step],auditoria=state.view==="auditoria";
+ const parts=auditoria?[
+  ["Delimitar o problema",s.concern],
+  ["Localizar as fontes",s.docs.join("; ")+". Obtenha acesso aos documentos pelos meios legalmente admitidos."],
+  ["Confrontar explicação regular",s.lawful],
+  ["Fundamentar a resposta",s.analysis]
+ ]:[
+  ["O que o caso relata",s.fact],
+  ["Qual mecanismo é observado",phase.mechanism],
+  ["Qual efeito poderia surgir",phase.effect],
+  ["Onde está o rastro documental",s.docs.join("; ")+". A verificação pode confirmar regularidade ou reforçar uma suspeita."]
+ ];
+ put("microHeading",auditoria?"Auditoria jurídica · sequência de análise":"Reconstituição · sequência dos fatos");
+ put("microCounter","Detalhe "+(state.micro+1)+" de 4");
+ const buttons=$("microButtons");buttons.replaceChildren();
+ for(let i=0;i<4;i++){
+  const btn=make("button","micro-btn"+(state.micro===i?" active":""));
+  btn.type="button";btn.textContent=String(i+1);
+  btn.setAttribute("aria-pressed",String(i===state.micro));
+  btn.title=parts[i][0];
+  btn.addEventListener("click",()=>{state.micro=i;renderMicro(c,s);});
+  buttons.append(btn);
+ }
+ put("microTitle",parts[state.micro][0]);
+ put("microText",parts[state.micro][1]);
+}
+
 function renderSwitches(){
  const root=$("caseButtons");root.replaceChildren();
  CASES.forEach((c,i)=>{
   const b=make("button","case-switch"+(i===state.case?" active":""));
   b.type="button";b.setAttribute("aria-pressed",String(i===state.case));
   b.append(make("strong","",c.short),make("small","",c.range));
-  b.addEventListener("click",()=>{state.case=i;state.step=0;state.reveal=false;render();resetPanelScroll();});
+  b.addEventListener("click",()=>{state.case=i;state.step=0;state.micro=0;state.reveal=false;render();resetPanelScroll();});
   root.append(b);
  });
  put("caseLabel","Caso "+(state.case+1)+" de "+CASES.length);
@@ -212,7 +251,7 @@ function renderSteps(){
   const b=make("button","flow-step"+(i===state.step?" active":"")+(i<state.step?" reviewed":""));
   b.type="button";b.title=s[2];b.setAttribute("aria-pressed",String(i===state.step));
   b.append(make("b","",s[0]),make("small","",s[1]));
-  b.addEventListener("click",()=>{state.step=i;state.reveal=false;render();resetPanelScroll();});
+  b.addEventListener("click",()=>{state.step=i;state.micro=0;state.reveal=false;render();resetPanelScroll();});
   root.append(b);
  });
  put("stepLabel","Etapa "+(state.step+1)+" de 8");
@@ -276,6 +315,7 @@ function render(){
  put("eventTitle",s.title);
  put("eventNarrative",state.view==="circuito"?s.fact:"Ponto de exame: "+s.concern+" Documentos relevantes: "+s.docs.join("; ")+".");
  put("legitimate",s.lawful);
+ renderMicro(c,s);
  for(const [id,v] of [["viewCircuito","circuito"],["viewAuditoria","auditoria"]]){
   const el=$(id);el.classList.toggle("active",state.view===v);el.setAttribute("aria-pressed",String(state.view===v));
  }
@@ -294,7 +334,7 @@ function render(){
  put("announce","Caso "+c.short+", etapa "+(state.step+1)+": "+s.title);
 }
 function resetPanelScroll(){doc.querySelectorAll(".op-panel").forEach(p=>{p.scrollTop=0;});}
-function changeStep(i){state.step=Math.max(0,Math.min(7,i));state.reveal=false;render();resetPanelScroll();}
+function changeStep(i){state.step=Math.max(0,Math.min(7,i));state.micro=0;state.reveal=false;render();resetPanelScroll();}
 
 function toggleDashboard(visible){
  const modal=$("dashboard"),backdrop=$("dashboardBackdrop");
@@ -309,11 +349,11 @@ $("openDashboard").addEventListener("click",()=>toggleDashboard(true));
 $("openDashboardBottom").addEventListener("click",()=>toggleDashboard(true));
 $("closeDashboard").addEventListener("click",()=>toggleDashboard(false));
 $("dashboardBackdrop").addEventListener("click",()=>toggleDashboard(false));
-$("viewCircuito").addEventListener("click",()=>{state.view="circuito";render();});
-$("viewAuditoria").addEventListener("click",()=>{state.view="auditoria";render();});
+$("viewCircuito").addEventListener("click",()=>{state.view="circuito";state.micro=0;render();});
+$("viewAuditoria").addEventListener("click",()=>{state.view="auditoria";state.micro=0;render();});
 
 $("previous").addEventListener("click",()=>changeStep(state.step-1));
-$("next").addEventListener("click",()=>{if(state.step<7)changeStep(state.step+1);else{state.case=(state.case+1)%CASES.length;state.step=0;state.reveal=false;render();resetPanelScroll();}});
+$("next").addEventListener("click",()=>{if(state.step<7)changeStep(state.step+1);else{state.case=(state.case+1)%CASES.length;state.step=0;state.micro=0;state.reveal=false;render();resetPanelScroll();}});
 $("reveal").addEventListener("click",()=>{state.reveal=!state.reveal;render();});
 $("resetChecks").addEventListener("click",()=>{if(!window.confirm("Limpar a análise deste dossiê?"))return;state.marks[current().id]={};renderChecks();renderDashboard();});
 $("print").addEventListener("click",()=>{state.reveal=true;render();window.print();});
