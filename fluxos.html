@@ -1,164 +1,257 @@
 <!doctype html>
-<html lang="pt-BR"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b1925"><title>Rastreio de fluxos | Holding Studio</title>
-<meta name="description" content="Simulação forense projetável 16:9 sobre a trajetória de recursos em suspeitas de lavagem de dinheiro, com exemplos fictícios de holdings.">
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#081d2a">
+<meta name="description" content="Aula 16:9: movimentos financeiros em holdings, rastreio documental e análise jurídica em cinco passos, com ícones vetoriais.">
+<title>Rastreio de Fluxos — Tutorial Visual | Holding Studio</title>
 <style>
-:root{--bg:#091b29;--panel:#163345;--panel2:#1d4352;--line:#3b6272;--fg:#eef7f7;--muted:#bad0d9;--gold:#edbd77;--green:#a7e1c6;--red:#f0ad9c;--paper:#f2f6f2;--ink:#193947}
+:root{--bg:#091d2a;--panel:#142f3e;--panel2:#193a49;--edge:#416576;--fg:#f5f9f8;--sub:#b7cdd6;--gold:#f4c77f;--mint:#a4edca;--rose:#ffc5b6;--soft:#eef5f1;--ink:#193945}
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;overflow:hidden}
-body{background:radial-gradient(circle at 80% 0,#20465b 0,transparent 45%),var(--bg);color:var(--fg);font:14px/1.42 system-ui,-apple-system,Segoe UI,sans-serif}
-button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-a{color:var(--green)}
-.app{display:flex;flex-direction:column;height:100dvh;min-height:0;width:100%;max-width:1900px;margin:auto}
-header{flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px clamp(14px,2vw,35px);border-bottom:1px solid var(--line)}
-.logo{font-weight:900;letter-spacing:.08em;font-size:17px;white-space:nowrap}.logo em{font-style:normal;color:var(--gold)}.logo small{display:block;font-weight:500;font-size:10px;letter-spacing:.09em;color:var(--muted)}
-nav{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
-.nav{color:#e3f1f4;text-decoration:none;background:#173748;border:1px solid #4a6b7e;padding:7px 10px;border-radius:9px;font-size:12px;font-weight:800}
-.nav.on{border-color:var(--gold);color:var(--gold)}
-main{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;padding:10px clamp(14px,2vw,35px) 0;gap:9px}
-.hero{display:flex;align-items:end;justify-content:space-between;gap:18px;flex:0 0 auto}
-.eyebrow{font-size:10px;text-transform:uppercase;color:var(--gold);letter-spacing:.13em;font-weight:900}
-h1{font-size:clamp(25px,2.45vw,41px);line-height:1.1;letter-spacing:-.035em;margin:3px 0 5px}
-.hero p{margin:0;max-width:940px;font-size:12px;line-height:1.35;color:var(--muted)}
-.note{font-size:11px;border:1px solid #58757a;border-left:3px solid var(--green);border-radius:9px;background:#1b3c46;padding:10px 13px;max-width:285px;color:#d9eee9}
-.cases{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:0 0 auto}
-.case{background:#1d3d4e;color:#e4f3f2;border:1px solid #4d6a7a;border-radius:10px;padding:9px 12px;text-align:left}
-.case b{display:block;font-size:13px}.case span{display:block;color:#bbd1d8;font-size:11px}
-.case[aria-pressed=true]{border:2px solid var(--gold);padding:8px 11px;background:#315266}
-.progress{display:flex;align-items:center;gap:9px;flex:0 0 auto}
-.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;flex:1}
-.step{background:#1f3d4d;border:1px solid #456778;padding:7px 6px;color:#cadfe5;border-radius:8px;font-weight:700;font-size:11px;min-width:0}
-.step[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:#1b3544}
-.progress small{color:var(--gold);font-size:11px;min-width:62px;text-align:right;font-weight:800}
-.workspace{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(0,.84fr);gap:11px;min-height:0;flex:1 1 auto;overflow:hidden}
-.panel{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#648998 transparent;border-radius:15px;padding:clamp(13px,1.5vw,24px);border:1px solid #416477;background:linear-gradient(145deg,#1b3c4d,#102b3c)}
-.panel.paper{background:linear-gradient(150deg,#f9fbf9,#e9f0ed);color:var(--ink);border-color:#cfded9}
-.panel h2{font-size:clamp(20px,1.8vw,29px);letter-spacing:-.025em;line-height:1.16;margin:4px 0 8px}
-.kicker{font-size:11px;text-transform:uppercase;font-weight:900;letter-spacing:.1em;color:var(--gold)}.paper .kicker{color:#23715e}
-.subline{color:var(--muted);font-size:12px;margin:0 0 12px}.paper .subline{color:#4c6b73}
-.diagram{display:grid;grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr);gap:2px;align-items:center;margin:13px 0 12px}
-.entity{border:1px solid #587687;background:#22485b;border-radius:11px;min-width:0;min-height:100px;padding:11px 8px;display:flex;flex-direction:column;justify-content:center}
-.entity.active{background:#35645e;border-color:#b4e9ce;box-shadow:0 0 0 1px #a6dcc4 inset}
-.entity.hint{background:#35485a;border-color:#dbb787}
-.entity small{font-size:10px;color:#bfd3dd;text-transform:uppercase;letter-spacing:.05em}
-.entity b{font-size:clamp(12px,1.02vw,17px);line-height:1.22;margin:4px 0;overflow-wrap:anywhere}
-.entity span{color:#e7c992;font-size:11px}
-.arrow{color:#789eae;font-size:24px;text-align:center;font-weight:900}
-.arrow.active{color:var(--gold)}
-.amountbox{border-radius:12px;padding:10px 13px;background:#1f4857;border-left:3px solid var(--gold);margin:10px 0}
-.amountbox small{display:block;color:#b4d4dc;font-size:11px}.amountbox strong{font-size:clamp(22px,2vw,34px);letter-spacing:-.025em;color:#f1d3a4}
-.story{font-size:13px;line-height:1.55;color:#d5e6e7;margin:10px 0}
-.phasebar{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 0}
-.phasebar span{border:1px solid #567889;padding:5px 8px;border-radius:8px;font-size:10px;color:#d4e4e6}
-.phasebar span.active{color:#203b40;background:#bde8d0;border-color:#bde8d0;font-weight:900}
-.doc{border:1px solid #d5e3df;background:#fff;border-radius:11px;padding:12px;margin:10px 0}
-.doc b{display:block;margin-bottom:4px;font-size:12px;color:#24675d}
-.doc p{margin:0;color:#365d67;font-size:12px;line-height:1.52}
-.question{font-size:15px;font-weight:900;color:#153b4a;margin:11px 0 4px}
-.options{display:grid;gap:7px;margin-top:9px}
-.choice{border:1px solid #b7cec7;border-radius:8px;background:#fff;color:#24505b;text-align:left;padding:9px 11px;font-size:12px;font-weight:700}
-.choice.selected{border-color:#b88b4c;background:#fff2db}
-.choice.correct{background:#ddf2e7;border-color:#5d9c80}
-.choice.incorrect{background:#f9e5e0;border-color:#c78b7c}
-.feedback{border-radius:9px;padding:10px 12px;background:#deeee7;color:#1c5749;font-size:12px;line-height:1.5;margin-top:9px}
-.feedback[hidden]{display:none}
-.sources{color:#536b71;font-size:11px;margin-top:12px;border-top:1px solid #cfdfd8;padding-top:10px}
-.sources a{color:#286a60}
-.bottom{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px clamp(14px,2vw,35px) 11px;border-top:1px solid #2a4c5c;background:#112b3b}
-.controls{display:flex;gap:8px}
-.btn{background:#25465a;border:1px solid #567488;border-radius:9px;padding:10px 16px;color:#f0f6f6;font-weight:800;font-size:12px}
-.btn.primary{background:var(--gold);color:#173542;border-color:var(--gold)}
-.btn:disabled{opacity:.35;cursor:not-allowed}
-.status{font-size:11px;color:var(--muted)}.assistive{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-@media(max-width:950px){.workspace{grid-template-columns:1fr;overflow:visible}.app{height:auto;min-height:100dvh}.workspace .panel{min-height:340px;max-height:none;overflow:visible}.hero .note{display:none}html,body{height:auto;overflow-y:auto}.diagram{grid-template-columns:1fr 20px 1fr 20px 1fr 20px 1fr}.entity{min-height:85px}.bottom{position:sticky;bottom:0;z-index:10}}
-@media(max-height:720px) and (min-width:951px){.hero p{display:none}.note{display:none}main{gap:6px}.case{padding:6px 11px}.case[aria-pressed=true]{padding:5px 10px}.entity{min-height:83px}.diagram{margin:8px 0}.panel{padding:12px}}
-@media(max-width:550px){.header{flex-wrap:wrap}.logo{font-size:15px}.cases{grid-template-columns:1fr}.steps{grid-template-columns:repeat(5,1fr)}.step{font-size:9px;padding:8px 2px}.diagram{grid-template-columns:1fr;gap:4px}.arrow{transform:rotate(90deg)}.entity{min-height:65px}.bottom .status{display:none}.controls{width:100%}.controls button{flex:1}}
-@media print{html,body{height:auto;overflow:visible;background:#fff}.app,.workspace,.panel{height:auto;overflow:visible;max-height:none}.workspace{display:block}.panel{margin:10px 0;break-inside:avoid}.paper{background:#fff}.controls,.steps,nav,.note{display:none}.diagram{color:#fff}}
-</style></head>
-<body><div class="app">
-<header><div class="logo">HOLDING <em>STUDIO</em><small>SHOWROOM JURÍDICO · PROJETOR 16:9</small></div>
-<nav><a class="nav" href="showroom.html">01 · Viabilidade</a><a class="nav" href="investigacao.html">02 · Investigação</a><a class="nav" href="operacoes-clandestinas.html">03 · Operações</a><a class="nav on" href="fluxos.html" aria-current="page">04 · Fluxos</a><button id="full" type="button" class="nav">⛶ Tela cheia</button></nav></header>
-<main>
-<div class="hero"><div><div class="eyebrow">Laboratório de rastreamento de ativos · casos fictícios</div><h1>Rastreio de <span>fluxos financeiros</span></h1><p>Acompanhe o percurso dos valores, confronte o movimento bancário com o contrato declarado e identifique quando uma holding pode estar envolvida em dissimulação patrimonial.</p></div><div class="note">Aula forense: os movimentos são descritos como fatos de um caso fictício, não como instruções para efetuar ou encobrir operações.</div></div>
-<div class="cases" id="cases" role="group" aria-label="Escolher caso"></div>
-<div class="progress"><div class="steps" id="steps" role="group" aria-label="Etapas do caso"></div><small id="progress">1 / 5</small></div>
-<div class="workspace"><section class="panel" aria-labelledby="title"><div class="kicker" id="phase">FASE INVESTIGATIVA</div><h2 id="title">Carregando...</h2><p class="subline" id="overview"></p>
-<div class="diagram" id="diagram" aria-label="Sequência visual de entidades e bens"></div>
-<div class="amountbox"><small id="moneyLabel">Valor sob análise</small><strong id="money">—</strong></div>
-<p class="story" id="story"></p>
-<div class="phasebar" id="phases" aria-label="Conceitos da análise"></div>
-</section>
-<section class="panel paper" aria-labelledby="analysisTitle"><div class="kicker">ADVOCACIA · CONFRONTO DOCUMENTAL</div><h2 id="analysisTitle">O que essa operação demonstra?</h2>
-<p class="subline" id="focus"></p>
-<div class="doc"><b>Documentos do dossiê</b><p id="documents"></p></div>
-<div class="doc"><b>Inconsistência a verificar</b><p id="inconsistency"></p></div>
-<div class="question" id="question"></div><div class="options" id="options"></div><div class="feedback" id="feedback" hidden></div>
-<div class="sources">Base de estudo: <a href="https://www.planalto.gov.br/ccivil_03/leis/l9613.htm" rel="noopener noreferrer" target="_blank">Lei nº 9.613/1998</a> · <a href="https://www.gov.br/coaf/pt-br" rel="noopener noreferrer" target="_blank">COAF</a></div>
-</section></div>
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font:16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 75% -5%,#28516a 0,transparent 39%),var(--bg);color:var(--fg)}
+button,a{font:inherit}button{cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+a{color:var(--mint)}
+svg.icon{height:1.2em;width:1.2em;flex:0 0 auto;vertical-align:middle;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.app{max-width:1920px;height:100dvh;display:flex;flex-direction:column;margin:auto;min-height:0;overflow:hidden}
+header{height:58px;flex:0 0 58px;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:8px clamp(18px,2.8vw,50px);border-bottom:1px solid #35596c}
+.brand{white-space:nowrap;font-size:18px;font-weight:900;letter-spacing:.075em}
+.brand em{font-style:normal;color:var(--gold)}
+.brand small{display:block;color:#a7c3d0;font-size:10px;letter-spacing:.12em;font-weight:600}
+.nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.nav a,.nav button{display:inline-flex;gap:5px;align-items:center;justify-content:center;text-decoration:none;border:1px solid #476878;background:#1c3848;color:#ecf5f4;border-radius:10px;padding:7px 12px;font-size:12px;font-weight:800}
+.nav a.current{border-color:var(--gold);color:var(--gold)}
+.layout{padding:12px clamp(18px,2.8vw,50px) 0;display:flex;flex:1;flex-direction:column;min-height:0;gap:10px}
+.section-top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex:0 0 auto}
+.top-left{min-width:0}
+.eyebrow{color:var(--gold);letter-spacing:.12em;font-weight:900;font-size:11px;text-transform:uppercase}
+h1{font-size:clamp(26px,2.8vw,45px);line-height:1.1;margin:4px 0 0;letter-spacing:-.045em}
+.case-chooser{display:flex;gap:8px;min-width:0}
+.case-btn{min-width:165px;text-align:left;border:1px solid #527186;border-radius:12px;background:#234456;color:#e9f5f5;padding:10px 13px}
+.case-btn b{display:block;font-size:14px}.case-btn small{display:block;font-size:11px;color:#b8cfda}
+.case-btn[aria-pressed=true]{background:#3b5e65;border:2px solid var(--gold);padding:9px 12px}
+.stepper{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;flex:0 0 auto}
+.step{background:#173949;border:1px solid #416579;color:#b8cfd4;border-radius:11px;display:flex;align-items:center;gap:9px;text-align:left;padding:9px 10px;font-size:12px;font-weight:800;min-width:0}
+.step strong{background:#325064;display:grid;place-items:center;width:25px;height:25px;border-radius:8px;font-size:12px}
+.step[aria-pressed=true]{color:#1b3843;background:var(--gold);border-color:var(--gold)}
+.step[aria-pressed=true] strong{background:#eedaa9}
+.stage{display:grid;grid-template-columns:minmax(0,1.52fr) minmax(300px,.78fr);gap:12px;flex:1;min-height:0;overflow:hidden}
+.visual,.explain{border-radius:18px;min-width:0;min-height:0;overflow:hidden;border:1px solid #46687a}
+.visual{display:flex;flex-direction:column;background:linear-gradient(135deg,#1c4050 0%,#112b3b 100%);padding:clamp(16px,2vw,30px);gap:12px}
+.explain{display:flex;flex-direction:column;justify-content:center;background:#f1f6f3;color:var(--ink);padding:clamp(17px,2vw,32px);gap:14px}
+.pill{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--mint)}
+.visual h2{font-size:clamp(21px,2.15vw,34px);line-height:1.15;letter-spacing:-.036em;margin:4px 0 0;max-width:800px}
+.event-summary{font-size:clamp(13px,1.1vw,17px);color:#c9e0e2;line-height:1.48;margin:2px 0 0;max-width:750px}
+.diagram{display:grid;grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr) 36px minmax(0,1fr);gap:7px;align-items:center;min-height:0;margin:auto 0;flex:1}
+.actor{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:175px;height:min(22vh,220px);min-width:0;border-radius:16px;border:1px solid #50738a;background:#244656;color:#c5d5dc;padding:10px 10px;opacity:.58;transition:opacity .2s,background .2s,border-color .2s}
+.actor.active{opacity:1;border:2px solid #bcebd0;background:#2d5a56;color:white;box-shadow:inset 0 0 0 1px #94d9b5}
+.actor.intermediate{opacity:.87;border-color:#9db2bc;background:#264858}
+.actor .big-icon{display:grid;place-items:center;border-radius:15px;background:#35596a;width:clamp(50px,5vw,76px);height:clamp(50px,5vw,76px);margin-bottom:11px}
+.actor.active .big-icon{background:#3e796a;color:#bff3d5}
+.big-icon .icon{height:clamp(30px,2.9vw,43px);width:clamp(30px,2.9vw,43px);stroke-width:1.7}
+.actor small{font-size:10px;text-transform:uppercase;font-weight:900;letter-spacing:.09em;color:#b6cbd2}
+.actor b{font-size:clamp(14px,1.18vw,19px);margin-top:5px;line-height:1.15;overflow-wrap:anywhere}
+.link-arrow{display:grid;place-items:center;color:#618ba1}
+.link-arrow .icon{height:36px;width:36px;stroke-width:2.5}
+.link-arrow.active{color:var(--gold)}
+.value-row{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#264e5c;border:1px solid #456c79;border-radius:12px;padding:11px 15px;flex:0 0 auto}
+.value-row span{display:block;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#b9d8d9}
+.value-row strong{font-size:clamp(25px,2.5vw,40px);line-height:1.12;color:#f5d097;white-space:nowrap}
+.value-row .icon{width:33px;height:33px;color:var(--gold)}
+.explain .eyebrow{color:#2d7c63}
+.explain .question{font-weight:900;letter-spacing:-.025em;font-size:clamp(21px,1.95vw,32px);line-height:1.22;margin:0}
+.explain p{margin:0;color:#4c6872;font-size:clamp(13px,1.05vw,17px);line-height:1.5}
+.evidence{background:#fff;border:1px solid #cadbd4;border-radius:12px;padding:13px 14px}
+.evidence b{font-size:12px;display:flex;align-items:center;gap:7px;color:#236353;margin-bottom:6px}
+.evidence p{font-size:13px;color:#345963}
+.reveal{border:1px solid #1a6658;border-radius:10px;padding:12px 15px;color:#fff;background:#205e57;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:900}
+.answer{display:none;border-left:4px solid #2b8b69;border-radius:7px;background:#ddede4;color:#1b5446;padding:11px 13px;font-size:13px;line-height:1.5}
+.answer.shown{display:block}
+footer{height:69px;flex:0 0 69px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px clamp(18px,2.8vw,50px);border-top:1px solid #3b6172;background:#102d3d}
+.controls{display:flex;gap:9px}
+.controls button{min-height:42px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #54788d;color:#f1f7f6;background:#23485b;font-size:14px;font-weight:900;border-radius:11px;padding:9px 22px}
+.controls .primary{background:var(--gold);border-color:var(--gold);color:#1d3c47}
+.controls button:disabled{opacity:.35;cursor:not-allowed}
+.progress-foot{display:flex;align-items:center;gap:12px;font-size:12px;color:#b2cbd3;font-weight:700}
+.progress-dots{display:flex;gap:6px}
+.progress-dots i{height:7px;width:19px;background:#436575;border-radius:10px}
+.progress-dots i.active{background:var(--gold)}
+.fineprint{font-size:10px;color:#99b4c2}
+.sr-only{position:absolute;width:1px;height:1px;left:-99999px;overflow:hidden}
+@media(max-height:700px) and (min-width:901px){
+ header{height:48px;flex-basis:48px}
+ footer{height:56px;flex-basis:56px}
+ .layout{gap:6px;padding-top:7px}
+ .section-top h1{font-size:25px}
+ .case-btn{padding:6px 10px}.case-btn[aria-pressed=true]{padding:5px 9px}
+ .step{padding:6px 8px}
+ .visual{gap:6px;padding:13px}
+ .diagram{margin:6px 0}
+ .actor{min-height:110px;height:19vh}
+ .value-row{padding:7px 11px}
+ .explain{gap:8px;padding:14px}
+ .evidence{padding:9px 10px}
+ .fineprint{display:none}
+}
+@media(max-width:900px){
+ html,body{height:auto;min-height:100%;overflow:auto}
+ .app{height:auto;min-height:100dvh}
+ .section-top{flex-direction:column;align-items:stretch}
+ .case-btn{flex:1;min-width:0}
+ .stage{grid-template-columns:1fr;overflow:visible}
+ .visual,.explain{overflow:visible}
+ .diagram{min-height:200px}
+ .actor{height:auto;min-height:145px}
+ footer{position:sticky;bottom:0;z-index:9}
+ .fineprint{display:none}
+}
+@media(max-width:500px){
+ header{height:auto;min-height:58px;flex-wrap:wrap}
+ .nav a{font-size:11px;padding:5px 7px}
+ h1{font-size:26px}
+ .stepper{gap:4px}.step{font-size:10px;padding:5px;gap:4px}.step strong{width:20px;height:20px}
+ .step .step-word{display:none}
+ .diagram{gap:3px;grid-template-columns:1fr 14px 1fr 14px 1fr}
+ .actor{min-height:125px;padding:5px}
+ .actor .big-icon{width:38px;height:38px}
+ .actor .big-icon .icon{width:27px;height:27px}
+ .actor b{font-size:11px}.actor small{font-size:9px}
+ .link-arrow .icon{width:18px;height:18px}
+ .controls{width:100%}.controls button{flex:1;font-size:12px;padding:9px}
+ .progress-foot{display:none}
+ footer{height:auto}
+}
+@media print{html,body{height:auto;overflow:auto}.app{height:auto;min-height:0}.stage{display:block}.visual,.explain{margin:12px 0;break-inside:avoid}.nav,.controls,.reveal{display:none}}
+</style>
+</head>
+<body>
+<svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden">
+ <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 9V6a2 2 0 0 1 2-2h12"/><path d="M16 13h5v4h-5a2 2 0 0 1 0-4Z"/></symbol>
+ <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 21v-4h6v4M8 7h2m4 0h2M8 11h2m4 0h2"/></symbol>
+ <symbol id="i-bank" viewBox="0 0 24 24"><path d="m3 10 9-6 9 6M4 20h16M4 10h16M6 10v9m4-9v9m4-9v9m4-9v9M2 22h20"/></symbol>
+ <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9Z"/><path d="M9 21v-7h6v7"/></symbol>
+ <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+ <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></symbol>
+ <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-7-7 7 7-7 7"/></symbol>
+ <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+ <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 6h14M5 6l-3 7h6L5 6Zm14 0-3 7h6l-3-7ZM7 21h10"/></symbol>
+ <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 9 4v6c0 5-4 8-9 10-5-2-9-5-9-10V6l9-4Z"/><path d="m8 12 3 3 5-5"/></symbol>
+ <symbol id="i-arrows" viewBox="0 0 24 24"><path d="M4 7h15l-4-4m4 4-4 4M20 17H5l4 4m-4-4 4-4"/></symbol>
+ <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 2h14v20l-4-2-3 2-3-2-4 2V2ZM9 7h6M9 12h6"/></symbol>
+ <symbol id="i-gavel" viewBox="0 0 24 24"><path d="m14 7 3 3-5 5-3-3 5-5ZM8 11l-3 3 3 3 3-3M12 15l7 7M3 22h11"/></symbol>
+</svg>
+<div class="app">
+<header>
+ <div class="brand">HOLDING <em>STUDIO</em><small>AULA VISUAL · RASTREIO FINANCEIRO · 16:9</small></div>
+ <nav class="nav">
+  <a href="operacoes-clandestinas.html"><svg class="icon"><use href="#i-arrow"/></svg> Operações</a>
+  <a href="showroom.html">Viabilidade</a>
+  <a class="current" href="fluxos.html" aria-current="page">Tutorial visual</a>
+  <button id="fullscreen" type="button"><svg class="icon"><use href="#i-eye"/></svg> Tela cheia</button>
+ </nav>
+</header>
+<main class="layout">
+ <div class="section-top">
+  <div class="top-left"><div class="eyebrow">Laboratório de Direito · Reconstrução de operações suspeitas</div><h1>O percurso do dinheiro, <span style="color:var(--gold)">uma etapa de cada vez.</span></h1></div>
+  <div class="case-chooser" id="cases" role="group" aria-label="Selecionar patrimônio fictício"></div>
+ </div>
+ <div class="stepper" id="steps" role="group" aria-label="Etapas do tutorial"></div>
+ <div class="stage">
+  <section class="visual" aria-labelledby="sceneTitle">
+   <div>
+    <div class="pill" id="phase">FASE</div>
+    <h2 id="sceneTitle">Carregando...</h2>
+    <p class="event-summary" id="summary"></p>
+   </div>
+   <div id="diagram" class="diagram" aria-label="Representação do circuito financeiro investigado"></div>
+   <div class="value-row"><div><span id="valueLabel">Valor sob análise</span><strong id="value">—</strong></div><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></div>
+  </section>
+  <section class="explain" aria-labelledby="question">
+   <div class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-scale"/></svg> Perspectiva do advogado</div>
+   <div><h2 class="question" id="question">Qual é a inconsistência?</h2><p id="clue">Carregando...</p></div>
+   <div class="evidence"><b><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg> Documento que importa</b><p id="document"></p></div>
+   <button id="reveal" class="reveal" type="button" aria-expanded="false"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg> Revelar análise</button>
+   <div class="answer" id="answer" aria-live="polite"></div>
+  </section>
+ </div>
 </main>
-<div class="bottom"><div class="controls"><button class="btn" id="prev" type="button">← Anterior</button><button class="btn primary" id="next" type="button">Próxima movimentação →</button></div><span class="status">Teclas ← → para navegar · F para tela cheia · cada painel rola separadamente</span></div><div id="live" class="assistive" aria-live="polite"></div>
+<footer>
+ <div class="controls">
+  <button id="previous" type="button"><svg class="icon" aria-hidden="true"><use href="#i-arrow" style="transform:rotate(180deg);transform-origin:center"/></svg> Voltar</button>
+  <button id="next" class="primary" type="button">Próximo movimento <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+ </div>
+ <div class="progress-foot"><span id="counter">1 / 5</span><span id="dots" class="progress-dots" aria-hidden="true"></span><span class="fineprint">Casos fictícios. Fluxos sob investigação não comprovam lavagem.</span></div>
+</footer>
+<div class="sr-only" id="live" aria-live="polite"></div>
 </div>
 <script>
 (function(){
 "use strict";
-const $=id=>document.getElementById(id),format=v=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0}).format(v);
-const CASES=[
-{name:"Patrimônio pequeno",summary:"Imóvel familiar de R$ 250 mil · hipótese de contratos inconsistentes",nodes:["Origem alegada","Empresa A","Holding B","Imóvel"],facts:[
-{phase:"Contexto",title:"O primeiro alerta é documental",amount:250000,highlight:0,moneyLabel:"Patrimônio declarado",overview:"A investigação parte de uma holding familiar que administra um imóvel.",story:"O imóvel é registrado por R$ 250 mil. A autoridade recebe informações sobre pagamentos que não parecem compatíveis com a atividade alegada por uma empresa vinculada. Ainda não há prova de crime antecedente.",focus:"Qual é a origem econômica dos recursos?",docs:"Matrícula do imóvel; contratos de serviços; demonstrações financeiras.",issue:"Os documentos disponíveis mostram receitas declaradas inferiores aos recebimentos identificados.",question:"A divergência prova lavagem de dinheiro?",options:["Sim, qualquer diferença é lavagem.","Não. É necessário estabelecer a origem ilícita e a ocultação ou dissimulação exigidas pela lei."],correct:1,why:"Divergência contábil pode ter explicações lícitas, infração administrativa ou ser um indício. Lavagem possui requisitos próprios."},
-{phase:"Colocação · conceito investigativo",title:"Entradas incompatíveis com a receita declarada",amount:180000,highlight:1,moneyLabel:"Créditos bancários a explicar",overview:"O foco está na entrada de valores no sistema financeiro.",story:"Os extratos fictícios mostram créditos que totalizam R$ 180 mil. A empresa alega que a receita decorre de serviços, mas os contratos disponíveis dão suporte a parcela menor dos valores.",focus:"O que foi efetivamente prestado ou vendido?",docs:"Extratos; contratos; notas fiscais; relatórios de prestação de serviços.",issue:"A documentação conhecida não explica integralmente as entradas. Não há, neste ponto, prova de que os valores derivem de uma infração penal.",question:"Qual providência instrutória é correta?",options:["Reconstruir a receita e exigir suporte das operações, por meios legais.","Concluir que créditos sem contrato são automaticamente crime."],correct:0,why:"A divergência exige conciliação, identificação de titulares e análise das operações reais. O nome 'colocação' é uma categoria de estudo."},
-{phase:"Ocultação ou dissimulação · conceito",title:"Transferência intragrupo sob questionamento",amount:110000,highlight:2,moneyLabel:"Transferência que exige conciliação",overview:"A análise alcança relações econômicas entre sociedades.",story:"Parte dos recursos aparece na contabilidade de uma holding relacionada, sob a descrição de obrigação entre empresas. Os autos didáticos não contêm documentação suficiente para confirmar a natureza do negócio.",focus:"O registro descreve uma operação econômica verdadeira?",docs:"Extratos intercompanhias; balancetes; contratos; comprovantes de execução.",issue:"As demonstrações das duas sociedades não estão conciliadas e a causa econômica da movimentação permanece controvertida.",question:"Toda transferência entre empresas de um grupo é suspeita?",options:["Sim, grupos societários são mecanismos clandestinos.","Não. É preciso verificar a efetividade do negócio, a coerência contábil e os elementos legais."],correct:1,why:"Operações intercompanhias podem ser regulares. A dissimulação não se presume de uma transferência."},
-{phase:"Integração · conceito investigativo",title:"Aquisição patrimonial sob exame",amount:155000,highlight:3,moneyLabel:"Parcela da aquisição a rastrear",overview:"O exame se concentra na utilização econômica posterior dos recursos.",story:"Uma operação de aquisição do imóvel menciona pagamentos cuja origem econômica ainda não foi totalmente demonstrada. O bem possui matrícula e instrumento formal; isso não esclarece, por si só, a origem dos valores.",focus:"A aquisição está economicamente justificada?",docs:"Matrícula; escritura; comprovantes de pagamento; registros contábeis.",issue:"A rastreabilidade entre receitas alegadas, pagamentos e aquisição precisa ser reconstruída documentalmente.",question:"Comprar um imóvel por meio da holding comprova lavagem?",options:["Não. A aquisição pode ser regular; faltam elementos legais específicos.","Sim. Toda compra realizada por holding é criminosa."],correct:0,why:"O uso de uma pessoa jurídica para adquirir bens é lícito. É preciso examinar a origem do dinheiro e eventuais atos concretos de ocultação ou dissimulação."},
-{phase:"Parecer jurídico",title:"Do rastro financeiro à conclusão fundamentada",amount:180000,highlight:2,moneyLabel:"Créditos inicialmente investigados",overview:"O advogado reúne a cronologia e identifica lacunas probatórias.",story:"Existem divergências sobre receitas, movimentações societárias e pagamentos associados ao imóvel. Os fatos fictícios permitem formular hipóteses, mas não autorizam uma condenação automática.",focus:"Quais elementos probatórios permanecem ausentes?",docs:"Matriz de fluxo; demonstrações reconciliadas; origem dos valores; decisões judiciais pertinentes.",issue:"Ainda é necessário demonstrar a eventual origem em infração penal e a conduta de ocultação ou dissimulação.",question:"Qual conclusão deve constar de um parecer responsável?",options:["Fraude comprovada apenas pelo número de transferências.","Suspeita que depende de aprofundamento e do preenchimento dos elementos do tipo penal."],correct:1,why:"O parecer deve separar fatos demonstrados, hipóteses e lacunas, assegurando contraditório e análise independente de cada operação."}
-]},
-{name:"Patrimônio elevado",summary:"Grupo familiar de R$ 15 milhões · operações entre pessoas jurídicas",nodes:["Atividade empresarial","Sociedade A","Holding central","Ativos"],facts:[
-{phase:"Contexto",title:"Mapa de um grupo patrimonial",amount:15000000,highlight:0,moneyLabel:"Patrimônio total ilustrativo",overview:"Várias sociedades concentram ativos e contratos.",story:"O grupo administra bens avaliados em R$ 15 milhões. Há despesas legítimas, contratos entre sociedades e pagamentos relevantes. A complexidade é um dado, não prova de crime.",focus:"Quais atividades têm suporte econômico?",docs:"Organograma; declarações societárias; balanços; matrículas.",issue:"É necessário identificar direitos econômicos, titulares e operações reais.",question:"Um grupo societário complexo configura lavagem?",options:["Não. Complexidade e parentesco não são elementos suficientes do crime.","Sim, quando há mais de uma holding."],correct:0,why:"A legitimidade ou irregularidade deve ser demonstrada nos atos concretos."},
-{phase:"Colocação · conceito investigativo",title:"Recebimentos relevantes sob apuração",amount:2400000,highlight:1,moneyLabel:"Entradas sob conciliação",overview:"A análise começa pelas receitas declaradas e recebidas.",story:"A sociedade operacional registra créditos expressivos, apresentados como decorrentes de contratos comerciais. Parte desses contratos ainda não teve sua execução demonstrada no dossiê.",focus:"A atividade justifica os pagamentos?",docs:"Contratos comerciais; extratos; notas; comprovação de entregas.",issue:"Existem diferenças entre os serviços descritos e os documentos de prestação efetiva.",question:"Qual evidência é mais importante nesta fase?",options:["Provas da efetiva atividade e da origem dos recursos.","Apenas a quantidade de contas bancárias."],correct:0,why:"A reconstrução econômica e documental antecede qualquer imputação de ilícito."},
-{phase:"Ocultação ou dissimulação · conceito",title:"Fluxos entre sociedades são questionados",amount:1700000,highlight:2,moneyLabel:"Movimentos intragrupo investigados",overview:"O exame alcança relações comerciais internas do grupo.",story:"Transferências entre sociedades constam de registros com diferentes descrições econômicas. A auditoria precisa esclarecer quais contratos e entregas correspondem a cada pagamento.",focus:"Como as sociedades contabilizaram as mesmas operações?",docs:"DRE; balanços; contratos intercompanhias; conciliações.",issue:"Não há no material uma correspondência completa entre movimentações e documentos de suporte.",question:"O que diferencia gestão lícita de possível dissimulação?",options:["A existência de outras empresas no organograma.","A realidade das operações e o eventual propósito de ocultar ou dissimular recursos de origem ilícita."],correct:1,why:"A prova deve alcançar a substância econômica e os elementos do tipo penal, não apenas a cadeia societária."},
-{phase:"Integração · conceito investigativo",title:"Aplicação de recursos em ativos patrimoniais",amount:3200000,highlight:3,moneyLabel:"Ativos associados à investigação",overview:"O dinheiro aparece relacionado a uma aquisição imobiliária documentada.",story:"Uma holding registra aquisição de ativos por R$ 3,2 milhões. A operação pode ser inteiramente lícita; há controvérsia sobre a conciliação de certas fontes de financiamento.",focus:"As origens dos pagamentos estão identificadas?",docs:"Escrituras; matrículas; comprovantes; demonstração de financiamento.",issue:"A documentação precisa permitir vincular o pagamento à fonte econômica que o sustentou.",question:"O que o advogado não deve presumir?",options:["Que um imóvel adquirido por holding é necessariamente fruto de lavagem.","Que documentos devem ser apresentados quando exigidos legalmente."],correct:0,why:"A forma jurídica da aquisição não é presunção de ilícito."},
-{phase:"Parecer jurídico",title:"Consolidação das hipóteses",amount:2400000,highlight:2,moneyLabel:"Receitas que iniciaram a investigação",overview:"As movimentações são confrontadas com a atividade real.",story:"O relatório distingue operações confirmadas, divergências ainda não explicadas e elementos que poderiam justificar novas diligências. Nenhuma das hipóteses apresentadas dispensa requisitos penais e processuais.",focus:"Como apresentar o diagnóstico sem antecipar a condenação?",docs:"Conciliações; cronologia; matriz de documentos; decisões pertinentes.",issue:"O perito não transforma pontuação de risco em prova de origem criminosa.",question:"Qual formulação é correta?",options:["O número de camadas empresariais prova dolo.","Há inconsistências a verificar com base no conjunto probatório e na Lei nº 9.613/1998."],correct:1,why:"A conclusão não deve afirmar culpa sem prova suficiente."}
-]}
+const $=id=>document.getElementById(id);
+const real=x=>x===null?"—":new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0}).format(x);
+const scenarios=[
+ {name:"Patrimônio pequeno",short:"R$ 250 mil",actors:[["i-wallet","Origem","Receitas alegadas"],["i-building","Empresa A","Documentos"],["i-bank","Holding B","Contabilidade"]],slides:[
+  {phase:"01 · CONTEXTO",title:"De onde vêm os recursos?",summary:"Uma holding familiar administra um imóvel. Os documentos disponíveis não explicam todas as receitas atribuídas a uma empresa ligada.",index:0,value:250000,label:"Imóvel do exemplo",question:"A holding já é uma fraude?",clue:"O valor do bem e a existência de empresas não bastam para concluir lavagem.",document:"Matrícula, contrato social e histórico das receitas.",answer:"Não. É preciso identificar os recursos, a possível infração penal de origem e atos concretos de ocultação ou dissimulação."},
+  {phase:"02 · COLOCAÇÃO (CONCEITO)",title:"Entradas exigem explicação econômica.",summary:"Extratos fictícios registram créditos superiores às receitas comprovadas até agora.",index:1,value:180000,label:"Créditos sob conciliação",question:"O que o advogado confere?",clue:"A divergência pode ter explicação lícita, tributária ou contratual.",document:"Extratos, notas, contratos e comprovantes de serviços.",answer:"Confrontar cada recebimento com sua origem alegada. Créditos sem conciliação não provam, isoladamente, lavagem."},
+  {phase:"03 · DISSIMULAÇÃO (CONCEITO)",title:"O registro da transferência é questionado.",summary:"Uma movimentação entre sociedades relacionadas não está suficientemente explicada pelos documentos apresentados.",index:2,value:110000,label:"Movimento entre sociedades",question:"O contrato corresponde à realidade?",clue:"Transferências intragrupo são permitidas quando possuem causa econômica verdadeira.",document:"Contrato entre empresas, extratos e balancetes de ambas.",answer:"Verificar prestação efetiva, causa econômica e registros coerentes. Dissimulação depende dos requisitos legais; não se presume do CNPJ."},
+  {phase:"04 · INTEGRAÇÃO (CONCEITO)",title:"A origem de uma aquisição é examinada.",summary:"Há pagamentos associados à aquisição imobiliária cuja fonte econômica continua sem documentação completa.",index:2,value:155000,label:"Parcela da aquisição sob análise",question:"Comprar imóvel comprova lavagem?",clue:"A titularidade imobiliária em nome de holding é comum e pode ser legítima.",document:"Escritura, matrícula, comprovantes e financiamento.",answer:"Não. A investigação precisa demonstrar a origem dos valores e o possível vínculo com ocultação ou dissimulação de recursos provenientes de infração penal."},
+  {phase:"05 · CONCLUSÃO",title:"A prova deve fechar o circuito.",summary:"O caso reúne divergências entre receitas, registros societários e pagamentos, mas ainda há informações a esclarecer.",index:1,value:null,label:"Parecer jurídico",question:"Qual conclusão é defensável?",clue:"Indício não equivale a prova de crime. A responsabilidade depende do conjunto probatório.",document:"Linha do tempo, matriz financeira e documentação reconciliada.",answer:"Registrar fatos demonstrados, hipóteses e lacunas. A Lei nº 9.613/1998 exige elementos próprios; o parecer não deve antecipar condenação."}
+ ]},
+ {name:"Patrimônio elevado",short:"R$ 15 milhões",actors:[["i-building","Operação","Receitas"],["i-arrows","Empresas","Transações"],["i-bank","Holding","Ativos"]],slides:[
+  {phase:"01 · CONTEXTO",title:"Várias sociedades, qual função real?",summary:"Um grupo familiar administra imóveis e participações que somam R$ 15 milhões. A estrutura complexa pode ser plenamente lícita.",index:0,value:15000000,label:"Patrimônio ilustrativo",question:"Muitas empresas significam fraude?",clue:"Número de pessoas jurídicas não é critério suficiente para lavagem.",document:"Organograma, contratos sociais e demonstrações.",answer:"Não. Devem ser identificadas funções reais, direitos econômicos, passivos e operações específicas."},
+  {phase:"02 · COLOCAÇÃO (CONCEITO)",title:"Receitas elevadas precisam de lastro.",summary:"Créditos expressivos são atribuídos a contratos comerciais, mas parte de sua execução ainda não está demonstrada no material.",index:0,value:2400000,label:"Créditos investigados",question:"Qual é a pergunta principal?",clue:"Uma empresa pode receber valores altos legitimamente.",document:"Contratos, notas fiscais e comprovação de entregas.",answer:"Verificar se a atividade e os documentos explicam as receitas, distinguindo diferenças contábeis de possíveis ilícitos."},
+  {phase:"03 · DISSIMULAÇÃO (CONCEITO)",title:"Fluxos entre sociedades sob exame.",summary:"Pagamentos entre empresas possuem descrições econômicas que precisam ser conciliadas com as atividades efetivas.",index:1,value:1700000,label:"Movimentos em análise",question:"Há serviço, dívida ou operação real?",clue:"A circulação intragrupo pode ser lícita. A suspeita nasce de contradições materiais.",document:"Balanços, DRE, contratos e comprovantes.",answer:"A auditoria confronta registros de origem e destino, efetiva prestação e eventual ocultação de valores de origem ilícita."},
+  {phase:"04 · INTEGRAÇÃO (CONCEITO)",title:"Um ativo aparece no destino do circuito.",summary:"Uma holding registra aquisição de imóveis, e a origem de parte dos recursos usados está sob questionamento.",index:2,value:3200000,label:"Aquisição analisada",question:"A aplicação do dinheiro tem lastro?",clue:"O destino patrimonial não substitui a análise da origem.",document:"Escrituras, registros, comprovantes e financiamento.",answer:"A aquisição por holding pode ser lícita. É necessário vincular os pagamentos a fontes demonstráveis e verificar elementos de ocultação ou dissimulação."},
+  {phase:"05 · CONCLUSÃO",title:"O advogado separa fatos e hipóteses.",summary:"O relatório final aponta valores conciliados, documentos ausentes e divergências que precisam ser esclarecidas.",index:1,value:null,label:"Parecer jurídico",question:"O que podemos afirmar à turma?",clue:"Complexidade e montante elevado não constituem, isoladamente, prova penal.",document:"Matriz dos fluxos, contrato e linha do tempo.",answer:"É possível delimitar diligências e riscos jurídicos, mas não afirmar lavagem sem origem em infração penal e atos típicos demonstrados."}
+ ]}
 ];
-const state={c:0,s:0,answers:{}};
-const make=(tag,cls,text)=>{let e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;};
+const state={c:0,s:0,reveal:false};
+const icon=id=>{const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("class","icon");svg.setAttribute("aria-hidden","true");const use=document.createElementNS("http://www.w3.org/2000/svg","use");use.setAttribute("href","#"+id);svg.append(use);return svg};
+const make=(name,cls,text)=>{const el=document.createElement(name);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el};
+function setText(id,text){$(id).textContent=text;}
 function render(){
- const c=CASES[state.c],f=c.facts[state.s];
- const cards=$("cases");cards.replaceChildren();
- CASES.forEach((x,i)=>{const b=make("button","case");b.type="button";b.setAttribute("aria-pressed",String(i===state.c));b.append(make("b","",x.name),make("span","",x.summary));b.addEventListener("click",()=>{state.c=i;state.s=0;render();resetScroll();});cards.append(b);});
- const steps=$("steps");steps.replaceChildren();
- ["Contexto","Colocação","Ocultação","Integração","Parecer"].forEach((name,i)=>{const b=make("button","step",String(i+1)+" · "+name);b.setAttribute("aria-pressed",String(i===state.s));b.addEventListener("click",()=>{state.s=i;render();resetScroll();});steps.append(b);});
- $("progress").textContent=(state.s+1)+" / 5";
- $("phase").textContent=f.phase;$("title").textContent=f.title;$("overview").textContent=f.overview;
- $("moneyLabel").textContent=f.moneyLabel;$("money").textContent=format(f.amount);$("story").textContent=f.story;
- const diag=$("diagram");diag.replaceChildren();
- c.nodes.forEach((n,i)=>{
-  const item=make("div","entity"+(i===f.highlight?" active":"")+(i===3&&state.s===4?" hint":""));
-  item.append(make("small","",["Ponto inicial","Registro intermediário","Pessoa jurídica","Bem ou destino"][i]),make("b","",n),make("span","",i===f.highlight?"Sob exame":"No circuito fictício"));
-  diag.append(item);
-  if(i<3)diag.append(make("span","arrow"+(f.highlight===i+1?" active":""),"➜"));
+ const c=scenarios[state.c],d=c.slides[state.s];
+ const cs=$("cases");cs.replaceChildren();
+ scenarios.forEach((x,i)=>{const b=make("button","case-btn");b.type="button";b.setAttribute("aria-pressed",String(i===state.c));b.append(make("b","",x.name),make("small","",x.short));b.addEventListener("click",()=>{state.c=i;state.s=0;state.reveal=false;render();});cs.append(b);});
+ const st=$("steps");st.replaceChildren();
+ ["Contexto","Entradas","Movimentos","Ativo","Parecer"].forEach((name,i)=>{
+  const b=make("button","step");b.type="button";b.setAttribute("aria-pressed",String(i===state.s));
+  b.append(make("strong","",String(i+1)),make("span","step-word",name));b.addEventListener("click",()=>{state.s=i;state.reveal=false;render();});st.append(b);
  });
- const phases=$("phases");phases.replaceChildren();
- ["Contexto","Colocação","Ocultação","Integração","Parecer"].forEach((n,i)=>phases.append(make("span",i===state.s?"active":"",n)));
- $("focus").textContent=f.focus;$("documents").textContent=f.docs;$("inconsistency").textContent=f.issue;$("question").textContent=f.question;
- const answers=$("options"),key=state.c+":"+state.s,selected=state.answers[key];answers.replaceChildren();
- f.options.forEach((opt,i)=>{
-  const b=make("button","choice"+(selected===i?" selected":"")+(selected!==undefined&&i===f.correct?" correct":"")+(selected===i&&i!==f.correct?" incorrect":""),String.fromCharCode(65+i)+". "+opt);
-  b.type="button";b.setAttribute("aria-pressed",String(selected===i));b.addEventListener("click",()=>{state.answers[key]=i;render();});answers.append(b);
+ setText("phase",d.phase);setText("sceneTitle",d.title);setText("summary",d.summary);
+ setText("valueLabel",d.label);setText("value",real(d.value));
+ setText("question",d.question);setText("clue",d.clue);setText("document",d.document);setText("answer",d.answer);
+ $("answer").classList.toggle("shown",state.reveal);
+ $("reveal").setAttribute("aria-expanded",String(state.reveal));
+ $("reveal").textContent=state.reveal?"Ocultar análise":"⚖ Revelar análise jurídica";
+ const diagram=$("diagram");diagram.replaceChildren();
+ c.actors.forEach(([id,label,sub],i)=>{
+  const node=make("div","actor"+(i===d.index?" active":i===d.index-1?" intermediate":""));
+  const symbol=make("span","big-icon");symbol.append(icon(id));
+  node.append(symbol,make("small","",label),make("b","",sub));diagram.append(node);
+  if(i<2){const arr=make("div","link-arrow"+(i===d.index-1?" active":""));arr.append(icon("i-arrow"));diagram.append(arr);}
  });
- const fb=$("feedback");fb.hidden=selected===undefined;if(selected!==undefined)fb.textContent=(selected===f.correct?"✓ Resposta fundamentada. ":"⚖ Reveja a interpretação. ")+f.why;
- $("prev").disabled=state.s===0;$("next").textContent=state.s===4?"Próximo caso →":"Próxima movimentação →";
- $("live").textContent=c.name+", "+f.phase+", "+f.title;
+ $("previous").disabled=state.s===0;
+ $("next").lastChild.textContent="";
+ $("next").replaceChildren(make("span","",state.s===4?"Próximo patrimônio":"Próximo movimento"),icon("i-arrow"));
+ const dots=$("dots");dots.replaceChildren();for(let i=0;i<5;i++)dots.append(make("i",i===state.s?"active":""));
+ setText("counter",(state.s+1)+" / 5");setText("live",c.name+": "+d.phase+": "+d.title);
 }
-function resetScroll(){document.querySelectorAll(".panel").forEach(p=>p.scrollTop=0);}
-$("prev").addEventListener("click",()=>{if(state.s>0){state.s--;render();resetScroll();}});
-$("next").addEventListener("click",()=>{if(state.s<4)state.s++;else{state.c=(state.c+1)%CASES.length;state.s=0;}render();resetScroll();});
-$("full").addEventListener("click",()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen?.();});
-document.addEventListener("keydown",e=>{if(["INPUT","TEXTAREA","BUTTON","A","SELECT"].includes(e.target.tagName)||e.ctrlKey||e.altKey||e.metaKey)return;
- if(e.key==="ArrowRight")$("next").click();
- else if(e.key==="ArrowLeft")$("prev").click();
- else if(e.key.toLowerCase()==="f")$("full").click();
+$("previous").addEventListener("click",()=>{if(state.s>0){state.s--;state.reveal=false;render();}});
+$("next").addEventListener("click",()=>{if(state.s<4)state.s++;else{state.c=(state.c+1)%scenarios.length;state.s=0;}state.reveal=false;render();});
+$("reveal").addEventListener("click",()=>{state.reveal=!state.reveal;render();});
+$("fullscreen").addEventListener("click",()=>{if(document.fullscreenElement)document.exitFullscreen?.();else document.documentElement.requestFullscreen?.();});
+document.addEventListener("keydown",ev=>{
+ if(["INPUT","TEXTAREA","BUTTON","SELECT","A"].includes(ev.target?.tagName)||ev.metaKey||ev.ctrlKey||ev.altKey)return;
+ if(ev.key==="ArrowRight"){ev.preventDefault();$("next").click();}
+ else if(ev.key==="ArrowLeft"){ev.preventDefault();$("previous").click();}
+ else if(ev.key.toLowerCase()==="f"){ev.preventDefault();$("fullscreen").click();}
+ else if(ev.key===" "){ev.preventDefault();$("reveal").click();}
 });
 render();
 })();
 </script>
-</body></html>
+</body>
+</html>
