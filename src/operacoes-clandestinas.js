@@ -314,7 +314,8 @@ function renderDashboard(){
  ["ID","Indício/questão","Documento ou diligência","Status"].forEach(v=>header.append(make("span","",v)));proof.append(header);
  reviewed.forEach(c=>{
   const row=make("div","proofrow");
-  row.append(make("span","code",c.id),make("span","",c.label),make("span","",c.docs),make("span","",selected[c.id]==="alert"?"Indício":"Afastado"));proof.append(row);
+  const status=selected[c.id]==="alert"?"Indício":"Afastado";
+  row.append(make("span","code",c.id),make("span","",c.label+" · "+c.docs+" · "+status));proof.append(row);
  });
 }
 function render(){
