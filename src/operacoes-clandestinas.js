@@ -184,7 +184,7 @@ const ART_NAMES=[
 "07_grupo.webp","08_investigacao.webp","09_julgamento.webp","10_final.webp"];
 const ART_CASE={credores:"02_credores.webp",meacao:"03_meacao.webp",herdeiros:"04_herdeiros.webp",
 itbi:"05_itbi.webp","aluguéis":"06_alugueis.webp",grupos:"07_grupo.webp"};
-let artEpoch=0,lastObjectURL=null;
+const artMemory=new Map();let artEpoch=0,lastObjectURL=null;
 function sceneArt(c,step){
  if(step===5)return "08_investigacao.webp";
  if(step===6)return "09_julgamento.webp";
@@ -201,6 +201,7 @@ function artDB(){
  });
 }
 async function readStoredArt(name){
+ if(artMemory.has(name))return artMemory.get(name);
  try{
   const db=await artDB();
   return await new Promise(resolve=>{
@@ -268,9 +269,9 @@ $("artImportFile").addEventListener("change",async event=>{
   }
   if(!all.length)throw Error("Nenhuma das 10 imagens foi encontrada no arquivo.");
   let stored=0;
-  for(const [name,blob] of all)if(await saveArt(name,blob))stored++;
+  for(const [name,blob] of all){artMemory.set(name,blob);if(await saveArt(name,blob))stored++;}
   $("artStatus").textContent=all.length+" artes disponíveis"+(stored===0?" nesta sessão":"");
-  if(stored===0)window.alert("O navegador bloqueou o armazenamento local das imagens. Use uma janela comum.");
+  if(stored===0)$("artStatus").textContent=all.length+" artes nesta sessão (sem armazenamento permanente)";
   renderArt(current(),state.step);
  }catch(err){$("artStatus").textContent="Falha ao importar";window.alert(String(err.message||err));}
  finally{event.target.value="";}
