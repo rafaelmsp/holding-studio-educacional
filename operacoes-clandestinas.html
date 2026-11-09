@@ -8,29 +8,28 @@
 <script defer src="src/operacoes-clandestinas.js?v=20261108-4"></script>
 </head>
 <body><div class="app operations-app">
-<header class="top"><div class="brand"><strong>HOLDING <em>STUDIO</em></strong><small>Curso interativo · Direito de Família e Sucessões</small></div>
+<header class="top"><div class="brand"><strong>HOLDING <em>STUDIO</em></strong><small>MÓDULO 02 · CASOS E RECONSTITUIÇÃO JURÍDICA</small></div>
 <nav class="module-tabs" aria-label="Módulos do curso">
 <a class="utility" href="showroom.html">01 · Viabilidade</a>
-<a class="utility" href="investigacao.html">02 · Investigação</a>
-<a class="utility current" href="operacoes-clandestinas.html" aria-current="page">03 · Operações clandestinas</a>
-<a class="utility" href="fluxos.html" title="Abrir aula forense do percurso financeiro em formato de projetor">04 · Fluxos</a>
+<a class="utility current" href="operacoes-clandestinas.html" aria-current="page">02 · Anatomia dos Crimes</a>
+
 <button class="utility" type="button" id="openDashboard" aria-controls="dashboard" aria-expanded="false" title="Abrir painel de exposição e matriz de provas (P)">▥ Indicadores</button>
 <button class="utility" type="button" id="fullscreen">⛶ Tela cheia</button></nav></header>
 <main class="operations-main">
 <div class="operations-hero">
- <div><span class="chapter-kicker">MÓDULO F · ANATOMIA DA FRAUDE PATRIMONIAL</span>
- <h1>Operações <span>clandestinas</span></h1>
- <p>Uma aula investigativa sobre como <strong>esquemas ilícitos envolvendo holdings aparecem nos documentos e nos fluxos patrimoniais</strong>. Acompanhe os fatos de cada operação fictícia, investigue os vestígios e aprenda a distinguir planejamento lícito, irregularidade e fraude comprovada.</p></div>
+ <div><span class="chapter-kicker">MÓDULO 02 · ANATOMIA DOS CRIMES</span>
+ <h1>Anatomia dos <span>Crimes</span></h1>
+ <p>Acompanhe cada caso fictício em sequência: contexto, movimentação patrimonial, documentos, sinais de alerta e consequência jurídica. Uma etapa por vez, em formato de aula.</p></div>
  <div class="course-card"><strong>Como usar na aula</strong><span>Escolha um dossiê → percorra 8 etapas → examine os registros → classifique indícios → revele a leitura jurídica → gere uma matriz de diligências.</span><small>Todo conteúdo é fictício, para prevenção e análise jurídica. Não contém instruções operacionais para fraudar, ocultar bens ou burlar controles.</small></div>
 </div>
 <section class="case-section" aria-label="Casos disponíveis">
- <div class="section-label"><b>Selecione um circuito patrimonial</b><span id="caseLabel">Caso 1 de 6</span></div>
+ <div class="section-label"><b>ESCOLHA UM CASO PARA ACOMPANHAR</b><span id="caseLabel">Caso 1 de 6</span></div>
  <div id="caseButtons" class="case-switches" role="group" aria-label="Selecionar caso"></div>
 </section>
 <div class="flow-progress"><span id="stepLabel">Etapa 1 de 8</span><div class="flow-track"><div id="flowFill"></div></div><span id="coverageShort">0/39 verificados</span></div>
 <div class="op-grid">
 <section class="op-panel story" aria-labelledby="scenarioTitle">
- <div class="kicker">DOSSIÊ · CRONOLOGIA</div>
+ <div class="kicker">CASO FICTÍCIO · PASSO A PASSO</div>
  <h2 id="scenarioTitle">Carregando caso...</h2><p id="scenarioLead" class="case-lead"></p>
  <div class="metrics"><div><small>Patrimônio ilustrativo</small><strong id="wealth"></strong></div><div><small>Questão central</small><strong id="theme"></strong></div></div>
  <div class="flow-steps" id="flowSteps" role="group" aria-label="Oito etapas investigativas"></div>
@@ -45,7 +44,7 @@
  <div class="caution"><b>Qual é o limite do exemplo?</b><p id="limitation"></p></div>
 </section>
 <section class="op-panel laboratory" aria-labelledby="labTitle">
- <div class="kicker">LABORATÓRIO · ADVOCACIA E PROVA</div><h2 id="labTitle">Rastreamento jurídico</h2>
+ <div class="kicker">ANÁLISE JURÍDICA</div><h2 id="labTitle">O que o advogado deve observar</h2>
  <div class="detail"><span class="detail-label">DOCUMENTOS E VESTÍGIOS</span><div id="documents"></div></div>
  <div class="detail"><span class="detail-label">39 INDICADORES · ETAPA ATUAL</span><p class="helper">Para cada sinal, selecione <b>indício</b>, <b>afastado</b> ou <b>desconhecido</b>. Indício não significa prova de crime; dados desconhecidos não contam como risco confirmado.</p><div id="checks" class="checks-operations"></div></div>
  <div class="detail"><span class="detail-label">DECISÃO DO ADVOGADO</span><p id="question" class="legal-question"></p><button id="reveal" class="reveal-btn" type="button" aria-expanded="false">⚖ Revelar análise e diligência</button><div id="analysis" class="legal-analysis" hidden></div></div>
