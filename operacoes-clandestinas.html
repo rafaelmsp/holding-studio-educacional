@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f7f8fa">
+<meta name="theme-color" content="#0b111a">
 <meta name="description" content="Simulador didático de fraudes patrimoniais para aulas de Direito.">
-<title>Simulador de Fraudes Patrimoniais | Holding Studio</title>
-<link rel="stylesheet" href="src/operacoes-clandestinas.css?v=20261109-10">
-<script defer src="src/operacoes-clandestinas.js?v=20261109-9"></script>
+<title>The Crimes · Simulador Jurídico | Holding Studio</title>
+<link rel="stylesheet" href="src/operacoes-clandestinas.css?v=20261109-20">
+<script defer src="src/operacoes-clandestinas.js?v=20261109-20"></script>
 </head>
 <body>
 <div class="simulator">
@@ -17,7 +17,7 @@
    <span class="brand-text"><strong>HOLDING <em>STUDIO</em></strong><small>LABORATÓRIO JURÍDICO EDUCACIONAL</small></span>
   </a>
   <div class="top-actions">
-   <span class="live-label"><i></i> SIMULAÇÃO DIDÁTICA</span>
+   <span class="live-label"><i></i> THE CRIMES · EDUCAÇÃO JURÍDICA</span><button class="asset-button" id="artImportButton" type="button" title="Instalar as 10 ilustrações do pacote">⬆ Instalar artes</button><input id="artImportFile" class="file-picker" type="file" accept=".zip,.webp,image/webp" multiple aria-label="Escolher pacote de artes ZIP ou arquivos WebP" /><span class="asset-status" id="artStatus" aria-live="polite"></span>
    <button id="fullscreen" type="button" class="fullscreen">⛶ Tela cheia</button>
   </div>
  </header>
@@ -25,10 +25,10 @@
   <section class="heading">
    <div>
     <div class="eyebrow">DIREITO EMPRESARIAL · CIVIL · TRIBUTÁRIO · PENAL</div>
-    <h1>Simulador de fraudes patrimoniais</h1>
-    <p>Escolha um cenário e acompanhe, cena por cena, como a fraude pode se manifestar e quais são suas consequências jurídicas.</p>
+    <h1><span class="heading-mark">THE CRIMES</span> · Simulador Jurídico</h1>
+    <p>Seis crimes e controvérsias patrimoniais, oito cenas por caso. Acompanhe os fatos e compreenda as consequências jurídicas.</p>
    </div>
-   <div class="classroom-tag">AULA <strong>16:9</strong></div>
+   <div class="classroom-tag">CINEMA JURÍDICO <strong>16:9</strong></div>
   </section>
 
   <section class="scenario-picker">
@@ -55,37 +55,29 @@
   </section>
 
   <section id="simulationView" class="simulation-view">
-   <article class="scene-card">
-    <div class="scene-top"><span id="sceneTag">CENA 01 · CONTEXTO</span><span class="scene-kind">RECONSTITUIÇÃO</span></div>
-    <h2 id="eventTitle">Situação inicial</h2>
-    <p id="eventNarrative"></p>
-    <div class="scene-foot"><span class="scene-dot"></span> <span>Observe a sequência dos fatos antes de avançar.</span></div>
+   <article class="cinema" aria-label="Cena ilustrada do caso">
+    <img id="sceneImage" class="cinema-art" alt="" loading="eager" decoding="async" />
+    <div id="artPlaceholder" class="art-placeholder"><span class="art-monogram">THE<br>CRIMES</span><span class="art-placeholder-note">ILUSTRAÇÃO CINEMATOGRÁFICA · CASO FICTÍCIO</span></div>
+    <div class="cinema-top"><span id="sceneTag">CENA 01 · CONTEXTO</span><span class="scene-kind">AULA ILUSTRADA</span></div>
+    <div class="cinema-caption"><h2 id="eventTitle">Situação inicial</h2><p id="eventNarrative"></p></div>
    </article>
-
-   <div class="explanation-column">
-    <section class="explanation-card primary-explanation">
-     <div class="card-kicker">O QUE ESTÁ ACONTECENDO</div>
-     <h3 id="operationTitle">Situação de partida</h3>
-     <p id="operationText"></p>
+   <aside class="lesson-shell" aria-label="Aula do caso">
+    <div class="lesson-head"><div><div class="eyebrow">ENTENDA A CENA</div><span id="lessonTopic">DINÂMICA PATRIMONIAL</span></div><button id="detailsButton" type="button" class="text-button">+ Aprofundar</button></div>
+    <div id="lessonCopy" class="lesson-copy">
+     <section class="lesson-block"><div class="lesson-mark">01</div><div class="lesson-body"><h3 id="operationTitle">O que aconteceu</h3><p id="operationText"></p></div></section>
+     <div class="lesson-divider"></div>
+     <section class="lesson-block"><div class="lesson-mark legal">02</div><div class="lesson-body"><h3 id="legalTitle">Por que importa no Direito</h3><p id="legalText"></p></div></section>
+    </div>
+    <section id="quizPanel" class="quiz-panel" hidden>
+     <div class="eyebrow">DESAFIO · DECISÃO JURÍDICA</div>
+     <h2 id="quizQuestion"></h2>
+     <div id="quizOptions" class="quiz-options"></div>
+     <div id="quizFeedback" class="quiz-feedback" hidden><strong id="quizResult"></strong><p id="quizWhy"></p></div>
     </section>
-    <section class="explanation-card legal-explanation">
-     <div class="card-kicker">EXPLICAÇÃO PARA A TURMA</div>
-     <h3 id="legalTitle">Ponto jurídico</h3>
-     <p id="legalText"></p>
-    </section>
-   </div>
+    <div class="lesson-foot"><span id="impactTitle">QUESTÃO CENTRAL</span><p id="impactText"></p></div>
+   </aside>
   </section>
-
-  <section id="quizPanel" class="quiz-panel" hidden>
-   <div class="quiz-intro"><div class="eyebrow">FIXAÇÃO DO CONTEÚDO</div><h2 id="quizQuestion"></h2></div>
-   <div id="quizOptions" class="quiz-options"></div>
-   <div id="quizFeedback" class="quiz-feedback" hidden><strong id="quizResult"></strong><p id="quizWhy"></p></div>
-  </section>
-
-  <section class="impact-row">
-   <div class="impact-card"><span id="impactTitle">QUESTÃO CENTRAL</span><p id="impactText"></p></div>
-   <div class="documents-card"><span>ELEMENTOS DA CENA</span><p id="docsText"></p></div>
-  </section>
+  <section class="documents-strip"><span>📑 ELEMENTOS DO CASO</span><p id="docsText"></p></section>
 
   <footer class="controls">
    <div class="control-left">
@@ -101,6 +93,7 @@
   <p class="disclaimer">Simulação acadêmica com casos fictícios. As cenas explicam mecanismos e enquadramentos em nível conceitual; não constituem roteiro operacional para praticar ou ocultar ilícitos. A responsabilização depende dos fatos provados e dos requisitos legais.</p>
  </main>
  <div id="announce" class="sr-only" aria-live="polite"></div>
+<dialog id="detailDialog" class="detail-dialog" aria-labelledby="detailHeading"><div class="detail-dialog-head"><div class="eyebrow">MATERIAL DE APOIO · DOCENTE</div><button id="closeDetails" type="button" class="close-detail">✕ Fechar</button></div><h2 id="detailHeading"></h2><div class="dialog-label">RECONSTITUIÇÃO DOS FATOS</div><p id="detailNarrative"></p><div class="dialog-label">MECANISMO EM ESTUDO</div><p id="detailOperation"></p><div class="dialog-label">ENQUADRAMENTO JURÍDICO</div><p id="detailLegal"></p><div class="dialog-label">PONTOS PARA A TURMA</div><p id="detailImpact"></p><div class="dialog-label">DOCUMENTOS DO CASO</div><p id="detailDocs"></p></dialog>
 </div>
 </body>
 </html>
