@@ -226,3 +226,54 @@
 .micro-content p{font-size:12px!important;line-height:1.52!important;margin:5px 0 0!important;color:#cee1e5!important}
 @media(min-width:971px){.micro-lesson{padding:9px 11px;margin:7px 0}.micro-buttons{margin:6px 0}.micro-content{min-height:70px}}
 @media print{.micro-lesson,.micro-content,.micro-content p{color:#123040!important;background:#fff!important}.micro-lesson-head strong,.micro-content b{color:#123040!important}}
+
+
+/* CONSOLIDAÇÃO DO CURSO · somente dois módulos e foco no projetor */
+@media(min-width:971px){
+ .operations-app{height:100dvh;overflow:hidden}
+ .operations-main{gap:6px;padding:8px clamp(18px,2.3vw,40px) 8px}
+ .operations-hero{margin:2px 0 5px;gap:12px}
+ .operations-hero h1{font-size:clamp(25px,2.1vw,36px);margin:1px 0 3px}
+ .operations-hero p{font-size:12px;line-height:1.32;max-width:950px;margin:0}
+ .course-card{display:none}
+ .case-section{padding:6px 9px}
+ .section-label{margin-bottom:4px;font-size:11px}
+ .case-switches{gap:5px}
+ .case-switch{min-height:40px;padding:5px 8px}
+ .case-switch strong{font-size:11px}.case-switch small{font-size:9px}
+ .flow-progress{padding:4px 0}
+ .op-grid{grid-template-columns:minmax(0,1fr);min-height:0;flex:1;overflow:hidden}
+ .op-panel.story{height:100%;overflow:hidden;padding:12px 16px;display:flex;flex-direction:column;gap:6px}
+ .op-panel.story>.kicker{font-size:10px}
+ .op-panel.story h2{font-size:clamp(19px,1.7vw,27px);margin:0}
+ .op-panel.story .case-lead{font-size:12px;line-height:1.35;margin:0;max-width:1200px}
+ .metrics{display:flex;gap:8px;margin:2px 0}
+ .metrics>div{padding:5px 9px;min-width:145px}
+ .metrics small{font-size:9px}.metrics strong{font-size:14px}
+ .flow-steps{margin:3px 0;gap:4px}
+ .flow-step{padding:5px 4px}
+ .flow-step b{font-size:10px}.flow-step small{font-size:8px}
+ .view-modes{margin:2px 0;gap:6px}
+ .mode-button{padding:6px 10px;font-size:11px}
+ .event-card{padding:12px 15px;margin:2px 0;flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+ .event-card .event-tag{font-size:11px}
+ .event-card h3{font-size:clamp(20px,2vw,31px);line-height:1.18;margin:7px 0}
+ .event-card p{font-size:clamp(14px,1.15vw,18px);line-height:1.48;max-width:1200px}
+ .micro-lesson{padding:8px 11px;margin:2px 0;flex:0 0 auto}
+ .micro-lesson-head strong{font-size:11px}
+ .micro-buttons{margin:5px 0}
+ .micro-content{min-height:44px;padding-top:5px}
+ .micro-content b{font-size:11px}.micro-content p{font-size:11px!important;line-height:1.35!important}
+ .lawful,.caution{display:none}
+ .laboratory{display:none!important}
+ .op-footer{margin-top:4px;flex:0 0 auto}
+ .op-footer .btn{padding:8px 12px}
+ .module-disclaimer{display:none}
+}
+@media(max-width:970px){
+ .course-card{display:none}
+ .op-grid{grid-template-columns:1fr}
+ .laboratory{display:none}
+ .op-panel.story{display:flex;flex-direction:column}
+ .lawful,.caution{display:none}
+}
