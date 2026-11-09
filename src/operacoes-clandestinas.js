@@ -201,7 +201,7 @@ function renderSwitches(){
   const b=make("button","case-switch"+(i===state.case?" active":""));
   b.type="button";b.setAttribute("aria-pressed",String(i===state.case));
   b.append(make("strong","",c.short),make("small","",c.range));
-  b.addEventListener("click",()=>{state.case=i;state.step=0;state.reveal=false;render();});
+  b.addEventListener("click",()=>{state.case=i;state.step=0;state.reveal=false;render();resetPanelScroll();});
   root.append(b);
  });
  put("caseLabel","Caso "+(state.case+1)+" de "+CASES.length);
@@ -212,7 +212,7 @@ function renderSteps(){
   const b=make("button","flow-step"+(i===state.step?" active":"")+(i<state.step?" reviewed":""));
   b.type="button";b.title=s[2];b.setAttribute("aria-pressed",String(i===state.step));
   b.append(make("b","",s[0]),make("small","",s[1]));
-  b.addEventListener("click",()=>{state.step=i;state.reveal=false;render();});
+  b.addEventListener("click",()=>{state.step=i;state.reveal=false;render();resetPanelScroll();});
   root.append(b);
  });
  put("stepLabel","Etapa "+(state.step+1)+" de 8");
@@ -293,7 +293,8 @@ function render(){
  renderChecks();renderDashboard();
  put("announce","Caso "+c.short+", etapa "+(state.step+1)+": "+s.title);
 }
-function changeStep(i){state.step=Math.max(0,Math.min(7,i));state.reveal=false;render();}
+function resetPanelScroll(){doc.querySelectorAll(".op-panel").forEach(p=>{p.scrollTop=0;});}
+function changeStep(i){state.step=Math.max(0,Math.min(7,i));state.reveal=false;render();resetPanelScroll();}
 
 function toggleDashboard(visible){
  const modal=$("dashboard"),backdrop=$("dashboardBackdrop");
@@ -312,7 +313,7 @@ $("viewCircuito").addEventListener("click",()=>{state.view="circuito";render();}
 $("viewAuditoria").addEventListener("click",()=>{state.view="auditoria";render();});
 
 $("previous").addEventListener("click",()=>changeStep(state.step-1));
-$("next").addEventListener("click",()=>{if(state.step<7)changeStep(state.step+1);else{state.case=(state.case+1)%CASES.length;state.step=0;state.reveal=false;render();}});
+$("next").addEventListener("click",()=>{if(state.step<7)changeStep(state.step+1);else{state.case=(state.case+1)%CASES.length;state.step=0;state.reveal=false;render();resetPanelScroll();}});
 $("reveal").addEventListener("click",()=>{state.reveal=!state.reveal;render();});
 $("resetChecks").addEventListener("click",()=>{if(!window.confirm("Limpar a análise deste dossiê?"))return;state.marks[current().id]={};renderChecks();renderDashboard();});
 $("print").addEventListener("click",()=>{state.reveal=true;render();window.print();});
