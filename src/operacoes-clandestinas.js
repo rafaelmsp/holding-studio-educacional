@@ -159,7 +159,7 @@ const CASES=[
 }
 ];
 
-const state={case:0,step:0,reveal:false,marks:{}};
+const state={case:0,step:0,reveal:false,view:"circuito",marks:{}};
 const current=()=>CASES[state.case];
 const marks=()=>state.marks[current().id]||(state.marks[current().id]={});
 const make=(tag,cls,t)=>{const e=doc.createElement(tag);if(cls)e.className=cls;if(t!==undefined)e.textContent=t;return e;};
@@ -273,7 +273,12 @@ function render(){
  put("scenarioTitle",c.name);put("scenarioLead",c.summary);
  put("wealth",money(c.wealth));put("theme",c.issue);
  put("stepName",STAGES[state.step][2]);put("stepNum",(state.step+1)+"/8");
- put("eventTitle",s.title);put("eventNarrative",s.fact);put("legitimate",s.lawful);
+ put("eventTitle",s.title);
+ put("eventNarrative",state.view==="circuito"?s.fact:"Ponto de exame: "+s.concern+" Documentos relevantes: "+s.docs.join("; ")+".");
+ put("legitimate",s.lawful);
+ for(const [id,v] of [["viewCircuito","circuito"],["viewAuditoria","auditoria"]]){
+  const el=$(id);el.classList.toggle("active",state.view===v);el.setAttribute("aria-pressed",String(state.view===v));
+ }
  put("limitation",s.concern);
  const docs=$("documents");docs.replaceChildren();
  s.docs.forEach(v=>docs.append(make("div","doc-item",v)));
@@ -289,6 +294,23 @@ function render(){
  put("announce","Caso "+c.short+", etapa "+(state.step+1)+": "+s.title);
 }
 function changeStep(i){state.step=Math.max(0,Math.min(7,i));state.reveal=false;render();}
+
+function toggleDashboard(visible){
+ const modal=$("dashboard"),backdrop=$("dashboardBackdrop");
+ modal.hidden=!visible;backdrop.hidden=!visible;
+ for(const id of ["openDashboard","openDashboardBottom"])$(id).setAttribute("aria-expanded",String(visible));
+ if(visible){
+  modal.scrollTop=0;
+  $("closeDashboard").focus();
+ }else $("openDashboard").focus();
+}
+$("openDashboard").addEventListener("click",()=>toggleDashboard(true));
+$("openDashboardBottom").addEventListener("click",()=>toggleDashboard(true));
+$("closeDashboard").addEventListener("click",()=>toggleDashboard(false));
+$("dashboardBackdrop").addEventListener("click",()=>toggleDashboard(false));
+$("viewCircuito").addEventListener("click",()=>{state.view="circuito";render();});
+$("viewAuditoria").addEventListener("click",()=>{state.view="auditoria";render();});
+
 $("previous").addEventListener("click",()=>changeStep(state.step-1));
 $("next").addEventListener("click",()=>{if(state.step<7)changeStep(state.step+1);else{state.case=(state.case+1)%CASES.length;state.step=0;state.reveal=false;render();}});
 $("reveal").addEventListener("click",()=>{state.reveal=!state.reveal;render();});
@@ -296,6 +318,11 @@ $("resetChecks").addEventListener("click",()=>{if(!window.confirm("Limpar a aná
 $("print").addEventListener("click",()=>{state.reveal=true;render();window.print();});
 $("fullscreen").addEventListener("click",()=>{if(doc.fullscreenElement)doc.exitFullscreen?.();else doc.documentElement.requestFullscreen?.();});
 doc.addEventListener("keydown",ev=>{
+ if(ev.key==="Escape"&&!$("dashboard").hidden){ev.preventDefault();toggleDashboard(false);return;}
+ if(ev.key.toLowerCase()==="p"&&!ev.altKey&&!ev.metaKey&&!ev.ctrlKey&&!["input","textarea","select"].includes(ev.target?.tagName?.toLowerCase())){
+  ev.preventDefault();toggleDashboard($("dashboard").hidden);return;
+ }
+ if(!$("dashboard").hidden)return;
  const tag=ev.target?.tagName?.toLowerCase();
  if(["input","textarea","select","button","a"].includes(tag)||ev.altKey||ev.metaKey||ev.ctrlKey)return;
  if(ev.key==="ArrowRight"||ev.key==="PageDown"){ev.preventDefault();$("next").click();}
