@@ -16,6 +16,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .top-actions{display:flex;align-items:center;gap:8px}
 .live-label{font-size:9px;color:var(--muted);font-weight:700;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
 .live-label i{width:6px;height:6px;border-radius:50%;background:var(--teal)}
+.module-link{display:inline-flex;align-items:center;text-decoration:none;color:var(--accent);font-size:10px;font-weight:750;border:1px solid #455468;border-radius:7px;padding:7px 9px;white-space:nowrap}
 .asset-button,.fullscreen{border:1px solid #405267;border-radius:7px;padding:7px 11px;background:#172331;color:var(--ink);font-size:10px;font-weight:650;white-space:nowrap}
 .asset-button:hover,.fullscreen:hover{border-color:var(--accent)}
 .asset-status{font-size:9px;color:var(--teal);white-space:nowrap}
@@ -145,7 +146,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 }
 @media(max-width:580px){
  .topbar{height:auto;min-height:49px;flex-basis:auto;flex-wrap:wrap;padding:9px 12px;gap:8px}
- .live-label{display:none}.brand-text small{font-size:7px}
+ .live-label,.module-link{display:none}.brand-text small{font-size:7px}
  .heading h1{font-size:22px}.heading p{font-size:11px}.classroom-tag{display:none}
  .case-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}
  .flow-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
