@@ -247,14 +247,25 @@ function renderSwitches(){
 }
 function renderSteps(){
  const root=$("flowSteps");root.replaceChildren();
+ const icons=["oc-clock","oc-building","oc-file","oc-house","oc-move","oc-users","oc-search","oc-scale"];
  STAGES.forEach((s,i)=>{
+  const data=stageData(current(),i);
   const b=make("button","flow-step"+(i===state.step?" active":"")+(i<state.step?" reviewed":""));
-  b.type="button";b.title=s[2];b.setAttribute("aria-pressed",String(i===state.step));
-  b.append(make("b","",s[0]),make("small","",s[1]));
+  b.type="button";b.title=data.title;
+  b.setAttribute("aria-pressed",String(i===state.step));
+  const row=make("span","flow-step-head");
+  row.append(make("b","step-number",s[0]));
+  const ico=document.createElementNS("http://www.w3.org/2000/svg","svg");
+  ico.setAttribute("class","flow-step-icon");ico.setAttribute("aria-hidden","true");
+  const use=document.createElementNS("http://www.w3.org/2000/svg","use");
+  use.setAttribute("href","#"+icons[i]);ico.append(use);row.append(ico);
+  const full=data.fact.trim().replace(/\s+/g," ");
+  const fact=full.length>105?full.slice(0,102).replace(/\s+\S*$/,"")+"…":full;
+  b.append(row,make("strong","flow-step-title",data.title),make("span","flow-step-excerpt",fact));
   b.addEventListener("click",()=>{state.step=i;state.micro=0;state.reveal=false;render();resetPanelScroll();});
   root.append(b);
  });
- put("stepLabel","Etapa "+(state.step+1)+" de 8");
+ put("stepLabel","ETAPA "+(state.step+1)+" DE 8");
  $("flowFill").style.width=((state.step+1)*12.5)+"%";
 }
 function renderChecks(){
