@@ -261,7 +261,7 @@ function renderSteps(){
   use.setAttribute("href","#"+icons[i]);ico.append(use);row.append(ico);
   const full=data.fact.trim().replace(/\s+/g," ");
   const fact=full.length>105?full.slice(0,102).replace(/\s+\S*$/,"")+"…":full;
-  b.append(row,make("strong","flow-step-title",data.title),make("span","flow-step-excerpt",fact));
+  b.append(row,make("strong","flow-step-title",STAGES[i][1]),make("span","flow-step-excerpt",fact));
   b.addEventListener("click",()=>{state.step=i;state.micro=0;state.reveal=false;render();resetPanelScroll();});
   root.append(b);
  });
@@ -308,7 +308,7 @@ function renderDashboard(){
  const active=themes.filter(([id])=>selected[id]==="alert");
  if(!active.length)gate.append(make("span","","Nenhuma hipótese específica destacada."));
  else active.forEach(([,l])=>gate.append(make("span","gate-pill",l)));
- const proof=$("proof");proof.replaceChildren();
+ const proof=$("proof");proof.replaceChildren();put("proofCount",reviewed.length+" itens");
  if(!reviewed.length){proof.append(make("div","empty-proof","Nenhuma verificação classificada. Comece examinando os documentos fictícios e classificando os indicadores de cada etapa."));return;}
  const header=make("div","proofrow header");
  ["ID","Indício/questão","Documento ou diligência","Status"].forEach(v=>header.append(make("span","",v)));proof.append(header);
