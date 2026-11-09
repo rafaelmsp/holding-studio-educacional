@@ -19,3 +19,28 @@
 @media(max-width:1024px){html,body{height:auto;overflow:auto}.app{height:auto;min-height:100dvh;display:flex;flex-direction:column}.top{height:75px;grid-template-columns:auto minmax(0,1fr)}.hero-title strong{font-size:13px}.viability{display:none}.body-layout{display:flex;flex-direction:column;overflow:visible}.cases-rail{display:block;overflow-x:auto;padding:9px}.cases-rail h2,.rail-foot{display:none}.cases-list{display:flex;min-height:85px;gap:6px}.case-btn{width:190px;min-height:72px;flex:0 0 190px}.case-btn img{width:68px}.lesson{display:flex;flex-direction:column;overflow:visible}.case-heading{padding:10px}.view-row{display:flex;flex-direction:column;padding:8px}.cinema{height:50vw;min-height:260px}.explain{min-height:250px}.timeline{height:auto;overflow-x:auto}.step-cards{display:flex;min-height:135px}.step-card{min-width:125px;max-width:125px}.step-thumb{height:80px}.footer{min-height:58px;position:sticky;bottom:0}.footer-stats{display:none}.footer-actions{width:100%;justify-content:space-between}}
 @media(max-width:520px){.top{height:65px}.hero-title{display:none}.top{grid-template-columns:1fr}.logo{border:0}.case-heading h1{white-space:normal;font-size:20px}.class-counter{font-size:10px}.cinema{min-height:270px}.scene-overlay h2{font-size:22px}.scene-overlay p{font-size:13px}.footer-actions .text-control{display:none}.footer-actions button{font-size:11px}.tab{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Aula avançada: modo telão, progresso por caso e transições */
+.top-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;min-width:0}
+.top-tool{display:inline-flex;align-items:center;gap:6px;border:1px solid #574a3c;border-radius:7px;padding:8px 10px;color:#d8d9dc;background:#0a0c11c9;font-size:clamp(9px,.68vw,12px);font-weight:750;white-space:nowrap}
+.top-tool:hover,.top-tool.active,.top-tool[aria-pressed=true]{border-color:var(--gold);color:var(--gold2);background:#171109e6}
+.top-tool .ico{width:1.1em;height:1.1em}
+.case-btn:after{content:"";position:absolute;left:0;bottom:0;height:3px;width:var(--case-progress,0%);background:linear-gradient(90deg,var(--red),var(--gold));transition:width .25s ease}
+.case-progress{display:block;margin-top:3px;font-size:clamp(8px,.58vw,10px);color:#8f949a;font-weight:650}
+.case-btn.active .case-progress{color:#dcb778}
+.scene-image{transition:opacity .24s ease,transform .3s ease}
+.scene-image.is-changing{opacity:.28;transform:scale(1.012)}
+.presentation-mode{grid-template-rows:clamp(60px,7vh,78px) minmax(0,1fr) clamp(50px,6vh,62px)}
+.presentation-mode .hero-title small{display:none}
+.presentation-mode .viability{display:none}
+.presentation-mode .rail-foot{display:none}
+.presentation-mode .lesson{grid-template-rows:auto minmax(0,1fr) clamp(155px,22vh,230px)}
+.presentation-mode .case-heading{padding-top:5px;padding-bottom:5px}
+.presentation-mode .top{grid-template-columns:minmax(205px,18%) minmax(0,1fr) auto}
+.presentation-mode .cinema{border-color:#775a35}
+.presentation-mode .scene-overlay h2{font-size:clamp(28px,2.25vw,43px)}
+.presentation-mode .scene-overlay p{font-size:clamp(13px,.95vw,18px)}
+.presentation-mode .footer-stats span:nth-child(2),.presentation-mode .footer-stats span:nth-child(3){display:none}
+@media(max-width:1240px){.top-actions .viability{display:none}.top-tool span{display:none}.top-tool{padding:8px}}
+@media(max-width:1024px){.top-actions{display:none}.presentation-mode .lesson{grid-template-rows:auto}}
