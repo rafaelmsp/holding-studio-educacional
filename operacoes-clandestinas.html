@@ -1,99 +1,64 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b111a">
-<meta name="description" content="Simulador didático de fraudes patrimoniais para aulas de Direito.">
-<title>The Crimes · Simulador Jurídico | Holding Studio</title>
-<link rel="stylesheet" href="src/operacoes-clandestinas.css?v=20261109-21">
-<script defer src="src/operacoes-clandestinas.js?v=20261109-21"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d12">
+  <meta name="description" content="The Crimes: Cidade do Crime — laboratório jurídico educacional de fraudes patrimoniais com seis casos fictícios e oito cenas por caso.">
+  <title>THE CRIMES — Cidade do Crime | Holding Studio</title>
+  <link rel="preload" href="assets/the-crimes/city-banner.webp" as="image">
+  <link rel="stylesheet" href="src/operacoes-clandestinas.css?v=20261109-crimcity-1">
+  <script src="src/operacoes-clandestinas.js?v=20261109-crimcity-1" defer></script>
 </head>
 <body>
-<div class="simulator">
- <header class="topbar">
-  <a class="brand" href="showroom.html" aria-label="Holding Studio, início">
-   <span class="brand-mark">HS</span>
-   <span class="brand-text"><strong>HOLDING <em>STUDIO</em></strong><small>LABORATÓRIO JURÍDICO EDUCACIONAL</small></span>
-  </a>
-  <div class="top-actions"><a href="showroom.html" class="module-link">01 · Viabilidade</a>
-   <span class="live-label"><i></i> THE CRIMES · EDUCAÇÃO JURÍDICA</span><button class="asset-button" id="artImportButton" type="button" title="Instalar as 10 ilustrações do pacote">⬆ Instalar artes</button><input id="artImportFile" class="file-picker" type="file" accept=".zip,.webp,image/webp" multiple aria-label="Escolher pacote de artes ZIP ou arquivos WebP" /><span class="asset-status" id="artStatus" aria-live="polite"></span>
-   <button id="fullscreen" type="button" class="fullscreen">⛶ Tela cheia</button>
+<svg class="svg-bank" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="ic-folder" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="ic-coins" viewBox="0 0 24 24"><ellipse cx="10" cy="5" rx="7" ry="3"/><path d="M3 5v10c0 2 3 3 7 3s7-1 7-3V5M3 10c0 2 3 3 7 3s7-1 7-3M14 12c1-.6 3-1 5-1 4 0 4 6 0 7-3 1-5-1-5-3"/></symbol>
+  <symbol id="ic-rings" viewBox="0 0 24 24"><circle cx="9" cy="14" r="7"/><circle cx="15" cy="14" r="7"/><path d="m12 2 2 2 2-2M14 4l1 3"/></symbol>
+  <symbol id="ic-users" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M2 21v-3a6 6 0 0 1 12 0v3M16 15a5 5 0 0 1 6 5v1"/></symbol>
+  <symbol id="ic-house" viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10H3Z"/><path d="M9 21v-7h6v7"/></symbol>
+  <symbol id="ic-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="5"/><path d="m12 11 9-9M18 5l3 3M15 8l3 3"/></symbol>
+  <symbol id="ic-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="1"/><path d="M8 6h2m4 0h2M8 10h2m4 0h2M8 14h2m4 0h2M9 22v-5h6v5"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 24 24"><path d="M3 5a3 3 0 0 1 3-3h15v19H6a3 3 0 0 1 0-6h15M3 5v13"/></symbol>
+  <symbol id="ic-scale" viewBox="0 0 24 24"><path d="M12 2v20M4 6h16M4 6 1 14h6L4 6Zm16 0-3 8h6l-3-8ZM7 22h10"/></symbol>
+  <symbol id="ic-file" viewBox="0 0 24 24"><path d="M14 2H5v20h14V7Z"/><path d="M14 2v5h5M8 13h8M8 17h8"/></symbol>
+  <symbol id="ic-alert" viewBox="0 0 24 24"><path d="M12 3 2 21h20Z"/><path d="M12 9v5M12 18h.01"/></symbol>
+  <symbol id="ic-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+  <symbol id="ic-play" viewBox="0 0 24 24"><path d="m8 5 12 7-12 7Z"/></symbol>
+  <symbol id="ic-chevron" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="ic-restart" viewBox="0 0 24 24"><path d="M4 11a8 8 0 1 1 2 6M4 4v7h7"/></symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></symbol>
+  <symbol id="ic-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="18" rx="2"/><rect x="9" y="2" width="6" height="5" rx="1"/><path d="m9 14 2 2 4-4"/></symbol>
+  <symbol id="ic-film" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 4v16M17 4v16M2 9h5m10 0h5M2 15h5m10 0h5"/></symbol>
+</svg>
+<div class="app" id="app">
+  <header class="top">
+    <a class="logo" href="operacoes-clandestinas.html" aria-label="The Crimes — Cidade do Crime">
+      <strong>THE <em>CRIMES</em></strong><small>C I D A D E&nbsp; D O&nbsp; C R I M E</small>
+    </a>
+    <div class="hero-title"><strong>SIMULADOR DE FRAUDES PATRIMONIAIS</strong><small>AULA INTERATIVA · RECONSTITUIÇÃO DOS FATOS · ANÁLISE JURÍDICA</small></div>
+    <a class="viability" href="showroom.html" title="Ir para a calculadora original">01 · Viabilidade</a>
+  </header>
+  <div class="body-layout">
+    <aside class="cases-rail" aria-label="Casos do simulador">
+      <h2><svg class="ico"><use href="#ic-folder"/></svg> ESCOLHA O CASO</h2>
+      <div id="cases" class="cases-list" role="group" aria-label="Selecione um dos seis casos"></div>
+      <p class="rail-foot">6 CASOS · 8 ETAPAS POR CASO</p>
+    </aside>
+    <main class="lesson" aria-labelledby="caseTitle">
+      <div class="case-heading"><div class="case-heading-left"><span id="caseNumber">CASO 01</span><h1 id="caseTitle">Fraude contra credores</h1></div><p id="caseBlurb">Reconstrução jurídica de operações patrimoniais</p><div id="lessonCount" class="class-counter">AULA 01 DE 08</div></div>
+      <section class="view-row" aria-label="Cena e explicação jurídica">
+        <div class="cinema"><img id="sceneImage" class="scene-image" src="assets/the-crimes/scenes/credores/01_contexto.webp" alt="Cena cinematográfica de uma operação patrimonial fictícia" fetchpriority="high" decoding="async"><div class="scene-vignette"></div><div class="scene-overlay"><span id="sceneNumber" class="scene-pill">PASSO 01 DE 08</span><h2 id="sceneTitle">O contexto: a dívida</h2><p id="sceneSub">Observe o que aconteceu e como a operação será analisada.</p></div><button id="playScene" class="play-scene" type="button" aria-label="Avançar para a próxima cena"><svg class="ico"><use href="#ic-play"/></svg></button></div>
+        <aside class="explain" aria-label="Material didático da cena"><div class="tabs" role="tablist" aria-label="Perspectiva da aula"><button id="tab-explanation" type="button" role="tab" aria-controls="tabPanel" aria-selected="true" class="tab active" data-tab="explanation"><svg class="ico"><use href="#ic-book"/></svg><span>EXPLICAÇÃO</span></button><button id="tab-legal" type="button" role="tab" aria-controls="tabPanel" aria-selected="false" class="tab" data-tab="legal"><svg class="ico"><use href="#ic-scale"/></svg><span>JURÍDICO</span></button><button id="tab-documents" type="button" role="tab" aria-controls="tabPanel" aria-selected="false" class="tab" data-tab="documents"><svg class="ico"><use href="#ic-file"/></svg><span>DOCUMENTOS</span></button></div>
+          <div id="tabPanel" class="tab-panel" role="tabpanel" tabindex="0"><div id="lessonFacts" class="facts"></div><div id="quizBox" class="quiz-box" hidden></div></div>
+          <button id="detailsBtn" class="details-btn" type="button">Aprofundar esta etapa <svg class="ico"><use href="#ic-chevron"/></svg></button>
+        </aside>
+      </section>
+      <section class="timeline" aria-labelledby="timelineTitle"><h2 id="timelineTitle"><svg class="ico"><use href="#ic-film"/></svg> ETAPAS DA OPERAÇÃO <small>(8 CENAS)</small></h2><div id="steps" class="step-cards" role="group" aria-label="Navegar entre as oito cenas"></div></section>
+    </main>
   </div>
- </header>
- <main class="main">
-  <section class="heading">
-   <div>
-    <div class="eyebrow">DIREITO EMPRESARIAL · CIVIL · TRIBUTÁRIO · PENAL</div>
-    <h1><span class="heading-mark">THE CRIMES</span> · Simulador Jurídico</h1>
-    <p>Seis crimes e controvérsias patrimoniais, oito cenas por caso. Acompanhe os fatos e compreenda as consequências jurídicas.</p>
-   </div>
-   <div class="classroom-tag">CINEMA JURÍDICO <strong>16:9</strong></div>
-  </section>
-
-  <section class="scenario-picker">
-   <div class="picker-label"><strong>SELECIONE A SIMULAÇÃO</strong><span id="caseLabel">CENÁRIO 1 / 6</span></div>
-   <div id="caseButtons" class="case-buttons" role="group" aria-label="Escolher cenário"></div>
-  </section>
-
-  <section class="scenario-title">
-   <div class="scenario-copy">
-    <div class="eyebrow">CENÁRIO FICTÍCIO</div>
-    <h2 id="scenarioTitle">Carregando simulação...</h2>
-    <p id="scenarioLead"></p>
-   </div>
-   <div class="scenario-data">
-    <div><small>Patrimônio ilustrativo</small><strong id="wealth">—</strong></div>
-    <div><small>Questão central</small><strong id="theme">—</strong></div>
-   </div>
-  </section>
-
-  <section class="progress-area" aria-label="Progresso da simulação">
-   <div class="progress-label"><strong id="stepLabel">PASSO 1 DE 8</strong><span id="stepNum">01 / 08</span></div>
-   <div class="progress-track"><div id="simFill"></div></div>
-   <div id="flowSteps" class="flow-steps" role="group" aria-label="Cenas da simulação"></div>
-  </section>
-
-  <section id="simulationView" class="simulation-view">
-   <article class="cinema" aria-label="Cena ilustrada do caso">
-    <img id="sceneImage" class="cinema-art" alt="" loading="eager" decoding="async" />
-    <div id="artPlaceholder" class="art-placeholder"><span class="art-monogram">THE<br>CRIMES</span><span class="art-placeholder-note">ILUSTRAÇÃO CINEMATOGRÁFICA · CASO FICTÍCIO</span></div>
-    <div class="cinema-top"><span id="sceneTag">CENA 01 · CONTEXTO</span><span class="scene-kind">AULA ILUSTRADA</span></div>
-    <div class="cinema-caption"><h2 id="eventTitle">Situação inicial</h2><p id="eventNarrative"></p></div>
-   </article>
-   <aside class="lesson-shell" aria-label="Aula do caso">
-    <div class="lesson-head"><div><div class="eyebrow">ENTENDA A CENA</div><span id="lessonTopic">DINÂMICA PATRIMONIAL</span></div><button id="detailsButton" type="button" class="text-button">+ Aprofundar</button></div>
-    <div id="lessonCopy" class="lesson-copy">
-     <section class="lesson-block"><div class="lesson-mark">01</div><div class="lesson-body"><h3 id="operationTitle">O que aconteceu</h3><p id="operationText"></p></div></section>
-     <div class="lesson-divider"></div>
-     <section class="lesson-block"><div class="lesson-mark legal">02</div><div class="lesson-body"><h3 id="legalTitle">Por que importa no Direito</h3><p id="legalText"></p></div></section>
-    </div>
-    <section id="quizPanel" class="quiz-panel" hidden>
-     <div class="eyebrow">DESAFIO · DECISÃO JURÍDICA</div>
-     <h2 id="quizQuestion"></h2>
-     <div id="quizOptions" class="quiz-options"></div>
-     <div id="quizFeedback" class="quiz-feedback" hidden><strong id="quizResult"></strong><p id="quizWhy"></p></div>
-    </section>
-    <div class="lesson-foot"><span id="impactTitle">QUESTÃO CENTRAL</span><p id="impactText"></p></div>
-   </aside>
-  </section>
-  <section class="documents-strip"><span>📑 ELEMENTOS DO CASO</span><p id="docsText"></p></section>
-
-  <footer class="controls">
-   <div class="control-left">
-    <button id="previous" type="button" class="control-button secondary">← Voltar</button>
-    <button id="restart" type="button" class="control-button subtle">↺ Reiniciar caso</button>
-   </div>
-   <div class="control-right">
-    <button id="sourceToggle" type="button" class="source-toggle" aria-expanded="false">Fontes legais</button>
-    <button id="next" type="button" class="control-button primary">Próxima cena →</button>
-   </div>
-  </footer>
-  <section id="sourceBox" class="source-box" hidden><div class="source-title">Legislação e referências do cenário</div><div id="sourceLinks" class="source-links"></div></section>
-  <p class="disclaimer">Simulação acadêmica com casos fictícios. As cenas explicam mecanismos e enquadramentos em nível conceitual; não constituem roteiro operacional para praticar ou ocultar ilícitos. A responsabilização depende dos fatos provados e dos requisitos legais.</p>
- </main>
- <div id="announce" class="sr-only" aria-live="polite"></div>
-<dialog id="detailDialog" class="detail-dialog" aria-labelledby="detailHeading"><div class="detail-dialog-head"><div class="eyebrow">MATERIAL DE APOIO · DOCENTE</div><button id="closeDetails" type="button" class="close-detail">✕ Fechar</button></div><h2 id="detailHeading"></h2><div class="dialog-label">RECONSTITUIÇÃO DOS FATOS</div><p id="detailNarrative"></p><div class="dialog-label">MECANISMO EM ESTUDO</div><p id="detailOperation"></p><div class="dialog-label">ENQUADRAMENTO JURÍDICO</div><p id="detailLegal"></p><div class="dialog-label">PONTOS PARA A TURMA</div><p id="detailImpact"></p><div class="dialog-label">DOCUMENTOS DO CASO</div><p id="detailDocs"></p></dialog>
+  <footer class="footer"><div class="footer-stats"><span><svg class="ico"><use href="#ic-folder"/></svg> 6 CASOS</span><span><svg class="ico"><use href="#ic-film"/></svg> 8 ETAPAS</span><span><svg class="ico"><use href="#ic-play"/></svg> AULA INTERATIVA</span><span><svg class="ico"><use href="#ic-scale"/></svg> ANÁLISE JURÍDICA</span></div><div class="footer-actions"><button type="button" id="restart" class="text-control" title="Voltar ao primeiro passo"><svg class="ico"><use href="#ic-restart"/></svg> Reiniciar</button><button id="prev" type="button" class="nav-control"><svg class="ico backwards"><use href="#ic-chevron"/></svg> ETAPA ANTERIOR</button><button id="next" type="button" class="nav-control primary">PRÓXIMA ETAPA <svg class="ico"><use href="#ic-chevron"/></svg></button></div></footer>
+  <div id="live" class="sr-only" aria-live="polite"></div>
 </div>
-</body>
-</html>
+<dialog id="detailsDialog" class="details-dialog"><div class="dialog-top"><h2 id="detailTitle">Material de apoio</h2><button id="closeDialog" type="button">✕ Fechar</button></div><div id="detailBody"></div><div class="reference-links" id="referenceLinks"></div></dialog>
+</body></html>

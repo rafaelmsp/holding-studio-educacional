@@ -1,0 +1,204 @@
+# THE CRIMES — Cidade do Crime
+
+**Projeto completo: simulador jurídico educacional de fraudes patrimoniais**  
+**Versão:** 2026-11-09 · **Idioma:** português (Brasil) · **Publicação:** GitHub Pages  
+**Endereço da aula:** https://rafaelmsp.github.io/holding-studio-educacional/operacoes-clandestinas.html  
+**Módulo complementar preservado:** https://rafaelmsp.github.io/holding-studio-educacional/showroom.html
+
+> **Finalidade acadêmica:** acompanhar fatos fictícios, identificar controvérsias de Direito, documentos e possíveis consequências. O projeto não ensina a executar, ocultar, aperfeiçoar ou burlar a fiscalização de delitos. Um cenário suspeito não significa culpa comprovada.
+
+## 1. Resultado esperado
+
+Um único módulo **The Crimes** integrado ao site **Holding Studio**. Ao selecionar um caso, o projetor exibe uma imagem cinematográfica do acontecimento. O estudante passa por oito cenas, lê três análises curtas (Explicação, Jurídico e Documentos), acompanha uma cronologia e responde ao desafio final. 
+
+**Interface aprovada:** cabeçalho com skyline chuvoso, logotipo branco/vermelho, navegação lateral com seis casos, grande palco fotográfico central, painel jurídico à direita, trilha visual de oito cenas na parte inferior e botões de próxima/anterior no rodapé. Preto grafite, vermelho de crime urbano e dourado de Direito.
+
+## 2. Arquitetura do repositório
+
+```text
+holding-studio-educacional/
+├── showroom.html                            # Módulo 01: Viabilidade (inalterado)
+├── operacoes-clandestinas.html              # Módulo 02: The Crimes (página existente reconstruída)
+├── src/
+│   ├── operacoes-clandestinas.css           # UX Premium para projetor e celular
+│   └── operacoes-clandestinas.js            # 6 casos, navegação, abas e quiz
+├── assets/the-crimes/
+│   ├── city-banner.webp                     # skyline principal
+│   ├── manifest.json                        # catálogo de arquivos
+│   ├── portraits/                           # 6 miniaturas dos casos
+│   └── scenes/                              # 6 pastas × 8 imagens WebP
+└── docs/
+    └── THE_CRIMES_PROJETO_COMPLETO.md       # este documento
+```
+
+**Tecnologias em produção:** HTML5 semântico, CSS Grid/Flexbox, JavaScript ES2022, SVG inline para ícones e WebP para imagens. Tudo roda diretamente no GitHub Pages **sem backend, npm, React ou build obrigatório**. React/TypeScript/Vite/Motion podem ser usados em futura migração, mas não são necessários para reproduzir esta experiência e acrescentariam risco à calculadora já publicada.
+
+## 3. UX do telão — regras objetivas
+
+| Região | Disposição | Regra de legibilidade |
+|---|---|---|
+| Cabeçalho | Skyline, marca, título e link Viabilidade | Sem elementos pequenos sobre fotografia clara |
+| Lateral | Seis botões com retrato e nome | Seleção por contraste vermelho |
+| Palco | Fotografia 16:9 e título da cena | Fotografia sem texto fixo; tipografia HTML sobre gradiente na base |
+| Painel | Três abas: Explicação, Jurídico, Documentos | Até três blocos curtos de conteúdo |
+| Timeline | Oito miniaturas reais do caso | A cena ativa tem borda dourada |
+| Rodapé | Voltar, reiniciar, avançar | Controles preservados na altura da tela |
+
+A grade se adapta à altura do navegador. Em notebooks e celulares abaixo de 1024 px, os painéis são empilhados e a timeline desliza horizontalmente; o conteúdo não é cortado. **NÃO criar tela adicional, dashboard de indicadores, pop-up de instalação de artes ou importação manual de ZIP.**
+
+## 4. Roteiro integral: seis casos × oito quadros
+
+Cada quadro corresponde a um arquivo WebP **1280 × 720** e a um objeto de dados no JavaScript. As cenas são representações artísticas de acontecimentos, sem retratar documentos reais nem pessoas reais.
+
+
+### Caso 01 — Fraude contra credores
+**Diretório:** `assets/the-crimes/scenes/credores/`
+
+| Etapa | Objetivo do quadro | Imagem exata |
+|---:|---|---|
+| 1 | Contexto inicial | `01_contexto.webp` |
+| 2 | Estrutura jurídica | `02_estrutura.webp` |
+| 3 | Operação representada | `03_operacao.webp` |
+| 4 | Efeito patrimonial | `04_efeito.webp` |
+| 5 | Conflito | `05_conflito.webp` |
+| 6 | Apuração documental | `06_apuracao.webp` |
+| 7 | Consequências jurídicas | `07_consequencias.webp` |
+| 8 | Debate e quiz | `08_debate.webp` |
+
+**Retrato:** `assets/the-crimes/portraits/credores.webp`
+
+
+### Caso 02 — Ocultação patrimonial na meação
+**Diretório:** `assets/the-crimes/scenes/meacao/`
+
+| Etapa | Objetivo do quadro | Imagem exata |
+|---:|---|---|
+| 1 | Contexto inicial | `01_contexto.webp` |
+| 2 | Estrutura jurídica | `02_estrutura.webp` |
+| 3 | Operação representada | `03_operacao.webp` |
+| 4 | Efeito patrimonial | `04_efeito.webp` |
+| 5 | Conflito | `05_conflito.webp` |
+| 6 | Apuração documental | `06_apuracao.webp` |
+| 7 | Consequências jurídicas | `07_consequencias.webp` |
+| 8 | Debate e quiz | `08_debate.webp` |
+
+**Retrato:** `assets/the-crimes/portraits/meacao.webp`
+
+
+### Caso 03 — Questionamento de cessões e legítima
+**Diretório:** `assets/the-crimes/scenes/herdeiros/`
+
+| Etapa | Objetivo do quadro | Imagem exata |
+|---:|---|---|
+| 1 | Contexto inicial | `01_contexto.webp` |
+| 2 | Estrutura jurídica | `02_estrutura.webp` |
+| 3 | Operação representada | `03_operacao.webp` |
+| 4 | Efeito patrimonial | `04_efeito.webp` |
+| 5 | Conflito | `05_conflito.webp` |
+| 6 | Apuração documental | `06_apuracao.webp` |
+| 7 | Consequências jurídicas | `07_consequencias.webp` |
+| 8 | Debate e quiz | `08_debate.webp` |
+
+**Retrato:** `assets/the-crimes/portraits/herdeiros.webp`
+
+
+### Caso 04 — ITBI e integralização de imóveis
+**Diretório:** `assets/the-crimes/scenes/itbi/`
+
+| Etapa | Objetivo do quadro | Imagem exata |
+|---:|---|---|
+| 1 | Contexto inicial | `01_contexto.webp` |
+| 2 | Estrutura jurídica | `02_estrutura.webp` |
+| 3 | Operação representada | `03_operacao.webp` |
+| 4 | Efeito patrimonial | `04_efeito.webp` |
+| 5 | Conflito | `05_conflito.webp` |
+| 6 | Apuração documental | `06_apuracao.webp` |
+| 7 | Consequências jurídicas | `07_consequencias.webp` |
+| 8 | Debate e quiz | `08_debate.webp` |
+
+**Retrato:** `assets/the-crimes/portraits/itbi.webp`
+
+
+### Caso 05 — Receitas locatícias em disputa
+**Diretório:** `assets/the-crimes/scenes/alugueis/`
+
+| Etapa | Objetivo do quadro | Imagem exata |
+|---:|---|---|
+| 1 | Contexto inicial | `01_contexto.webp` |
+| 2 | Estrutura jurídica | `02_estrutura.webp` |
+| 3 | Operação representada | `03_operacao.webp` |
+| 4 | Efeito patrimonial | `04_efeito.webp` |
+| 5 | Conflito | `05_conflito.webp` |
+| 6 | Apuração documental | `06_apuracao.webp` |
+| 7 | Consequências jurídicas | `07_consequencias.webp` |
+| 8 | Debate e quiz | `08_debate.webp` |
+
+**Retrato:** `assets/the-crimes/portraits/alugueis.webp`
+
+
+### Caso 06 — Operações entre empresas do grupo
+**Diretório:** `assets/the-crimes/scenes/grupos/`
+
+| Etapa | Objetivo do quadro | Imagem exata |
+|---:|---|---|
+| 1 | Contexto inicial | `01_contexto.webp` |
+| 2 | Estrutura jurídica | `02_estrutura.webp` |
+| 3 | Operação representada | `03_operacao.webp` |
+| 4 | Efeito patrimonial | `04_efeito.webp` |
+| 5 | Conflito | `05_conflito.webp` |
+| 6 | Apuração documental | `06_apuracao.webp` |
+| 7 | Consequências jurídicas | `07_consequencias.webp` |
+| 8 | Debate e quiz | `08_debate.webp` |
+
+**Retrato:** `assets/the-crimes/portraits/grupos.webp`
+
+
+## 5. Ícones e componentes
+
+Todos os ícones da interface são **vetores SVG declarados no próprio HTML**, com `viewBox` escalável, `currentColor` e contraste alto. Inventário: pasta, moedas/credores, alianças/meação, pessoas/herdeiros, casa/ITBI, chave/aluguéis, edifício/grupo societário, livro/explicação, balança/jurídico, documento, alerta, alvo, play, setas, reiniciar, lupa, ficha e filme/timeline. Nenhum arquivo de fonte ou pacote externo é necessário.
+
+## 6. Funcionamento da aula
+
+1. Abra **The Crimes**, selecione o caso na coluna esquerda.
+2. Apresente a **cena 1** e leia o resumo sobreposto na imagem.
+3. Use **Explicação**, **Jurídico** e **Documentos** para discutir o mesmo fato.
+4. Clique em **Próxima etapa** ou no quadro da timeline; as imagens mudam junto com os textos.
+5. Use **Aprofundar esta etapa** para abrir o material do docente com documentos e links oficiais.
+6. No quadro 8, abra **Explicação**, escolha uma das três alternativas e confira a justificativa.
+7. Continue para outro caso; o estado é salvo localmente no navegador (sem cadastro).
+
+**Atalhos:** `←`, `→` para navegação, `1` a `8` para salto de etapa. Botões têm rótulos acessíveis e `aria-pressed` na seleção.
+
+## 7. Fontes legais e rigor acadêmico
+
+- [Código Civil compilado](https://www.planalto.gov.br/ccivil_03/leis/2002/l10406compilada.htm): arts. 50, 158–167, 544, 549.
+- [CPC](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm): arts. 133–137 e 792.
+- [Constituição Federal](https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm): art. 156, § 2º, I.
+- [Lei 8.137/1990](https://www.planalto.gov.br/ccivil_03/leis/l8137.htm): ordem tributária.
+- [Lei 9.613/1998](https://www.planalto.gov.br/ccivil_03/leis/l9613.htm): lavagem e ocultação de bens.
+
+**Distinção a ensinar:** fraude contra credores e fraude à execução não produzem necessariamente o mesmo efeito. Para a primeira, examinar as hipóteses do CC; para a segunda, examinar as do art. 792 do CPC, incluindo eventual ineficácia em relação ao exequente. A lavagem exige elementos típicos específicos; a simples existência de holdings, múltiplos CNPJs ou operações intragrupo não comprova delito.
+
+## 8. Arte e organização dos arquivos
+
+As **48 cenas finais** são **composições cinematográficas individuais** criadas a partir de um conjunto de artes-base ultrarrealistas previamente produzidas no estilo noir urbano aprovado: ambientes corporativos noturnos, personagens fictícios, interiores de escritórios, cidade chuvosa, arquivos e tribunais. Cada arquivo tem nome, ordem, proporção e rota definidos. **Não são 48 gerações independentes por IA**; são 48 composições finalizadas a partir das artes-base, com enquadramentos e cenas complementares. Não incluir textos dentro do WebP: todo título, número, quiz, botão e explicação é HTML editável.
+
+**Otimização:** WebP 1280×720 para os quadros, WebP 440×280 para retratos, banner panorâmico 1600×300. O navegador baixa sob demanda os oito frames do caso exibido, com miniaturas e pré-carregamento da próxima cena.
+
+## 9. Publicação e atualização
+
+A aplicação usa o caminho existente `operacoes-clandestinas.html`, publicado na branch `main` do repositório `rafaelmsp/holding-studio-educacional`. Ao confirmar o commit, o GitHub Pages serve os arquivos estáticos conforme sua configuração existente. Se não atualizar automaticamente, consulte **Settings → Pages** no repositório. Faça refresh sem cache (`Ctrl + F5`).
+
+Para substituir uma ilustração: exporte outra imagem WebP 16:9 com o **mesmo nome e na mesma pasta** indicada no catálogo. Não precisa editar o JS. Para alterar a análise jurídica, revise o bloco de dados da respectiva etapa em `src/operacoes-clandestinas.js`.
+
+## 10. Checklist de aceite
+
+- [x] Seis casos descritos, oito cenas por caso.
+- [x] Inventário de 48 WebP 1280×720, 6 retratos e banner.
+- [x] Layout com cinema, painel jurídico, timeline e navegação.
+- [x] Tabs de conteúdo e quiz de conclusão para cada caso.
+- [x] Sem backend e sem importação manual de artes.
+- [ ] Conferir imagem e controles em navegador real no endereço público após o deploy.
+- [ ] Validar a publicação efetiva de todos os assets pelo GitHub Pages.
+
+**Notas de autoria:** recurso didático não oficial. Personagens, organizações e valores são fictícios. A redação não constitui orientação jurídica individual ou manual para prática de ilícitos.
