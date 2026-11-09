@@ -213,3 +213,36 @@ Para substituir uma ilustração: exporte outra imagem WebP 16:9 com o **mesmo n
 - **Comparação visual:** a renderização preserva a estrutura aprovada — skyline, sidebar de casos, palco cinematográfico central, painel jurídico direito, oito miniaturas e controles inferiores.
 - **Deploy:** GitHub Pages executa a publicação automática a partir da branch `main`.
 - **Limitação de QA:** o navegador conectado do ChatGPT não estava disponível nesta sessão; a inspeção visual foi feita por Chromium/Playwright local com os mesmos arquivos publicados.
+
+
+## 12. Upgrade de apresentação e progresso — implementação final
+
+Implementado na página existente `operacoes-clandestinas.html`, sem criar novo módulo:
+
+- **Modo Telão:** reduz elementos secundários e aumenta a área útil da aula; estado persistido localmente.
+- **Tela cheia:** botão dedicado e atalho `F`, usando a Fullscreen API do navegador.
+- **Atalho `P`:** ativa/desativa o Modo Telão.
+- **Atalhos `1–8`:** saltam diretamente para qualquer cena mesmo após uso das abas.
+- **Progresso por caso:** cada card mostra `x/8 cenas` e uma barra discreta na base.
+- **Progresso geral:** rodapé mostra `x/48 CENAS`.
+- **Persistência:** caso, etapa, respostas, cenas vistas e Modo Telão são salvos em `localStorage`.
+- **Pré-carregamento:** cena atual, anterior e próxima são carregadas imediatamente; as demais do caso entram em idle preload.
+- **Transição de cena:** troca fotográfica com fade/zoom curto, respeitando `prefers-reduced-motion`.
+- **Fallback de imagem:** se uma cena falhar, o banner panorâmico assume temporariamente.
+- **Correção de assets:** retrato de Herdeiros e quadro 8 de Meação foram reconstruídos após QA detectar arquivos corrompidos.
+
+### QA funcional final
+
+Teste automatizado executado contra o commit final em servidor local isolado, viewport **1920×1080**:
+
+- **6/6 casos** renderizados.
+- **48/48 cenas** carregadas em **1280×720**.
+- **6/6 retratos** carregados em **440×280**.
+- Abas **Explicação**, **Jurídico** e **Documentos** funcionais.
+- Quiz final com **3 alternativas** e feedback.
+- Atalhos `1–8`, `←`, `→`, `F` e `P` implementados.
+- Modo Telão confirmado por estado visual e `aria-pressed`.
+- Persistência confirmada com **48/48 cenas vistas**.
+- Fullscreen API disponível no navegador de QA.
+- **0 erros de console** durante a varredura.
+- GitHub Pages: deploy do commit funcional `f69d370a` concluído com sucesso.
