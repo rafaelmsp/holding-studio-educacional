@@ -3,82 +3,102 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f6f7f8">
-<meta name="description" content="Laboratório jurídico interativo para reconstituição forense de casos fictícios envolvendo holdings e fraudes patrimoniais.">
-<title>Anatomia da Fraude Patrimonial | Holding Studio</title>
-<link rel="stylesheet" href="src/operacoes-clandestinas.css?v=20261109-6">
-<script defer src="src/operacoes-clandestinas.js?v=20261109-8"></script>
+<meta name="theme-color" content="#f7f8fa">
+<meta name="description" content="Simulador didático de fraudes patrimoniais para aulas de Direito.">
+<title>Simulador de Fraudes Patrimoniais | Holding Studio</title>
+<link rel="stylesheet" href="src/operacoes-clandestinas.css?v=20261109-9">
+<script defer src="src/operacoes-clandestinas.js?v=20261109-9"></script>
 </head>
 <body>
-<svg aria-hidden="true" class="svg-sprite">
- <symbol id="oc-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 3"/></symbol>
- <symbol id="oc-building" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h2m4 0h2M8 12h2m4 0h2M9 21v-4h6v4"/></symbol>
- <symbol id="oc-file" viewBox="0 0 24 24"><path d="M14 2H5v20h14V8Z"/><path d="M14 2v6h5M8 13h8M8 17h7"/></symbol>
- <symbol id="oc-house" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v10H3V11Z"/><path d="M9 21v-7h6v7"/></symbol>
- <symbol id="oc-move" viewBox="0 0 24 24"><path d="M4 7h16m-5-4 5 4-5 4M20 17H4m5-4-5 4 5 4"/></symbol>
- <symbol id="oc-users" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M2 21v-3a6 6 0 0 1 12 0v3M16 15a5 5 0 0 1 6 5v1"/></symbol>
- <symbol id="oc-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></symbol>
- <symbol id="oc-scale" viewBox="0 0 24 24"><path d="M12 2v20M4 7h16M4 7 1 15h6L4 7Zm16 0-3 8h6l-3-8ZM7 22h10"/></symbol>
-</svg>
-<div class="operations-app">
+<div class="simulator">
  <header class="topbar">
-  <div class="brand"><span class="brand-mark">HS</span><span class="brand-copy"><strong>HOLDING <em>STUDIO</em></strong><small>CURSO DE DIREITO · LABORATÓRIO INTEGRADO</small></span></div>
-  <nav class="module-nav" aria-label="Módulos do curso">
-   <a href="showroom.html">01 · Viabilidade</a>
-   <a href="operacoes-clandestinas.html" class="current" aria-current="page">02 · Anatomia da fraude</a>
-   <button type="button" id="fullscreen" class="nav-action">⛶ Tela cheia</button>
-  </nav>
- </header>
- <main class="main-shell">
-  <section class="intro-row">
-   <div><div class="eyebrow">RECONSTITUIÇÃO FORENSE · CASOS FICTÍCIOS</div><h1>Anatomia da fraude patrimonial</h1><p>Entenda a sequência dos acontecimentos, os sinais documentais e as consequências jurídicas. Um caso por vez, uma etapa por vez.</p></div>
-   <div class="class-tag"><span></span> AULA INTERATIVA · PROJETOR</div>
-  </section>
-  <section class="case-bar" aria-label="Seleção de casos">
-   <div class="case-bar-head"><strong>Carregar cenário</strong><span id="caseLabel">Caso 1 de 6</span></div>
-   <div id="caseButtons" class="case-buttons" role="group" aria-label="Selecionar caso"></div>
-  </section>
-  <div class="workspace">
-   <section class="lesson-panel op-panel" aria-label="Etapa atual do caso">
-    <div class="stage-meta"><span id="stepLabel">ETAPA 1 DE 8</span><div class="progress-track"><div id="flowFill"></div></div><span class="stage-hint">Selecione uma etapa</span></div>
-    <div class="case-context">
-     <div class="context-main"><div class="eyebrow">CASO EM ANÁLISE</div><h2 id="scenarioTitle">Carregando caso...</h2><p id="scenarioLead"></p></div>
-     <div class="case-facts"><div><small>Patrimônio ilustrativo</small><strong id="wealth">—</strong></div><div><small>Questão central</small><strong id="theme">—</strong></div></div>
-    </div>
-    <div id="flowSteps" class="stage-track" role="group" aria-label="Etapas do caso"></div>
-    <div class="mode-row"><span>Perspectiva</span><div class="mode-switch" role="group" aria-label="Perspectiva didática">
-     <button type="button" class="mode-button active" id="viewCircuito" aria-pressed="true">▶ Reconstituição</button>
-     <button type="button" class="mode-button" id="viewAuditoria" aria-pressed="false">⚖ Auditoria jurídica</button>
-    </div></div>
-    <article class="event-card">
-     <div class="event-tag"><span id="stepName">ANTES DA HOLDING</span><span id="stepNum">1/8</span></div>
-     <h3 id="eventTitle">Carregando etapa...</h3><p id="eventNarrative"></p>
-    </article>
-    <section class="micro-lesson" aria-label="Explicação em quatro momentos">
-     <div class="micro-head"><div><div class="eyebrow" id="microHeading">SEQUÊNCIA GUIADA</div><span id="microCounter">Detalhe 1 de 4</span></div><div id="microButtons" class="micro-buttons" role="group" aria-label="Detalhes da etapa"></div></div>
-     <div class="micro-content" aria-live="polite"><strong id="microTitle"></strong><p id="microText"></p></div>
-    </section>
-    <section class="checks-section">
-     <div class="section-head"><div><div class="eyebrow">PARTICIPAÇÃO DA TURMA</div><h3 id="checksTitle">Classifique os indicadores</h3></div><button type="button" class="quiet-button" id="resetChecks">Limpar esta análise</button></div>
-     <p class="helper">Marque o que os documentos fictícios permitem concluir: indício, afastado ou ainda desconhecido.</p>
-     <div id="checks" class="checks-list"></div>
-    </section>
-    <div class="stage-nav"><button id="previous" type="button" class="nav-button">← Etapa anterior</button><button id="next" type="button" class="nav-button primary">Próxima etapa →</button></div>
-   </section>
-   <aside class="insights-panel op-panel" aria-label="Indicadores e material de apoio">
-    <div class="indicator-grid">
-     <section class="indicator-card"><small>Itens classificados como indício</small><strong id="alertScore">—</strong><span id="alertText">Nenhum item avaliado</span><div class="mini-track"><div id="alertFill"></div></div></section>
-     <section class="indicator-card"><small>Cobertura da análise</small><strong id="coverageScore">0%</strong><span id="coverageText">0 de 39 indicadores</span><div class="mini-track"><div id="coverageFill"></div></div><small class="coverage-short" id="coverageShort">0 classificados</small></section>
-    </div>
-    <details class="side-section" open><summary>Eixos examinados <span>10 mecanismos</span></summary><div id="mechs" class="mechanism-list"></div></details>
-    <details class="side-section"><summary>Documentos e diligências</summary><div id="documents" class="document-list"></div></details>
-    <details class="side-section"><summary>Leitura jurídica</summary><p id="question" class="legal-question"></p><button type="button" id="reveal" class="reveal-button" aria-expanded="false">Revelar análise e diligência</button><div id="analysis" class="legal-analysis" hidden></div></details>
-    <details class="side-section"><summary>Contraponto de licitude</summary><div class="lawful-note"><strong>Operação regular possível</strong><p id="legitimate"></p></div><div class="caution-note"><strong>Limite da análise</strong><p id="limitation"></p></div></details>
-    <details class="side-section"><summary>Questões jurídicas destacadas</summary><div id="gates" class="gate-list">Nenhuma hipótese destacada.</div></details>
-    <details class="side-section"><summary>Matriz de evidências <span id="proofCount">0 itens</span></summary><div id="proof" class="proof-table"></div><button type="button" class="quiet-button print-button" id="print">Imprimir análise</button></details>
-    <details class="side-section"><summary>Fontes legais</summary><div id="references" class="reference-list"></div><p class="disclaimer">Indicadores didáticos. Não representam probabilidade de fraude, culpa ou prognóstico judicial. Toda conclusão depende de prova, requisitos legais e contraditório.</p></details>
-   </aside>
+  <a class="brand" href="showroom.html" aria-label="Holding Studio, início">
+   <span class="brand-mark">HS</span>
+   <span class="brand-text"><strong>HOLDING <em>STUDIO</em></strong><small>LABORATÓRIO JURÍDICO EDUCACIONAL</small></span>
+  </a>
+  <div class="top-actions">
+   <span class="live-label"><i></i> SIMULAÇÃO DIDÁTICA</span>
+   <button id="fullscreen" type="button" class="fullscreen">⛶ Tela cheia</button>
   </div>
+ </header>
+ <main class="main">
+  <section class="heading">
+   <div>
+    <div class="eyebrow">DIREITO EMPRESARIAL · CIVIL · TRIBUTÁRIO · PENAL</div>
+    <h1>Simulador de fraudes patrimoniais</h1>
+    <p>Escolha um cenário e acompanhe, cena por cena, como a fraude pode se manifestar e quais são suas consequências jurídicas.</p>
+   </div>
+   <div class="classroom-tag">AULA <strong>16:9</strong></div>
+  </section>
+
+  <section class="scenario-picker">
+   <div class="picker-label"><strong>SELECIONE A SIMULAÇÃO</strong><span id="caseLabel">CENÁRIO 1 / 6</span></div>
+   <div id="caseButtons" class="case-buttons" role="group" aria-label="Escolher cenário"></div>
+  </section>
+
+  <section class="scenario-title">
+   <div class="scenario-copy">
+    <div class="eyebrow">CENÁRIO FICTÍCIO</div>
+    <h2 id="scenarioTitle">Carregando simulação...</h2>
+    <p id="scenarioLead"></p>
+   </div>
+   <div class="scenario-data">
+    <div><small>Patrimônio ilustrativo</small><strong id="wealth">—</strong></div>
+    <div><small>Questão central</small><strong id="theme">—</strong></div>
+   </div>
+  </section>
+
+  <section class="progress-area" aria-label="Progresso da simulação">
+   <div class="progress-label"><strong id="stepLabel">PASSO 1 DE 8</strong><span id="stepNum">01 / 08</span></div>
+   <div class="progress-track"><div id="simFill"></div></div>
+   <div id="flowSteps" class="flow-steps" role="group" aria-label="Cenas da simulação"></div>
+  </section>
+
+  <section id="simulationView" class="simulation-view">
+   <article class="scene-card">
+    <div class="scene-top"><span id="sceneTag">CENA 01 · CONTEXTO</span><span class="scene-kind">RECONSTITUIÇÃO</span></div>
+    <h2 id="eventTitle">Situação inicial</h2>
+    <p id="eventNarrative"></p>
+    <div class="scene-foot"><span class="scene-dot"></span> <span>Observe a sequência dos fatos antes de avançar.</span></div>
+   </article>
+
+   <div class="explanation-column">
+    <section class="explanation-card primary-explanation">
+     <div class="card-kicker">O QUE ESTÁ ACONTECENDO</div>
+     <h3 id="operationTitle">Situação de partida</h3>
+     <p id="operationText"></p>
+    </section>
+    <section class="explanation-card legal-explanation">
+     <div class="card-kicker">EXPLICAÇÃO PARA A TURMA</div>
+     <h3 id="legalTitle">Ponto jurídico</h3>
+     <p id="legalText"></p>
+    </section>
+   </div>
+  </section>
+
+  <section id="quizPanel" class="quiz-panel" hidden>
+   <div class="quiz-intro"><div class="eyebrow">FIXAÇÃO DO CONTEÚDO</div><h2 id="quizQuestion"></h2></div>
+   <div id="quizOptions" class="quiz-options"></div>
+   <div id="quizFeedback" class="quiz-feedback" hidden><strong id="quizResult"></strong><p id="quizWhy"></p></div>
+  </section>
+
+  <section class="impact-row">
+   <div class="impact-card"><span id="impactTitle">QUESTÃO CENTRAL</span><p id="impactText"></p></div>
+   <div class="documents-card"><span>ELEMENTOS DA CENA</span><p id="docsText"></p></div>
+  </section>
+
+  <footer class="controls">
+   <div class="control-left">
+    <button id="previous" type="button" class="control-button secondary">← Voltar</button>
+    <button id="restart" type="button" class="control-button subtle">↺ Reiniciar caso</button>
+   </div>
+   <div class="control-right">
+    <button id="sourceToggle" type="button" class="source-toggle" aria-expanded="false">Fontes legais</button>
+    <button id="next" type="button" class="control-button primary">Próxima cena →</button>
+   </div>
+  </footer>
+  <section id="sourceBox" class="source-box" hidden><div class="source-title">Legislação e referências do cenário</div><div id="sourceLinks" class="source-links"></div></section>
+  <p class="disclaimer">Simulação acadêmica com casos fictícios. As cenas explicam mecanismos e enquadramentos em nível conceitual; não constituem roteiro operacional para praticar ou ocultar ilícitos. A responsabilização depende dos fatos provados e dos requisitos legais.</p>
  </main>
  <div id="announce" class="sr-only" aria-live="polite"></div>
 </div>
