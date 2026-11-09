@@ -77,3 +77,19 @@
 @media(max-width:970px){.audit-head{align-items:start}.audit-grid{grid-template-columns:1fr}.audit-footer{position:sticky;bottom:0;z-index:5;flex-wrap:wrap;backdrop-filter:blur(8px)}.audit-conclusion{flex-direction:column;align-items:start;gap:8px}}
 @media(max-width:640px){.audit-head{flex-direction:column;align-items:start}.audit-rule{max-width:none}.case-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}.audit-metrics{grid-template-columns:1fr 1fr}.audit-metrics strong{font-size:17px}.audit-paper{padding:17px}.audit-footer{justify-content:center}.audit-footer .audit-actions{justify-content:center}.audit-footer #auditFooterStatus{order:3;width:100%}.audit-footer .btn{min-width:0;padding:10px 13px}.audit-footer .utility{font-size:12px}.toptools{flex-wrap:wrap}.audit-intro{font-size:14px}}
 @media(print){body{color:#162b39;background:#fff}.top,.audit-selector,.audit-progress,.audit-footer,.audit-disclaimer,.audit-reveal{display:none!important}.audit-grid{grid-template-columns:1fr 1fr}.audit-paper{background:#fff!important;color:#182f3e!important;break-inside:avoid}.audit-paper h2,.audit-paper h3,.audit-summary,.audit-event p,.audit-event-head,.audit-evidence li,.audit-lawful p{color:#1e3947!important}.audit-event,.audit-lawful,.audit-metrics>div,.audit-evidence{background:#fff!important}.audit-metrics strong{color:#1e3947!important}.audit-conclusion{background:#fff!important}.audit-conclusion h2,.audit-conclusion p{color:#1e3947!important}.audit-analysis[hidden]{display:block!important}}
+
+
+/* Corrige herança do layout 16:9 da calculadora: esta página não usa
+   a grade fixa de quatro linhas definida em showroom.css. */
+@media screen and (min-width:971px){
+ body:has(.audit-app){display:block;place-items:initial;overflow:hidden;height:100%;width:100%}
+ .audit-app{display:flex;flex-direction:column;grid-template-rows:none;grid-template-columns:none;aspect-ratio:auto;width:100%;max-width:1850px;height:100dvh;min-height:0;overflow:hidden}
+ .audit-app>.top{flex:0 0 auto}
+ .audit-main{display:block;flex:1 1 auto;min-height:0;overflow-y:auto;scrollbar-color:#5b8290 transparent;padding-top:10px;padding-bottom:15px}
+ .audit-footer{flex:0 0 auto}
+ .audit-disclaimer{flex:0 0 auto;padding-bottom:7px}
+}
+@media screen and (max-width:970px){
+ .audit-app{display:flex;flex-direction:column;grid-template-rows:none;aspect-ratio:auto;width:100%;height:auto;min-height:100dvh;overflow:visible}
+ .audit-main{overflow:visible}
+}
