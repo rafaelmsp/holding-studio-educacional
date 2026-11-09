@@ -151,11 +151,18 @@ function renderQuiz(c){
 function renderSources(){const root=$("sourceLinks");root.replaceChildren();SOURCE.forEach(([label,url])=>{const a=make("a","",label+" ↗");a.href=url;a.target="_blank";a.rel="noopener noreferrer";root.append(a);});}
 function render(){
  const c=current(),d=simulationData(c,state.step);renderCases();renderFlow();
+ renderArt(c,state.step);
+ put("lessonTopic",MECHANISMS[c.id].label);
+ put("detailHeading",c.short+" · "+d.title);
+ put("detailNarrative",d.text);put("detailOperation",d.operationText);put("detailLegal",d.legalText);
+ put("detailImpact",d.impactText);put("detailDocs",d.docs);
+ $("lessonCopy").hidden=state.step===7;
+
  put("scenarioTitle",c.name);put("scenarioLead",c.summary);put("wealth",money(c.wealth));put("theme",c.issue);
  put("sceneTag",d.tag);put("eventTitle",d.title);put("eventNarrative",d.text);
  put("operationTitle",d.operationTitle);put("operationText",d.operationText);put("legalTitle",d.legalTitle);put("legalText",d.legalText);
  put("impactTitle",d.impactTitle);put("impactText",d.impactText);put("docsText",d.docs);
- $("simulationView").hidden=state.step===7;$("quizPanel").hidden=state.step!==7;
+ $("simulationView").hidden=false;$("quizPanel").hidden=state.step!==7;
  if(state.step===7){put("quizQuestion",c.quiz.question);renderQuiz(c);}
  $("previous").disabled=state.step===0;$("next").textContent=state.step===7?(state.case===CASES.length-1?"Reiniciar primeiro caso":"Próximo caso →"):"Próxima cena →";
  put("announce",c.short+", passo "+(state.step+1)+": "+d.title);
@@ -167,5 +174,109 @@ $("restart").addEventListener("click",()=>{state.step=0;state.quizChoice=null;re
 $("fullscreen").addEventListener("click",()=>{if(doc.fullscreenElement)doc.exitFullscreen?.();else doc.documentElement.requestFullscreen?.();});
 $("sourceToggle").addEventListener("click",()=>{const box=$("sourceBox");box.hidden=!box.hidden;$("sourceToggle").setAttribute("aria-expanded",String(!box.hidden));if(!box.hidden)renderSources();});
 doc.addEventListener("keydown",ev=>{const tag=ev.target?.tagName?.toLowerCase();if(["input","textarea","select","button","a","summary"].includes(tag)||ev.altKey||ev.metaKey||ev.ctrlKey)return;if(ev.key==="ArrowRight"||ev.key==="PageDown"){ev.preventDefault();advance();}if(ev.key==="ArrowLeft"||ev.key==="PageUp"){ev.preventDefault();$("previous").click();}if(ev.key.toLowerCase()==="f")$("fullscreen").click();});
+
+/* Illustrations are loaded from the repository when published, or from a locally
+   imported, persistent classroom pack. Nothing is uploaded to another service. */
+const ART_DIR="assets/the-crimes/";
+const ART_NAMES=[
+"01_capa_crimcity.webp","02_credores.webp","03_meacao.webp",
+"04_herdeiros.webp","05_itbi.webp","06_alugueis.webp",
+"07_grupo.webp","08_investigacao.webp","09_julgamento.webp","10_final.webp"];
+const ART_CASE={credores:"02_credores.webp",meacao:"03_meacao.webp",herdeiros:"04_herdeiros.webp",
+itbi:"05_itbi.webp","aluguéis":"06_alugueis.webp",grupos:"07_grupo.webp"};
+let artEpoch=0,lastObjectURL=null;
+function sceneArt(c,step){
+ if(step===5)return "08_investigacao.webp";
+ if(step===6)return "09_julgamento.webp";
+ if(step===7)return "10_final.webp";
+ if(step===0&&c.id==="credores")return "01_capa_crimcity.webp";
+ return ART_CASE[c.id];
+}
+function artDB(){
+ return new Promise((resolve,reject)=>{
+  if(!("indexedDB" in window)){reject(Error("Armazenamento local indisponível"));return;}
+  const q=indexedDB.open("the-crimes-illustrations",1);
+  q.onupgradeneeded=()=>{if(!q.result.objectStoreNames.contains("images"))q.result.createObjectStore("images");};
+  q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error);
+ });
+}
+async function readStoredArt(name){
+ try{
+  const db=await artDB();
+  return await new Promise(resolve=>{
+   const tx=db.transaction("images","readonly"),req=tx.objectStore("images").get(name);
+   req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>resolve(null);
+   tx.oncomplete=()=>db.close();tx.onerror=()=>db.close();
+  });
+ }catch{return null;}
+}
+async function saveArt(name,blob){
+ try{
+  const db=await artDB();
+  await new Promise((resolve,reject)=>{
+   const tx=db.transaction("images","readwrite");
+   tx.objectStore("images").put(blob,name);
+   tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);
+  });
+  db.close();return true;
+ }catch{return false;}
+}
+function showArtBlob(blob){
+ const el=$("sceneImage");if(lastObjectURL)URL.revokeObjectURL(lastObjectURL);
+ lastObjectURL=URL.createObjectURL(blob);
+ el.onload=()=>{$("artPlaceholder").hidden=true;};
+ el.onerror=()=>{$("artPlaceholder").hidden=false;};
+ el.src=lastObjectURL;
+}
+async function renderArt(c,step){
+ const token=++artEpoch, name=sceneArt(c,step),img=$("sceneImage");
+ img.alt="Ilustração cinematográfica fictícia: "+c.short+", cena "+(step+1);
+ $("artPlaceholder").hidden=false;
+ const blob=await readStoredArt(name);
+ if(token!==artEpoch)return;
+ if(blob){showArtBlob(blob);return;}
+ if(lastObjectURL){URL.revokeObjectURL(lastObjectURL);lastObjectURL=null;}
+ img.onload=()=>{if(token===artEpoch)$("artPlaceholder").hidden=true;};
+ img.onerror=()=>{if(token===artEpoch)$("artPlaceholder").hidden=false;};
+ img.src=ART_DIR+name;
+}
+function parseArtZip(buffer){
+ const b=new Uint8Array(buffer),v=new DataView(buffer),dec=new TextDecoder(),out=[];
+ let p=0;
+ while(p+30<=b.byteLength&&v.getUint32(p,true)===0x04034b50){
+  const flags=v.getUint16(p+6,true),method=v.getUint16(p+8,true),size=v.getUint32(p+18,true);
+  const namelen=v.getUint16(p+26,true),extra=v.getUint16(p+28,true);
+  const name=dec.decode(b.slice(p+30,p+30+namelen)).split("/").pop();
+  const start=p+30+namelen+extra,end=start+size;
+  if(flags&8||end>b.length)throw Error("ZIP incompatível. Utilize o pacote de ilustrações preparado para o simulador.");
+  if(ART_NAMES.includes(name)){
+   if(method!==0)throw Error("O pacote precisa estar em ZIP sem compressão adicional.");
+   out.push([name,new Blob([b.slice(start,end)],{type:"image/webp"})]);
+  }
+  p=end;
+ }
+ return out;
+}
+$("artImportButton").addEventListener("click",()=>$("artImportFile").click());
+$("artImportFile").addEventListener("change",async event=>{
+ const files=Array.from(event.target.files||[]);if(!files.length)return;
+ try{
+  const all=[];
+  for(const file of files){
+   if(file.name.toLowerCase().endsWith(".zip"))all.push(...parseArtZip(await file.arrayBuffer()));
+   else if(ART_NAMES.includes(file.name))all.push([file.name,file]);
+  }
+  if(!all.length)throw Error("Nenhuma das 10 imagens foi encontrada no arquivo.");
+  let stored=0;
+  for(const [name,blob] of all)if(await saveArt(name,blob))stored++;
+  $("artStatus").textContent=all.length+" artes disponíveis"+(stored===0?" nesta sessão":"");
+  if(stored===0)window.alert("O navegador bloqueou o armazenamento local das imagens. Use uma janela comum.");
+  renderArt(current(),state.step);
+ }catch(err){$("artStatus").textContent="Falha ao importar";window.alert(String(err.message||err));}
+ finally{event.target.value="";}
+});
+$("detailsButton").addEventListener("click",()=>$("detailDialog").showModal());
+$("closeDetails").addEventListener("click",()=>$("detailDialog").close());
+
 render();
 })();
