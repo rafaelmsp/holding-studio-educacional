@@ -198,7 +198,18 @@ Para substituir uma ilustração: exporte outra imagem WebP 16:9 com o **mesmo n
 - [x] Layout com cinema, painel jurídico, timeline e navegação.
 - [x] Tabs de conteúdo e quiz de conclusão para cada caso.
 - [x] Sem backend e sem importação manual de artes.
-- [ ] Conferir imagem e controles em navegador real no endereço público após o deploy.
-- [ ] Validar a publicação efetiva de todos os assets pelo GitHub Pages.
+- [x] Renderização validada em navegador automatizado no viewport 1920×1080; 6 casos, 8 etapas, abas e quiz funcionais.
+- [x] 48 cenas WebP verificadas em 1280×720 e sem falhas de carregamento no pacote.
+- [x] GitHub Pages publicou com sucesso o commit principal do projeto; o ajuste final de rótulos de timeline é acompanhado pela mesma pipeline.
 
 **Notas de autoria:** recurso didático não oficial. Personagens, organizações e valores são fictícios. A redação não constitui orientação jurídica individual ou manual para prática de ilícitos.
+
+
+## 11. Validação final — 09/11/2026
+
+- **Viewport de QA:** 1920×1080 (projetor/telão 16:9).
+- **Cenas verificadas:** 48/48 com `naturalWidth=1280` e `naturalHeight=720`.
+- **Controles verificados:** seis casos, oito etapas, abas Explicação/Jurídico/Documentos, navegação anterior/próxima, reinício e quiz.
+- **Comparação visual:** a renderização preserva a estrutura aprovada — skyline, sidebar de casos, palco cinematográfico central, painel jurídico direito, oito miniaturas e controles inferiores.
+- **Deploy:** GitHub Pages executa a publicação automática a partir da branch `main`.
+- **Limitação de QA:** o navegador conectado do ChatGPT não estava disponível nesta sessão; a inspeção visual foi feita por Chromium/Playwright local com os mesmos arquivos publicados.
