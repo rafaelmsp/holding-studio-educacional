@@ -144,7 +144,7 @@ function renderFlow(){
 }
 function renderQuiz(c){
  const root=$("quizOptions");root.replaceChildren();
- c.quiz.options.forEach((option,i)=>{const b=make("button","quiz-option"+(state.quizChoice===i?" selected":""));b.type="button";b.append(make("span","quiz-letter",String.fromCharCode(65+i)),make("span","",option));b.setAttribute("aria-pressed",String(state.quizChoice===i));b.addEventListener("click",()=>{state.quizChoice=i;renderQuiz(c);});root.append(b);});
+ c.quiz.options.forEach((option,i)=>{const b=make("button","quiz-option"+(state.quizChoice===i?" selected":""));b.type="button";b.append(make("span","quiz-letter",String.fromCharCode(65+i)),make("span","",option));b.setAttribute("aria-pressed",String(state.quizChoice===i));b.addEventListener("click",()=>{state.quizChoice=i;renderQuiz(c);put("impactText",c.quiz.why);});root.append(b);});
  const feedback=$("quizFeedback");feedback.hidden=state.quizChoice===null;
  if(state.quizChoice!==null){const correct=state.quizChoice===c.quiz.correct;feedback.className="quiz-feedback "+(correct?"correct":"review");put("quizResult",correct?"Resposta correta":"Revise esta conclusão");put("quizWhy",c.quiz.why);}
 }
@@ -161,7 +161,7 @@ function render(){
  put("scenarioTitle",c.name);put("scenarioLead",c.summary);put("wealth",money(c.wealth));put("theme",c.issue);
  put("sceneTag",d.tag);put("eventTitle",d.title);put("eventNarrative",d.text);
  put("operationTitle",d.operationTitle);put("operationText",d.operationText);put("legalTitle",d.legalTitle);put("legalText",d.legalText);
- put("impactTitle",d.impactTitle);put("impactText",d.impactText);put("docsText",d.docs);
+ put("impactTitle",d.impactTitle);put("impactText",state.step===7&&state.quizChoice===null?"Responda ao desafio para revelar a fundamentação jurídica.":d.impactText);put("docsText",d.docs);
  $("simulationView").hidden=false;$("quizPanel").hidden=state.step!==7;
  if(state.step===7){put("quizQuestion",c.quiz.question);renderQuiz(c);}
  $("previous").disabled=state.step===0;$("next").textContent=state.step===7?(state.case===CASES.length-1?"Reiniciar primeiro caso":"Próximo caso →"):"Próxima cena →";
