@@ -96,7 +96,7 @@ button{font:inherit;cursor:pointer}
 .source-links a:hover{text-decoration:underline}
 .disclaimer{margin:0;text-align:center;font-size:8px;line-height:1.25;color:var(--muted);flex:0 0 auto}
 .quiz-panel{flex:1;min-height:0;padding:clamp(16px,1.6vw,27px);border:1px solid var(--line);border-radius:11px;background:var(--paper);display:flex;flex-direction:column;gap:13px;overflow:auto}
-.quiz-panel[hidden]{display:none}
+.quiz-panel[hidden],.simulation-view[hidden]{display:none}
 .quiz-intro h2{font-size:clamp(20px,1.8vw,31px);line-height:1.2;margin:5px 0 0;letter-spacing:-.03em}
 .quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .quiz-option{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--soft);color:var(--ink);text-align:left;font-size:clamp(11px,.85vw,15px);line-height:1.4}
