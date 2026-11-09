@@ -212,3 +212,17 @@
  body:has(.operations-app){display:block}
  .operations-app{display:flex;flex-direction:column;aspect-ratio:auto;width:100%;height:auto;min-height:100dvh}
 }
+
+/* Sequência de estudo do dossiê: detalhes progressivos sem estourar o projetor */
+.micro-lesson{background:#173b4b;border:1px solid #476d77;padding:11px 13px;border-radius:12px;margin:8px 0 12px;min-width:0}
+.micro-lesson-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.micro-lesson-head strong{color:#f6d6a5;font-size:12px}
+.micro-lesson-head small{color:#b6cad1;font-size:10px;white-space:nowrap}
+.micro-buttons{display:flex;gap:6px;margin:10px 0}
+.micro-btn{border:1px solid #577585;background:#254a5c;color:#e5f0f3;border-radius:8px;min-width:34px;padding:5px 11px;font-size:12px;font-weight:800}
+.micro-btn.active{background:#e7b86e;border-color:#e7b86e;color:#1d3440}
+.micro-content{border-top:1px solid #3b5968;padding-top:8px;min-height:82px}
+.micro-content b{display:block;color:#e7f0ee;font-size:12px}
+.micro-content p{font-size:12px!important;line-height:1.52!important;margin:5px 0 0!important;color:#cee1e5!important}
+@media(min-width:971px){.micro-lesson{padding:9px 11px;margin:7px 0}.micro-buttons{margin:6px 0}.micro-content{min-height:70px}}
+@media print{.micro-lesson,.micro-content,.micro-content p{color:#123040!important;background:#fff!important}.micro-lesson-head strong,.micro-content b{color:#123040!important}}
