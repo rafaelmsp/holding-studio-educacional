@@ -277,3 +277,90 @@
  .op-panel.story{display:flex;flex-direction:column}
  .lawful,.caution{display:none}
 }
+
+
+/* TELA ÚNICA 16:9 · Mostra o fluxo completo dos oito acontecimentos por caso */
+@media screen and (min-width:971px){
+ body:has(.operations-app){display:grid;place-items:center;width:100%;height:100%;min-height:0;overflow:hidden}
+ .operations-app{
+  display:flex;flex-direction:column;width:min(100vw,177.77778dvh);
+  height:min(100dvh,56.25vw);max-width:none;min-height:0;
+  aspect-ratio:16 / 9;margin:auto;overflow:hidden;
+  border:1px solid #2f5365;box-shadow:0 12px 50px #0008
+ }
+ .operations-app>.top{min-height:48px;flex:0 0 48px;padding:6px clamp(15px,2vw,32px)}
+ .operations-main{min-height:0;flex:1;overflow:hidden;padding:5px clamp(15px,2vw,32px) 6px;gap:4px}
+ .operations-hero{flex:0 0 auto;margin:0}
+ .operations-hero h1{font-size:clamp(23px,2.1vw,33px);line-height:1.12;margin:1px 0 3px}
+ .operations-hero p{margin:0;font-size:11px;line-height:1.24;max-width:1050px}
+ .case-section{flex:0 0 auto;padding:5px 8px}
+ .section-label{font-size:10px;margin-bottom:3px}
+ .case-switches{grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}
+ .case-switch{min-height:42px;padding:5px 8px}
+ .case-switch strong{font-size:11px}
+ .case-switch small{font-size:10px}
+ .flow-progress{padding:4px 0;font-size:10px;flex:0 0 auto}
+ .op-grid{display:grid;grid-template-columns:minmax(0,1fr);flex:1 1 auto;min-height:0;overflow:hidden}
+ .op-panel.story{height:100%;min-height:0;padding:9px 12px;overflow:hidden;gap:4px;display:flex;flex-direction:column}
+ .op-panel.story>.kicker{font-size:10px;margin:0}
+ .op-panel.story h2{font-size:clamp(18px,1.65vw,25px);margin:0;line-height:1.15}
+ .op-panel.story .case-lead{font-size:11px;line-height:1.25;margin:0;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+ .metrics{display:flex;gap:7px;margin:0;flex:0 0 auto}
+ .metrics>div{padding:4px 8px;min-width:140px}
+ .metrics small{font-size:9px}
+ .metrics strong{font-size:13px;margin-top:1px}
+ .flow-steps{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  grid-template-rows:repeat(2,minmax(0,1fr));
+  gap:7px 10px;min-width:0;min-height:0;flex:1 1 auto;
+  margin:2px 0;overflow:hidden
+ }
+ .flow-step{
+  position:relative;display:flex;flex-direction:column;align-items:flex-start;
+  justify-content:space-between;gap:3px;min-width:0;min-height:0;overflow:hidden;
+  text-align:left;background:#1e4355;border:1px solid #527789;
+  padding:7px 10px;border-radius:10px;color:#e8f3f2
+ }
+ .flow-step.active{background:#365c57;color:#fff;border:2px solid #ecc387;padding:6px 9px}
+ .flow-step.reviewed:not(.active){border-color:#8dcdac}
+ .flow-step-head{display:flex;align-items:center;gap:7px;color:#e7c98e}
+ .flow-step .step-number{font-size:10px;display:block;line-height:1.3;background:#34586b;border-radius:5px;padding:2px 5px}
+ .flow-step-icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+ .flow-step-title{font-size:clamp(11px,.9vw,15px);font-weight:900;line-height:1.16;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .flow-step-excerpt{font-size:clamp(10px,.72vw,12px);line-height:1.23;color:#c2d9dd;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .flow-step.active .flow-step-excerpt{color:#e9f4e9}
+ .flow-step:not(:nth-child(4n))::after{content:"›";position:absolute;right:0;top:2px;color:#e4ba7b;font-size:17px}
+ .view-modes{margin:1px 0;flex:0 0 auto}
+ .mode-button{padding:4px 9px;font-size:10px}
+ .event-card{flex:0 0 auto;max-height:23%;min-height:0;overflow:auto;padding:8px 12px;margin:0}
+ .event-card h3{font-size:clamp(17px,1.4vw,23px);margin:2px 0 3px}
+ .event-card p{font-size:clamp(11px,.9vw,14px);line-height:1.35;margin:0}
+ .event-tag{font-size:10px}
+ .micro-lesson{flex:0 0 auto;max-height:17%;overflow:auto;margin:1px 0;padding:6px 10px}
+ .micro-lesson-head strong{font-size:10px}
+ .micro-buttons{margin:4px 0}
+ .micro-btn{font-size:10px;padding:3px 8px;min-width:27px}
+ .micro-content{min-height:0;padding-top:4px}
+ .micro-content b{font-size:10px}
+ .micro-content p{font-size:10px!important;line-height:1.28!important}
+ .lawful,.caution,.laboratory,.course-card,.module-disclaimer{display:none!important}
+ .op-footer{flex:0 0 auto;margin:2px 0 0}
+ .op-footer .btn{padding:7px 11px;font-size:11px}
+ .op-footer span{font-size:10px}
+}
+@media screen and (min-width:971px) and (max-height:650px){
+ .operations-hero p,.op-panel.story .case-lead,.metrics,.micro-lesson{display:none!important}
+ .flow-step-excerpt{-webkit-line-clamp:1}
+ .event-card{max-height:30%}
+ .case-switch{min-height:37px}
+ .operations-main{gap:2px}
+}
+@media screen and (max-width:970px){
+ .flow-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .flow-step{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left;gap:6px;padding:10px;min-height:94px}
+ .flow-step-head{display:flex;align-items:center;gap:7px}
+ .flow-step-icon{height:20px;width:20px;stroke:currentColor;fill:none;stroke-width:1.8}
+ .flow-step-title{font-size:13px;font-weight:800;line-height:1.25}
+ .flow-step-excerpt{font-size:11px;line-height:1.35}
+ .flow-step .step-number{font-size:11px}
+}
