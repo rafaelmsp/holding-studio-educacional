@@ -103,3 +103,90 @@
 @media(max-width:1060px){.operations-hero{align-items:start;flex-direction:column}.course-card{max-width:none;width:100%}.op-grid{grid-template-columns:1fr}.flow-steps{grid-template-columns:repeat(4,1fr)}.flow-step small{min-height:0}.score-cards{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:640px){.top{flex-wrap:wrap}.module-tabs{gap:5px}.module-tabs .utility{font-size:11px;padding:7px 9px}.case-switches{grid-template-columns:repeat(2,1fr)}.score-cards{grid-template-columns:1fr}.dashboard-head{align-items:start;flex-direction:column}.metrics{grid-template-columns:1fr 1fr}.proofrow{grid-template-columns:40px 1fr}.proofrow>span:nth-child(3),.proofrow>span:nth-child(4){grid-column:2}.op-footer{position:sticky;bottom:0;z-index:6;flex-direction:column;align-items:stretch;background:#122f3ef7;border-radius:12px;padding:12px}.op-footer>div>*{flex:1}.op-footer span{display:none}}
 @media(print){body{color:#123040;background:#fff}.top,.case-section,.flow-progress,.op-footer,.module-disclaimer,.tri,.reveal-btn,.proof-actions{display:none!important}.op-grid{grid-template-columns:1fr 1fr}.op-panel,.evidence-dashboard,.detail,.scorecard{background:#fff!important;color:#123040!important;border-color:#ccc}.event-card,.lawful,.caution{background:#fff!important}.event-card p,.lawful p,.caution p,.case-lead,.mechanisms,.metrics strong{color:#123040!important}.legal-analysis[hidden]{display:block!important}.proofrow{background:#fff!important;color:#123040!important;border-color:#ddd}.proofrow .code{color:#123040!important}}
+
+
+/* ============================================================
+   DISPLAY FIT · edição 2026-11-08
+   Na apresentação, a etapa inteira cabe na área útil da janela.
+   Somente o conteúdo de cada painel pode rolar internamente.
+   ============================================================ */
+.view-modes{display:flex;gap:6px;flex-wrap:wrap;margin:11px 0 9px}
+.mode-button{border:1px solid #56778a;border-radius:8px;background:#274658;color:#dceaf0;padding:7px 10px;font-weight:800;font-size:11px;line-height:1.3}
+.mode-button.active{border-color:#e7b86e;color:#263c46;background:#e7b86e}
+.drawer-tools{display:flex;align-items:center;justify-content:space-between;gap:15px;border-bottom:1px solid #466274;padding-bottom:10px;margin-bottom:12px;color:#dfc088;font-size:11px;letter-spacing:.1em;font-weight:900}
+.dashboard-backdrop{position:fixed;inset:0;background:#06141fd6;z-index:90}
+.dashboard-backdrop[hidden],.evidence-dashboard[hidden]{display:none!important}
+.evidence-dashboard{position:fixed;inset:clamp(10px,3vh,36px) clamp(10px,5vw,100px);z-index:91;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#6b8b96 transparent;max-width:1600px;margin:auto;box-shadow:0 28px 80px #000a}
+@media(min-width:971px){
+ body:has(.operations-app){height:100dvh;overflow:hidden}
+ .operations-app{height:100dvh;min-height:0;overflow:hidden}
+ .operations-app>.top{flex:0 0 auto;min-height:48px;padding-top:7px;padding-bottom:7px}
+ .operations-main{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;overflow:hidden;padding-top:6px;padding-bottom:10px}
+ .operations-hero{flex:0 0 auto;gap:14px;margin:0 0 7px;align-items:center}
+ .operations-hero h1{font-size:clamp(25px,2.6vw,38px);margin:2px 0 5px}
+ .operations-hero p{font-size:12px;line-height:1.38;margin:2px 0 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .course-card{padding:9px 11px;max-width:300px;min-width:235px;font-size:11px}
+ .course-card span{margin-top:2px;line-height:1.35}
+ .course-card small{display:none}
+ .case-section{flex:0 0 auto;padding:7px 10px}
+ .case-switches{gap:6px}
+ .case-switch{min-height:52px;padding:5px 9px;gap:2px}
+ .case-switch strong{font-size:11px}
+ .case-switch small{font-size:10px}
+ .section-label{font-size:10px;margin-bottom:5px}
+ .flow-progress{flex:0 0 auto;padding:7px 0;font-size:11px}
+ .op-grid{flex:1 1 auto;min-height:0;overflow:hidden;align-items:stretch;gap:12px}
+ .op-panel{height:100%;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#618094 transparent;padding:clamp(12px,1.3vw,20px)}
+ .op-panel h2{font-size:clamp(19px,1.65vw,26px);margin:4px 0 7px}
+ .op-panel .case-lead{font-size:12px;line-height:1.4;margin:5px 0}
+ .metrics{margin:8px 0;gap:7px}
+ .metrics>div{padding:8px 10px}
+ .metrics strong{font-size:clamp(16px,1.5vw,22px)}
+ .flow-steps{margin:9px 0;gap:4px}
+ .flow-step{padding:5px 1px;border-radius:7px}
+ .flow-step b{font-size:11px}.flow-step small{font-size:8px;min-height:0}
+ .view-modes{margin:8px 0 7px}
+ .mode-button{padding:5px 8px;font-size:10px}
+ .event-card{padding:11px;min-height:0;margin-bottom:7px}
+ .event-card h3{font-size:16px;margin:5px 0}
+ .event-card p{font-size:12px;line-height:1.48}
+ .lawful,.caution{margin-top:7px;padding:9px 10px;font-size:12px}
+ .lawful p,.caution p{font-size:12px;line-height:1.4}
+ .detail{padding:10px;margin:9px 0}
+ .detail-label{margin-bottom:5px}
+ .doc-item{padding:6px 0;font-size:12px}
+ .checks-operations{max-height:none;overflow:visible}
+ .checkrow{padding:7px}
+ .checkrow .checktitle{font-size:11px}
+ .tri{margin-top:5px}
+ .tri button{font-size:10px;padding:4px 7px}
+ .legal-source{padding-top:6px}
+ .op-footer{flex:0 0 auto;margin-top:7px;gap:10px}
+ .op-footer .btn{padding:9px 13px;font-size:12px;min-width:0}
+ .op-footer span{font-size:11px}
+ .module-disclaimer{display:none}
+}
+@media(min-width:971px) and (max-height:740px){
+ .operations-hero p{display:none}
+ .course-card{display:none}
+ .operations-hero h1{margin:1px 0;font-size:clamp(23px,2.2vw,31px)}
+ .case-switch{min-height:43px}
+ .case-switch small{display:none}
+ .section-label{margin-bottom:3px}
+ .flow-progress{padding:5px 0}
+}
+@media(max-width:970px){
+ .operations-app{height:auto;min-height:100dvh;overflow:visible}
+ .operations-main{display:block;overflow:visible;min-height:0}
+ .op-grid{overflow:visible}
+ .op-panel{height:auto;max-height:none;overflow:visible}
+ .evidence-dashboard{inset:8px;max-height:calc(100dvh - 16px)}
+ .view-modes{gap:6px}
+ .mode-button{flex:1}
+}
+@media(print){
+ body:has(.operations-app){height:auto;overflow:visible}
+ .operations-app,.operations-main,.op-grid,.op-panel{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
+ .evidence-dashboard{position:static;display:block!important;inset:auto;overflow:visible!important;box-shadow:none;margin-top:12px}
+ .dashboard-backdrop,.drawer-tools,.view-modes{display:none!important}
+}
