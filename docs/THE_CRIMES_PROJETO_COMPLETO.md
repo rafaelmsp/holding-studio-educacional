@@ -314,3 +314,77 @@ Resultado confirmado:
 O frontend é publicado pelo GitHub Pages em `/live/`.
 
 O servidor WebSocket fica isolado em `/server/` e exige um endpoint público HTTPS/WSS. Foram adicionados Dockerfile, compose de exemplo, healthcheck e CI. O endpoint de produção deve ser configurado em `PUBLIC_SERVER_URL` e `PUBLIC_PLAYER_URL`.
+
+
+## 17. THE CRIMES LIVE — 100% online com Supabase
+
+Migração concluída em 10/11/2026.
+
+### Arquitetura online
+
+Frontend:
+- GitHub Pages
+- `/live/?view=host`
+- `/live/?view=player&room=CRIM-####`
+- `/live/?view=screen&room=CRIM-####`
+
+Backend:
+- Supabase projeto `the-crimes-live`
+- região `sa-east-1` (São Paulo)
+- Postgres
+- Realtime
+- Edge Function `the-crimes-live`
+
+O multiplayer não depende mais de:
+- PC local;
+- servidor Node rodando manualmente;
+- VPS do LexJuridicus;
+- IP local;
+- campo de configuração de servidor.
+
+### Segurança
+
+A Edge Function é a autoridade do jogo.
+
+Tabelas privadas:
+- `game_rooms`
+- `game_players`
+- `game_answers`
+- `game_events`
+
+Tabelas públicas de estado em tempo real:
+- `game_room_public`
+- `game_player_public`
+
+As tabelas privadas possuem RLS, negação explícita a clientes públicos e não expõem tokens do Host ou dos players.
+
+O frontend usa apenas chave publicável do Supabase.
+
+### Realtime
+
+O Host, Player e Telão recebem atualizações por Supabase Realtime.
+
+Há também polling de fallback para recuperar estado em caso de perda momentânea da conexão WebSocket.
+
+### QA online real
+
+Teste realizado diretamente pelo GitHub Pages público contra o Supabase:
+
+- sala criada online;
+- 2 players em sessões independentes;
+- estado **AGUARDANDO INICIAR A PARTIDA...**;
+- Host reconheceu 2 conectados;
+- Rafael Cloud QA escolheu 🔴:
+  - 0 pts;
+  - `OCULTOU BENS: SIM`;
+  - resultado: `BENS AINDA NÃO LOCALIZADOS`;
+- Ana Cloud QA escolheu 🟢:
+  - 129 pts;
+  - `OCULTOU BENS: NÃO`;
+- respostas persistidas no Postgres;
+- placar sincronizado;
+- Security Advisor do Supabase: **0 lints**.
+
+### Observação
+
+Os índices de eventos ainda aparecem como "unused" no Performance Advisor porque o ambiente acabou de ser criado e possui pouco volume. Eles são mantidos para o crescimento da auditoria e não representam falha de segurança ou funcionamento.
