@@ -1,0 +1,11 @@
+services:
+  the-crimes-live:
+    build: .
+    container_name: the-crimes-live
+    restart: unless-stopped
+    ports:
+      - "3768:3768"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data

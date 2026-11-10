@@ -287,3 +287,30 @@ Implementado em `/live/` com três modos na mesma interface:
 O servidor está em `/server/index.js`, usando Node.js + Express + Socket.IO, com persistência JSON das salas, eventos e respostas.
 
 Cada resposta salva: alternativa, símbolo, classificação, tempo, score e estado patrimonial. O campo **OCULTOU BENS: SIM/NÃO** é explícito e separado da pontuação acadêmica. Ocultação nunca gera bônus.
+
+
+## 16. QA final do multiplayer
+
+Teste ponta a ponta executado em navegador real com Host + 2 players em sessões independentes e servidor Socket.IO local.
+
+Resultado confirmado:
+
+- sala criada com código `CRIM-####`;
+- estado **AGUARDANDO INICIAR A PARTIDA...** exibido para os players;
+- Host mostrou 2 jogadores conectados;
+- partida iniciou e as alternativas foram sincronizadas;
+- um player escolheu a alternativa 🔴 **ATITUDE CRIMINOSA NO CENÁRIO**;
+- o servidor registrou `ocultouBens=true` e **0 pontos** para essa escolha;
+- outro player escolheu 🟢 **JURIDICAMENTE ADEQUADA** e recebeu a pontuação acadêmica;
+- o Admin exibiu explicitamente **OCULTOU BENS: SIM/NÃO**;
+- o resultado final do player 🔴 mostrou **BENS AINDA NÃO LOCALIZADOS** sem tratar isso como vitória;
+- o resultado final do player 🟢 mostrou **ESTRUTURA JURIDICAMENTE DEFENSÁVEL**;
+- respostas, símbolos, classificações, score e eventos ficaram persistidos em JSON;
+- reconexão é baseada em `sessionToken`;
+- ranking permanece separado do resultado narrativo do personagem.
+
+### Implantação
+
+O frontend é publicado pelo GitHub Pages em `/live/`.
+
+O servidor WebSocket fica isolado em `/server/` e exige um endpoint público HTTPS/WSS. Foram adicionados Dockerfile, compose de exemplo, healthcheck e CI. O endpoint de produção deve ser configurado em `PUBLIC_SERVER_URL` e `PUBLIC_PLAYER_URL`.
