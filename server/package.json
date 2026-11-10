@@ -1,0 +1,9 @@
+{
+  "name":"the-crimes-live-server",
+  "version":"1.0.0",
+  "private":true,
+  "type":"module",
+  "scripts":{"start":"node index.js","check":"node --check index.js"},
+  "engines":{"node":">=20"},
+  "dependencies":{"cors":"^2.8.5","express":"^4.21.2","qrcode":"^1.5.4","socket.io":"^4.8.1"}
+}

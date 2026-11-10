@@ -274,3 +274,16 @@ Cada etapa mostra quatro blocos:
 - **STJ REsp 2.171.573/MS:** utilizado no módulo sucessório para discutir liberalidade dissimulada, colação e necessidade de manifestação expressa quando pertinente.
 
 O botão **Aprofundar esta etapa** também passa a mostrar a tese defensiva, o limite da zona cinzenta e o que ainda precisa ser provado, com links para as fontes oficiais.
+
+
+## 15. THE CRIMES LIVE — Multiplayer final
+
+Implementado em `/live/` com três modos na mesma interface:
+
+- **Host/Admin:** cria a sala, escolhe o crime, exibe QR, inicia/pausa/bloqueia/revela/avança e monitora cada player.
+- **Player mobile:** entra pelo QR, vê **AGUARDANDO INICIAR A PARTIDA...**, responde às 8 rodadas e recebe o resultado.
+- **Telão:** acompanha QR, progresso, ranking e estado patrimonial em tempo real.
+
+O servidor está em `/server/index.js`, usando Node.js + Express + Socket.IO, com persistência JSON das salas, eventos e respostas.
+
+Cada resposta salva: alternativa, símbolo, classificação, tempo, score e estado patrimonial. O campo **OCULTOU BENS: SIM/NÃO** é explícito e separado da pontuação acadêmica. Ocultação nunca gera bônus.
