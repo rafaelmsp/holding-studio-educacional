@@ -7,8 +7,8 @@
   <meta name="description" content="The Crimes: Cidade do Crime — laboratório jurídico educacional de fraudes patrimoniais com seis casos fictícios e oito cenas por caso.">
   <title>THE CRIMES — Cidade do Crime | Holding Studio</title>
   <link rel="preload" href="assets/the-crimes/city-banner.webp" as="image">
-  <link rel="stylesheet" href="src/operacoes-clandestinas.css?v=20261110-zone-1">
-  <script src="src/operacoes-clandestinas.js?v=20261110-zone-1" defer></script>
+  <link rel="stylesheet" href="src/operacoes-clandestinas.css?v=20261110-live-1">
+  <script src="src/operacoes-clandestinas.js?v=20261110-live-1" defer></script>
 </head>
 <body>
 <svg class="svg-bank" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -33,6 +33,7 @@
   <symbol id="ic-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.2 8.5 8 10 4.8-1.5 8-5 8-10V6Z"/><path d="M9 12h6M12 9v6"/></symbol>
   <symbol id="ic-screen" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 22h8M12 18v4"/></symbol>
   <symbol id="ic-expand" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></symbol>
+  <symbol id="ic-game" viewBox="0 0 24 24"><path d="M7 8h10a5 5 0 0 1 4.6 7l-1.1 2.6a2.4 2.4 0 0 1-3.8.8l-2-1.7H9.3l-2 1.7a2.4 2.4 0 0 1-3.8-.8L2.4 15A5 5 0 0 1 7 8Z"/><path d="M7 12v4M5 14h4M16 13h.01M19 15h.01"/></symbol>
 </svg>
 <div class="app" id="app">
   <header class="top">
@@ -41,6 +42,7 @@
     </a>
     <div class="hero-title"><strong>SIMULADOR DE FRAUDES PATRIMONIAIS</strong><small>AULA INTERATIVA · RECONSTITUIÇÃO DOS FATOS · ANÁLISE JURÍDICA</small></div>
     <div class="top-actions">
+      <button id="liveGame" class="top-tool live-game-trigger" type="button" title="Abrir o modo de perguntas da sala"><svg class="ico"><use href="#ic-game"/></svg><span>Jogo ao vivo</span></button>
       <button id="presentMode" class="top-tool" type="button" aria-pressed="false" title="Aumentar a área útil da aula"><svg class="ico"><use href="#ic-screen"/></svg><span>Modo telão</span></button>
       <button id="fullscreen" class="top-tool" type="button" title="Alternar tela cheia"><svg class="ico"><use href="#ic-expand"/></svg><span>Tela cheia</span></button>
       <a class="viability" href="showroom.html" title="Ir para a calculadora original">01 · Viabilidade</a>
@@ -68,4 +70,23 @@
   <div id="live" class="sr-only" aria-live="polite"></div>
 </div>
 <dialog id="detailsDialog" class="details-dialog"><div class="dialog-top"><h2 id="detailTitle">Material de apoio</h2><button id="closeDialog" type="button">✕ Fechar</button></div><div id="detailBody"></div><div class="reference-links" id="referenceLinks"></div></dialog>
+<dialog id="liveGameDialog" class="live-game-dialog">
+  <div class="live-game-head">
+    <div><span class="live-kicker">THE CRIMES LIVE · PRÉVIA DO HOST</span><h2 id="liveGameTitle">Escolha o crime da aula</h2></div>
+    <button id="closeLiveGame" class="live-close" type="button">✕ Fechar</button>
+  </div>
+  <section id="liveCasePhase" class="live-case-phase">
+    <p class="live-intro">Selecione o caso que será usado na sala. Nesta primeira etapa do projeto, o Host já consegue abrir e revisar as 8 perguntas antes da integração WebSocket.</p>
+    <div id="liveCaseGrid" class="live-case-grid" role="group" aria-label="Escolher o crime da partida"></div>
+    <div class="live-lobby-strip"><span class="live-status-dot"></span><strong>AGUARDANDO INICIAR A PARTIDA...</strong><span id="liveCaseSelected">Nenhum caso selecionado</span></div>
+    <div class="live-case-actions"><button id="liveOpenQuestions" class="live-primary" type="button">ABRIR PERGUNTAS</button></div>
+  </section>
+  <section id="liveQuestionPhase" class="live-question-phase" hidden>
+    <div class="live-question-layout">
+      <div class="live-question-scene"><img id="liveQuestionImage" src="assets/the-crimes/scenes/credores/01_contexto.webp" alt=""><div class="live-question-scene-overlay"><span id="liveQuestionCase">CASO 01</span><strong id="liveQuestionStep">RODADA 01 DE 08</strong></div></div>
+      <div class="live-question-content"><div class="live-question-topline"><span id="liveQuestionCount">QUESTÃO 1/8</span><span class="live-host-badge">HOST · PRÉVIA</span></div><h3 id="liveQuestionText"></h3><div id="liveAnswerOptions" class="live-answer-options"></div><div id="liveAnswerFeedback" class="live-answer-feedback" hidden></div></div>
+    </div>
+    <div class="live-question-nav"><button id="liveBackCases" type="button" class="live-secondary">← ESCOLHER OUTRO CRIME</button><div><button id="livePrevQuestion" type="button" class="live-secondary">← ANTERIOR</button><button id="liveNextQuestion" type="button" class="live-primary">PRÓXIMA →</button></div></div>
+  </section>
+</dialog>
 </body></html>

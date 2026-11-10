@@ -304,6 +304,56 @@ const ZONES={
  }
 };
 
+
+const LIVE_CLASS_META={
+  correct:{symbol:'🟢',label:'JURIDICAMENTE ADEQUADA',className:'is-correct'},
+  criminal:{symbol:'🔴',label:'ATITUDE CRIMINOSA NO CENÁRIO',className:'is-criminal'},
+  gray:{symbol:'🟡',label:'ZONA CINZENTA',className:'is-gray'},
+  risky:{symbol:'🟠',label:'ALTO RISCO JURÍDICO',className:'is-risky'}
+};
+function buildLiveQuestions(c){
+  return c.scenes.map((s,i)=>{
+    const mode=i%4;
+    if(mode===0)return{
+      q:'Na etapa "'+s[0]+'", qual leitura jurídica é mais adequada?',
+      options:[
+        {text:s[3],kind:'correct'},
+        {text:'Concluir pela fraude apenas porque existe uma holding.',kind:'risky'},
+        {text:'Ocultar deliberadamente patrimônio para frustrar a atuação judicial.',kind:'criminal'},
+        {text:'Adiar qualquer análise sem examinar os documentos já disponíveis.',kind:'gray'}
+      ],correct:0
+    };
+    if(mode===1)return{
+      q:'Qual elemento probatório merece atenção nesta etapa?',
+      options:[
+        {text:s[5][0],kind:'correct'},
+        {text:'Somente a aparência visual da operação, sem documentação.',kind:'risky'},
+        {text:'Eliminar ou esconder documentos relevantes do caso.',kind:'criminal'},
+        {text:'Apenas relatos informais ainda não confirmados.',kind:'gray'}
+      ],correct:0
+    };
+    if(mode===2)return{
+      q:'Qual conclusão é compatível com os fatos apresentados até aqui?',
+      options:[
+        {text:s[4],kind:'correct'},
+        {text:'Presumir condenação automática sem examinar os requisitos legais.',kind:'risky'},
+        {text:'Criar nova ocultação patrimonial para impedir o alcance dos bens.',kind:'criminal'},
+        {text:'Reconhecer que ainda pode haver questão controvertida dependente de prova.',kind:'gray'}
+      ],correct:0
+    };
+    return{
+      q:'Qual fato da etapa "'+s[0]+'" deve integrar a reconstrução do caso?',
+      options:[
+        {text:s[2],kind:'correct'},
+        {text:'Considerar irrelevante toda a cronologia da operação.',kind:'risky'},
+        {text:'Destruir rastros documentais para dificultar a apuração.',kind:'criminal'},
+        {text:'Tratar a existência da sociedade, isoladamente, como prova definitiva.',kind:'gray'}
+      ],correct:0
+    };
+  });
+}
+const liveState={case:0,question:0,selected:null};
+
 const persisted=(()=>{try{return JSON.parse(localStorage.getItem('the-crimes-progress')||'{}');}catch{return {};}})();
 const state={case:Math.max(0,Math.min(5,Number(persisted.case)||0)),step:Math.max(0,Math.min(7,Number(persisted.step)||0)),tab:'explanation',answers:persisted.answers||{},visited:persisted.visited||{},present:Boolean(persisted.present)};
 const icon=name=>`<svg class="ico" aria-hidden="true"><use href="#ic-${name}"></use></svg>`;
@@ -331,12 +381,77 @@ function renderPanel(){const box=$('lessonFacts');box.replaceChildren();const c=
  for(const item of items)box.append(fact(...item));
  const q=$('quizBox');q.replaceChildren();q.hidden=!(state.step===7&&state.tab==='explanation');if(!q.hidden){q.append(el('p','quiz-question','Com os fatos reconstruídos, qual conclusão é juridicamente sustentável?'));c.quiz.forEach((choice,i)=>{const b=el('button','quiz-option'+(state.answers[c.key]===i?' chosen':''),String.fromCharCode(65+i)+'. '+choice);b.type='button';b.setAttribute('aria-pressed',String(state.answers[c.key]===i));b.addEventListener('click',()=>{state.answers[c.key]=i;persist();renderPanel();});q.append(b);});if(state.answers[c.key]!==undefined)q.append(el('div','quiz-feedback',(state.answers[c.key]===c.correct?'✓ Conclusão adequada: ':'⚖ Reavalie os pressupostos: ')+c.quiz[c.correct]));}}
 function renderTabs(){for(const b of document.querySelectorAll('.tab')){const active=b.dataset.tab===state.tab;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));}}
+
+function renderLiveCases(){
+  const box=$('liveCaseGrid');box.replaceChildren();
+  CASES.forEach((c,i)=>{
+    const b=el('button','live-case-card'+(i===liveState.case?' active':''));
+    b.type='button';b.setAttribute('aria-pressed',String(i===liveState.case));
+    const img=el('img');img.src=BASE+'portraits/'+c.key+'.webp';img.alt='';
+    const copy=el('span','live-case-copy');
+    copy.append(el('small','','CASO '+formatStage(i)),el('strong','',c.short),el('span','',c.topic));
+    b.append(img,copy);
+    b.addEventListener('click',()=>{liveState.case=i;liveState.question=0;liveState.selected=null;renderLiveCases();});
+    box.append(b);
+  });
+  const c=CASES[liveState.case];
+  $('liveCaseSelected').textContent='Selecionado: '+c.short;
+  $('liveOpenQuestions').disabled=false;
+}
+function renderLiveQuestion(){
+  const c=CASES[liveState.case],qs=buildLiveQuestions(c),q=qs[liveState.question],scene=c.scenes[liveState.question];
+  $('liveGameTitle').textContent=c.short;
+  $('liveQuestionCase').textContent='CASO '+formatStage(liveState.case)+' · '+c.short.toUpperCase();
+  $('liveQuestionStep').textContent='RODADA '+formatStage(liveState.question)+' DE 08';
+  $('liveQuestionCount').textContent='QUESTÃO '+(liveState.question+1)+'/8';
+  $('liveQuestionText').textContent=q.q;
+  const img=$('liveQuestionImage');img.src=scenePath(c,liveState.question);img.alt='Cena da rodada '+(liveState.question+1)+' do caso '+c.short;
+  const answers=$('liveAnswerOptions');answers.replaceChildren();
+  q.options.forEach((opt,i)=>{
+    const b=el('button','live-answer'+(liveState.selected===i?' selected':''));
+    b.type='button';
+    b.append(el('span','live-answer-letter',String.fromCharCode(65+i)),el('span','live-answer-text',opt.text));
+    b.addEventListener('click',()=>{liveState.selected=i;renderLiveQuestion();});
+    answers.append(b);
+  });
+  const fb=$('liveAnswerFeedback');
+  if(liveState.selected===null){fb.hidden=true;fb.replaceChildren();}
+  else{
+    const chosen=q.options[liveState.selected],meta=LIVE_CLASS_META[chosen.kind]||LIVE_CLASS_META.risky;
+    fb.hidden=false;fb.className='live-answer-feedback '+meta.className;
+    fb.textContent=meta.symbol+' '+meta.label+(liveState.selected===q.correct?' · resposta esperada para a aula.':' · a resposta juridicamente mais adequada é a alternativa '+String.fromCharCode(65+q.correct)+'.');
+  }
+  $('livePrevQuestion').disabled=liveState.question===0;
+  $('liveNextQuestion').textContent=liveState.question===7?'FINALIZAR PRÉVIA':'PRÓXIMA →';
+}
+function openLiveGame(){
+  liveState.case=state.case;liveState.question=0;liveState.selected=null;
+  $('liveGameTitle').textContent='Escolha o crime da aula';
+  $('liveCasePhase').hidden=false;$('liveQuestionPhase').hidden=true;
+  renderLiveCases();$('liveGameDialog').showModal();
+}
+function startLiveQuestions(){
+  liveState.question=0;liveState.selected=null;
+  $('liveCasePhase').hidden=true;$('liveQuestionPhase').hidden=false;
+  renderLiveQuestion();
+}
+function changeLiveQuestion(delta){
+  if(liveState.question===7&&delta>0){$('liveCasePhase').hidden=false;$('liveQuestionPhase').hidden=true;$('liveGameTitle').textContent='Prévia concluída · escolha o crime da aula';renderLiveCases();return;}
+  liveState.question=Math.max(0,Math.min(7,liveState.question+delta));liveState.selected=null;renderLiveQuestion();
+}
+
 function render(){const c=CASES[state.case],s=c.scenes[state.step];markVisited(c,state.step);$('app').classList.toggle('presentation-mode',state.present);$('presentMode').setAttribute('aria-pressed',String(state.present));$('presentMode').classList.toggle('active',state.present);$('presentMode').querySelector('span').textContent=state.present?'Telão ativo':'Modo telão';$('caseNumber').textContent='CASO '+formatStage(state.case);$('caseTitle').textContent=c.title;$('caseBlurb').textContent=c.subtitle;$('lessonCount').textContent='AULA '+formatStage(state.step)+' DE 08';$('sceneNumber').textContent='PASSO '+formatStage(state.step)+' DE 08';$('sceneTitle').textContent=s[0];$('sceneSub').textContent=ANALYSIS[c.key].moves[state.step];setSceneImage(c,state.step);renderCases();renderSteps();renderTabs();renderPanel();$('prev').disabled=state.step===0;$('next').innerHTML=(state.step===7?'PRÓXIMO CASO':'PRÓXIMA ETAPA')+' '+icon('chevron');$('progressStat').innerHTML=icon('scale')+' '+overallVisited()+'/48 CENAS';$('live').textContent=`${c.short}, etapa ${state.step+1} de 8: ${s[0]}`;persist();
 }
 function go(step){state.step=Math.max(0,Math.min(7,step));state.tab='explanation';render();}
 function next(){if(state.step===7){state.case=(state.case+1)%CASES.length;go(0);}else go(state.step+1);}
 function detail(){const c=CASES[state.case],s=c.scenes[state.step],a=ANALYSIS[c.key],z=ZONES[c.key],docs=s[5];$('detailTitle').textContent=c.short+' · '+s[0];const b=$('detailBody');b.replaceChildren();for(const [title,text]of [['Reconstituição da fase',a.moves[state.step]],['Objetivo atribuído ao personagem',a.aim],['Onde está o ilícito em tese',a.wrongs[state.step]],['Possibilidade lícita / tese defensiva',z.lawful],['Limite da zona cinzenta',z.limit],['O que ainda falta provar',z.proof],['Leis em jogo',a.law],['Como foi descoberto',TRACE_PHASE[state.step]+' Documentos: '+docs.join(' · ')+'.'],['Consequências possíveis',state.step>=6?a.consequence:s[4]],['Padrão de prova',a.standard],['Regra da aula','A reconstituição descreve fatos fictícios para análise jurídica. A zona cinzenta mostra requisitos, exceções e argumentos opostos; não é instrução para ocultar patrimônio, dissimular recursos ou evitar fiscalização.']]){b.append(el('h3','',title),el('p','',text));}const links=$('referenceLinks');links.replaceChildren();const refs=[...new Set([...(c.law||[]),...(z.refs||[])])];for(const key of refs){const [title,href]=laws[key];const x=el('a','',title+' ↗');x.href=href;x.target='_blank';x.rel='noopener noreferrer';links.append(x);}$('detailsDialog').showModal();}
+$('liveGame').addEventListener('click',openLiveGame);
+$('closeLiveGame').addEventListener('click',()=>$('liveGameDialog').close());
+$('liveOpenQuestions').addEventListener('click',startLiveQuestions);
+$('liveBackCases').addEventListener('click',()=>{$('liveQuestionPhase').hidden=true;$('liveCasePhase').hidden=false;$('liveGameTitle').textContent='Escolha o crime da aula';renderLiveCases();});
+$('livePrevQuestion').addEventListener('click',()=>changeLiveQuestion(-1));
+$('liveNextQuestion').addEventListener('click',()=>changeLiveQuestion(1));
 $('next').addEventListener('click',next);$('playScene').addEventListener('click',next);$('presentMode').addEventListener('click',()=>{state.present=!state.present;persist();render();});$('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{}});document.addEventListener('fullscreenchange',()=>{$('fullscreen').classList.toggle('active',Boolean(document.fullscreenElement));$('fullscreen').querySelector('span').textContent=document.fullscreenElement?'Sair da tela cheia':'Tela cheia';});$('prev').addEventListener('click',()=>go(state.step-1));$('restart').addEventListener('click',()=>go(0));$('detailsBtn').addEventListener('click',detail);$('closeDialog').addEventListener('click',()=>$('detailsDialog').close());document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{state.tab=b.dataset.tab;renderTabs();renderPanel();}));
-document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','TEXTAREA','SELECT','A'].includes(e.target?.tagName)||$('detailsDialog').open)return;if(e.key==='ArrowRight'){e.preventDefault();next();}else if(e.key==='ArrowLeft'){e.preventDefault();go(state.step-1);}else if(/^[1-8]$/.test(e.key)){go(Number(e.key)-1);}else if(e.key.toLowerCase()==='f'){$('fullscreen').click();}else if(e.key.toLowerCase()==='p'){$('presentMode').click();}});
+document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','TEXTAREA','SELECT','A'].includes(e.target?.tagName)||$('detailsDialog').open||$('liveGameDialog').open)return;if(e.key==='ArrowRight'){e.preventDefault();next();}else if(e.key==='ArrowLeft'){e.preventDefault();go(state.step-1);}else if(/^[1-8]$/.test(e.key)){go(Number(e.key)-1);}else if(e.key.toLowerCase()==='f'){$('fullscreen').click();}else if(e.key.toLowerCase()==='p'){$('presentMode').click();}});
 render();
 })();
