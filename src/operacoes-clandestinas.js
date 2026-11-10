@@ -83,6 +83,170 @@ scenes:[
 ['O conselho da turma','Os grupos apresentam pareceres alternativos para os mesmos fatos.','A turma deve apontar o que foi provado e o que permanece desconhecido.','A boa análise admite a hipótese de estrutura regular.','O objetivo é aprender a distinguir aparência e prova.',['Matriz de evidências','Documentos','Fundamentos legais']]
 ]}
 ];
+
+const TRACE_PHASE=[
+'Fixe a situação anterior ao ato: datas, titularidade, obrigação, regime familiar ou origem econômica conforme o caso.',
+'Compare a data de criação da estrutura com o problema jurídico que já existia ou começava a surgir.',
+'Confronte o instrumento formal com registros públicos, contabilidade e a realidade econômica que ele afirma representar.',
+'Meça o efeito produzido depois do ato: quem passou a aparecer como titular, qual valor mudou e qual direito foi afetado.',
+'Use a reação da parte prejudicada ou da fiscalização para identificar exatamente qual fato passou a ser contestado.',
+'Monte a linha do tempo e procure convergência entre documentos independentes, evitando concluir apenas por aparência.',
+'Relacione cada consequência a um requisito efetivamente provado; efeitos civis, tributários e penais não são intercambiáveis.',
+'Feche o caso com uma matriz: fato comprovado, documento, norma, requisito, argumento contrário e conclusão.'
+];
+const ANALYSIS={
+credores:{
+aim:'Reduzir a exposição patrimonial percebida diante de uma cobrança já existente, sustentando que parte relevante do patrimônio passou a integrar a sociedade.',
+law:'Código Civil, arts. 158 a 165; CPC, art. 792 quando houver contexto executivo; art. 167 do Código Civil se a prova apontar simulação.',
+consequence:'Se os requisitos forem demonstrados, o negócio pode sofrer a consequência civil ou processual cabível, sem confundir fraude contra credores com fraude à execução.',
+standard:'A prova precisa ligar cronologia, situação patrimonial, natureza do negócio e prejuízo. A mudança formal de titularidade, sozinha, não fecha o caso.',
+moves:[
+'O personagem já possui uma obrigação relevante e um imóvel diretamente ligado ao seu patrimônio. A história fixa esse ponto antes de qualquer reorganização.',
+'Depois do surgimento da obrigação, ele constitui uma holding familiar e passa a concentrar nela a administração patrimonial.',
+'O imóvel que antes aparecia diretamente em seu nome passa a integrar o patrimônio da sociedade por negócio societário formalizado.',
+'Após a mudança, o credor encontra menos bens diretamente registrados em nome do devedor, embora participações societárias e outros direitos ainda precisem ser analisados.',
+'O credor compara a situação anterior e posterior e questiona se a reorganização reduziu a garantia patrimonial do crédito.',
+'Os atos são colocados em ordem: nascimento do crédito, constituição da sociedade, transferência, cobrança e atos processuais.',
+'Com a cronologia reconstruída, o tribunal separa a validade formal do negócio de seus possíveis efeitos perante o credor.',
+'A turma recebe a linha do tempo, os documentos e as teses opostas para decidir se os requisitos da consequência jurídica foram efetivamente provados.'
+],
+wrongs:[
+'O ponto de partida não é ilícito por si só, mas a anterioridade do crédito é decisiva para saber se atos posteriores podem atingir a garantia do credor.',
+'O problema aparece se a sociedade deixa de ser simples organização patrimonial e passa a integrar um encadeamento destinado a esvaziar a garantia do crédito.',
+'A transferência torna-se juridicamente crítica quando, somada aos demais fatos, reduz a solvência ou produz prejuízo juridicamente relevante ao credor.',
+'É nesta fase que o efeito econômico aparece: a forma societária pode criar distância entre o bem e o devedor, mas não apaga direitos, quotas, datas ou efeitos legais.',
+'O ilícito alegado precisa ser provado; não basta afirmar que houve blindagem porque o imóvel mudou de titular formal.',
+'A reconstrução pode revelar coincidência temporal, falta de equivalência econômica, insolvência ou outros elementos que sustentem a tese de fraude.',
+'A consequência depende do instituto correto: fraude contra credores e fraude à execução possuem pressupostos e efeitos distintos.',
+'O erro seria concluir apenas pela aparência. O veredito deve apontar fato, norma, requisito e prova correspondente.'
+]},
+meacao:{
+aim:'Fazer bens economicamente relevantes aparecerem concentrados na estrutura societária controlada por um dos cônjuges durante a ruptura, reduzindo o que aparenta integrar diretamente a partilha.',
+law:'Código Civil, regras do regime de bens aplicável; art. 167 em hipótese de simulação; art. 50 se houver abuso da personalidade jurídica; CPC, arts. 133 a 137 no incidente cabível.',
+consequence:'Se houver ocultação, simulação ou abuso comprovado, a solução pode envolver recomposição patrimonial, reconhecimento de direitos na partilha e, quando cabível, desconsideração inversa.',
+standard:'É preciso distinguir patrimônio da sociedade, valor econômico das quotas e direitos comunicáveis do casal. Controle empresarial não equivale automaticamente à propriedade pessoal de todos os ativos.',
+moves:[
+'A história começa identificando casamento, regime de bens, datas de aquisição e patrimônio conhecido antes da ruptura.',
+'Durante a vida familiar, bens passam a ser administrados por uma holding controlada no núcleo familiar.',
+'As quotas e o controle formal ficam concentrados, enquanto o valor econômico dos ativos permanece relacionado à sociedade.',
+'Na ruptura, valores atribuídos aos bens e às participações societárias não coincidem integralmente.',
+'Um dos cônjuges sustenta que determinados ativos pertencem à empresa; o outro afirma que a estrutura esconde direitos econômicos comunicáveis.',
+'Registros, quotas, origem dos recursos, rendimentos e movimentações admitidas no processo são confrontados.',
+'O juiz separa o que pertence à sociedade do valor econômico que pode repercutir na partilha e examina eventual abuso.',
+'A turma decide se a prova demonstra simples organização empresarial ou utilização abusiva da estrutura para prejudicar a meação.'
+],
+wrongs:[
+'O ilícito não decorre da existência de empresa. O problema surge se bens ou direitos comunicáveis forem deliberadamente ocultados da apuração patrimonial.',
+'A holding se torna relevante para a investigação quando sua utilização coincide com atos destinados a afastar da partilha patrimônio economicamente comum.',
+'O controle das quotas pode ser usado como argumento de exclusividade, mas a análise precisa alcançar origem dos recursos, regime de bens e conteúdo econômico da participação.',
+'Diferença de avaliação não prova fraude. Torna-se crítica quando documentos e atos revelam subavaliação simulada ou outra manipulação patrimonial deliberada.',
+'A possível violação está em apresentar como exclusivamente societário ou particular aquilo que, conforme o regime de bens e os fatos, repercute economicamente na meação.',
+'A investigação busca demonstrar se houve simulação, confusão patrimonial, desvio de finalidade ou simples divergência legítima de avaliação.',
+'Se comprovado abuso, a personalidade jurídica não pode ser utilizada como barreira artificial para impedir a tutela do direito patrimonial reconhecido.',
+'O veredito precisa indicar exatamente qual direito foi ocultado, qual ato produziu o efeito e qual prova sustenta essa conclusão.'
+]},
+herdeiros:{
+aim:'Favorecer economicamente um descendente por meio de negócio societário apresentado como oneroso, reduzindo o valor que aparece disponível para os demais na sucessão.',
+law:'Código Civil, arts. 167, 544, 549, 1.789, 1.846 e regras de colação aplicáveis ao caso.',
+consequence:'Se a realidade demonstrar liberalidade dissimulada, violação da legítima ou simulação, podem ser discutidas colação, redução do excesso, nulidade do negócio simulado e demais efeitos sucessórios cabíveis.',
+standard:'O foco é a realidade econômica do negócio: contraprestação, valor, datas, parte disponível e proteção da legítima. Relação familiar ou preço baixo, isoladamente, não bastam.',
+moves:[
+'O patrimônio familiar e os três descendentes são apresentados antes das transferências societárias.',
+'Os imóveis passam a compor uma holding sucessória e o valor patrimonial passa a ser representado também por quotas.',
+'Um descendente recebe quotas por negócio apresentado documentalmente como oneroso.',
+'O preço e a contraprestação declarados passam a ser comparados com avaliações e documentos econômicos disponíveis.',
+'Os demais herdeiros sustentam que o negócio aparente escondeu favorecimento patrimonial relevante.',
+'Advogados confrontam cessão, pagamentos, avaliações, doações anteriores e cronologia sucessória.',
+'O efeito do negócio é testado contra a parte disponível, a legítima e as regras de colação ou redução aplicáveis.',
+'A turma decide qual era a natureza econômica do ato e se ele ultrapassou os limites sucessórios.'
+],
+wrongs:[
+'Não há ilícito no simples planejamento sucessório. A investigação começa porque os direitos dos herdeiros necessários possuem limites protegidos por lei.',
+'A sociedade não elimina a legítima; transformar bens em quotas altera a forma patrimonial, não os limites materiais da sucessão.',
+'O ponto crítico surge se a cessão onerosa for apenas aparente e encobrir liberalidade que deveria receber outro tratamento sucessório.',
+'A divergência de valor torna-se relevante quando, junto com ausência de contraprestação real e outros fatos, sustenta a hipótese de negócio simulado ou liberalidade excessiva.',
+'O possível prejuízo está em retirar economicamente da futura sucessão parcela protegida sem respeitar os limites da parte disponível.',
+'A prova precisa mostrar a realidade do pagamento e do negócio, não apenas a aparência do contrato ou a insatisfação entre familiares.',
+'Se a liberalidade invade a legítima ou se o negócio é simulado, surgem consequências próprias; cada instituto deve ser aplicado separadamente.',
+'O veredito deve responder: houve venda real, liberalidade válida, liberalidade excessiva ou negócio simulado?'
+]},
+itbi:{
+aim:'Apresentar uma transmissão imobiliária como integralização de capital protegida constitucionalmente e obter tratamento tributário favorável, embora a realidade do caso possa não corresponder integralmente ao enquadramento declarado.',
+law:'Constituição Federal, art. 156, § 2º, I; legislação municipal do ITBI; Código Civil, art. 167 se houver simulação; jurisprudência aplicável à data dos fatos.',
+consequence:'Quando a operação não se enquadra na hipótese constitucional ou quando há simulação comprovada, podem surgir cobrança tributária, acréscimos legais e outras responsabilidades conforme os fatos e a legislação aplicável.',
+standard:'É preciso distinguir imunidade constitucional legítima, divergência de avaliação, parcela efetivamente integralizada e eventual simulação. Planejamento tributário e fraude não são sinônimos.',
+moves:[
+'A família parte de um conjunto de imóveis com valores fiscais, contábeis e de mercado potencialmente diferentes.',
+'A sociedade é constituída e declara capital que servirá de referência para a operação patrimonial.',
+'Os imóveis são vinculados ao ato de integralização e passam à esfera patrimonial da pessoa jurídica.',
+'Os registros revelam diferença entre valores atribuídos aos imóveis e valores relacionados ao capital social.',
+'O Município questiona o enquadramento tributário e exige explicações sobre a realidade da operação.',
+'São confrontados contrato social, registros imobiliários, avaliações e declarações apresentadas ao Fisco.',
+'A autoridade decide quais parcelas e fatos estão ou não abrangidos pelo tratamento constitucional invocado.',
+'A turma separa imunidade legítima, divergência interpretativa, erro e eventual simulação.'
+],
+wrongs:[
+'O ilícito não está em buscar a imunidade prevista na Constituição. Surge se os fatos declarados forem manipulados para enquadrar artificialmente operação diferente.',
+'A constituição da sociedade é regular; o problema é usar capital meramente aparente ou informação falsa para sustentar tratamento tributário indevido.',
+'A integralização deve corresponder ao negócio real. Se o documento encobrir transmissão diversa, a forma societária não impede a análise da substância.',
+'Diferença de valores não prova fraude. Ela se torna relevante quando conectada a declaração falsa, simulação ou parcela fora dos limites do enquadramento jurídico.',
+'A fiscalização precisa demonstrar por que o fato tributável difere da operação declarada; mera discordância interpretativa não equivale a crime.',
+'A eventual falsidade aparece na comparação entre o que foi declarado, o que foi registrado e o que economicamente ocorreu.',
+'A cobrança ou sanção deve corresponder ao fato demonstrado e ao regime vigente; consequência tributária não gera automaticamente consequência penal.',
+'O veredito deve indicar se há imunidade, incidência, erro ou simulação e qual prova sustenta a classificação.'
+]},
+alugueis:{
+aim:'Fazer parte da receita de locação efetivamente recebida não aparecer integralmente na apuração fiscal apresentada, reduzindo a base tributável percebida.',
+law:'Legislação tributária aplicável às receitas e obrigações de declaração; Lei nº 8.137/1990, art. 1º, apenas se os elementos penais previstos em lei forem demonstrados.',
+consequence:'Se houver omissão tributária dolosa comprovada, podem surgir exigência do tributo, multas e, nas hipóteses legais, responsabilização prevista na Lei nº 8.137/1990.',
+standard:'A prova precisa distinguir aluguel contratado, valor efetivamente recebido, competência, encargos, inadimplência, contabilização e declaração. Divergência contábil isolada não prova crime.',
+moves:[
+'A holding possui imóveis locados e contratos com valores e datas de vencimento identificáveis.',
+'A gestão reúne informações de cobrança e pagamentos efetivamente realizados pelos locatários.',
+'A auditoria encontra diferença entre parte dos recebimentos documentados e os valores registrados ou declarados.',
+'Contratos, extratos admitidos, contabilidade e declarações fiscais são colocados lado a lado.',
+'O Fisco questiona a origem da diferença e pede justificativas para exercícios e imóveis específicos.',
+'Cada divergência é classificada: valor não recebido, encargo, período diferente ou receita efetivamente omitida.',
+'Depois da reconciliação, a autoridade separa simples erro ou infração administrativa de eventual conduta dolosa.',
+'A turma decide se a documentação demonstra omissão intencional ou apenas inconsistência ainda não esclarecida.'
+],
+wrongs:[
+'A existência de receita tributável não é ilícita. O problema começa quando receita efetivamente auferida é deliberadamente excluída da apuração exigida.',
+'A gestão se torna relevante porque permite comparar o que foi cobrado, o que foi efetivamente recebido e o que foi registrado.',
+'A possível fraude aparece na diferença não explicada entre recebimentos reais e informações contábeis ou fiscais apresentadas.',
+'O ilícito não está na mera diferença numérica; está na eventual supressão ou redução de tributo por conduta que preencha os elementos legais.',
+'A fiscalização é o momento em que explicações e documentos são confrontados com a hipótese de omissão.',
+'A análise precisa eliminar causas legítimas da divergência antes de atribuir intenção fraudulenta.',
+'Responsabilidade tributária e penal são distintas; dolo e demais elementos do tipo precisam ser demonstrados quando se discute crime.',
+'O veredito deve indicar quais receitas foram efetivamente recebidas, quais foram declaradas e qual prova sustenta eventual intenção de omitir.'
+]},
+grupos:{
+aim:'Usar a complexidade de um grupo de empresas para afastar a aparência documental da origem econômica de determinados recursos e ativos, dificultando a compreensão de quem realizou cada operação.',
+law:'Código Civil, art. 50; CPC, arts. 133 a 137; Lei nº 9.613/1998, art. 1º, somente quando origem criminosa e atos de ocultação ou dissimulação forem demonstrados.',
+consequence:'Se houver abuso societário, podem existir efeitos civis de desconsideração; se a origem criminosa e atos típicos forem demonstrados, incide a análise própria da Lei nº 9.613/1998.',
+standard:'Complexidade, empresas relacionadas e transferências intragrupo não provam lavagem. É indispensável demonstrar origem ilícita quando exigida e os atos típicos correspondentes, separando consequências civis, fiscais e penais.',
+moves:[
+'O grupo familiar é apresentado com holding, sociedades operacionais, imóveis e participações cruzadas.',
+'Empresas relacionadas celebram contratos e atribuem receitas, despesas e responsabilidades a pessoas jurídicas distintas.',
+'A investigação identifica pagamentos entre sociedades do mesmo grupo e passa a confrontá-los com contratos e execução econômica.',
+'Uma das sociedades registra aquisição relevante de ativo e a origem econômica de parte dos recursos é questionada no caso fictício.',
+'Dados societários, contábeis e financeiros apresentam contradições que exigem reconstrução da substância das operações.',
+'Os investigadores ordenam empresas, contratos, datas, pagamentos e ativos para identificar o fluxo econômico real.',
+'Os fatos são separados em possíveis efeitos civis, tributários e, somente quando presentes elementos próprios, penais.',
+'A turma recebe organograma e matriz de operações para apontar quais fatos foram comprovados e qual enquadramento é possível.'
+],
+wrongs:[
+'O grupo societário é lícito. O problema surge quando a separação entre empresas é instrumentalizada para esconder abuso, confusão patrimonial ou fatos penalmente relevantes.',
+'Contrato intragrupo não é ilícito por si só; torna-se crítico quando é apenas aparente ou não corresponde a atividade econômica demonstrável.',
+'Pagamentos relacionados precisam ter causa econômica identificável. A falta de correspondência pode ser indício, não prova automática de lavagem.',
+'A aquisição de ativo é regular em si. A questão penal somente surge se houver origem criminosa demonstrada e conduta de ocultação ou dissimulação prevista em lei.',
+'Contradições podem revelar escrituração deficiente ou algo mais grave; o enquadramento depende de prova da realidade econômica e da autoria.',
+'O fluxo reconstruído permite distinguir operação real de ato aparente e verificar, quando pertinente, origem e destino dos recursos.',
+'Confusão patrimonial pode sustentar consequências civis sem automaticamente caracterizar lavagem; os pressupostos não se confundem.',
+'O veredito deve separar fato comprovado, hipótese investigativa e elemento ainda ausente, evitando transformar complexidade empresarial em presunção de culpa.'
+]}
+};
+
 const persisted=(()=>{try{return JSON.parse(localStorage.getItem('the-crimes-progress')||'{}');}catch{return {};}})();
 const state={case:Math.max(0,Math.min(5,Number(persisted.case)||0)),step:Math.max(0,Math.min(7,Number(persisted.step)||0)),tab:'explanation',answers:persisted.answers||{},visited:persisted.visited||{},present:Boolean(persisted.present)};
 const icon=name=>`<svg class="ico" aria-hidden="true"><use href="#ic-${name}"></use></svg>`;
@@ -99,14 +263,14 @@ function preloadCase(c,step){[step,step+1,step-1].filter(i=>i>=0&&i<8).forEach(i
 function setSceneImage(c,step){const img=$('sceneImage'),src=scenePath(c,step);img.classList.add('is-changing');img.alt=`Cena fictícia ${step+1} do caso ${c.short}: ${c.scenes[step][0]}`;const settle=()=>img.classList.remove('is-changing');img.onload=settle;img.onerror=()=>{img.onerror=null;img.src=BASE+'city-banner.webp';img.alt='Panorama noturno fictício da Cidade do Crime';settle();};if(img.getAttribute('src')!==src)img.src=src;else settle();preloadCase(c,step);}
 function renderCases(){const box=$('cases');box.replaceChildren();CASES.forEach((c,i)=>{const seen=visitedCount(c.key);const b=el('button','case-btn'+(i===state.case?' active':''));b.type='button';b.setAttribute('aria-pressed',String(i===state.case));b.setAttribute('aria-label',`Caso ${i+1}: ${c.short}. ${seen} de 8 cenas vistas.`);b.style.setProperty('--case-progress',`${seen/8*100}%`);const img=el('img');img.src=`${BASE}portraits/${c.key}.webp`;img.alt='';img.loading=i===state.case?'eager':'lazy';const text=el('span','label');text.append(el('span','number','CASO '+formatStage(i)),el('strong','case-name',c.short),el('span','case-progress',seen+'/8 cenas'));b.append(img,text);b.addEventListener('click',()=>{state.case=i;state.step=0;state.tab='explanation';markVisited(CASES[i],0);persist();render();});box.append(b);});}function renderSteps(){const box=$('steps');box.replaceChildren();const c=CASES[state.case];NAMES.forEach((_,i)=>{const b=el('button','step-card'+(i===state.step?' active':''));b.type='button';b.setAttribute('aria-pressed',String(i===state.step));b.setAttribute('aria-label',`Etapa ${i+1}: ${STEP_TITLES[c.key][i]}`);const frame=el('span','step-thumb');const img=el('img');img.src=scenePath(c,i);img.alt='';img.loading=Math.abs(i-state.step)<2?'eager':'lazy';frame.append(img);b.append(frame,el('span','step-idx',String(i+1)),el('strong','step-name',STEP_TITLES[c.key][i]));b.addEventListener('click',()=>go(i));box.append(b);});}
 function fact(iconName,title,text){const row=el('section','fact');const i=el('span','fact-icon');i.innerHTML=icon(iconName);const content=el('div');content.append(el('h3','',title),el('p','',text));row.append(i,content);return row;}
-function renderPanel(){const box=$('lessonFacts');box.replaceChildren();const c=CASES[state.case],s=c.scenes[state.step];const [title,sub,what,legal,risk,docs]=s;const items=state.tab==='explanation'?[['target','O que acontece nesta etapa?',what],['book','Qual é o contexto?',sub],['alert','Por que importa?',risk]]:state.tab==='legal'?[['scale','Ponto jurídico',legal],['alert','Risco ou consequência em tese',risk],['target','Questão central do caso',c.topic]]:[['file','Documentos relacionados',docs.join(' · ')],['search','O que confrontar?',what],['clipboard','Critério de análise','A existência de documentos não dispensa exame da realidade do negócio e dos requisitos legais.']];for(const item of items)box.append(fact(...item));
- const q=$('quizBox');q.replaceChildren();q.hidden=!(state.step===7&&state.tab==='explanation');if(!q.hidden){q.append(el('p','quiz-question','Qual conclusão a turma deve adotar?'));c.quiz.forEach((choice,i)=>{const b=el('button','quiz-option'+(state.answers[c.key]===i?' chosen':''),String.fromCharCode(65+i)+'. '+choice);b.type='button';b.setAttribute('aria-pressed',String(state.answers[c.key]===i));b.addEventListener('click',()=>{state.answers[c.key]=i;persist();renderPanel();});q.append(b);});if(state.answers[c.key]!==undefined)q.append(el('div','quiz-feedback',(state.answers[c.key]===c.correct?'✓ Conclusão adequada: ':'⚖ Reavalie os pressupostos: ')+c.quiz[c.correct]));}}
+function renderPanel(){const box=$('lessonFacts');box.replaceChildren();const c=CASES[state.case],s=c.scenes[state.step],a=ANALYSIS[c.key];const [title,sub,what,legal,risk,docs]=s;const trace=TRACE_PHASE[state.step]+' Documentos desta fase: '+docs.join(' · ')+'.';const items=state.tab==='explanation'?[['target','O que o personagem fez?',a.moves[state.step]],['alert','O que ele buscava?',a.aim],['book','Efeito produzido nesta fase',what]]:state.tab==='legal'?[['alert','Onde está o ilícito?',a.wrongs[state.step]],['scale','Leis em jogo',a.law],['target','Consequência em tese',state.step>=6?a.consequence:risk]]:[['search','Como isso foi descoberto?',trace],['file','Provas desta fase',docs.join(' · ')],['clipboard','O que precisa ser demonstrado',a.standard]];for(const item of items)box.append(fact(...item));
+ const q=$('quizBox');q.replaceChildren();q.hidden=!(state.step===7&&state.tab==='explanation');if(!q.hidden){q.append(el('p','quiz-question','Com os fatos reconstruídos, qual conclusão é juridicamente sustentável?'));c.quiz.forEach((choice,i)=>{const b=el('button','quiz-option'+(state.answers[c.key]===i?' chosen':''),String.fromCharCode(65+i)+'. '+choice);b.type='button';b.setAttribute('aria-pressed',String(state.answers[c.key]===i));b.addEventListener('click',()=>{state.answers[c.key]=i;persist();renderPanel();});q.append(b);});if(state.answers[c.key]!==undefined)q.append(el('div','quiz-feedback',(state.answers[c.key]===c.correct?'✓ Conclusão adequada: ':'⚖ Reavalie os pressupostos: ')+c.quiz[c.correct]));}}
 function renderTabs(){for(const b of document.querySelectorAll('.tab')){const active=b.dataset.tab===state.tab;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));}}
-function render(){const c=CASES[state.case],s=c.scenes[state.step];markVisited(c,state.step);$('app').classList.toggle('presentation-mode',state.present);$('presentMode').setAttribute('aria-pressed',String(state.present));$('presentMode').classList.toggle('active',state.present);$('presentMode').querySelector('span').textContent=state.present?'Telão ativo':'Modo telão';$('caseNumber').textContent='CASO '+formatStage(state.case);$('caseTitle').textContent=c.title;$('caseBlurb').textContent=c.subtitle;$('lessonCount').textContent='AULA '+formatStage(state.step)+' DE 08';$('sceneNumber').textContent='PASSO '+formatStage(state.step)+' DE 08';$('sceneTitle').textContent=s[0];$('sceneSub').textContent=s[1];setSceneImage(c,state.step);renderCases();renderSteps();renderTabs();renderPanel();$('prev').disabled=state.step===0;$('next').innerHTML=(state.step===7?'PRÓXIMO CASO':'PRÓXIMA ETAPA')+' '+icon('chevron');$('progressStat').innerHTML=icon('scale')+' '+overallVisited()+'/48 CENAS';$('live').textContent=`${c.short}, etapa ${state.step+1} de 8: ${s[0]}`;persist();
+function render(){const c=CASES[state.case],s=c.scenes[state.step];markVisited(c,state.step);$('app').classList.toggle('presentation-mode',state.present);$('presentMode').setAttribute('aria-pressed',String(state.present));$('presentMode').classList.toggle('active',state.present);$('presentMode').querySelector('span').textContent=state.present?'Telão ativo':'Modo telão';$('caseNumber').textContent='CASO '+formatStage(state.case);$('caseTitle').textContent=c.title;$('caseBlurb').textContent=c.subtitle;$('lessonCount').textContent='AULA '+formatStage(state.step)+' DE 08';$('sceneNumber').textContent='PASSO '+formatStage(state.step)+' DE 08';$('sceneTitle').textContent=s[0];$('sceneSub').textContent=ANALYSIS[c.key].moves[state.step];setSceneImage(c,state.step);renderCases();renderSteps();renderTabs();renderPanel();$('prev').disabled=state.step===0;$('next').innerHTML=(state.step===7?'PRÓXIMO CASO':'PRÓXIMA ETAPA')+' '+icon('chevron');$('progressStat').innerHTML=icon('scale')+' '+overallVisited()+'/48 CENAS';$('live').textContent=`${c.short}, etapa ${state.step+1} de 8: ${s[0]}`;persist();
 }
 function go(step){state.step=Math.max(0,Math.min(7,step));state.tab='explanation';render();}
 function next(){if(state.step===7){state.case=(state.case+1)%CASES.length;go(0);}else go(state.step+1);}
-function detail(){const c=CASES[state.case],s=c.scenes[state.step];$('detailTitle').textContent=`${c.short} · ${s[0]}`;const b=$('detailBody');b.replaceChildren();for(const [title,text]of [['Reconstrução do fato',s[2]],['Questão jurídica',s[3]],['Consequências e cautelas',s[4]],['Documentos mencionados',s[5].join(' · ')],['Regra da aula','A simulação é fictícia. Planejamento patrimonial pode ser lícito; o enquadramento depende de fatos comprovados, requisitos legais e contraditório.']]){b.append(el('h3','',title),el('p','',text));}const links=$('referenceLinks');links.replaceChildren();for(const key of c.law){const [title,href]=laws[key];const a=el('a','',title+' ↗');a.href=href;a.target='_blank';a.rel='noopener noreferrer';links.append(a);}$('detailsDialog').showModal();}
+function detail(){const c=CASES[state.case],s=c.scenes[state.step],a=ANALYSIS[c.key],docs=s[5];$('detailTitle').textContent=c.short+' · '+s[0];const b=$('detailBody');b.replaceChildren();for(const [title,text]of [['Como o personagem executou esta fase',a.moves[state.step]],['Objetivo atribuído ao personagem',a.aim],['Onde está o ilícito',a.wrongs[state.step]],['Leis em jogo',a.law],['Como foi descoberto',TRACE_PHASE[state.step]+' Documentos: '+docs.join(' · ')+'.'],['Consequências possíveis',state.step>=6?a.consequence:s[4]],['Padrão de prova',a.standard],['Regra da aula','A reconstituição descreve fatos de um caso fictício para análise jurídica. Ela não ensina técnicas para ocultar patrimônio, dissimular recursos ou evitar fiscalização.']]){b.append(el('h3','',title),el('p','',text));}const links=$('referenceLinks');links.replaceChildren();for(const key of c.law){const [title,href]=laws[key];const x=el('a','',title+' ↗');x.href=href;x.target='_blank';x.rel='noopener noreferrer';links.append(x);}$('detailsDialog').showModal();}
 $('next').addEventListener('click',next);$('playScene').addEventListener('click',next);$('presentMode').addEventListener('click',()=>{state.present=!state.present;persist();render();});$('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{}});document.addEventListener('fullscreenchange',()=>{$('fullscreen').classList.toggle('active',Boolean(document.fullscreenElement));$('fullscreen').querySelector('span').textContent=document.fullscreenElement?'Sair da tela cheia':'Tela cheia';});$('prev').addEventListener('click',()=>go(state.step-1));$('restart').addEventListener('click',()=>go(0));$('detailsBtn').addEventListener('click',detail);$('closeDialog').addEventListener('click',()=>$('detailsDialog').close());document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{state.tab=b.dataset.tab;renderTabs();renderPanel();}));
 document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','TEXTAREA','SELECT','A'].includes(e.target?.tagName)||$('detailsDialog').open)return;if(e.key==='ArrowRight'){e.preventDefault();next();}else if(e.key==='ArrowLeft'){e.preventDefault();go(state.step-1);}else if(/^[1-8]$/.test(e.key)){go(Number(e.key)-1);}else if(e.key.toLowerCase()==='f'){$('fullscreen').click();}else if(e.key.toLowerCase()==='p'){$('presentMode').click();}});
 render();
