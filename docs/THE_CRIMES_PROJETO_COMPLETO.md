@@ -246,3 +246,31 @@ Teste automatizado executado contra o commit final em servidor local isolado, vi
 - Fullscreen API disponível no navegador de QA.
 - **0 erros de console** durante a varredura.
 - GitHub Pages: deploy do commit funcional `f69d370a` concluído com sucesso.
+
+
+## 13. Zona Cinzenta — exceções lícitas, limites e prova
+
+Implementado como quarta aba do painel do The Crimes, ao lado de **Como foi feito**, **Ilícito** e **Provas & Leis**.
+
+A aba **Zona Cinzenta** não oferece instruções para contornar a lei. Ela ensina o aluno a separar:
+
+- **🟢 Permitido em tese:** estrutura ou ato que pode ser juridicamente válido.
+- **🟡 Zona cinzenta:** conclusão dependente de cronologia, finalidade, valores, documentos ou outros requisitos.
+- **🔴 Limite ultrapassado no caso fictício:** somente quando os fatos narrativos fornecem os elementos necessários para a conclusão didática.
+
+Cada etapa mostra quatro blocos:
+
+1. **Possibilidade lícita / argumento de defesa**
+2. **Onde está o limite**
+3. **O que ainda falta provar**
+4. **Precedente ou regra-chave**
+
+### Atualizações jurisprudenciais incorporadas
+
+- **STF Tema 1.348 (20/10/2026):** a imunidade de ITBI na integralização de capital independe da atividade preponderante, inclusive imobiliária, ressalvada simulação ou fraude à lei e observado o limite quantitativo do Tema 796.
+- **STF Tema 796:** a imunidade fica limitada ao valor destinado à integralização do capital social.
+- **STJ Tema 1.210 (2026):** desconsideração da personalidade jurídica, nas relações civis e empresariais, exige prova efetiva de abuso por desvio de finalidade ou confusão patrimonial; mera falta de bens penhoráveis ou encerramento irregular não basta.
+- **STJ Súmula 375:** para fraude à execução envolvendo terceiro adquirente, o registro da penhora ou a prova de má-fé do terceiro é elemento central da tese.
+- **STJ REsp 2.171.573/MS:** utilizado no módulo sucessório para discutir liberalidade dissimulada, colação e necessidade de manifestação expressa quando pertinente.
+
+O botão **Aprofundar esta etapa** também passa a mostrar a tese defensiva, o limite da zona cinzenta e o que ainda precisa ser provado, com links para as fontes oficiais.

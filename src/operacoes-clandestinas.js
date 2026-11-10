@@ -13,7 +13,7 @@ grupos:['Grupo familiar','Contratos','Pagamentos','Aquisição de ativos','Diver
 };
 const ICONS=['coins','rings','users','house','key','building'];
 const KEYS=['credores','meacao','herdeiros','itbi','alugueis','grupos'];
-const laws={cc:['Código Civil — arts. 50, 158–167, 544 e 549','https://www.planalto.gov.br/ccivil_03/leis/2002/l10406compilada.htm'],cpc:['CPC — arts. 133–137 e 792','https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm'],cf:['Constituição Federal — art. 156, § 2º, I','https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm'],tax:['Lei nº 8.137/1990 — ordem tributária','https://www.planalto.gov.br/ccivil_03/leis/l8137.htm'],launder:['Lei nº 9.613/1998 — lavagem de dinheiro','https://www.planalto.gov.br/ccivil_03/leis/l9613.htm']};
+const laws={cc:['Código Civil — arts. 50, 158–167, 544 e 549','https://www.planalto.gov.br/ccivil_03/leis/2002/l10406compilada.htm'],cpc:['CPC — arts. 133–137 e 792','https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm'],cf:['Constituição Federal — art. 156, § 2º, I','https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm'],tax:['Lei nº 8.137/1990 — ordem tributária','https://www.planalto.gov.br/ccivil_03/leis/l8137.htm'],launder:['Lei nº 9.613/1998 — lavagem de dinheiro','https://www.planalto.gov.br/ccivil_03/leis/l9613.htm'],stj375:['STJ — Súmula 375: fraude à execução','https://scon.stj.jus.br/SCON/sumstj/doc.jsp?b=SUMU&livre=%22375%22.num.'],stj1210:['STJ — Tema 1.210: desconsideração e prova de abuso','https://www.stj.jus.br/sites/portalp/Paginas/Comunicacao/Noticias/2026/16102026-Desconsideracao-da-personalidade-juridica-exige-prova-de-abuso--define-Segunda-Secao.aspx'],stf1348:['STF — Tema 1.348: ITBI e integralização','https://portal.stf.jus.br/processos/detalhe.asp?incidente=6929423'],stf796:['STF — Tema 796: limite do capital integralizado','https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=796'],stj2171573:['STJ — REsp 2.171.573/MS: doação dissimulada e colação','https://scon.stj.jus.br/jurisprudencia/externo/informativo/?livre=%40CNOT%3D021332']};
 // Cada conjunto tem 8 quadros. Um quadro = título, narração curta, fato, discussão jurídica, possível consequência, documentos.
 const CASES=[
 {key:'credores',title:'FRAUDE CONTRA CREDORES',short:'Fraude contra credores',subtitle:'Um imóvel passa a integrar uma holding enquanto já existe uma obrigação relevante.',topic:'Responsabilidade patrimonial',law:['cc','cpc'],quiz:['A transferência é automaticamente nula.','É necessário examinar a data do crédito, a situação patrimonial e os requisitos legais.','Toda holding afasta a responsabilidade do sócio.'],correct:1,
@@ -247,6 +247,63 @@ wrongs:[
 ]}
 };
 
+
+const ZONE_LEVELS={
+ green:{label:'PERMITIDO EM TESE',icon:'🟢',className:'zone-green'},
+ yellow:{label:'ZONA CINZENTA',icon:'🟡',className:'zone-yellow'},
+ red:{label:'LIMITE ULTRAPASSADO NO CASO FICTÍCIO',icon:'🔴',className:'zone-red'}
+};
+const ZONES={
+ credores:{
+  status:['green','green','yellow','yellow','yellow','yellow','yellow','yellow'],
+  lawful:'Reorganizar patrimônio, constituir uma holding ou integralizar um imóvel pode ser lícito. A existência de dívida não congela automaticamente toda administração patrimonial.',
+  limit:'O limite aparece quando os fatos e os requisitos do instituto aplicável mostram prejuízo juridicamente relevante ao credor. Fraude contra credores e fraude à execução não são a mesma coisa.',
+  proof:'Cronologia do crédito e da transferência; solvência antes e depois; contraprestação; patrimônio remanescente; atos processuais; registro de constrição e má-fé do terceiro quando juridicamente relevantes.',
+  precedent:'Súmula 375/STJ: para fraude à execução envolvendo terceiro adquirente, o registro da penhora ou a prova de má-fé do terceiro é central.',
+  refs:['stj375']
+ },
+ meacao:{
+  status:['green','green','yellow','yellow','yellow','yellow','yellow','yellow'],
+  lawful:'A sociedade possui patrimônio próprio. Administrar uma holding ou concentrar bens na pessoa jurídica não significa, sozinho, que todos os ativos pertençam pessoalmente a um dos cônjuges.',
+  limit:'A zona deixa de ser lícita se a prova demonstrar simulação, ocultação de direitos comunicáveis, desvio de finalidade ou confusão patrimonial.',
+  proof:'Regime de bens; data e origem da aquisição; valor econômico das quotas; fluxos entre sócio e sociedade; pagamentos pessoais pela empresa; atos de administração e eventual abuso.',
+  precedent:'Tema 1.210/STJ: nas relações civis e empresariais, desconsideração exige prova efetiva de abuso por desvio de finalidade ou confusão patrimonial; falta de bens, sozinha, não basta.',
+  refs:['stj1210']
+ },
+ herdeiros:{
+  status:['green','green','yellow','yellow','yellow','yellow','yellow','yellow'],
+  lawful:'É possível organizar a sucessão e favorecer economicamente um herdeiro dentro dos limites da parte disponível, observadas as regras legais e a natureza real do negócio.',
+  limit:'O problema surge quando uma venda aparente encobre liberalidade, quando a doação invade a legítima ou quando a dispensa de colação não observa os requisitos aplicáveis.',
+  proof:'Contraprestação real; valor do patrimônio no momento relevante; parte disponível; pagamentos; avaliações; liberalidades anteriores; declaração formal de dispensa de colação quando pertinente.',
+  precedent:'O STJ distingue venda real de liberalidade dissimulada e exige atenção à legítima, à colação e à manifestação expressa quando a liberalidade recai sobre a parte disponível.',
+  refs:['stj2171573']
+ },
+ itbi:{
+  status:['green','green','green','yellow','yellow','yellow','yellow','yellow'],
+  lawful:'A integralização de bens no capital social pode gozar de imunidade de ITBI. No Tema 1.348, julgado em 20/10/2026, o STF afirmou que a imunidade independe da atividade preponderante, inclusive imobiliária.',
+  limit:'A imunidade fica limitada ao valor do capital social a integralizar, nos termos do Tema 796, e não impede o Fisco de demonstrar simulação ou fraude à lei para usufruir indevidamente do benefício.',
+  proof:'Contrato social; capital efetivamente integralizado; valor e natureza da transmissão; matrícula; lançamentos societários; eventual parcela excedente; elementos concretos de simulação, se alegada.',
+  precedent:'STF, Tema 1.348: imunidade incondicionada quanto à atividade preponderante, ressalvada simulação/fraude à lei; limite quantitativo conforme Tema 796.',
+  refs:['stf1348','stf796']
+ },
+ alugueis:{
+  status:['green','green','yellow','yellow','yellow','yellow','yellow','yellow'],
+  lawful:'Diferença entre aluguel contratado e valor efetivamente recebido pode decorrer de inadimplência, vacância, descontos, encargos, período parcial ou critérios contábeis.',
+  limit:'A questão muda quando a prova demonstra receita efetivamente auferida e deliberadamente omitida ou informação falsa relevante para a obrigação tributária.',
+  proof:'Contratos; vencimentos; comprovantes de recebimento; inadimplência; extratos admissíveis; razão contábil; declarações fiscais; período de competência e autoria da informação.',
+  precedent:'Divergência contábil não equivale automaticamente a crime. A responsabilidade tributária e penal exige enquadramento e prova dos respectivos requisitos.',
+  refs:[]
+ },
+ grupos:{
+  status:['green','green','green','yellow','yellow','yellow','yellow','yellow'],
+  lawful:'Controle comum, mesmo endereço, contratos entre empresas e pagamentos intragrupo podem ter fundamento econômico legítimo. Complexidade societária não é sinônimo de ilícito.',
+  limit:'O limite aparece com prova de abuso da personalidade, confusão patrimonial ou, para lavagem, atos típicos de ocultação/dissimulação ligados a bens provenientes de infração penal.',
+  proof:'Substância econômica; contratos e entregas; contabilidade separada; origem dos recursos; beneficiário econômico; fluxos financeiros; pagamentos pessoais; finalidade dos atos e eventual origem ilícita.',
+  precedent:'Tema 1.210/STJ exige prova de abuso para desconsideração civil/empresarial. Para lavagem, a Lei 9.613/1998 exige os elementos típicos próprios; múltiplas empresas não bastam.',
+  refs:['stj1210']
+ }
+};
+
 const persisted=(()=>{try{return JSON.parse(localStorage.getItem('the-crimes-progress')||'{}');}catch{return {};}})();
 const state={case:Math.max(0,Math.min(5,Number(persisted.case)||0)),step:Math.max(0,Math.min(7,Number(persisted.step)||0)),tab:'explanation',answers:persisted.answers||{},visited:persisted.visited||{},present:Boolean(persisted.present)};
 const icon=name=>`<svg class="ico" aria-hidden="true"><use href="#ic-${name}"></use></svg>`;
@@ -263,14 +320,22 @@ function preloadCase(c,step){[step,step+1,step-1].filter(i=>i>=0&&i<8).forEach(i
 function setSceneImage(c,step){const img=$('sceneImage'),src=scenePath(c,step);img.classList.add('is-changing');img.alt=`Cena fictícia ${step+1} do caso ${c.short}: ${c.scenes[step][0]}`;const settle=()=>img.classList.remove('is-changing');img.onload=settle;img.onerror=()=>{img.onerror=null;img.src=BASE+'city-banner.webp';img.alt='Panorama noturno fictício da Cidade do Crime';settle();};if(img.getAttribute('src')!==src)img.src=src;else settle();preloadCase(c,step);}
 function renderCases(){const box=$('cases');box.replaceChildren();CASES.forEach((c,i)=>{const seen=visitedCount(c.key);const b=el('button','case-btn'+(i===state.case?' active':''));b.type='button';b.setAttribute('aria-pressed',String(i===state.case));b.setAttribute('aria-label',`Caso ${i+1}: ${c.short}. ${seen} de 8 cenas vistas.`);b.style.setProperty('--case-progress',`${seen/8*100}%`);const img=el('img');img.src=`${BASE}portraits/${c.key}.webp`;img.alt='';img.loading=i===state.case?'eager':'lazy';const text=el('span','label');text.append(el('span','number','CASO '+formatStage(i)),el('strong','case-name',c.short),el('span','case-progress',seen+'/8 cenas'));b.append(img,text);b.addEventListener('click',()=>{state.case=i;state.step=0;state.tab='explanation';markVisited(CASES[i],0);persist();render();});box.append(b);});}function renderSteps(){const box=$('steps');box.replaceChildren();const c=CASES[state.case];NAMES.forEach((_,i)=>{const b=el('button','step-card'+(i===state.step?' active':''));b.type='button';b.setAttribute('aria-pressed',String(i===state.step));b.setAttribute('aria-label',`Etapa ${i+1}: ${STEP_TITLES[c.key][i]}`);const frame=el('span','step-thumb');const img=el('img');img.src=scenePath(c,i);img.alt='';img.loading=Math.abs(i-state.step)<2?'eager':'lazy';frame.append(img);b.append(frame,el('span','step-idx',String(i+1)),el('strong','step-name',STEP_TITLES[c.key][i]));b.addEventListener('click',()=>go(i));box.append(b);});}
 function fact(iconName,title,text){const row=el('section','fact');const i=el('span','fact-icon');i.innerHTML=icon(iconName);const content=el('div');content.append(el('h3','',title),el('p','',text));row.append(i,content);return row;}
-function renderPanel(){const box=$('lessonFacts');box.replaceChildren();const c=CASES[state.case],s=c.scenes[state.step],a=ANALYSIS[c.key];const [title,sub,what,legal,risk,docs]=s;const trace=TRACE_PHASE[state.step]+' Documentos desta fase: '+docs.join(' · ')+'.';const items=state.tab==='explanation'?[['target','O que o personagem fez?',a.moves[state.step]],['alert','O que ele buscava?',a.aim],['book','Efeito produzido nesta fase',what]]:state.tab==='legal'?[['alert','Onde está o ilícito?',a.wrongs[state.step]],['scale','Leis em jogo',a.law],['target','Consequência em tese',state.step>=6?a.consequence:risk]]:[['search','Como isso foi descoberto?',trace],['file','Provas desta fase',docs.join(' · ')],['clipboard','O que precisa ser demonstrado',a.standard]];for(const item of items)box.append(fact(...item));
+function zoneBanner(level,stage){const cfg=ZONE_LEVELS[level]||ZONE_LEVELS.yellow;const wrap=el('section','zone-banner '+cfg.className);const top=el('div','zone-banner-top');top.append(el('strong','zone-status',cfg.icon+' '+cfg.label),el('span','zone-stage','ETAPA '+formatStage(stage)));wrap.append(top,el('p','zone-caption','Classificação didática desta etapa no caso fictício — não é presunção de culpa nem conclusão automática sobre casos reais.'));return wrap;}
+
+function renderPanel(){const box=$('lessonFacts');box.replaceChildren();const c=CASES[state.case],s=c.scenes[state.step],a=ANALYSIS[c.key],z=ZONES[c.key];const [title,sub,what,legal,risk,docs]=s;const trace=TRACE_PHASE[state.step]+' Documentos desta fase: '+docs.join(' · ')+'.';
+ let items=[];
+ if(state.tab==='explanation')items=[['target','O que o personagem fez?',a.moves[state.step]],['alert','O que ele buscava?',a.aim],['book','Efeito produzido nesta fase',what]];
+ else if(state.tab==='legal')items=[['alert','Onde está o ilícito em tese?',a.wrongs[state.step]],['scale','Leis em jogo',a.law],['target','Consequência possível',state.step>=6?a.consequence:risk]];
+ else if(state.tab==='documents')items=[['search','Como isso foi descoberto?',trace],['file','Provas desta fase',docs.join(' · ')],['clipboard','O que precisa ser demonstrado',a.standard]];
+ else {box.append(zoneBanner(z.status[state.step],state.step));items=[['shield','Possibilidade lícita / argumento de defesa',z.lawful],['alert','Onde está o limite',z.limit],['search','O que ainda falta provar',z.proof],['scale','Precedente ou regra-chave',z.precedent]];}
+ for(const item of items)box.append(fact(...item));
  const q=$('quizBox');q.replaceChildren();q.hidden=!(state.step===7&&state.tab==='explanation');if(!q.hidden){q.append(el('p','quiz-question','Com os fatos reconstruídos, qual conclusão é juridicamente sustentável?'));c.quiz.forEach((choice,i)=>{const b=el('button','quiz-option'+(state.answers[c.key]===i?' chosen':''),String.fromCharCode(65+i)+'. '+choice);b.type='button';b.setAttribute('aria-pressed',String(state.answers[c.key]===i));b.addEventListener('click',()=>{state.answers[c.key]=i;persist();renderPanel();});q.append(b);});if(state.answers[c.key]!==undefined)q.append(el('div','quiz-feedback',(state.answers[c.key]===c.correct?'✓ Conclusão adequada: ':'⚖ Reavalie os pressupostos: ')+c.quiz[c.correct]));}}
 function renderTabs(){for(const b of document.querySelectorAll('.tab')){const active=b.dataset.tab===state.tab;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));}}
 function render(){const c=CASES[state.case],s=c.scenes[state.step];markVisited(c,state.step);$('app').classList.toggle('presentation-mode',state.present);$('presentMode').setAttribute('aria-pressed',String(state.present));$('presentMode').classList.toggle('active',state.present);$('presentMode').querySelector('span').textContent=state.present?'Telão ativo':'Modo telão';$('caseNumber').textContent='CASO '+formatStage(state.case);$('caseTitle').textContent=c.title;$('caseBlurb').textContent=c.subtitle;$('lessonCount').textContent='AULA '+formatStage(state.step)+' DE 08';$('sceneNumber').textContent='PASSO '+formatStage(state.step)+' DE 08';$('sceneTitle').textContent=s[0];$('sceneSub').textContent=ANALYSIS[c.key].moves[state.step];setSceneImage(c,state.step);renderCases();renderSteps();renderTabs();renderPanel();$('prev').disabled=state.step===0;$('next').innerHTML=(state.step===7?'PRÓXIMO CASO':'PRÓXIMA ETAPA')+' '+icon('chevron');$('progressStat').innerHTML=icon('scale')+' '+overallVisited()+'/48 CENAS';$('live').textContent=`${c.short}, etapa ${state.step+1} de 8: ${s[0]}`;persist();
 }
 function go(step){state.step=Math.max(0,Math.min(7,step));state.tab='explanation';render();}
 function next(){if(state.step===7){state.case=(state.case+1)%CASES.length;go(0);}else go(state.step+1);}
-function detail(){const c=CASES[state.case],s=c.scenes[state.step],a=ANALYSIS[c.key],docs=s[5];$('detailTitle').textContent=c.short+' · '+s[0];const b=$('detailBody');b.replaceChildren();for(const [title,text]of [['Como o personagem executou esta fase',a.moves[state.step]],['Objetivo atribuído ao personagem',a.aim],['Onde está o ilícito',a.wrongs[state.step]],['Leis em jogo',a.law],['Como foi descoberto',TRACE_PHASE[state.step]+' Documentos: '+docs.join(' · ')+'.'],['Consequências possíveis',state.step>=6?a.consequence:s[4]],['Padrão de prova',a.standard],['Regra da aula','A reconstituição descreve fatos de um caso fictício para análise jurídica. Ela não ensina técnicas para ocultar patrimônio, dissimular recursos ou evitar fiscalização.']]){b.append(el('h3','',title),el('p','',text));}const links=$('referenceLinks');links.replaceChildren();for(const key of c.law){const [title,href]=laws[key];const x=el('a','',title+' ↗');x.href=href;x.target='_blank';x.rel='noopener noreferrer';links.append(x);}$('detailsDialog').showModal();}
+function detail(){const c=CASES[state.case],s=c.scenes[state.step],a=ANALYSIS[c.key],z=ZONES[c.key],docs=s[5];$('detailTitle').textContent=c.short+' · '+s[0];const b=$('detailBody');b.replaceChildren();for(const [title,text]of [['Reconstituição da fase',a.moves[state.step]],['Objetivo atribuído ao personagem',a.aim],['Onde está o ilícito em tese',a.wrongs[state.step]],['Possibilidade lícita / tese defensiva',z.lawful],['Limite da zona cinzenta',z.limit],['O que ainda falta provar',z.proof],['Leis em jogo',a.law],['Como foi descoberto',TRACE_PHASE[state.step]+' Documentos: '+docs.join(' · ')+'.'],['Consequências possíveis',state.step>=6?a.consequence:s[4]],['Padrão de prova',a.standard],['Regra da aula','A reconstituição descreve fatos fictícios para análise jurídica. A zona cinzenta mostra requisitos, exceções e argumentos opostos; não é instrução para ocultar patrimônio, dissimular recursos ou evitar fiscalização.']]){b.append(el('h3','',title),el('p','',text));}const links=$('referenceLinks');links.replaceChildren();const refs=[...new Set([...(c.law||[]),...(z.refs||[])])];for(const key of refs){const [title,href]=laws[key];const x=el('a','',title+' ↗');x.href=href;x.target='_blank';x.rel='noopener noreferrer';links.append(x);}$('detailsDialog').showModal();}
 $('next').addEventListener('click',next);$('playScene').addEventListener('click',next);$('presentMode').addEventListener('click',()=>{state.present=!state.present;persist();render();});$('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{}});document.addEventListener('fullscreenchange',()=>{$('fullscreen').classList.toggle('active',Boolean(document.fullscreenElement));$('fullscreen').querySelector('span').textContent=document.fullscreenElement?'Sair da tela cheia':'Tela cheia';});$('prev').addEventListener('click',()=>go(state.step-1));$('restart').addEventListener('click',()=>go(0));$('detailsBtn').addEventListener('click',detail);$('closeDialog').addEventListener('click',()=>$('detailsDialog').close());document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{state.tab=b.dataset.tab;renderTabs();renderPanel();}));
 document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','TEXTAREA','SELECT','A'].includes(e.target?.tagName)||$('detailsDialog').open)return;if(e.key==='ArrowRight'){e.preventDefault();next();}else if(e.key==='ArrowLeft'){e.preventDefault();go(state.step-1);}else if(/^[1-8]$/.test(e.key)){go(Number(e.key)-1);}else if(e.key.toLowerCase()==='f'){$('fullscreen').click();}else if(e.key.toLowerCase()==='p'){$('presentMode').click();}});
 render();
