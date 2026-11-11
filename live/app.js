@@ -82,7 +82,16 @@ async function api(action,payload={}){
  return j;
 }
 function setOnline(ok=true){const el=document.getElementById('serverState')||document.getElementById('conn');if(el)el.textContent=ok?'● SUPABASE ONLINE':'● DESCONECTADO'}
-async function loadPublic(code=room){const {data,error}=await sb.from('game_room_public').select('*').eq('code',code).maybeSingle();if(error)throw error;publicRoom=data;if(data){const p=await sb.from('game_player_public').select('*').eq('room_id',data.room_id).order('score',{ascending:false});if(p.error)throw p.error;publicPlayers=p.data||[]}return data}
+async function loadPublic(code=room){
+ const {data,error}=await sb.from('game_room_public').select('*').eq('code',code).maybeSingle();if(error)throw error;
+ if(!data)return publicRoom;
+ const incomingRev=Number(data.room_revision??-1),currentRev=(publicRoom&&publicRoom.code===data.code)?Number(publicRoom.room_revision??-1):-1;
+ if(incomingRev<currentRev)return publicRoom;
+ const p=await sb.from('game_player_public').select('*').eq('room_id',data.room_id).order('score',{ascending:false});if(p.error)throw p.error;
+ const afterRev=(publicRoom&&publicRoom.code===data.code)?Number(publicRoom.room_revision??-1):-1;
+ if(incomingRev<afterRev)return publicRoom;
+ publicRoom=data;publicPlayers=p.data||[];return publicRoom
+}
 async function watchPublic(code,onChange){if(channel)await sb.removeChannel(channel);const r=await loadPublic(code);if(!r)return;const touch=()=>{lastRealtimeAt=Date.now();realtimeHealthy=true};channel=sb.channel('room-'+r.room_id).on('postgres_changes',{event:'*',schema:'public',table:'game_room_public',filter:'room_id=eq.'+r.room_id},async()=>{touch();await loadPublic(code);onChange()}).subscribe((s)=>{realtimeHealthy=s==='SUBSCRIBED';if(realtimeHealthy)lastRealtimeAt=Date.now()});if(playerChannel)await sb.removeChannel(playerChannel);playerChannel=sb.channel('players-'+r.room_id).on('postgres_changes',{event:'*',schema:'public',table:'game_player_public',filter:'room_id=eq.'+r.room_id},async()=>{touch();await loadPublic(code);onChange()}).subscribe((s)=>{if(s==='SUBSCRIBED'){realtimeHealthy=true;lastRealtimeAt=Date.now()}})}
 async function watchPresence(code,onChange,trackPayload=null){
  if(presenceChannel)await sb.removeChannel(presenceChannel);
