@@ -546,3 +546,65 @@ Commit do frontend:
 ```text
 9381be47f9dec207178a37fc7b8cda7b903ebcbb
 ```
+
+
+## 20. UX 2.0 — Host contextual, mobile compacto e presença real
+
+Atualização implementada em 10/11/2026.
+
+### Host contextual
+
+O painel do Host agora muda conforme o estado da partida.
+
+**Waiting:** Abrir telão, Entrada aberta/fechada, Iniciar partida e Resetar sala.
+
+**Running:** Abrir telão, Entrada aberta/fechada, Pausar, Bloquear, Revelar, Pular/Próxima e Encerrar partida.
+
+**Paused:** Continuar e Encerrar partida.
+
+**Finished:** Abrir telão e Resetar sala.
+
+Foi removido o excesso de ações simultâneas.
+
+### Monitor do Host
+
+A tabela foi reduzida para Player, Status, Rodada, Pontos, Perfil e Exposição. Os contadores de decisões ficam resumidos abaixo do nome.
+
+Resumo da rodada mostra: RODADA 1/8, quantos responderam e quantos faltam.
+
+### Entrada da sala
+
+O Host pode alternar entre 🔓 ENTRADA ABERTA e 🔒 ENTRADA FECHADA. Novos jogadores são bloqueados quando fechada; reconexões existentes continuam permitidas.
+
+### Presença real
+
+Supabase Realtime Presence passou a controlar quem está realmente online. Teste confirmado: 2 online → fechamento de um celular → 1 online.
+
+### Timer real
+
+O tempo deixou de ser apenas visual. A Edge Function rejeita respostas após o prazo com HTTP 409 e a mensagem “Tempo esgotado para esta pergunta”. No celular, depois de responder, aparece o tempo real, por exemplo ✓ 1.2s.
+
+### Mobile compacto
+
+Validado em 390 × 844: scrollHeight = 844 e innerHeight = 844. Pergunta, imagem, quatro alternativas, métricas e status cabem sem rolagem.
+
+### Resultado final
+
+No celular: posição, pontuação, percentual de acertos, exposição, resultado jurídico, ocultou bens, descoberta, patrimônio bloqueado e contadores 🟢/🔴/🟡/🟠/⚪.
+
+No telão: pódio 🥇🥈🥉, TOP 3, acertos da turma, escolhas criminosas, personagens que ocultaram bens e ocultações descobertas.
+
+### Ranking de sala cheia
+
+O telão exibe TOP 10 e depois “+N JOGADORES — Ranking completo disponível no Host”. Teste com 12 jogadores confirmou 10 linhas + 2 jogadores e zero overflow.
+
+### Segurança e QA
+
+Supabase Security Advisor: 0 lints. CI: success. GitHub Pages: success.
+
+Commits principais da UX 2.0:
+
+- 30efb9b9cd99780cfd4dfee30900521738ee38ee
+- 3ba8c4b27c80a4cbbe60868fcaf683c2ec34092d
+- cc45390d7b0e87409d8674b23f3e7089b5ff1440
+- c48e437f92902352599bb8741f7190c9727bb50d
