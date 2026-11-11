@@ -39,7 +39,7 @@ jobs:
       - name: Validate V3 production bundle and visual assets
         working-directory: .
         run: |
-          grep -q 'app.js?v=20261111-v3-prod-11' live/index.html
+          grep -q 'app.js?v=20261111-v3-prod-12' live/index.html
           grep -q 'v3-assets.js?v=20261111-7' live/index.html
           test -f assets/the-crimes-v3/global/command-center.webp
           test -f assets/the-crimes-v3/global/courtroom.webp
