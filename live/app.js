@@ -128,12 +128,19 @@ function host(){
  document.getElementById('v3Modal').onclick=e=>{if(e.target.id==='v3Modal')closeV3Modal()};
  document.getElementById('dossierBtn').onclick=()=>openV3Modal('dossier');
  document.getElementById('activityBtn').onclick=()=>openV3Modal('activity');
- document.getElementById('create').onclick=async()=>{try{const r=await api('createRoom',{caseKey:selectedCase,maxPlayers:+document.getElementById('maxp').value,questionTimeSec:+document.getElementById('secs').value,correctionPolicy:document.getElementById('policy').value});state={code:r.code,adminToken:r.adminToken,caseKey:r.caseKey,caseTitle:r.caseTitle};localStorage.setItem('tc-admin-'+r.code,r.adminToken);document.getElementById('setup').classList.add('hidden');document.getElementById('dash').classList.remove('hidden');await watchPublic(r.code,scheduleAdminRefresh);await watchPresence(r.code,scheduleAdminRefresh);await refreshAdmin();startPoll(refreshAdmin)}catch(x){document.getElementById('err').textContent=x.message}};
+ document.getElementById('create').onclick=async()=>{try{const r=await api('createRoom',{caseKey:selectedCase,maxPlayers:+document.getElementById('maxp').value,questionTimeSec:+document.getElementById('secs').value,correctionPolicy:document.getElementById('policy').value});state={code:r.code,adminToken:r.adminToken,caseKey:r.caseKey,caseTitle:r.caseTitle};localStorage.setItem('tc-admin-'+r.code,r.adminToken);document.getElementById('setup').classList.add('hidden');document.getElementById('dash').classList.remove('hidden');await watchPublic(r.code,scheduleAdminRefresh);await watchPresence(r.code,scheduleAdminRefresh);await refreshAdmin();clearInterval(poll);poll=setInterval(()=>syncAdminFromPublic().catch(()=>setOnline(false)),3000)}catch(x){document.getElementById('err').textContent=x.message}};
  function renderCases(){const g=document.getElementById('caseGrid');g.innerHTML='';cases.forEach((c,i)=>{const b=document.createElement('button');b.className='case'+(selectedCase===c[0]?' active':'');b.innerHTML='<img src="'+coverPath(c[0])+'"><span><small>CASO '+String(i+1).padStart(2,'0')+'</small><strong>'+esc(c[1])+'</strong></span>';b.onclick=()=>{selectedCase=c[0];renderCases()};g.appendChild(b)})}
  async function refreshAdmin(){if(!state)return;const r=await api('adminState',{code:state.code,adminToken:state.adminToken});const rev=roomRevisionOf(r.room);if(rev>=appliedRevision){appliedRevision=rev;state={...state,...r}}await loadPublic(state.code);renderAdmin()}
+ async function syncAdminFromPublic(){
+  if(!state)return;
+  const pub=await loadPublic(state.code);
+  renderAdmin();
+  const publicRev=Number(pub?.room_revision??-1),privateRev=roomRevisionOf(state?.room);
+  if(publicRev>privateRev)await refreshAdmin();
+ }
  async function cmd(a,extra={}){
  try{
-  const rev=roomRevisionOf(state?.room);
+  const rev=Math.max(roomRevisionOf(state?.room),Number(publicRoom?.room_revision??-1));
   await api(a,{code:state.code,adminToken:state.adminToken,expectedRevision:rev,requestId:requestId('host-'+a),...extra});
  }catch(x){
   if(x?.payload?.stale){await refreshAdmin();return}
