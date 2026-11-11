@@ -16,6 +16,7 @@ const profiles=[
 ];
 function avatar(p){
 if(typeof p==='string')p=profiles.find(x=>x.id===p)||profiles[0];
+if(p&&p.id&&profiles.some(x=>x.id===p.id))return '../assets/the-crimes-v3/avatars/'+p.id+'.webp';
 const hair=p.cut==='long'||p.cut==='ponytail'?'<path d="M47 137 Q20 106 37 53 Q53 18 89 21 Q134 14 144 58 L150 143 L116 146 L108 72 L65 74 L65 142Z" fill="'+p.hair+'"/>':p.cut==='curly'?'<g fill="'+p.hair+'"><circle cx="53" cy="56" r="28"/><circle cx="83" cy="40" r="29"/><circle cx="119" cy="54" r="28"/><circle cx="130" cy="76" r="17"/></g>':'';
 const shortHair=(p.cut==='short'||p.cut==='side')?'<path d="M44 72 Q41 27 86 26 Q133 24 136 67 Q115 53 99 48 Q75 66 45 72Z" fill="'+p.hair+'"/>':'';
 const glasses=p.glasses?'<g stroke="#9cddf0" stroke-width="3" fill="none"><rect x="51" y="81" width="30" height="19" rx="7"/><rect x="95" y="81" width="30" height="19" rx="7"/><path d="M81 88h14"/></g>':'';

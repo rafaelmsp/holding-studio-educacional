@@ -1,5 +1,5 @@
 window.TC_V3_ASSETS={
-  "version": "3.7.0",
+  "version": "3.9.0",
   "status": "active",
   "fallbackRoot": "../assets/the-crimes",
   "global": {
