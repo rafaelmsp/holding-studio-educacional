@@ -343,3 +343,55 @@ body[data-view="screen"].v3-premium .podiumCard.first{background:linear-gradient
  body.v3-premium .v3MobileSteps i{height:16px;font-size:6px}
  body.v3-premium .v3-round-progress{display:none}
 }
+
+
+/* V3.6 — cinematic depth closer to approved mockups */
+body[data-view="host"].v3-premium:before{
+  background:
+    radial-gradient(circle at 8% 35%,#be29251e,transparent 28%),
+    radial-gradient(circle at 92% 30%,#167cb51b,transparent 30%),
+    linear-gradient(180deg,#05080c72,#05080cd0),
+    var(--v3-global-bg,url('../assets/the-crimes/city-banner.webp')) center/cover fixed no-repeat;
+  filter:saturate(.96) contrast(1.12) brightness(.88);
+}
+body[data-view="host"].v3-premium .v3Nav,
+body[data-view="host"].v3-premium #hostPanel,
+body[data-view="host"].v3-premium .v3ClassProgress,
+body[data-view="host"].v3-premium #playersCard{
+  backdrop-filter:blur(18px) saturate(1.1);
+  background-color:#091019d9;
+  box-shadow:0 18px 48px #0009,inset 0 1px #ffffff0b;
+}
+body[data-view="host"].v3-premium .v3Nav{
+  background:linear-gradient(180deg,#0e1620e8,#070c12df);
+  border-color:#3b4858;
+}
+body[data-view="host"].v3-premium #hostPanel{
+  background:
+    radial-gradient(circle at 50% 8%,#a02a202b,transparent 34%),
+    linear-gradient(180deg,#111923e8,#080d13e6);
+}
+body[data-view="host"].v3-premium .roundBar,
+body[data-view="host"].v3-premium .v3HostQuestion{
+  backdrop-filter:blur(16px);
+  box-shadow:0 16px 42px #0009,inset 0 1px #ffffff10;
+}
+body[data-view="host"].v3-premium .admin:before,
+body[data-view="host"].v3-premium .admin:after{
+  content:"";position:fixed;top:72px;bottom:0;width:2px;pointer-events:none;z-index:0;opacity:.5;
+}
+body[data-view="host"].v3-premium .admin:before{left:0;background:linear-gradient(transparent,#df3830 28%,transparent 82%);box-shadow:0 0 22px #df3830}
+body[data-view="host"].v3-premium .admin:after{right:0;background:linear-gradient(transparent,#269bd3 28%,transparent 82%);box-shadow:0 0 22px #269bd3}
+body[data-view="screen"].v3-premium .screen{
+  background:
+    radial-gradient(circle at 12% 35%,#a9272322,transparent 30%),
+    radial-gradient(circle at 88% 28%,#1a7ba822,transparent 30%),
+    #070b10;
+}
+body[data-view="screen"].v3-premium .stage{box-shadow:0 22px 70px #000c,0 0 0 1px #d59d4f18}
+body[data-view="screen"].v3-premium .screenSide{box-shadow:0 20px 55px #000a,inset 0 1px #ffffff0a}
+body[data-view="player"].v3-premium .playerShell{
+  background:
+    radial-gradient(circle at 50% 0,#7a211b22,transparent 24%),
+    linear-gradient(180deg,#0b1118ed,#06090ef0);
+}
