@@ -90,3 +90,5 @@ jobs:
         run: npm run build
       - name: Validate artwork, 12 characters and 48 scenes
         run: node tests/assets.test.cjs
+      - name: Verify React V5 cinematic gallery and realtime channels
+        run: npm run test:visual

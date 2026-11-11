@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
-    "test:browser": "node qa-react.cjs"
+    "test:browser": "node qa-react.cjs",
+    "test:visual": "node tests/visual-v51.test.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.97.0",
