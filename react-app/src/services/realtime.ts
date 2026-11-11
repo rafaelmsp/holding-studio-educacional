@@ -10,7 +10,9 @@ export function useRoomRealtime(code:string, role:'host'|'screen'|'player', sess
        setPresence=useGame(s=>s.setPresence),error=useGame(s=>s.setError),setOnline=useGame(s=>s.setOnline);
  const token=useGame(s=>s.adminToken);
  const tokenRef=useRef(token);tokenRef.current=token;
- const refresh=async()=>{
+ const inFlight=useRef<Promise<void>|null>(null);
+ const queued=useRef(false);
+ const doRefresh=async()=>{
   if(!code)return;
   const id=++refreshId.current;
   try{
@@ -30,12 +32,27 @@ export function useRoomRealtime(code:string, role:'host'|'screen'|'player', sess
    if(id===refreshId.current){setOnline(false);error(e instanceof Error?e.message:'Falha de conexão');}
   }
  };
+ const refresh=async():Promise<void>=>{
+  if(inFlight.current){queued.current=true;return inFlight.current;}
+  const job=doRefresh();
+  inFlight.current=job;
+  try{await job;}
+  finally{
+   if(inFlight.current===job)inFlight.current=null;
+   if(queued.current){
+    queued.current=false;
+    queueMicrotask(()=>{void refreshRef.current();});
+   }
+  }
+ };
  const refreshRef=useRef(refresh);refreshRef.current=refresh;
  useEffect(()=>{
   if(!code)return;
   let disposed=false;
-  const signal=()=>{if(!disposed)void refreshRef.current()};
-  const channel=supabase.channel('react-live-'+role+'-'+code+'-'+Math.random().toString(36).slice(2));
+  let debounceTimer:ReturnType<typeof setTimeout>|null=null;
+  const signal=()=>{if(disposed)return;if(debounceTimer)clearTimeout(debounceTimer);
+   debounceTimer=setTimeout(()=>{debounceTimer=null;if(!disposed)void refreshRef.current();},160);};
+  const channel=supabase.channel('react-sync-'+code);
   channel.on('postgres_changes',{event:'*',schema:'public',table:'game_room_public'},signal)
    .on('postgres_changes',{event:'*',schema:'public',table:'game_player_public'},signal)
    .on('broadcast',{event:'sync'},signal).subscribe();
@@ -51,19 +68,29 @@ export function useRoomRealtime(code:string, role:'host'|'screen'|'player', sess
      await presence.track({playerId:sessionRef.current.playerId,nickname:sessionRef.current.nickname,avatarId:sessionRef.current.avatarId,at:new Date().toISOString()});
   });
   void refreshRef.current();
-  const timer=setInterval(signal,role==='player'?2800:3200);
+  const timer=setInterval(signal,role==='player'?6500:6200);
   const online=()=>signal();
   window.addEventListener('focus',online);window.addEventListener('online',online);
   const visible=()=>{if(document.visibilityState==='visible')signal();};
   document.addEventListener('visibilitychange',visible);
-  return()=>{disposed=true;clearInterval(timer);window.removeEventListener('focus',online);window.removeEventListener('online',online);document.removeEventListener('visibilitychange',visible);void supabase.removeChannel(channel);void supabase.removeChannel(presence);};
+  return()=>{disposed=true;clearInterval(timer);if(debounceTimer)clearTimeout(debounceTimer);window.removeEventListener('focus',online);window.removeEventListener('online',online);document.removeEventListener('visibilitychange',visible);void supabase.removeChannel(channel);void supabase.removeChannel(presence);};
  },[code,role,session?.playerId,setPresence]);
  return {refresh:()=>refreshRef.current()};
 }
 export async function broadcastRoom(code:string){
  try{
- const c=supabase.channel('react-command-'+code);
- await new Promise<void>(resolve=>{c.subscribe(()=>resolve());setTimeout(resolve,700);});
+ const existing=supabase.getChannels().find(channel=>channel.topic==='realtime:react-sync-'+code);
+ if(existing){
+  await existing.send({type:'broadcast',event:'sync',payload:{ts:Date.now()}});
+  return;
+ }
+ const c=supabase.channel('react-sync-'+code);
+ const subscribed=await new Promise<boolean>(resolve=>{let done=false;
+   const finish=(result:boolean)=>{if(!done){done=true;resolve(result);}};
+   c.subscribe(status=>{if(status==='SUBSCRIBED')finish(true);else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT')finish(false);});
+   setTimeout(()=>finish(false),1300);
+  });
+  if(!subscribed){await supabase.removeChannel(c);return;}
  await c.send({type:'broadcast',event:'sync',payload:{ts:Date.now()}});
  await supabase.removeChannel(c);
  }catch{/* polling and postgres_changes remain authoritative */}

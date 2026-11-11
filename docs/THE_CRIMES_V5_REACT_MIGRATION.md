@@ -67,3 +67,17 @@ A V5 será publicada em um caminho de **prévia**. Não substituir `/live/` até
 As três imagens independentes da arte original do telão, entrada e encerramento estão disponíveis no ZIP cinematográfico anexo à conversa. A V5 publicada contém alternativas derivadas do fundo principal — visivelmente coerentes, mas ainda não pixel-equivalentes às três imagens independentes originais. Fazer sua troca somente após a transferência e validação das imagens completas.
 
 Não implementar operações jurídicas ilícitas reais nem dados pessoais de processos reais nas cenas; casos permanecem fictícios e educativos.
+
+## 11/11/2026 — Endurecimento de sincronização pública (V5.1)
+
+Na verificação pelo domínio do GitHub Pages, uma partida chegou ao pódio com Host, telão e dois jogadores, mas o Chrome automatizado registrou falhas intermitentes `ERR_INSUFFICIENT_RESOURCES` em requisições REST/Edge Function. A medida corretiva implementada no frontend:
+
+- Consultas Supabase com **uma requisição em voo por tela** e apenas uma atualização pendente.
+- Eventos em rajada agrupados com `debounce` de 160 ms.
+- Intervalo de verificação de 6,2 a 6,5 segundos, com Realtime para eventos imediatos.
+- Canal de broadcast de controle reutilizado sem tentar `subscribe()` duas vezes.
+- Preservação de `room_revision`, token de sessão e fallback de polling.
+
+A V5.1 requer novo teste pelo domínio público. Não considerar esses mecanismos como prova de escalabilidade para 30–50 participantes sem teste de carga na rede real.
+
+**Links de teste:** https://rafaelmsp.github.io/holding-studio-educacional/react-live/ (React V5) e https://rafaelmsp.github.io/holding-studio-educacional/live/?view=host (HTML legado preservado).
