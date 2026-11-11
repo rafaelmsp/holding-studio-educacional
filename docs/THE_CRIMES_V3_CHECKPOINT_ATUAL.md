@@ -1,33 +1,34 @@
-# THE CRIMES LIVE — CHECKPOINT OFICIAL V3.9.0 CINEMATIC
+# THE CRIMES LIVE — CHECKPOINT V4.0
 Atualizado em **11/11/2026**.
 
-## Estado
-- Release: **V3.9.0 — UX cinematográfica**.
-- Produção: GitHub Pages.
-- Bundle: `live/app.js?v=20261111-v3-prod-13`.
-- CSS: `live/ux-v38.css` e `live/ux-v39.css`.
-- Assets: `live/ux-personas.js?v=20261111-2`, 12 retratos WebP; 48 cenas dos seis casos preservadas.
-- Backend/realtime: Supabase V3.7, sem migrações.
+## Versão ativa
+- **V4.0 — UX Premium Cinematográfica e Layout de Apresentação**
+- Repositório: `rafaelmsp/holding-studio-educacional` (branch `main`)
+- Host: https://rafaelmsp.github.io/holding-studio-educacional/live/?view=host
+- Arquivo JS: `live/app.js?v=20261111-v4-prod-1`
+- Estilos: `live/v3-premium.css`, `live/ux-v38.css`, `live/ux-v39.css`, `live/ux-v40.css`
+- SVG de marca: `assets/the-crimes-v3/ui/detective-mark.svg`
+- Avatares WebP: `assets/the-crimes-v3/avatars/*.webp`
+- Registro completo: `docs/THE_CRIMES_V40_UX_REVIEW.md`
+- Screenshots de QA: `docs/preview/v40/`
 
-## Funcionalidades mantidas
-Host, telão, dois tipos de acesso, nome e escolha de personagem, QR por sala, votação em tempo real, Presence, room_revision, round_key, controle de comando idempotente, pausa, bloqueio, revelação, pular/avançar, score e exposição, ranking, relatório, resultado individual, pódio, replay e retorno ao lobby.
+## Feito e conferido
+- Header com marca, sala ativa, caso, pessoas online e status.
+- Host com Top 5 real, tabela e métricas em detalhes expandíveis e ações prioritárias.
+- Host 1440×900: dock acaba em y=813, trilho de rodadas em y=870; sem overflow horizontal.
+- Telão 1920×1080: cena + texto, ranking, controles autorizados e relógio inferior sincronizado.
+- Celular 390×844 / 412×915: identidade, foto, relógio, quatro opções e botão Responder sem sobreposição.
+- Entrada desktop: formulário e prévia de personagem em duas colunas, largura 1370px.
+- Teste funcional (sala CRIM-2989): jogador 2 avança para MISSÃO 02/08 mesmo sem responder à primeira, controle autorizado pelo telão avança para rodada 3, pódio no final.
+- 0 erros de JavaScript no QA local, sem X-overflow nas telas verificadas.
 
-## QA V3.9 aprovado no navegador
-- Sala `CRIM-3751`.
-- Host 1440×900 — layout novo, pergunta, ações e monitoramento.
-- Telão 1920×1080 — cena separada, ranking e comandos autorizados pelo Host.
-- Celulares 390×844 e 412×915 — avatares carregados, quatro respostas e botão responder.
-- Jogador 2 avançou para **MISSÃO 02 / 08** mesmo sem ter respondido à primeira.
-- Controle administrativo pelo telão avançou para rodada 3.
-- Revelação/resultado final aprovados.
-- `errors: []`, `expectedConflicts: []`, sem overflow horizontal nas telas.
-- 12 retratos WebP gerados e testados; catálogo unitário aprovado.
+## Preservado
+48 perguntas, 6 casos, Supabase, room_revision, round_key, idempotência, Host autorizado, Presence, pontuação, exposição, regras de correção, cronômetro, replay e QR Code.
 
-## Escopo e ressalvas
-A interface V3.9 usa DOM/CSS funcional e cenas originais, não screenshots de referência como controles falsos. Os retratos são recortes das imagens do próprio jogo; alguns personagens podem aparecer em cenas diferentes. Teste de carga ampliado (30–50 alunos), múltiplos browsers e UX pixel-a-pixel ainda são evoluções futuras. Não altere políticas de backend ou credenciais em futuras passagens puramente visuais.
+## Limitações/pendências
+- As fotos originais dos modelos conceituais (mansão/estátua/cidade) ainda não foram transformadas em assets independentes da interface. V4.0 usa imagens cinematográficas existentes e DOM real, não uma cópia visual exata pixel a pixel.
+- Teste de carga 30–50 jogadores e QA multi-browser permanecem pendentes.
+- As salas criadas no QA são temporárias e não devem ser apresentadas como partidas reais.
 
-## Links
-- Host / apresentação: https://rafaelmsp.github.io/holding-studio-educacional/live/?view=host
-- Jogador: QR gerado pela sala.
-- Telão: botão **ABRIR TELÃO** do Host para compartilhar a sessão administrativa.
-- Detalhes: `docs/THE_CRIMES_V39_CINEMATIC_UX.md`.
+## Próximas ações sugeridas
+Conferir a versão publicada na aula com projetor; avaliar detalhes de tipografia e fotografias por caso; testar turma maior em rede real.

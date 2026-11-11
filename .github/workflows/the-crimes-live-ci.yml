@@ -33,8 +33,12 @@ jobs:
           node --check live/v3-assets.js
           node --check live/ux-personas.js
           node tests/live-ux-v38.test.js
+          node tests/live-ux-v40.test.js
           test -f live/ux-v38.css
           test -f live/ux-v39.css
+          test -f live/ux-v40.css
+          test -s assets/the-crimes-v3/ui/detective-mark.svg
+          grep -q 'ux-v40.css' live/index.html
           grep -q 'ux-v39.css' live/index.html
           for persona in detetive advogado delegado estrategista perita advogada investigadora analista especialista auditor arquivista mediador; do
             test -s "assets/the-crimes-v3/avatars/$persona.webp"
@@ -44,7 +48,7 @@ jobs:
       - name: Validate V3 production bundle and visual assets
         working-directory: .
         run: |
-          grep -q 'app.js?v=20261111-v3-prod-13' live/index.html
+          grep -q 'app.js?v=20261111-v4-prod-1' live/index.html
           grep -q 'v3-assets.js?v=20261111-7' live/index.html
           test -f assets/the-crimes-v3/global/command-center.webp
           test -f assets/the-crimes-v3/global/courtroom.webp
