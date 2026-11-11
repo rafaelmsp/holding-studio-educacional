@@ -4,7 +4,7 @@ Este diretório é o pacote visual premium da UX V3.4. Ele foi desenhado para re
 
 ## Estado atual
 
-A aplicação está funcional e usa `live/v3-assets.js` como mapa de assets. Enquanto os masters premium não estiverem versionados, o mapa usa automaticamente os backgrounds e cenas cinematográficas estáveis de `assets/the-crimes/`.
+A aplicação está funcional e usa `live/v3-assets.js` como mapa de assets. Três masters globais premium já estão versionados e ativos: `command-center.webp`, `investigation-keyart.webp` e `courtroom.webp`. Os targets ainda não produzidos continuam usando automaticamente os backgrounds e cenas cinematográficas estáveis de `assets/the-crimes/`.
 
 Isso significa que **nenhuma tela quebra** se um master V3 ainda não estiver disponível.
 
@@ -57,6 +57,6 @@ Textos, perguntas, nomes, ranking, pontuação, cronômetros, símbolos e botõe
 
 ## Fallback
 
-`manifest.json` mantém `null` nos arquivos ainda não versionados. O runtime ativo permanece em `live/v3-assets.js`, apontando para assets existentes até a troca pelos masters premium.
+`manifest.json` registra os masters globais já ativos e mantém `null` apenas nos arquivos ainda não versionados. O runtime em `live/v3-assets.js` mistura masters premium e fallbacks de forma segura.
 
 Assim que um arquivo premium for colocado no caminho definitivo, basta atualizar a entrada correspondente de `live/v3-assets.js`; nenhuma tela ou regra do jogo precisa ser reescrita.

@@ -1,15 +1,15 @@
 window.TC_V3_ASSETS={
-  "version": "3.2.0",
+  "version": "3.6.0",
   "status": "active",
   "fallbackRoot": "../assets/the-crimes",
   "global": {
-    "keyart": "../assets/the-crimes/city-banner.webp",
+    "keyart": "../assets/the-crimes-v3/global/investigation-keyart.webp",
     "city": "../assets/the-crimes/city-banner.webp",
-    "command": "../assets/the-crimes/scenes/credores/06_apuracao.webp",
+    "command": "../assets/the-crimes-v3/global/command-center.webp",
     "lobby": "../assets/the-crimes/scenes/credores/01_contexto.webp",
     "briefing": "../assets/the-crimes/scenes/credores/02_estrutura.webp",
-    "hearing": "../assets/the-crimes/scenes/herdeiros/07_consequencias.webp",
-    "podium": "../assets/the-crimes/scenes/grupos/08_debate.webp",
+    "hearing": "../assets/the-crimes-v3/global/courtroom.webp",
+    "podium": "../assets/the-crimes-v3/global/courtroom.webp",
     "reconnect": "../assets/the-crimes/city-banner.webp"
   },
   "cases": {

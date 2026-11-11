@@ -979,3 +979,34 @@ Baseline funcional V3.5:
 ```text
 4d6c613955b1904fa4a99ce0b89b735b8f6e96f4
 ```
+
+
+## 24. UX Premium V3.6 — Masters globais premium ativos
+
+Atualização publicada em 11/11/2026.
+
+A V3.6 mantém toda a sincronização autoritativa da V3.5 e adiciona os três primeiros masters ultrarrealistas aprovados como arquivos reais do projeto:
+
+```text
+assets/the-crimes-v3/global/
+├── command-center.webp
+├── courtroom.webp
+└── investigation-keyart.webp
+```
+
+Uso no runtime:
+
+- `command-center.webp`: background da Central do Host;
+- `investigation-keyart.webp`: key art do Telão;
+- `courtroom.webp`: resultado/pódio e audiência;
+- city, lobby, briefing e reconnect continuam usando fallback estável até receberem masters próprios.
+
+Os textos dinâmicos continuam em HTML/CSS; nenhum nome, pergunta, ranking, cronômetro ou botão é gravado nas imagens.
+
+Integridade dos masters transferidos:
+
+```text
+command-center.webp       7754f6f7ee35b05306489b480902661d024e97e9f1ea3a694697908b0bdb04ba
+courtroom.webp            fe862acf82739743f19b15dcd2cb1b250aca1374d5e6ea37d2da75c642cbac89
+investigation-keyart.webp d905c231a1f1b0a99c87e315658e9557a6b2d0d6424a61c4ddb365438db783c6
+```

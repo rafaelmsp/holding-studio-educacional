@@ -1,6 +1,6 @@
 {
-  "version": "3.4.0",
-  "status": "runtime-fallback-active",
+  "version": "3.6.0",
+  "status": "partial-masters-active",
   "fallbackRoot": "../the-crimes",
   "counts": {
     "global": 8,
@@ -20,16 +20,16 @@
       "briefing": "global/briefing-room.webp",
       "reconnect": "global/reconnect.webp"
     },
-    "note": "Enquanto os binários premium não estiverem versionados, live/v3-assets.js mantém os fallbacks estáveis de assets/the-crimes/."
+    "note": "Três masters globais premium estão ativos: command-center, investigation-keyart e courtroom. Os demais targets mantêm fallback seguro."
   },
   "global": {
-    "keyart": null,
+    "keyart": "global/investigation-keyart.webp",
     "city": null,
-    "command": null,
+    "command": "global/command-center.webp",
     "lobby": null,
     "briefing": null,
-    "hearing": null,
-    "podium": null,
+    "hearing": "global/courtroom.webp",
+    "podium": "global/courtroom.webp",
     "reconnect": null
   },
   "cases": {
