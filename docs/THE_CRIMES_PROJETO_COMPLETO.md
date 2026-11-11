@@ -890,3 +890,92 @@ Commits principais:
 ```
 
 CI e GitHub Pages da V3.4.1: success.
+
+
+## 23. UX Premium V3.5 — Concorrência Host/Telão e validação pública
+
+Atualização validada em 11/11/2026.
+
+### Sincronização autoritativa
+
+A V3.5 endurece o fluxo de comandos administrativos usando:
+
+- `roomRevision` / `room_revision`;
+- `roundKey` por rodada;
+- `requestId` por comando;
+- rejeição de comandos com revisão obsoleta;
+- atualização automática do cliente quando o estado da sala muda.
+
+O objetivo é impedir que dois controles — por exemplo Host e Telão — façam a mesma transição duas vezes.
+
+Teste de concorrência executado contra a Edge Function online:
+
+```text
+START                 200 OK
+ANSWER                200 OK
+SHOW CORRECT antes    409 — bloqueado pela política do Host
+REVEAL                 200 OK
+SHOW CORRECT depois   200 OK
+NEXT Host             200 OK
+NEXT Telão concorrente 409 stale
+rodada final do teste  2/8
+FINISH                200 OK
+RESET                 200 OK
+estado após reset      waiting · rodada 1
+```
+
+Portanto, dois comandos `NEXT` enviados com a mesma revisão não avançam da rodada 1 diretamente para a 3.
+
+### QA público da interface
+
+Validação executada diretamente no GitHub Pages, não apenas em servidor local.
+
+Resultados observados:
+
+- Host: 1440×900 sem overflow;
+- Player: 390×844 sem overflow;
+- Telão: 1920×1080 sem overflow;
+- imagens de cena carregadas em 1280×720 no Host, Mobile e Telão;
+- botão **RESPONDER** exige seleção explícita no mobile;
+- Presence online funcionando;
+- **REVELAR RESPOSTA** disponível no Telão autorizado;
+- **PULAR / PRÓXIMA** preservado;
+- pódio e resultado final preservados;
+- console do QA público: zero erros.
+
+### Estado do pacote visual
+
+O contrato V3 continua em `assets/the-crimes-v3/`.
+
+O runtime usa os assets cinematográficos estáveis de `assets/the-crimes/` enquanto os masters globais premium ainda não estiverem versionados. Os seguintes targets permanecem reservados:
+
+```text
+assets/the-crimes-v3/global/
+├── investigation-keyart.webp
+├── command-center.webp
+├── courtroom.webp
+├── city-night.webp
+├── lobby-investigation.webp
+├── briefing-room.webp
+└── reconnect.webp
+```
+
+Os três masters aprovados de **Central de Operações**, **Tribunal/Pódio** e **Key Art da investigação** já possuem direção de arte definida e versões WebP 1280×720 preparadas; a importação binária para o GitHub permanece como etapa visual separada. A ausência desses três arquivos não quebra nenhuma tela porque `live/v3-assets.js` mantém fallback seguro.
+
+### Saúde do backend
+
+Após a V3.5:
+
+```text
+Supabase: ACTIVE_HEALTHY
+Security Advisor: 0 lints
+Performance Advisor: 0 lints
+CI: success
+GitHub Pages: success
+```
+
+Baseline funcional V3.5:
+
+```text
+4d6c613955b1904fa4a99ce0b89b735b8f6e96f4
+```
