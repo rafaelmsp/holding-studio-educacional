@@ -4,7 +4,7 @@ const SUPABASE_URL='https://ouiqzhdhgughkspxqvnj.supabase.co';
 const SUPABASE_KEY='sb_publishable_VO-RkaU9Pr8h8c6LV2IJdQ_eefoD-7h';
 const FUNCTION_URL=SUPABASE_URL+'/functions/v1/the-crimes-live-v3-staging';
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:false}});
-const qs=new URLSearchParams(location.search), view=qs.get('view')||'host', room=(qs.get('room')||'').toUpperCase();
+const qs=new URLSearchParams(location.search), view=qs.get('view')||'host', room=(qs.get('room')||'').toUpperCase();document.body.dataset.view=view;document.body.classList.add('v3-premium');
 const cases=[['credores','Fraude contra credores'],['meacao','Ocultação de meação'],['herdeiros','Prejuízo a herdeiros'],['itbi','Operação de ITBI'],['alugueis','Receitas de aluguéis'],['grupos','Grupo societário']];
 let selectedCase=qs.get('case')||'credores', state=null, publicRoom=null, publicPlayers=[], channel=null, playerChannel=null, presenceChannel=null, presenceIds=new Set(), presenceReady=false, poll=null, timer=null, lastRealtimeAt=Date.now(), realtimeHealthy=false, appliedRevision=-1, refreshSerial=0, lastRoundKey='';
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
