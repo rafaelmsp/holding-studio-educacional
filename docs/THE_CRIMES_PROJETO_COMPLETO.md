@@ -847,3 +847,46 @@ Commit público validado pelo CI e GitHub Pages:
 ```text
 8836dc62648c3f9b70ca70ac51474ef9e917339f
 ```
+
+
+## 22. UX Premium V3.4.1 — Layout sem rolagem
+
+Atualização publicada em 11/11/2026.
+
+A V3.4.1 aplica o refinamento final de viewport para o uso em sala de aula:
+
+- Host premium ajustado para ocupar a área útil sem rolagem desnecessária;
+- Mobile 390×844 reorganizado para manter pergunta, alternativas, status e ação principal dentro da viewport;
+- preservação do botão explícito **RESPONDER**;
+- preservação do trilho das oito missões;
+- manutenção de Host, Telão e Resultado Final no mesmo sistema visual V3;
+- nenhum corte do pódio no telão 1920×1080.
+
+Bundle atual:
+
+```text
+app.js?v=20261111-v3-prod-8
+v3-premium.css?v=20261111-5
+```
+
+Validação estática após o patch:
+
+```text
+JavaScript: syntax OK
+submitAnswer: presente
+screenRevealBtn: presente
+Host question board: presente
+v3MobileSteps: presente
+v3ScreenSteps: presente
+finalPodium: presente
+CSS no-scroll: presente
+```
+
+Commits principais:
+
+```text
+0c8cbc9e404a98d1dccbe00d1d31f74e9213dd4d
+52472cf5c9e277e685e2d9e1a7cf0fa5b9edf544
+```
+
+CI e GitHub Pages da V3.4.1: success.
