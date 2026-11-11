@@ -26,3 +26,19 @@ jobs:
           cache-dependency-path: server/package.json
       - run: npm install
       - run: node --check index.js
+      - name: Check live JavaScript syntax
+        working-directory: .
+        run: |
+          node --check live/app.js
+          node --check live/v3-assets.js
+      - name: Validate V3 production bundle and visual assets
+        working-directory: .
+        run: |
+          grep -q 'app.js?v=20261111-v3-prod-11' live/index.html
+          grep -q 'v3-assets.js?v=20261111-7' live/index.html
+          test -f assets/the-crimes-v3/global/command-center.webp
+          test -f assets/the-crimes-v3/global/courtroom.webp
+          test -f assets/the-crimes-v3/global/investigation-keyart.webp
+          for case_name in credores meacao herdeiros itbi alugueis grupos; do
+            test "$(find "assets/the-crimes/scenes/$case_name" -maxdepth 1 -name '*.webp' | wc -l)" -ge 8
+          done
