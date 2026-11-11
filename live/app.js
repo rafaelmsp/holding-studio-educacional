@@ -28,7 +28,7 @@ function ownPlayerStatus(r,old){
  if(r.status==='finished')return 'finished';
  if(r.revealed)return old?'revealed':'no_answer';
  if(r.locked)return old?'answered':'no_answer';
- if(!old&&r.roundStartedAt&&Date.now()-new Date(r.roundStartedAt).getTime()>=(r.questionTimeSec||60)*1000)return 'no_answer';
+ if(!old&&roomClockLeft(r)<=0)return 'no_answer';
  return old?'answered':'answering';
 }
 function formatClock(total){
@@ -159,12 +159,20 @@ async function player(){
  function showJoin(err=''){p.innerHTML='<section class="view"><div class="card joinCard"><span class="kicker">Entrar na partida</span><h1>Sala '+esc(room)+'</h1><div class="field"><label>Seu apelido</label><input id="nick" maxlength="24"></div><button id="join" class="btn gold">ENTRAR</button><p class="muted">'+esc(err)+'</p></div></section>';document.getElementById('join').onclick=()=>join(document.getElementById('nick').value.trim()).catch(x=>showJoin(x.message))}
  function decorateCorrection(q,r){
    const corr=document.getElementById('playerCorrection');if(!corr)return;
-   const correctionKey=roundKeyOf(r)||q.id;const own=corrections[correctionKey];
+   const correctionKey=roundKeyOf(r)||q.id, own=corrections[correctionKey];
    if(own){const letter=String.fromCharCode(65+own.correctIndex);corr.innerHTML='<div class="playerCorrection"><strong>✅ RESPOSTA CORRETA: '+letter+'</strong><br>'+esc(own.correctText)+'</div>';return}
    if(r.revealed&&q.correctIndex!==undefined){const letter=String.fromCharCode(65+q.correctIndex);const correct=q.options[q.correctIndex];corr.innerHTML='<div class="playerCorrection"><strong>✅ RESPOSTA CORRETA: '+letter+'</strong><br>'+esc(correct.text)+'</div>';return}
+   if(r.correctionPolicy==='host_reveal'){
+     corr.innerHTML='<div class="playerCorrection locked"><strong>👁 CORREÇÃO BLOQUEADA</strong><br>Aguarde o professor revelar a resposta no telão.</div>';return
+   }
+   if(r.correctionPolicy==='all_answered'&&!r.revealed&&Number(publicRoom?.responded||0)<Number(publicRoom?.players_total||0)){
+     const faltam=Math.max(0,Number(publicRoom?.players_total||0)-Number(publicRoom?.responded||0));
+     corr.innerHTML='<div class="playerCorrection locked"><strong>⏳ AGUARDANDO A TURMA</strong><br>Faltam '+faltam+' jogador(es) responderem.</div>';return
+   }
    corr.innerHTML='<button id="showCorrectBtn" class="playerRevealBtn" type="button">MOSTRAR RESPOSTA CORRETA</button>';
-   const btn=document.getElementById('showCorrectBtn');if(btn)btn.onclick=async()=>{try{const x=await api('showCorrect',{code:room,sessionToken:sess.sessionToken,questionId:q.id,roundKey:roundKeyOf(r)});corrections[roundKeyOf(r)||q.id]=x;render()}catch(err){alert(err.message)}};
+   const btn=document.getElementById('showCorrectBtn');if(btn)btn.onclick=async()=>{try{const x=await api('showCorrect',{code:room,sessionToken:sess.sessionToken,questionId:q.id,roundKey:roundKeyOf(r)});corrections[correctionKey]=x;render()}catch(err){if(err?.status===409){showPlayerNotice(err.message);await refresh('correction-policy')}else alert(err.message)}};
  }
+
  if(sess){try{await watchPublic(room,()=>refresh('realtime').catch(()=>{}));await watchPresence(room,()=>{}, {playerId:sess.playerId,nickname:sess.nickname});await refresh('restore');startPoll(()=>refresh('poll'))}catch{localStorage.removeItem(key);sess=null;showJoin()}}else showJoin();
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refresh('visibility').catch(()=>{})});
  window.addEventListener('focus',()=>refresh('focus').catch(()=>{}));
