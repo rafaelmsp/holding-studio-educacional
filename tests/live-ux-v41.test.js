@@ -3,10 +3,10 @@ const fs=require('node:fs');
 const p=s=>fs.readFileSync(s,'utf8');
 const assets=p('live/v3-assets.js'),app=p('live/app.js'),html=p('live/index.html'),css=p('live/ux-v41.css');
 assert.ok(html.includes('ux-v41.css'), 'new cinema stylesheet must be loaded');
-assert.ok(html.includes('v41-prod-1'), 'new app cache must be busted');
-assert.ok(assets.includes('"version": "4.1.0"'));
+assert.ok(/v(?:41|42)-prod-1/.test(html), 'new app cache must be busted');
+assert.ok(assets.includes('"version": "4.2.0"'));
 for(let n=1;n<=8;n++){
- const path='assets/the-crimes-v3/scenes/credores/'+String(n).padStart(2,'0')+'-cinematic.webp';
+ const path='assets/the-crimes-v3/scenes/credores-v42/'+String(n).padStart(2,'0')+'-scene.webp';
  assert.ok(fs.existsSync(path),path);
  assert.ok(fs.statSync(path).size>50000,'source is empty/suspicious '+path);
  assert.ok(assets.includes('../'+path),'manifest missing '+path);

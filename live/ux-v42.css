@@ -1,0 +1,56 @@
+/* V4.2: separate evidence photography; rank placeholders cannot mimic real players. */
+body[data-view="host"].v3-premium .uxHostGalleryLink{
+  grid-column:1/-1;
+  display:block;width:100%;
+  padding:12px;
+  border:1px solid #6ab4d8;
+  border-radius:8px;
+  background:linear-gradient(90deg,#12314b,#091d30);
+  color:#b8f0ff;
+  font-size:12px;font-weight:900;
+  text-align:center;text-decoration:none;
+  letter-spacing:.07em
+}
+body[data-view="host"].v3-premium .uxHostGalleryLink:hover,
+body[data-view="host"].v3-premium .uxHostGalleryLink:focus-visible{
+  border-color:#fbd27e;color:#ffdd92;
+  box-shadow:0 0 12px #e9a33c4d;
+  outline-offset:2px
+}
+body[data-view="host"].v3-premium .uxHostRankRow.uxRankGhost{
+  min-height:47px;opacity:.68;
+  background:linear-gradient(90deg,#081927df,#070f1dec);
+  border-bottom:1px dashed #36516a
+}
+body[data-view="host"].v3-premium .uxRankGhost .uxPlace{color:#738c9b;font-size:17px}
+body[data-view="host"].v3-premium .uxRankGhost .uxEmptyAvatar{
+  display:grid;grid-column:2;grid-row:1/3;place-items:center;
+  width:33px;height:33px;border:1px dashed #3f7491;
+  border-radius:50%;font-size:22px;color:#728fa5
+}
+body[data-view="host"].v3-premium .uxRankGhost .uxRankPlayer strong{
+  color:#829bad;font-size:12px;letter-spacing:.05em
+}
+body[data-view="host"].v3-premium .uxRankGhost .uxRankPlayer small{color:#7192a7}
+body[data-view="host"].v3-premium .uxRankGhost .uxPoints{color:#789bb2}
+body[data-view="screen"].v3-premium .rank.uxRankPlaceholder{
+  border-bottom:1px dashed #34576d;
+  background:linear-gradient(90deg,#061727d9,#07121bea);
+  opacity:.61;
+  min-height:61px
+}
+body[data-view="screen"].v3-premium .uxRankPlaceholder .rankPos{color:#93afc1}
+body[data-view="screen"].v3-premium .uxRankPlaceholder .rankName{color:#7c9caf;font-size:13px}
+body[data-view="screen"].v3-premium .uxRankPlaceholder .rankScore{color:#6e90a5}
+body[data-view="screen"].v3-premium .uxRankPlaceholder .uxRankWaiting{
+  grid-row:2;grid-column:3/5;text-align:right;color:#6f98b3;
+  font-weight:800;letter-spacing:.08em;font-size:9px
+}
+body[data-view="screen"].v3-premium .uxScreenSceneLabel{max-width:33%}
+@media(max-width:1240px){
+ body[data-view="host"].v3-premium .uxRankGhost .uxRankPlayer strong{font-size:11px}
+ body[data-view="screen"].v3-premium .rank.uxRankPlaceholder{min-height:50px}
+}
+@media(max-width:650px){
+ body[data-view="host"].v3-premium .uxHostGalleryLink{font-size:11px}
+}

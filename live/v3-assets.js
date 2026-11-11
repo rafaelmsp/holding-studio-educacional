@@ -1,5 +1,5 @@
 window.TC_V3_ASSETS={
-  "version": "4.1.0",
+  "version": "4.2.0",
   "status": "active",
   "fallbackRoot": "../assets/the-crimes",
   "global": {
@@ -14,18 +14,18 @@ window.TC_V3_ASSETS={
   },
   "cases": {
     "credores": {
-      "cover": "../assets/the-crimes-v3/scenes/credores/01-cinematic.webp",
+      "cover": "../assets/the-crimes-v3/scenes/credores-v42/01-scene.webp",
       "portrait": "../assets/the-crimes/portraits/credores.webp",
-      "mobileCover": "../assets/the-crimes-v3/scenes/credores/01-cinematic.webp",
+      "mobileCover": "../assets/the-crimes-v3/scenes/credores-v42/01-scene.webp",
       "scenes": {
-        "01_contexto": "../assets/the-crimes-v3/scenes/credores/01-cinematic.webp",
-        "02_estrutura": "../assets/the-crimes-v3/scenes/credores/02-cinematic.webp",
-        "03_instrumento": "../assets/the-crimes-v3/scenes/credores/03-cinematic.webp",
-        "04_efeito": "../assets/the-crimes-v3/scenes/credores/04-cinematic.webp",
-        "05_conflito": "../assets/the-crimes-v3/scenes/credores/05-cinematic.webp",
-        "06_apuracao": "../assets/the-crimes-v3/scenes/credores/06-cinematic.webp",
-        "07_consequencias": "../assets/the-crimes-v3/scenes/credores/07-cinematic.webp",
-        "08_debate": "../assets/the-crimes-v3/scenes/credores/08-cinematic.webp"
+        "01_contexto": "../assets/the-crimes-v3/scenes/credores-v42/01-scene.webp",
+        "02_estrutura": "../assets/the-crimes-v3/scenes/credores-v42/02-scene.webp",
+        "03_instrumento": "../assets/the-crimes-v3/scenes/credores-v42/03-scene.webp",
+        "04_efeito": "../assets/the-crimes-v3/scenes/credores-v42/04-scene.webp",
+        "05_conflito": "../assets/the-crimes-v3/scenes/credores-v42/05-scene.webp",
+        "06_apuracao": "../assets/the-crimes-v3/scenes/credores-v42/06-scene.webp",
+        "07_consequencias": "../assets/the-crimes-v3/scenes/credores-v42/07-scene.webp",
+        "08_debate": "../assets/the-crimes-v3/scenes/credores-v42/08-scene.webp"
       }
     },
     "meacao": {
