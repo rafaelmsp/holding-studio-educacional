@@ -395,3 +395,19 @@ body[data-view="player"].v3-premium .playerShell{
     radial-gradient(circle at 50% 0,#7a211b22,transparent 24%),
     linear-gradient(180deg,#0b1118ed,#06090ef0);
 }
+
+
+/* V3.6.1 — courtroom master on the individual final result */
+body[data-view="player"].v3-premium .v3FinalPlayer{
+  min-height:calc(100dvh - 58px);
+  background:
+    linear-gradient(180deg,#070b10d6 0%,#070b10f2 44%,#070b10fa 100%),
+    var(--v3-final-bg) center/cover no-repeat;
+  border-radius:0 0 14px 14px;
+}
+body[data-view="player"].v3-premium .v3FinalPlayer .finalScore,
+body[data-view="player"].v3-premium .v3FinalPlayer .finalSummary,
+body[data-view="player"].v3-premium .v3FinalPlayer .finalResult,
+body[data-view="player"].v3-premium .v3FinalPlayer .finalDecisionGrid{
+  backdrop-filter:blur(12px);
+}
