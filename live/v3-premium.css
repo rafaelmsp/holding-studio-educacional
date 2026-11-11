@@ -16,7 +16,7 @@ body.v3-premium{
 body.v3-premium:before{
   background:
     linear-gradient(180deg,#05080ca8,#05080cf1),
-    url('../assets/the-crimes/city-banner.webp') center/cover fixed no-repeat;
+    var(--v3-global-bg,url('../assets/the-crimes/city-banner.webp')) center/cover fixed no-repeat;
   filter:saturate(.78) contrast(1.08);
 }
 body.v3-premium:after{
@@ -250,3 +250,24 @@ body.v3-premium .v3ReportGrid strong{display:block;margin-top:5px;font-size:22px
 @media(max-width:1200px){body.v3-premium .admin{grid-template-columns:170px 270px minmax(0,1fr)}body.v3-premium .v3ScreenTopStats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){body.v3-premium .admin{grid-template-columns:1fr}body.v3-premium .v3Nav{position:static;min-height:0;display:grid;grid-template-columns:repeat(3,1fr)}body.v3-premium .v3ScreenTop{grid-template-columns:1fr auto}body.v3-premium .v3ScreenTopStats{display:none}}
 @media(max-width:600px){body.v3-premium .v3PlayerStrip{grid-template-columns:1.4fr 1fr 1fr}body.v3-premium .v3PlayerStrip strong{font-size:11px}body.v3-premium .v3SubmitAnswer{min-height:48px;font-size:15px}}
+
+
+/* V3.3 — active cinematic asset library + case rail + round status */
+body.v3-premium .v3ScreenSteps{height:54px;display:flex;align-items:center;justify-content:center;gap:8px;border-top:1px solid #333d49;border-bottom:1px solid #333d49;background:linear-gradient(180deg,#0b1018,#070b11);box-shadow:0 -8px 28px #0007}
+body.v3-premium .v3ScreenSteps>strong{margin-right:12px;color:#c6ccd4;font-size:10px;letter-spacing:.08em}
+body.v3-premium .v3ScreenSteps span{min-width:50px;height:30px;display:grid;place-items:center;border:1px solid #374353;border-radius:7px;background:#111923;color:#7d8793;font-size:11px;font-weight:950}
+body.v3-premium .v3ScreenSteps span.done{border-color:#2d8f60;background:#0e2a1d;color:#7be6a8;box-shadow:0 0 14px #42c98524}
+body.v3-premium .v3ScreenSteps span.done:before{content:"✓ ";font-size:9px}
+body.v3-premium .v3ScreenSteps span.current{border-color:#54cfff;background:#0c2631;color:#9ce8ff;box-shadow:0 0 18px #54cfff55}
+body.v3-premium .v3ScreenSteps span.locked{opacity:.58}
+body.v3-premium .v3RoundStatusBar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-top:12px;border:1px solid #3c4654;border-radius:10px;overflow:hidden;background:#0b1119e8}
+body.v3-premium .v3RoundStatusBar>div{padding:9px 13px;border-right:1px solid #34404e}
+body.v3-premium .v3RoundStatusBar>div:last-child{border-right:0}
+body.v3-premium .v3RoundStatusBar small{display:block;color:#8793a1;font-size:8px;font-weight:900;letter-spacing:.08em}
+body.v3-premium .v3RoundStatusBar strong{display:block;margin-top:3px;font-size:17px;color:#fff}
+body.v3-premium .v3RoundStatusBar>div:nth-child(1) strong{color:#ff8c86}
+body.v3-premium .v3RoundStatusBar>div:nth-child(2) strong{color:#65e89a}
+body.v3-premium .finalPodium .podiumCard.first{transform:translateY(-12px);border-color:#e9ba62;box-shadow:0 0 0 1px #e9ba6266,0 18px 45px #0009,0 0 32px #e9ba6226}
+body.v3-premium .finalPodium .podiumCard.second{border-color:#8fa6bc}
+body.v3-premium .finalPodium .podiumCard.third{border-color:#b46f45}
+@media(max-width:1100px){body.v3-premium .v3ScreenSteps span{min-width:40px}body.v3-premium .v3ScreenSteps>strong{display:none}}
