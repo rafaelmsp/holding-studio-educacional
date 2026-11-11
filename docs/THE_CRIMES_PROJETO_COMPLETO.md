@@ -443,3 +443,106 @@ Validado diretamente no GitHub Pages:
 - Edge Function: ativa;
 - Security Advisor: **0 lints**;
 - salas de QA e carga removidas após os testes.
+
+
+## 19. Perguntas únicas e status dos jogadores
+
+Atualização implementada em 10/11/2026.
+
+### Banco de perguntas
+
+O The Crimes Live deixou de usar o mesmo enunciado genérico em todas as rodadas.
+
+Agora existem:
+
+- **6 casos**;
+- **8 rodadas por caso**;
+- **48 perguntas**;
+- **48 enunciados únicos**;
+- alternativas próprias por contexto;
+- posição da resposta juridicamente adequada variando entre A, B, C e D.
+
+Os casos cobrem:
+
+1. Fraude contra credores;
+2. Ocultação de meação;
+3. Prejuízo a herdeiros;
+4. ITBI e integralização;
+5. Receitas de aluguéis;
+6. Grupo societário.
+
+As perguntas alternam entre:
+
+- cronologia;
+- prova;
+- finalidade econômica;
+- avaliação;
+- solvência;
+- efeitos patrimoniais;
+- requisitos legais;
+- zona cinzenta;
+- consequência;
+- conclusão jurídica.
+
+O servidor continua classificando a escolha como:
+
+- 🟢 juridicamente adequada;
+- 🔴 atitude criminosa no cenário;
+- 🟡 zona cinzenta;
+- 🟠 alto risco jurídico.
+
+### Status dos jogadores
+
+O painel do Host agora separa **Conexão** de **Status da rodada**.
+
+Estados:
+
+- 🟣 **AGUARDANDO INÍCIO**;
+- 🟡 **RESPONDENDO**;
+- ✅ **RESPONDEU**;
+- 🔵 **AG. PRÓXIMA**;
+- ⏸ **PAUSADO**;
+- ⛔ **SEM RESPOSTA**;
+- 🏁 **FINALIZADO**;
+- ⚪ **OFFLINE**.
+
+O telão também exibe o status ao lado do jogador.
+
+### QA
+
+Teste direto na Edge Function percorreu todos os casos e confirmou:
+
+```text
+48 perguntas
+48 enunciados únicos
+```
+
+Transição testada com dois jogadores:
+
+```text
+waiting:
+waiting / waiting
+
+partida iniciada:
+answering / answering
+
+um jogador respondeu:
+answered / answering
+
+resultado revelado:
+revealed / no_answer
+```
+
+As salas sintéticas utilizadas no QA foram removidas.
+
+Security Advisor do Supabase após a atualização:
+
+```text
+0 lints
+```
+
+Commit do frontend:
+
+```text
+9381be47f9dec207178a37fc7b8cda7b903ebcbb
+```
