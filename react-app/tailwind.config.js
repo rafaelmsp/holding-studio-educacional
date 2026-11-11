@@ -1,0 +1,1 @@
+export default {content:['./index.html','./src/**/*.{ts,tsx}'],theme:{extend:{colors:{night:'#030814',panel:'#0a1b2b',neon:'#37d7ff',red:'#f44258',gold:'#ffd078',mint:'#42eda5'},fontFamily:{display:['Impact','Bahnschrift SemiCondensed','Arial Narrow','sans-serif'],body:['Segoe UI Variable','Inter','Segoe UI','Arial','sans-serif']}}},plugins:[]};
