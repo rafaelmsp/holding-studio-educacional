@@ -325,3 +325,21 @@ body[data-view="screen"].v3-premium .podiumCard.first{background:linear-gradient
 @media(max-width:600px){
  body.v3-premium .v3MobileSteps i{height:21px;font-size:7px}
 }
+
+
+/* V3.4.1 — projector/mobile fit pass */
+@media(min-width:1181px) and (max-height:920px){
+ body.v3-premium .v3HostQuestion{min-height:260px}
+ body.v3-premium .v3HostScene{min-height:260px}
+ body.v3-premium .v3HostScene img{min-height:260px}
+ body.v3-premium .v3HostQuestionCopy{padding:13px 15px}
+ body.v3-premium .v3HostQuestionCopy h2{font-size:18px;margin:5px 0 9px}
+ body.v3-premium .v3HostOpt{min-height:44px;padding:5px 8px}
+ body.v3-premium .v3ClassProgress{padding:9px 13px}
+ body.v3-premium .metrics{margin-bottom:8px}
+}
+@media(max-width:600px){
+ body.v3-premium .v3MobileSteps{margin:3px 0 2px;gap:3px}
+ body.v3-premium .v3MobileSteps i{height:16px;font-size:6px}
+ body.v3-premium .v3-round-progress{display:none}
+}
