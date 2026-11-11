@@ -22,6 +22,12 @@ body:before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradi
 .host.in-game .qr-local img,.host.in-game .qr-local canvas{width:106px!important;height:106px!important}
 .serverBadge{min-height:45px;display:flex;align-items:center;padding:0 12px;border:1px solid #343d48;border-radius:8px;background:#0e141c;color:#75e39a;font-weight:900}
 .roundBar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px 14px;margin-bottom:10px;border:1px solid #3b4653;border-radius:9px;background:#0d131b}
+.roundClock{min-width:86px;text-align:center;font-size:22px;font-weight:950;color:var(--gold2)}
+.roundClock.urgent,.screenClock.urgent{color:#ff6f66;animation:urgentPulse .8s ease-in-out infinite}
+.screenRoundHead{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.screenClock{font-size:24px;font-weight:950;color:var(--gold2);padding:5px 9px;border:1px solid #8b6730;border-radius:8px;background:#0a0f16cc}
+@keyframes urgentPulse{0%,100%{opacity:1}50%{opacity:.55}}
+
 .roundBar strong{font-size:17px}
 .roundBar .progressText{color:var(--gold2);font-weight:950}
 .playerCell small{display:block;margin-top:3px;color:#8993a0;font-size:9px}
@@ -111,5 +117,5 @@ body:before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradi
 <div id="app"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<script src="./app.js?v=20261110-ux2-6"></script>
+<script src="./app.js?v=20261110-ux2-7"></script>
 </body></html>
