@@ -165,12 +165,29 @@ function host(){
   const publicRev=Number(pub?.room_revision??-1),privateRev=roomRevisionOf(state?.room);
   if(publicRev>privateRev)await refreshAdmin();
  }
- async function cmd(a,extra={}){
+ async function cmd(a,extra={},retry=0){
+ const before={round:Number(publicRoom?.current_round??state?.room?.currentRound??1),status:String(publicRoom?.status??state?.room?.status??''),locked:Boolean(publicRoom?.locked??state?.room?.locked),revealed:Boolean(publicRoom?.revealed??state?.room?.revealed)};
  try{
   const rev=Math.max(roomRevisionOf(state?.room),Number(publicRoom?.room_revision??-1));
   await api(a,{code:state.code,adminToken:state.adminToken,expectedRevision:rev,requestId:requestId('host-'+a),...extra});
  }catch(x){
-  if(x?.payload?.stale){await refreshAdmin();return}
+  if(x?.payload?.stale){
+   await refreshAdmin();
+   if(retry<1){
+    const now={round:Number(publicRoom?.current_round??state?.room?.currentRound??1),status:String(publicRoom?.status??state?.room?.status??''),locked:Boolean(publicRoom?.locked??state?.room?.locked),revealed:Boolean(publicRoom?.revealed??state?.room?.revealed)};
+    const retrySafe=
+      (a==='finish'&&now.status!=='finished')||
+      (a==='reset'&&now.status!=='waiting')||
+      (a==='next'&&now.round===before.round&&now.status!=='finished')||
+      (a==='reveal'&&now.round===before.round&&!now.revealed&&now.status==='running')||
+      (a==='lock'&&now.round===before.round&&!now.locked&&now.status==='running')||
+      (a==='pause'&&now.status==='running')||
+      (a==='resume'&&now.status==='paused')||
+      (a==='start'&&now.status==='waiting');
+    if(retrySafe)return cmd(a,extra,retry+1);
+   }
+   return;
+  }
   throw x;
  }
  await pingControl(state.code,a);
