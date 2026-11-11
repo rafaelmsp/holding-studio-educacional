@@ -388,3 +388,58 @@ Teste realizado diretamente pelo GitHub Pages público contra o Supabase:
 ### Observação
 
 Os índices de eventos ainda aparecem como "unused" no Performance Advisor porque o ambiente acabou de ser criado e possui pouco volume. Eles são mantidos para o crescimento da auditoria e não representam falha de segurança ou funcionamento.
+
+
+## 18. THE CRIMES LIVE — Versão 1.0 de sala
+
+Fechamento da versão 1.0 em 10/11/2026.
+
+### Melhorias finais
+
+- QR Code passou a ser gerado no próprio navegador.
+- Removida dependência do serviço externo `api.qrserver.com`.
+- Polling de fallback reduzido: o Realtime é a via principal; o fallback só consulta o estado quando a conexão não está saudável ou fica sem evento por mais de 15 segundos.
+- Adicionado **↻ RESETAR SALA** no painel do Host.
+- O reset:
+  - mantém os jogadores na sala;
+  - apaga respostas da partida;
+  - zera score;
+  - volta exposição e evidência ao estado inicial;
+  - limpa `OCULTOU BENS`, descoberta, bloqueios e desfechos;
+  - volta para **AGUARDANDO INICIAR A PARTIDA...**.
+- Edge Function otimizada para sincronizar players públicos em lote e reduzir custo de atualização.
+- Realtime continua como mecanismo principal.
+
+### Teste de carga
+
+Teste online com burst de **50 jogadores**:
+
+- 50 joins concluídos;
+- 50 respostas simultâneas persistidas;
+- 12 personagens com `OCULTOU BENS: SIM` no cenário de carga;
+- reset completo confirmado;
+- após reset: 50 players, score total 0, ocultações 0, status `waiting`.
+
+Medições do burst sintético:
+
+- entrada dos 50 players: ~11,6 s;
+- processamento das 50 respostas: ~9,9 s;
+- ciclo completo com reset: ~23,6 s.
+
+Esse teste é deliberadamente mais agressivo do que uma entrada normal de sala, em que os alunos escaneiam o QR ao longo de vários segundos.
+
+### QA público
+
+Validado diretamente no GitHub Pages:
+
+- botão **↻ RESETAR SALA** visível;
+- QR renderizado localmente;
+- nenhuma chamada ao antigo serviço externo de QR;
+- estado inicial correto: **AGUARDANDO INICIAR A PARTIDA...**.
+
+### Segurança
+
+- projeto Supabase: `ACTIVE_HEALTHY`;
+- Edge Function: ativa;
+- Security Advisor: **0 lints**;
+- salas de QA e carga removidas após os testes.
