@@ -608,3 +608,146 @@ Commits principais da UX 2.0:
 - 3ba8c4b27c80a4cbbe60868fcaf683c2ec34092d
 - cc45390d7b0e87409d8674b23f3e7089b5ff1440
 - c48e437f92902352599bb8741f7190c9727bb50d
+
+## 20. UX Premium V3.3 — Implementação validada
+
+Baseline funcional/visual validada em 11/11/2026.
+
+### Estado da implementação
+
+A UX Premium V3.3 está implementada no fluxo online com:
+
+- Host / Central de Operações premium;
+- menu lateral para Partida ao Vivo, Lobby/Sala, Casos e Perguntas, Jogadores, Relatórios e Configurações;
+- progresso da turma com indicador circular;
+- QR e controles contextuais por estado;
+- Telão premium com:
+  - caso atual;
+  - jogadores;
+  - rodada;
+  - progresso;
+  - TOP 5;
+  - perguntas A–D;
+  - respostas recebidas;
+  - cronômetro;
+  - REVELAR RESPOSTA;
+  - PULAR / PRÓXIMA;
+  - ENCERRAR PARTIDA;
+  - trilho de progresso 01–08;
+  - barra de tempo / respostas / status;
+- Mobile premium com:
+  - identidade do jogador;
+  - pontos;
+  - exposição;
+  - imagem da missão;
+  - progresso da rodada;
+  - seleção A–D;
+  - botão explícito **RESPONDER**;
+  - correção individual conforme política da sala;
+- Resultado final com:
+  - pódio 1º/2º/3º;
+  - TOP 5;
+  - métricas da turma;
+  - **JOGAR NOVAMENTE**;
+  - **VOLTAR AO LOBBY**.
+
+### Sincronização de rodada
+
+A proteção contra o jogador permanecer preso em uma rodada anterior foi reforçada com:
+
+- `room_revision`;
+- `round_key`;
+- rejeição de respostas pertencentes a rodada antiga;
+- atualização autoritativa via broadcast;
+- fallback mobile de 5 segundos;
+- atualização no foco/visibilidade/reconexão;
+- correção histórica ligada a `questionId + roundKey`.
+
+Validação observada:
+
+```text
+Rodada 1 no servidor
+↓
+Host/Telão envia NEXT
+↓
+Servidor muda para rodada 2
+↓
+playerState retorna rodada 2
+↓
+Mobile muda para MISSÃO 02 / 08
+```
+
+A correção da rodada anterior continua disponível depois do avanço porque a API consulta a resposta histórica pelo identificador da pergunta e pela chave da rodada.
+
+### Fluxo de resposta mobile
+
+O celular não envia mais a resposta ao tocar imediatamente na alternativa.
+
+Fluxo:
+
+```text
+Selecionar alternativa
+↓
+alternativa recebe destaque
+↓
+RESPONDER é habilitado
+↓
+jogador confirma
+↓
+servidor persiste a resposta
+↓
+status = RESPONDEU
+```
+
+### Biblioteca visual
+
+O arquivo `live/v3-assets.js` está ativo e mapeia a biblioteca cinematográfica existente:
+
+```text
+6 casos
+×
+8 cenas
+=
+48 cenas cinematográficas
+```
+
+As cenas são utilizadas como backgrounds/contexto de missões, Host, lobby e resultado conforme a tela.
+
+As imagens conceituais premium aprovadas durante o design continuam sendo **referência visual de direção de arte**. Elas não foram copiadas literalmente para o repositório; a produção atual utiliza os assets cinematográficos já versionados em `assets/the-crimes/`.
+
+### QA validado
+
+Foram observados:
+
+- seleção no mobile sem submissão automática;
+- botão RESPONDER persistindo uma única resposta;
+- avanço para a rodada seguinte;
+- mobile acompanhando a nova rodada;
+- correção histórica da rodada anterior;
+- REVELAR no telão;
+- TOP 5;
+- trilho 01–08;
+- pódio;
+- replay;
+- retorno ao lobby;
+- 1920×1080 sem overflow;
+- mobile 390×844;
+- console sem erros relevantes.
+
+### Infraestrutura
+
+- Supabase: `ACTIVE_HEALTHY`;
+- Security Advisor: 0 lints;
+- Performance Advisor: 0 lints;
+- GitHub CI: success;
+- GitHub Pages: success.
+
+### Baseline
+
+Commit funcional mais recente da V3.3:
+
+```text
+3c56b19cb38e79be775f00ce210e122a36dc604a
+```
+
+Inclui o bundle com sincronização autoritativa por broadcast e fallback mobile de 5 segundos.
