@@ -1,7 +1,27 @@
 {
-  "version": "3.0.0-staging",
-  "status": "scaffold",
+  "version": "3.4.0",
+  "status": "runtime-fallback-active",
   "fallbackRoot": "../the-crimes",
+  "counts": {
+    "global": 8,
+    "cases": 6,
+    "scenesPerCase": 8,
+    "caseVisualsPerCase": 2,
+    "plannedMasters": 68
+  },
+  "approvedTargets": {
+    "global": {
+      "keyart": "global/investigation-keyart.webp",
+      "command": "global/command-center.webp",
+      "podium": "global/courtroom.webp",
+      "hearing": "global/courtroom.webp",
+      "city": "global/city-night.webp",
+      "lobby": "global/lobby-investigation.webp",
+      "briefing": "global/briefing-room.webp",
+      "reconnect": "global/reconnect.webp"
+    },
+    "note": "Enquanto os binários premium não estiverem versionados, live/v3-assets.js mantém os fallbacks estáveis de assets/the-crimes/."
+  },
   "global": {
     "keyart": null,
     "city": null,
