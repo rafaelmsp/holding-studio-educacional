@@ -751,3 +751,99 @@ Commit funcional mais recente da V3.3:
 ```
 
 Inclui o bundle com sincronização autoritativa por broadcast e fallback mobile de 5 segundos.
+
+
+## 21. UX Premium V3.4 — Central de Operações e polimento visual
+
+Atualização publicada em 11/11/2026.
+
+### Mudanças da V3.4
+
+A V3.4 mantém toda a máquina de estados e sincronização validada na V3.3 e acrescenta:
+
+- quadro da pergunta atual diretamente no **Host / Central de Operações**;
+- profundidade visual cinematográfica adicional no Host;
+- trilho mobile das oito missões / rodadas;
+- trilho 01–08 também no telão;
+- refinamento do pódio e do ranking final;
+- atualização do ranking após replay/reset;
+- manutenção do fluxo explícito **selecionar → RESPONDER** no celular;
+- manutenção do botão **REVELAR RESPOSTA** no telão;
+- manutenção de **PULAR / PRÓXIMA** mesmo com jogadores sem responder;
+- manutenção de **JOGAR NOVAMENTE** e **VOLTAR AO LOBBY** no resultado final.
+
+### Compatibilidade funcional
+
+A análise estática do bundle público V3.4 confirmou:
+
+```text
+JavaScript: syntax OK
+submitAnswer: presente
+screenRevealBtn: presente
+v3MobileSteps: presente
+v3ScreenSteps: presente
+finalPodium: presente
+screenReplay: presente
+screenLobby: presente
+watchControl: presente
+```
+
+O bundle publicado é:
+
+```text
+app.js?v=20261111-v3-prod-8
+v3-premium.css?v=20261111-4
+```
+
+### QA herdado e preservado
+
+O fluxo V3.3 imediatamente anterior foi validado no site público com:
+
+```text
+seleção da alternativa sem envio automático
+↓
+RESPONDER
+↓
+resposta persistida
+↓
+MISSÃO 01 → MISSÃO 02
+↓
+correção histórica da missão anterior via roundKey
+↓
+FINALIZAR
+↓
+resultado individual no celular
+↓
+pódio no telão
+↓
+VOLTAR AO LOBBY
+```
+
+Validações observadas:
+
+- mobile 390×844 sem overflow;
+- telão 1920×1080 sem overflow;
+- pódio com três posições;
+- QR restaurado ao voltar ao lobby;
+- console sem erros durante o fluxo validado;
+- Supabase `ACTIVE_HEALTHY`;
+- Security Advisor: 0 lints;
+- Performance Advisor: 0 lints;
+- GitHub CI: success;
+- GitHub Pages: success.
+
+### Direção de arte e assets
+
+O mapa `live/v3-assets.js` está ativo para os seis casos e usa as 48 cenas cinematográficas já versionadas em `assets/the-crimes/`.
+
+As imagens conceituais ultrarrealistas aprovadas continuam sendo o **design target oficial** para Host, Telão, Mobile e Resultado Final. O layout HTML/CSS foi aproximado dessas referências sem gravar textos dinâmicos dentro das imagens.
+
+Os backgrounds conceituais específicos — Central de Operações, Investigação e Tribunal/Pódio — ainda devem ser importados como arquivos binários em `assets/the-crimes-v3/global/` quando os originais estiverem disponíveis no repositório ou no computador autorizado. Até lá, o sistema utiliza os fallbacks cinematográficos já versionados, sem quebrar nenhuma tela.
+
+### Baseline V3.4
+
+Commit público validado pelo CI e GitHub Pages:
+
+```text
+8836dc62648c3f9b70ca70ac51474ef9e917339f
+```
