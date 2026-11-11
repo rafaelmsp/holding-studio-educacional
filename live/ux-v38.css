@@ -1,0 +1,159 @@
+/* THE CRIMES LIVE — UX Model V3.8.0. All game text, controls and state remain live DOM. */
+:root{
+ --ux-ink:#05090f; --ux-panel:rgba(7,16,28,.93); --ux-panel2:rgba(10,25,38,.95);
+ --ux-cyan:#49cff5; --ux-red:#e53b45; --ux-gold:#f1ba54; --ux-text:#f5f8fc;
+ --ux-stroke:rgba(74,165,202,.43);
+}
+body[data-view="player"].v3-premium .playerShell{
+ background:linear-gradient(180deg,rgba(3,8,16,.76),rgba(3,8,16,.96)),url('../assets/the-crimes-v3/global/investigation-keyart.webp') center top /cover fixed no-repeat;
+ color:var(--ux-text);min-height:100dvh;
+}
+body[data-view="player"].v3-premium .playerTop{
+ min-height:78px;padding:12px clamp(18px,3vw,45px);border-bottom:1px solid rgba(237,57,65,.7);
+ background:linear-gradient(90deg,#070d16,#0a1220ed);
+ box-shadow:0 10px 38px #000b,0 1px 23px #c8333533;
+}
+body[data-view="player"].v3-premium .playerTop .brand{
+ font-weight:950;font-size:clamp(22px,2.3vw,31px)!important;letter-spacing:.012em;
+ text-shadow:0 2px 6px #000c;
+}
+body[data-view="player"].v3-premium .playerTop .brand em{
+ color:#ed3846;text-shadow:0 0 18px #e82d3d70
+}
+.uxJoinPage{
+ width:min(1400px,calc(100% - 36px));margin:30px auto 45px;
+ padding:0;border:1px solid #3186a066;border-radius:17px;overflow:hidden;
+ background:linear-gradient(135deg,#0b1624f5 0%,#050c16f8 65%,#10101af5);
+ box-shadow:0 28px 90px #000b,0 0 48px #2198d51d,inset 0 1px #58b7eb38;
+}
+.uxJoinIntro{
+ background:linear-gradient(120deg,#110b16dd 0%,#0b1b2ee3 68%,#0c1523e5);
+ padding:26px clamp(18px,3.5vw,48px) 20px;border-bottom:1px solid #ba333b75;
+}
+.uxJoinHeading{display:flex;gap:12px 20px;align-items:baseline;flex-wrap:wrap}
+.uxEyebrow{color:#ff6974;font-size:11px;font-weight:900;letter-spacing:.22em}
+.uxJoinHeading h1{
+ margin:0;color:#fff;font-size:clamp(26px,3.1vw,39px);font-weight:950;line-height:1.1;
+ text-shadow:0 0 25px #e3354b44;text-transform:uppercase;
+}
+.uxJoinHeading p{flex-basis:100%;margin:0;color:#b7cddd;font-size:14px;line-height:1.5}
+.uxRoomInfo{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:21px}
+.uxRoomInfo>div{padding:13px 15px;border-radius:10px;background:#071320e8;border:1px solid #3a7d9b85;min-width:0}
+.uxRoomInfo small{color:#91b6cf;letter-spacing:.12em;font-size:10px;display:block;font-weight:900}
+.uxRoomInfo strong{display:block;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:clamp(13px,1.3vw,19px);margin-top:4px}
+.uxRoomInfo>div:nth-child(2) strong{color:#f9c66d}
+.uxJoinLayout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,.8fr);gap:26px;padding:26px clamp(18px,3.5vw,48px)}
+.uxJoinForm{min-width:0}
+.uxFormHead{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+.uxFormHead span{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;font-weight:950;color:#0d1722;background:linear-gradient(150deg,#ffc56d,#be792d);box-shadow:0 0 19px #ffb34135}
+.uxFormHead h2{margin:0;font-size:clamp(17px,1.5vw,22px);text-transform:uppercase;letter-spacing:.03em}
+.uxFormSection{margin-top:22px}
+.uxFieldLabel{display:block;color:#d9e9f6;font-size:11px;font-weight:850;letter-spacing:.13em;margin-bottom:9px}
+.uxJoinPage .uxJoinInput{
+ display:block;width:100%;max-width:580px;min-height:53px;padding:12px 18px;
+ border:1px solid #4ccef5;border-radius:10px;color:#fff;background:#071522d9;
+ box-shadow:0 0 0 2px #22bce719,inset 0 0 22px #2fbaf725;
+ font-family:inherit;font-size:clamp(15px,1.5vw,20px);font-weight:700;
+}
+.uxJoinInput:focus{outline:2px solid #a3ecff;outline-offset:2px}
+.uxHint{color:#9db5c9;font-size:12px;margin:-3px 0 12px}
+.uxGenderFilters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.uxGenderFilters button{
+ border:1px solid #63849c;border-radius:10px;background:linear-gradient(#182635,#08111d);
+ color:#e8eff7;min-height:49px;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;transition:.18s;
+}
+.uxGenderFilters button:hover,.uxGenderFilters button:focus-visible{border-color:#69d4f7;color:#fff}
+.uxGenderFilters button.active{
+ border-color:#60ddff;background:linear-gradient(#1475a7,#09466b);
+ box-shadow:0 0 17px #21bbf663,inset 0 0 13px #70e0ff2c;color:white
+}
+.uxCharacters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.uxPersonaCard{
+ min-width:0;position:relative;padding:0;border:1px solid #566b82;border-radius:12px;overflow:hidden;
+ background:#0a1722;color:#eaf3fa;cursor:pointer;text-align:center;
+ box-shadow:0 7px 24px #0008;transition:transform .16s,border-color .16s,box-shadow .16s
+}
+.uxPersonaCard:hover{transform:translateY(-2px);border-color:#66d6fa}
+.uxPersonaCard:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.uxPersonaCard.selected{border:2px solid #56e6ff;box-shadow:0 0 0 2px #1784a94a,0 0 24px #19bbef55}
+.uxPersonaCard.selected:after{
+ content:'✓';position:absolute;right:7px;top:7px;display:grid;place-items:center;width:24px;height:24px;
+ border-radius:50%;background:#0699bf;border:2px solid #ddfbff;color:white;font-size:15px;font-weight:900
+}
+.uxPersonaCard img{display:block;aspect-ratio:1 / 1;width:100%;object-fit:cover;object-position:center 28%;background:#0a1d31}
+.uxPersonaCard span{
+ display:block;padding:10px 3px;background:linear-gradient(#091320,#071019);
+ font-size:clamp(10px,1vw,13px);font-weight:950;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.uxJoinPreview{
+ border:1px solid #3ac8eab0;background:linear-gradient(#102537ec,#07111de8);
+ border-radius:13px;padding:17px;min-width:0;
+ box-shadow:inset 0 0 28px #08a4c310,0 0 25px #0c8eab20;align-self:start
+}
+.uxPreviewTitle{font-size:12px;font-weight:950;letter-spacing:.12em;color:#8ddfff;border-bottom:1px solid #5ab9dc66;padding:0 0 14px}
+.uxJoinPreview>img{
+ display:block;max-height:310px;aspect-ratio:1 / .9;object-fit:cover;
+ width:100%;border-radius:8px;border:1px solid #5393ad;margin-top:14px
+}
+.uxPreviewInfo>strong{display:block;font-size:clamp(20px,2vw,27px);font-weight:950;text-transform:uppercase;margin-top:12px;color:#f9c56c}
+.uxPreviewInfo>p{color:#c6d7e7;font-size:13px;line-height:1.5;margin:8px 0 18px}
+.uxPreviewInfo>div{border-top:1px solid #3c6079;padding:11px 0;display:grid;grid-template-columns:94px minmax(0,1fr);gap:10px}
+.uxPreviewInfo small{font-size:9px;color:#8db9d5;font-weight:900;letter-spacing:.1em}
+.uxPreviewInfo span{font-weight:800;font-size:12px;color:#f6f9fe}
+.uxJoinFooter{
+ display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;
+ padding:22px clamp(18px,3.5vw,48px);border-top:1px solid #a52e4477;background:#0b111ceb
+}
+.uxJoinRules strong{font-size:12px;color:#8fe5ff;letter-spacing:.1em}
+.uxJoinRules p{font-size:12px;max-width:500px;color:#a5bece;line-height:1.5;margin:5px 0 0}
+.uxJoinActions{min-width:min(100%,345px);text-align:right}
+.uxEnterBtn{
+ min-height:64px;padding:12px clamp(19px,2.6vw,38px);width:100%;
+ border:1px solid #ffe0a0;border-radius:11px;font-family:inherit;font-size:clamp(17px,2vw,21px);font-weight:950;line-height:1.2;
+ background:linear-gradient(180deg,#ffd580,#a86113);color:#180e09;letter-spacing:.025em;
+ box-shadow:0 0 28px #eca02b88,inset 0 2px #fff3c8,0 6px 24px #000c;
+ cursor:pointer
+}
+.uxEnterBtn:hover{filter:brightness(1.12)}
+.uxEnterBtn:disabled{opacity:.6;cursor:wait}
+.uxJoinError{margin:0 0 7px;color:#ff9296;font-size:12px;min-height:15px}
+.uxPlayerIdentity{display:flex;align-items:center;gap:8px;min-width:0}
+.uxPlayerIdentity span{min-width:0}
+.uxPlayerIdentity .uxPlayerAvatar{width:35px;height:40px;object-fit:cover;border:1px solid #57c1df;border-radius:7px;flex-shrink:0}
+.uxRankAvatar{display:inline-block;width:24px;height:26px;object-fit:cover;border-radius:5px;border:1px solid #2db2d4;vertical-align:middle;margin-right:7px}
+body.v3-premium .rankName{display:flex;align-items:center}
+body[data-view="screen"].v3-premium .screenOption{border-color:#386881;box-shadow:inset 0 0 20px #1e9fb014}
+body[data-view="screen"].v3-premium .screenOption.revealed.correct{box-shadow:0 0 18px #23b85f55}
+body[data-view="host"].v3-premium .btn.gold,body[data-view="screen"].v3-premium .screenNextBtn{box-shadow:0 0 18px #eaa9444a}
+body[data-view="host"].v3-premium .btn.green,body[data-view="screen"].v3-premium .screenRevealBtn{box-shadow:0 0 14px #46c4ef50}
+@media(max-width:1100px){
+ .uxJoinLayout{grid-template-columns:minmax(0,1fr) 260px;gap:17px}
+ .uxJoinIntro{padding-inline:24px}.uxJoinLayout{padding:20px 24px}
+ .uxJoinFooter{padding:20px 24px}
+}
+@media(max-width:760px){
+ .uxJoinPage{width:100%;border-left:0;border-right:0;border-radius:0;margin:0}
+ .uxJoinLayout{grid-template-columns:1fr;gap:17px;padding:16px}
+ .uxJoinIntro{padding:19px 16px}
+ .uxJoinHeading h1{font-size:24px}
+ .uxRoomInfo{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:16px}
+ .uxRoomInfo>div{padding:10px 9px}.uxRoomInfo small{font-size:9px}.uxRoomInfo strong{font-size:12px}
+ .uxCharacters{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+ .uxPersonaCard span{font-size:10px;padding:9px 2px}
+ .uxJoinPreview{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:start;gap:10px;padding:12px}
+ .uxPreviewTitle{grid-column:1/-1;padding-bottom:8px}
+ .uxJoinPreview>img{width:112px;height:130px;margin:0;object-fit:cover}
+ .uxPreviewInfo>strong{margin-top:0;font-size:17px}
+ .uxPreviewInfo>p{font-size:11px;line-height:1.35;margin:5px 0}
+ .uxPreviewInfo>div{padding:5px 0;grid-template-columns:68px minmax(0,1fr);gap:6px}
+ .uxPreviewInfo small{font-size:8px}.uxPreviewInfo span{font-size:10px}
+ .uxJoinFooter{grid-template-columns:1fr;padding:14px 16px}
+ .uxJoinRules p{font-size:11px}.uxJoinActions{width:100%;text-align:center}
+ .uxEnterBtn{min-height:55px;font-size:17px}
+ .uxGenderFilters{gap:7px}
+ .uxGenderFilters button{font-size:12px;min-height:46px}
+ .uxFormSection{margin-top:18px}
+ .uxJoinPage .uxJoinInput{min-height:48px;font-size:16px}
+}
+@media(max-width:360px){.uxCharacters{grid-template-columns:repeat(2,minmax(0,1fr))}.uxJoinPreview{grid-template-columns:90px minmax(0,1fr)}.uxJoinPreview>img{width:90px;height:108px}}
+@media(prefers-reduced-motion:reduce){.uxPersonaCard,.uxGenderFilters button{transition:none}}
