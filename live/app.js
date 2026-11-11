@@ -150,7 +150,7 @@ function host(){
     roomCard.classList.add('uxRoomCard');
     const casePanel=document.createElement('div');
     casePanel.className='uxHostCaseInfo';
-    casePanel.innerHTML='<small>CASO EM INVESTIGAÇÃO</small><strong id="uxHostCaseName">Aguardando sala</strong><span id="uxHostOnline">● Sistema online</span>';
+    casePanel.innerHTML='<small>CASO FICTÍCIO</small><strong id="uxHostCaseName">Aguardando sala</strong><span id="uxHostOnline">● Sistema online</span>';
     document.getElementById('hostPanel').appendChild(casePanel);
     const live=document.createElement('div');
     live.className='uxHostLive';
@@ -193,6 +193,11 @@ function host(){
     const title=document.getElementById('uxHostCaseName');
     const online=document.getElementById('uxHostOnline');
     if(title)title.textContent=publicRoom.case_title||'Caso selecionado';
+    const coverEl=document.querySelector('.uxHostCaseInfo');
+    if(coverEl){
+      const knownCase=cases.find(x=>x[0]===selectedCase)?.[0]||'credores';
+      coverEl.style.setProperty('--ux41-cover','url("'+coverPath(knownCase)+'")');
+    }
     if(online)online.textContent=(presenceReady?presenceIds.size:publicRoom.players_connected)+' jogadores online · rodada '+Number(publicRoom.current_round||1)+'/8';
     const put=(id,v)=>{const x=document.getElementById(id);if(x)x.textContent=v};
     put('uxTopRoom',publicRoom.code||'—');put('uxTopCase',publicRoom.case_title||'Aguardando');
@@ -391,7 +396,17 @@ async function player(){
 
 async function screenView(){
  const screenAdminToken=localStorage.getItem('tc-admin-'+room)||'';
- document.getElementById('app').innerHTML='<div class="screen"><header class="top v3ScreenTop"><div class="brand">THE <em>CRIMES</em> LIVE<small>JOGO JURÍDICO INVESTIGATIVO</small></div><div id="screenTopStats" class="v3ScreenTopStats"></div><div id="serverState" class="server">● SUPABASE REALTIME</div></header><main class="screenMain"><section class="stage"><img id="sbg" src="'+cityPath()+'"><div class="uxScreenSceneLabel"><small>CASO SOB INVESTIGAÇÃO</small><strong id="uxScreenSceneName">Carregando...</strong></div><div id="scopy" class="stageCopy"></div></section><aside class="screenSide card"><div class="head"><div><span class="kicker">PLACAR AO VIVO</span><h3>Ranking</h3></div><strong id="online"></strong></div><div class="rankHead"><span>#</span><span>Jogador</span><span style="text-align:right">Pts</span><span>Status</span><span>Perfil</span></div><div id="rank"></div></aside></main><div id="screenSteps" class="v3ScreenSteps"></div><footer class="footer"><strong id="froom"></strong><span id="fcase"></span><div id="screenNext" class="screenNext"><span id="screenNextHint" class="screenNextHint"></span><button id="screenRevealBtn" class="screenRevealBtn" type="button">👁 REVELAR RESPOSTA</button><button id="screenNextBtn" class="screenNextBtn" type="button">PRÓXIMA PERGUNTA →</button></div><span>SUPABASE REALTIME · ONLINE</span></footer></div>';
+ document.getElementById('app').innerHTML='<div class="screen"><header class="top v3ScreenTop"><div class="brand">THE <em>CRIMES</em> LIVE<small>JOGO JURÍDICO INVESTIGATIVO</small></div><div id="screenTopStats" class="v3ScreenTopStats"></div><div id="serverState" class="server">● SUPABASE REALTIME</div></header><main class="screenMain"><section class="stage"><img id="sbg" src="'+cityPath()+'"><div class="uxScreenSceneLabel"><small>CENA ILUSTRATIVA</small><strong id="uxScreenSceneName">Carregando...</strong></div><div id="scopy" class="stageCopy"></div></section><aside class="screenSide card"><div class="head"><div><span class="kicker">PLACAR AO VIVO</span><h3>Ranking</h3></div><strong id="online"></strong></div><div class="rankHead"><span>#</span><span>Jogador</span><span style="text-align:right">Pts</span><span>Status</span><span>Perfil</span></div><div id="rank"></div></aside></main><div id="screenSteps" class="v3ScreenSteps"></div><footer class="footer"><strong id="froom"></strong><span id="fcase"></span><div id="screenNext" class="screenNext"><span id="screenNextHint" class="screenNextHint"></span><button id="screenRevealBtn" class="screenRevealBtn" type="button">👁 REVELAR RESPOSTA</button><button id="screenNextBtn" class="screenNextBtn" type="button">PRÓXIMA PERGUNTA →</button></div><span>SUPABASE REALTIME · ONLINE</span></footer></div>';
+ const footer=document.querySelector('.screen>.footer');
+ const cinema=document.createElement('button');cinema.id='screenCinemaBtn';cinema.className='screenCinemaBtn';cinema.type='button';cinema.setAttribute('aria-label','Alternar modo cinema em tela cheia');cinema.textContent='⛶ TELA CHEIA';
+ if(footer)footer.insertBefore(cinema,footer.lastElementChild);
+ async function toggleCinema(){
+   try{if(document.fullscreenElement){await document.exitFullscreen()}else{await document.documentElement.requestFullscreen()}}
+   catch(e){console.warn('Modo cinema indisponível:',e.message)}
+ }
+ cinema.addEventListener('click',toggleCinema);
+ document.addEventListener('keydown',e=>{if((e.key||'').toLowerCase()==='f'&&!e.repeat&&!e.ctrlKey&&!e.metaKey&&!e.altKey)toggleCinema()});
+ document.addEventListener('fullscreenchange',()=>{cinema.textContent=document.fullscreenElement?'⛶ SAIR DA TELA CHEIA':'⛶ TELA CHEIA'});
  async function refresh(){await loadPublic(room);render()}
  await watchPublic(room,()=>refresh().catch(()=>{}));await watchPresence(room,render);await watchControl(room,()=>refresh());await refresh();startPoll(refresh);
  const nextBtn=document.getElementById('screenNextBtn'), revealBtn=document.getElementById('screenRevealBtn');

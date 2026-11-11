@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070e18">
+<meta name="description" content="Galeria de capturas reais do THE CRIMES LIVE V4.1: Host, telão, celular, entrada e resultado.">
+<title>THE CRIMES LIVE — Showcase cinematográfico V4.1</title>
+<style>
+:root{
+  color-scheme:dark;--night:#030814;--panel:#0d1a2a;--panel2:#071320;
+  --edge:#4aa9cc90;--blue:#4bd9fa;--red:#fb4963;--gold:#ffcd76;--text:#f2f6fb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;font:15px/1.5 "Segoe UI",Inter,Arial,sans-serif;color:var(--text);
+  background:linear-gradient(180deg,#040812ec,#030711f9 78%),
+    url("../assets/the-crimes-v3/global/investigation-keyart.webp") center top/cover fixed no-repeat,#030814;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1660px;margin:auto;padding:0 clamp(14px,2.5vw,42px)}
+.masthead{
+  background:linear-gradient(100deg,#061322f7,#040914e6);
+  border-bottom:1px solid #37c4e88e;box-shadow:0 10px 40px #000b;
+}
+.masthead .wrap{display:flex;align-items:center;gap:18px;min-height:91px}
+.mark{width:68px;height:83px;object-fit:contain;filter:drop-shadow(0 0 13px #f43e4f9e)}
+.brand{text-transform:uppercase;font:900 clamp(24px,2.3vw,40px)/1 Impact,"Arial Narrow",Arial,sans-serif;white-space:nowrap}
+.brand em{font-style:normal;color:var(--red);text-shadow:0 0 17px #fb3d5995}
+.brand small{display:block;font:700 9px/1.3 "Segoe UI",Arial,sans-serif;letter-spacing:.22em;color:#99bcd2;margin-top:7px}
+.headlinks{margin-left:auto;display:flex;align-items:center;gap:10px}
+.action{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:1px solid #52c2e2;border-radius:10px;padding:11px 17px;
+  background:linear-gradient(#134367,#082338);font-weight:850;font-size:13px;
+  box-shadow:inset 0 1px #b5f2ff20,0 5px 18px #0008;
+}
+.action.primary{
+  border-color:#ffdb91;color:#130d04;background:linear-gradient(#ffdc90,#c48b35);
+  box-shadow:0 0 17px #e4a54558;
+}
+.action:hover,.action:focus-visible{filter:brightness(1.16);outline-offset:3px}
+.hero{padding:29px 0 23px;display:flex;gap:20px;justify-content:space-between;align-items:end}
+.kicker{color:#78defc;letter-spacing:.2em;font-size:10px;font-weight:900}
+h1{margin:5px 0 8px;font:950 clamp(30px,3.1vw,49px)/1.03 "Bahnschrift SemiCondensed","Arial Narrow","Segoe UI",Arial,sans-serif;text-transform:uppercase}
+h1 span{color:#ffcb73}
+.subtitle{color:#a7c0d0;max-width:890px;margin:0;font-size:14px}
+.signal{flex:0 0 auto;display:flex;gap:9px;align-items:center;border:1px solid #30a56f;border-radius:9px;padding:10px 14px;background:#071d1aeb;color:#8ff6bb;font-size:12px;font-weight:900}
+.signal:before{content:"";width:10px;height:10px;border-radius:50%;background:#1cf18a;box-shadow:0 0 13px #22ffb7}
+.deck{display:grid;grid-template-columns:minmax(225px,275px) minmax(0,1fr);gap:15px;align-items:stretch}
+.sidebar,.viewer,.sceneGallery{border:1px solid var(--edge);border-radius:14px;background:linear-gradient(155deg,#0a1d30f4,#040c18f8);box-shadow:0 20px 44px #0009,inset 0 1px #9fefff13}
+.sidebar{padding:15px}
+.sideTitle{font-size:13px;font-weight:950;letter-spacing:.1em;margin:3px 2px 13px;color:#c8e9f7}
+.tab{
+  display:grid;grid-template-columns:40px minmax(0,1fr);align-items:center;gap:9px;
+  width:100%;min-height:69px;margin:7px 0;padding:10px 11px;
+  background:#102238d0;border:1px solid #315a7c;border-radius:9px;text-align:left;
+}
+.tab:hover,.tab:focus-visible{border-color:#6acff0}
+.tab.active{background:linear-gradient(90deg,#8b172de6,#2a1423c5);border-color:#f7677f;box-shadow:0 0 20px #e536535b,inset 3px 0 #ff8f9f}
+.tabIcon{font-size:23px;color:#8de7fb;text-align:center}
+.tab b{display:block;font-size:13px}
+.tab small{display:block;color:#99b8ca;font-size:10px;margin-top:2px;line-height:1.2}
+.note{margin-top:20px;border-top:1px solid #28506b;padding:15px 5px 2px;color:#9cb5c9;font-size:11px}
+.note strong{color:#f2c976;display:block;margin-bottom:6px}
+.viewer{min-width:0;overflow:hidden}
+.viewerTop{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 17px;border-bottom:1px solid #2e7599;
+  background:linear-gradient(90deg,#101c31,#08121f)
+}
+.viewerTop strong{font:900 clamp(15px,1.55vw,23px) "Bahnschrift SemiCondensed","Segoe UI",Arial,sans-serif}
+.viewerTop small{font-size:10px;color:#f8ce78;text-transform:uppercase;font-weight:900;letter-spacing:.08em}
+.snapshot{
+  position:relative;display:grid;place-items:center;
+  width:100%;min-height:min(60vw,745px);padding:14px;overflow:hidden;
+  background:radial-gradient(ellipse at center,#183247,#030915 72%);
+}
+.snapshot:before{content:"";position:absolute;inset:0;opacity:.3;background:repeating-linear-gradient(0deg,transparent,transparent 7px,#1ac0f514 8px);pointer-events:none}
+.snapshot img{display:block;position:relative;max-width:100%;max-height:min(60vw,735px);height:auto;width:auto;object-fit:contain;border-radius:7px;border:1px solid #306a8a;box-shadow:0 14px 36px #000b}
+.snapshot.phone img{max-height:750px;max-width:min(100%,370px)}
+.snapshot.phone{min-height:760px}
+.viewerBottom{
+  display:flex;justify-content:space-between;align-items:center;gap:15px;
+  padding:12px 17px;background:#081725ef;border-top:1px solid #316383
+}
+.viewerBottom p{margin:0;font-size:12px;color:#aec4d5;max-width:820px}
+.pager{display:flex;gap:7px;flex-shrink:0}
+.pager button{width:38px;height:37px;border:1px solid #3fa4cc;border-radius:8px;background:#10334b;font-weight:950}
+.pager button:hover{background:#186f98}
+.sceneGallery{margin:19px 0 30px;padding:21px}
+.sceneGallery h2{margin:0 0 5px;font-size:clamp(20px,2vw,27px);text-transform:uppercase}
+.sceneGallery p{margin:0 0 16px;color:#acc4d6;font-size:13px}
+.scenes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.scenes a{overflow:hidden;position:relative;display:block;border:1px solid #3a89b0;border-radius:9px;background:#081829}
+.scenes a:hover{border-color:#f2c36c;box-shadow:0 0 15px #e7a74f52}
+.scenes img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.scenes span{display:block;padding:9px 11px;font-size:11px;color:#d8ebf5;font-weight:850;letter-spacing:.07em}
+.footerline{padding:15px 0 27px;color:#87a5b8;font-size:11px;border-top:1px solid #28445b}
+@media(max-width:900px){
+ .deck{grid-template-columns:1fr}
+ .sidebar{display:flex;flex-wrap:wrap;gap:7px}
+ .sideTitle,.note{flex-basis:100%}
+ .tab{flex:1 1 150px;min-height:61px;margin:0}
+ .tabIcon{font-size:20px}
+ .viewerTop strong{font-size:16px}
+ .snapshot,.snapshot.phone{min-height:0}
+ .snapshot img{max-height:640px}
+ .scenes{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hero{align-items:start}
+}
+@media(max-width:580px){
+ .masthead .wrap{gap:10px;min-height:78px}
+ .mark{width:47px;height:58px}
+ .brand{font-size:24px}
+ .brand small{font-size:7px;letter-spacing:.1em}
+ .headlinks .action{padding:9px 10px;font-size:10px}
+ .headlinks .action:not(.primary){display:none}
+ .signal{display:none}
+ .hero{padding:22px 0 17px}
+ .sidebar{padding:11px}
+ .tab{flex:1 1 125px;padding:8px;grid-template-columns:30px minmax(0,1fr)}
+ .tab b{font-size:11px}
+ .tab small{font-size:9px}
+ .viewerBottom{flex-direction:column;align-items:start}
+ .pager{align-self:end}
+ .snapshot img{max-height:540px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="masthead"><div class="wrap">
+ <img class="mark" src="../assets/the-crimes-v3/ui/detective-mark.svg" alt="">
+ <a href="./?view=host" class="brand">THE <em>CRIMES LIVE</em><small>JOGO JURÍDICO INVESTIGATIVO</small></a>
+ <nav class="headlinks" aria-label="Acessos ao jogo">
+  <a class="action" href="../docs/THE_CRIMES_V41_CINEMATIC_ART.md">Ver documentação</a>
+  <a class="action primary" href="./?view=host">▶ ABRIR JOGO</a>
+ </nav>
+</div></header>
+<main class="wrap">
+ <div class="hero">
+  <div><div class="kicker">DIREÇÃO DE ARTE · V4.1</div><h1>THE CRIMES <span>CINEMATIC</span></h1><p class="subtitle">Explore as cinco telas reais do jogo e as oito cenas da investigação. As capturas são testes do frontend funcional, e não modelos estáticos criados para simular botões.</p></div>
+  <div class="signal">CAPTURAS REAIS · TESTES APROVADOS</div>
+ </div>
+ <div class="deck">
+  <aside class="sidebar">
+   <div class="sideTitle">ESCOLHA A TELA</div>
+   <button class="tab active" type="button" data-screen="host" aria-pressed="true"><span class="tabIcon">⌘</span><span><b>Central do Host</b><small>Controles da partida ao vivo</small></span></button>
+   <button class="tab" type="button" data-screen="telao" aria-pressed="false"><span class="tabIcon">▣</span><span><b>Telão</b><small>Projetor e ranking da turma</small></span></button>
+   <button class="tab" type="button" data-screen="jogador" aria-pressed="false"><span class="tabIcon">▯</span><span><b>Celular</b><small>Missão e respostas do jogador</small></span></button>
+   <button class="tab" type="button" data-screen="entrada" aria-pressed="false"><span class="tabIcon">♟</span><span><b>Entrada e personagens</b><small>Nome, perfis e identidade</small></span></button>
+   <button class="tab" type="button" data-screen="resultado" aria-pressed="false"><span class="tabIcon">🏆</span><span><b>Resultado final</b><small>Encerramento e pódio</small></span></button>
+   <div class="note"><strong>Como jogar de verdade?</strong>Use <b>ABRIR JOGO</b> para criar a sala no Host. No celular, entre pelo QR Code; use o botão ABRIR TELÃO do Host para uma tela com comandos autorizados.</div>
+  </aside>
+  <section class="viewer" aria-label="Captura da tela selecionada">
+   <div class="viewerTop"><strong id="shotTitle">Central do Host — V4.1</strong><small id="shotMeta">1440 × 900 • Partida em andamento</small></div>
+   <div id="snapshot" class="snapshot"><img id="shot" src="../docs/preview/v41/host.webp" alt="Captura real da Central do Host com pergunta e ranking"></div>
+   <div class="viewerBottom"><p id="shotDescription" aria-live="polite">Central do professor: sala, QR Code, pergunta, ranking, controles reais e oito rodadas.</p><div class="pager"><button id="prev" type="button" aria-label="Tela anterior">‹</button><button id="next" type="button" aria-label="Próxima tela">›</button></div></div>
+  </section>
+ </div>
+ <section class="sceneGallery" aria-label="Galeria dos oito capítulos">
+  <h2>Oito cenas de uma investigação</h2>
+  <p>Arte composta a partir da fotografia arquitetônica licenciada e das cenas originais do caso fictício Fraude contra Credores. Abra uma imagem para examiná-la em detalhe.</p>
+  <div class="scenes">
+   <a href="../assets/the-crimes-v3/scenes/credores/01-cinematic.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v3/scenes/credores/01-cinematic.webp" alt="Cenário ilustrativo da rodada 1"><span>01 · CONTEXTO</span></a>
+   <a href="../assets/the-crimes-v3/scenes/credores/02-cinematic.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v3/scenes/credores/02-cinematic.webp" alt="Cenário ilustrativo da rodada 2"><span>02 · ESTRUTURA</span></a>
+   <a href="../assets/the-crimes-v3/scenes/credores/03-cinematic.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v3/scenes/credores/03-cinematic.webp" alt="Cenário ilustrativo da rodada 3"><span>03 · INSTRUMENTO</span></a>
+   <a href="../assets/the-crimes-v3/scenes/credores/04-cinematic.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v3/scenes/credores/04-cinematic.webp" alt="Cenário ilustrativo da rodada 4"><span>04 · EFEITO</span></a>
+   <a href="../assets/the-crimes-v3/scenes/credores/05-cinematic.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v3/scenes/credores/05-cinematic.webp" alt="Cenário ilustrativo da rodada 5"><span>05 · CONFLITO</span></a>
+   <a href="../assets/the-crimes-v3/scenes/credores/06-cinematic.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v3/scenes/credores/06-cinematic.webp" alt="Cenário ilustrativo da rodada 6"><span>06 · APURAÇÃO</span></a>
+   <a href="../assets/the-crimes-v3/scenes/credores/07-cinematic.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v3/scenes/credores/07-cinematic.webp" alt="Cenário ilustrativo da rodada 7"><span>07 · CONSEQUÊNCIAS</span></a>
+   <a href="../assets/the-crimes-v3/scenes/credores/08-cinematic.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v3/scenes/credores/08-cinematic.webp" alt="Cenário ilustrativo da rodada 8"><span>08 · DEBATE</span></a>
+  </div>
+ </section>
+</main>
+<footer class="wrap footerline">THE CRIMES LIVE · Material educacional · Cenas ilustrativas. Os textos e controles do jogo online são renderizados dinamicamente pelo frontend.</footer>
+<script>
+(function(){
+ const screens=[
+  {key:'host',name:'Central do Host',file:'host.webp',meta:'1440 × 900 • Partida em andamento',description:'Central do professor com código, QR Code, ranking Top 5, pergunta e controles reais.'},
+  {key:'telao',name:'Telão',file:'telao.webp',meta:'1920 × 1080 • Projetor de sala',description:'Pergunta, cena, alternativas, ranking e tempo projetados em um layout amplo.'},
+  {key:'jogador',name:'Celular',file:'jogador.webp',meta:'390 × 844 • Smartphone',description:'Personagem selecionado, foto do caso, quatro alternativas e botão RESPONDER.',phone:true},
+  {key:'entrada',name:'Entrada e personagens',file:'entrada.webp',meta:'1440 × 900 • Preparação do jogador',description:'Escolha de gênero visual, personagem, apelido e prévia do perfil.'},
+  {key:'resultado',name:'Resultado final',file:'resultado.webp',meta:'1920 × 1080 • Encerramento',description:'Pódio e resumo da turma após finalizar a partida.'}
+ ];
+ let active=0;
+ const q=id=>document.getElementById(id);
+ function select(index){
+  active=(index+screens.length)%screens.length;
+  const x=screens[active];
+  q('shot').src='../docs/preview/v41/'+x.file;
+  q('shot').alt='Captura real da tela '+x.name;
+  q('shotTitle').textContent=x.name+' — V4.1';
+  q('shotMeta').textContent=x.meta;
+  q('shotDescription').textContent=x.description;
+  q('snapshot').classList.toggle('phone',Boolean(x.phone));
+  document.querySelectorAll('.tab').forEach(b=>{const selected=b.dataset.screen===x.key;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected))});
+ }
+ document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>select(screens.findIndex(x=>x.key===b.dataset.screen))));
+ q('prev').onclick=()=>select(active-1);
+ q('next').onclick=()=>select(active+1);
+ document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowLeft')select(active-1);if(e.key==='ArrowRight')select(active+1)});
+})();
+</script>
+</body>
+</html>

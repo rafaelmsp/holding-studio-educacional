@@ -1,5 +1,5 @@
 window.TC_V3_ASSETS={
-  "version": "4.0.0",
+  "version": "4.1.0",
   "status": "active",
   "fallbackRoot": "../assets/the-crimes",
   "global": {
@@ -14,18 +14,18 @@ window.TC_V3_ASSETS={
   },
   "cases": {
     "credores": {
-      "cover": "../assets/the-crimes/scenes/credores/01_contexto.webp",
+      "cover": "../assets/the-crimes-v3/scenes/credores/01-cinematic.webp",
       "portrait": "../assets/the-crimes/portraits/credores.webp",
-      "mobileCover": "../assets/the-crimes/scenes/credores/01_contexto.webp",
+      "mobileCover": "../assets/the-crimes-v3/scenes/credores/01-cinematic.webp",
       "scenes": {
-        "01_contexto": "../assets/the-crimes/scenes/credores/01_contexto.webp",
-        "02_estrutura": "../assets/the-crimes/scenes/credores/02_estrutura.webp",
-        "03_instrumento": "../assets/the-crimes/scenes/credores/03_operacao.webp",
-        "04_efeito": "../assets/the-crimes/scenes/credores/04_efeito.webp",
-        "05_conflito": "../assets/the-crimes/scenes/credores/05_conflito.webp",
-        "06_apuracao": "../assets/the-crimes/scenes/credores/06_apuracao.webp",
-        "07_consequencias": "../assets/the-crimes/scenes/credores/07_consequencias.webp",
-        "08_debate": "../assets/the-crimes/scenes/credores/08_debate.webp"
+        "01_contexto": "../assets/the-crimes-v3/scenes/credores/01-cinematic.webp",
+        "02_estrutura": "../assets/the-crimes-v3/scenes/credores/02-cinematic.webp",
+        "03_instrumento": "../assets/the-crimes-v3/scenes/credores/03-cinematic.webp",
+        "04_efeito": "../assets/the-crimes-v3/scenes/credores/04-cinematic.webp",
+        "05_conflito": "../assets/the-crimes-v3/scenes/credores/05-cinematic.webp",
+        "06_apuracao": "../assets/the-crimes-v3/scenes/credores/06-cinematic.webp",
+        "07_consequencias": "../assets/the-crimes-v3/scenes/credores/07-cinematic.webp",
+        "08_debate": "../assets/the-crimes-v3/scenes/credores/08-cinematic.webp"
       }
     },
     "meacao": {

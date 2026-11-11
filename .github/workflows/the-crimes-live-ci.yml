@@ -34,6 +34,12 @@ jobs:
           node --check live/ux-personas.js
           node tests/live-ux-v38.test.js
           node tests/live-ux-v40.test.js
+          node tests/live-ux-v41.test.js
+          test -s live/showroom.html
+          test -s assets/the-crimes-v3/CREDITS.md
+          test -s assets/the-crimes-v3/ui/lady-justice.svg
+          grep -q 'ux-v41.css' live/index.html
+          for n in 01 02 03 04 05 06 07 08; do test -s "assets/the-crimes-v3/scenes/credores/$n-cinematic.webp"; done
           test -f live/ux-v38.css
           test -f live/ux-v39.css
           test -f live/ux-v40.css
@@ -48,7 +54,7 @@ jobs:
       - name: Validate V3 production bundle and visual assets
         working-directory: .
         run: |
-          grep -q 'app.js?v=20261111-v4-prod-1' live/index.html
+          grep -q 'app.js?v=20261111-v41-prod-1' live/index.html
           grep -q 'v3-assets.js?v=20261111-7' live/index.html
           test -f assets/the-crimes-v3/global/command-center.webp
           test -f assets/the-crimes-v3/global/courtroom.webp

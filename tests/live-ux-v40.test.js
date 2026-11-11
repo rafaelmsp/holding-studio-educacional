@@ -13,7 +13,7 @@ for(const selector of ['.uxHostPrimary','.uxHostRankRow','.uxHostSteps','.stageC
  assert.ok(css.includes(selector),selector+' must be styled');
 }
 assert.ok(page.includes('ux-v40.css'), 'new CSS included');
-assert.ok(page.includes('v4-prod-1'), 'versioned JS to avoid stale cache');
+assert.match(page,/app\.js\?v=20261111-v(?:4|41)-prod-\d+/, 'versioned JS to avoid stale cache');
 assert.equal((page.match(/ux-v40\.css/g)||[]).length,1);
 assert.ok(css.includes('position:relative;bottom:auto'), 'CTA must not obscure answer options');
 assert.ok(app.includes("playersDetail.appendChild(document.getElementById('metrics'))"),'Detailed metrics remain available');
