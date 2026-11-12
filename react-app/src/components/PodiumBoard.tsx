@@ -31,7 +31,7 @@ function FinishCard({player,rank,avatars}:{player:PublicPlayer|null;rank:number;
 }
 export default function PodiumBoard({players,room,avatars={},onRestart,restarting=false}:Props){
  const ordered=[...players].sort((a,b)=>a.rank!=null&&b.rank!=null&&a.rank!==b.rank?Number(a.rank)-Number(b.rank):Number(b.score||0)-Number(a.score||0)||a.nickname.localeCompare(b.nickname,'pt-BR'));
- const total=ordered.reduce((s,p)=>s+answered(p),0),correct=ordered.reduce((s,p)=>s+hits(p),pct=total?Math.round(correct/total*100):null;
+ const total=ordered.reduce((s,p)=>s+answered(p),0),correct=ordered.reduce((s,p)=>s+hits(p),0),pct=total?Math.round(correct/total*100):null;
  return <div className="v6-final-board">
   <div className="v6-final-heading"><span className="v6-eyebrow"><Scale size={16}/> INVESTIGAÇÃO CONCLUÍDA</span><h1>RANKING <em>FINAL</em></h1><p>{room.case_title} • Sala {room.code}</p></div>
   <div className="v6-final-grid">
