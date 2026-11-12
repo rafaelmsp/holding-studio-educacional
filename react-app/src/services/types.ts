@@ -12,6 +12,7 @@ export type PublicRoom={
 };
 export type PublicPlayer={
  player_id:string;room_id?:string;nickname:string;score:number;rank?:number|null;
+ avatar_id?:string|null;
  connected?:boolean;answered_current?:boolean;current_round?:number;player_status?:string;
  exposure?:number;ocultou_bens?:boolean;ocultacao_descoberta?:boolean;
  counters?:Record<string,number>;
