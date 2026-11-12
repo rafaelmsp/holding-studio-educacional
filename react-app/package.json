@@ -11,7 +11,8 @@
     "test:browser": "node qa-react.cjs",
     "test:visual": "node tests/visual-v51.test.cjs",
     "test:v6": "node tests/visual-v6.test.cjs",
-    "test:v6:browser": "node qa-v6.cjs"
+    "test:v6:browser": "node qa-v6.cjs",
+    "test:metrics": "node --experimental-strip-types --test tests/metrics-v61.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.97.0",

@@ -33,7 +33,8 @@ assert.ok(catalog.includes('characterPortrait'),'cinematic cutouts must be mappe
 assert.ok(chrome.includes('p.avatar_id||avatars'),'ranking must use persisted avatar');
 assert.ok(podium.includes('[1,0,2]'),'podium must have silver/gold/bronze composition');
 assert.ok(podium.includes('player.avatar_id||avatars'),'podium must use server avatar');
-assert.ok(podium.includes("['correct','gray','risky','criminal']"),'do not count unanswered as answered');
+const metrics=read('react-app/src/services/score.ts');
+assert.ok(podium.includes('answeredAttempts(p.counters)')&&metrics.includes("['correct','gray','risky','criminal']"),'do not count unanswered as answered');
 assert.ok(screen.includes('PodiumBoard'),'screen must mount cinematic podium');
 assert.ok(host.includes('v6-host-lobby'),'host must have dedicated waiting room');
 for(const key of ['v6-final-board','v6-host-lobby','v6-finish-card','v6-lobby-qr','player-question','@media(max-width:650px)'])assert.ok(css.includes(key),'CSS missing '+key);

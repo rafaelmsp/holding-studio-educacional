@@ -1,4 +1,5 @@
 const {chromium}=require('playwright-core');
+const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const BASE=process.env.TC_V6_QA_BASE||'http://127.0.0.1:8148/react-live/';
@@ -16,6 +17,11 @@ fs.mkdirSync(OUT,{recursive:true});
  const snap=async(page,name)=>{
   await page.waitForTimeout(700);
   const meta=await page.evaluate(()=>({w:innerWidth,scroll:document.documentElement.scrollWidth,images:[...document.querySelectorAll('img')].filter(x=>!x.complete||x.naturalWidth===0).map(x=>x.src.slice(-110))}));
+  if(name==='07-host-rodada'){
+   const dock=await page.locator('.host-dock').boundingBox();
+   const viewport=page.viewportSize();
+   assert.ok(dock&&viewport&&dock.y+dock.height<=viewport.height+2,'Controles do Host precisam estar visíveis sem rolagem');
+  }
   await page.screenshot({path:path.join(OUT,name+'.png'),fullPage:true});
   results.push({name,overflow:meta.scroll>meta.w,badImages:meta.images});
   console.log('SCREENSHOT',name,JSON.stringify(meta));
