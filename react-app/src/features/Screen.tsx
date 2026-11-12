@@ -1,6 +1,7 @@
+import Podium from '../components/Podium';
 import {useEffect,useMemo,useState} from 'react';
 import {QRCodeSVG} from 'qrcode.react';
-import {Fullscreen,Eye,ChevronsRight,MonitorUp,Users,Crown,Play,RefreshCw} from 'lucide-react';
+import {Fullscreen,Eye,ChevronsRight,MonitorUp,Users,Crown,Play} from 'lucide-react';
 import {motion,AnimatePresence} from 'framer-motion';
 import {CinematicShell,Brand,LiveStatus,Countdown,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
 import {useGame,adminStorage} from '../services/store';
@@ -62,12 +63,12 @@ export default function Screen(){
  };
  const online=ids.length||Number(room?.players_connected||0);
  const round=Math.max(1,Number(room?.current_round||1));
- const finalists=players.slice(0,3);
+ 
  return <CinematicShell mode="screen">
    <div className="projector">
      <header className="projector-header"><Brand small/><TopStats room={room} online={online}/><LiveStatus/></header>
      {!code?<div className="projector-no-room"><h1>O TELÃO PRECISA DE UMA SALA</h1><p>Abra pelo botão ABRIR TELÃO da Central do Host.</p><a href="./?view=host">IR PARA O HOST</a></div>
-       :<><div className="projector-main">
+       :<><div className={"projector-main"+(room?.status==="finished"?" is-finished":"")}>
        <main className="projector-stage">
         <AnimatePresence mode="wait">
          {!room||room.status==='waiting'?<motion.div key="waiting" className="projector-waiting" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} style={{backgroundImage:'linear-gradient(90deg,#06121b98,#040a18ea),url("'+BACKGROUNDS.lobby+'")'}}>
@@ -75,14 +76,7 @@ export default function Screen(){
            <p>Entre pelo QR Code no seu celular e escolha seu personagem.</p>
            <div className="projector-qr"><QRCodeSVG value={playerUrl(code)} size={180} fgColor="#071421" bgColor="#fff"/></div>
            <strong>{online} jogadores online</strong>
-         </motion.div>:room.status==='finished'?<motion.div key="final" className="projector-final" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} style={{backgroundImage:'linear-gradient(#020b1ad9,#040b19f2),url("'+BACKGROUNDS.final+'")'}}>
-           <span className="red-sign">RESULTADO FINAL</span><h1>PÓDIO DA TURMA</h1>
-           <div className="podium">{[1,0,2].map((rank)=>{const p=finalists[rank];return p?<div key={rank} className={'podium-entry place-'+(rank+1)}>
-             <b>{rank===0?'🏆':rank===1?'🥈':'🥉'}</b><strong>{p?.nickname||'—'}</strong><span>{p?.score||0} pts</span><small>{p?.ocultou_bens?'⚠ EXPOSTO':'✓ REGULAR'}</small>
-           </div>:<div key={rank} className="podium-entry vacant"><b>{rank+1}º</b><strong>SEM PARTICIPANTE</strong><span>—</span></div>;})}</div>
-           <div className="final-stats"><span>JOGADORES <strong>{room.players_total}</strong></span><span>OCULTARAM BENS <strong>{room.ocultou_bens_count||0}</strong></span><span>OCULTAÇÕES DESCOBERTAS <strong>{room.ocultacao_descoberta_count||0}</strong></span></div>
-           {screenToken&&<button className="cinema-button gold" onClick={()=>void command('reset')} disabled={busy}><RefreshCw size={20}/> VOLTAR AO LOBBY</button>}
-         </motion.div>:room.question?<motion.div key={'round-'+round} className="projector-question" initial={{opacity:.45}} animate={{opacity:1}} exit={{opacity:0}}>
+         </motion.div>:room.status==='finished'?<Podium room={room} players={players} avatars={avatars} authorized={Boolean(screenToken)} disabled={busy} onReplay={()=>void command('reset')} onLobby={()=>window.location.assign('./?view=host&room='+encodeURIComponent(code))}/>:room.question?<motion.div key={'round-'+round} className="projector-question" initial={{opacity:.45}} animate={{opacity:1}} exit={{opacity:0}}>
            <SceneMedia caseKey={room.case_key} caseTitle={room.case_title} round={round} large/>
            <section className="projector-question-copy">
              <div className="question-round"><span>PERGUNTA DA RODADA {String(round).padStart(2,'0')}</span><Countdown room={room}/></div>
