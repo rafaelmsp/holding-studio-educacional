@@ -11,14 +11,14 @@ export type PublicRoom={
  average_exposure?:number;ocultou_bens_count?:number;ocultacao_descoberta_count?:number
 };
 export type PublicPlayer={
- player_id:string;room_id?:string;nickname:string;score:number;rank?:number|null;
+ player_id:string;room_id?:string;nickname:string;score:number;rank?:number|null;avatar_id?:string|null;
  connected?:boolean;answered_current?:boolean;current_round?:number;player_status?:string;
  exposure?:number;ocultou_bens?:boolean;ocultacao_descoberta?:boolean;
  counters?:Record<string,number>;
 };
 export type PlayerAnswer={id?:string;question_id?:string;round_key?:string;option_index?:number;classification?:OptionKind;response_time_ms?:number};
 export type PrivatePlayer={
- id:string;nickname:string;score:number;exposure:number;ocultou_bens?:boolean;
+ id:string;nickname:string;score:number;exposure:number;avatar_id?:string|null;ocultou_bens?:boolean;
  ocultacao_descoberta?:boolean;patrimonio_bloqueado?:number;
  answers:PlayerAnswer[];counters?:Record<string,number>;final_result?:{resultLabel?:string};
 };
