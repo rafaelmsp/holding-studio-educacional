@@ -77,7 +77,7 @@ export function RankList({players,limit=5,avatars={},ids=[]}:{players:PublicPlay
   const p=list[i];
   return <div className={'rank-entry '+(!p?'vacant ':'')+(i===0?'champion':'')} key={p?.player_id||'vacant'+i}>
     <b className={'rank-place pos'+(i+1)}>{i===0?'🥇':i===1?'🥈':i===2?'🥉':''}{i+1}º</b>
-    {p?<img src={avatars[p.player_id]?avatar(avatars[p.player_id]):'../assets/the-crimes-v3/ui/detective-mark.svg'} alt="" className="rank-avatar"/>:<div className="rank-avatar rank-empty">◌</div>}
+    {p?<img src={(p.avatar_id||avatars[p.player_id])?avatar(p.avatar_id||avatars[p.player_id]):'../assets/the-crimes-v3/ui/detective-mark.svg'} alt="" className="rank-avatar"/>:<div className="rank-avatar rank-empty">◌</div>}
     <div className="rank-person"><strong>{p?.nickname||'AGUARDANDO'}</strong><small>{p?(ids.includes(p.player_id)?'● ONLINE':p.connected?'● CONECTADO':'○ OFFLINE'):'VAGA LIVRE'}</small></div>
     <div className="rank-result"><strong>{p?Number(p.score||0).toLocaleString('pt-BR')+' pts':'—'}</strong><small className={p?.ocultou_bens?'danger':'safe'}>{p?(p.ocultou_bens?'⚠ EXPOSIÇÃO':'✓ REGULAR'):'—'}</small></div>
   </div>;

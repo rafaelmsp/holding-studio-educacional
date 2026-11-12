@@ -19,7 +19,7 @@ export type PublicPlayer={
 };
 export type PlayerAnswer={id?:string;question_id?:string;round_key?:string;option_index?:number;classification?:OptionKind;response_time_ms?:number};
 export type PrivatePlayer={
- id:string;nickname:string;score:number;exposure:number;ocultou_bens?:boolean;
+ id:string;nickname:string;score:number;exposure:number;avatar_id?:string|null;ocultou_bens?:boolean;
  ocultacao_descoberta?:boolean;patrimonio_bloqueado?:number;
  answers:PlayerAnswer[];counters?:Record<string,number>;final_result?:{resultLabel?:string};
 };
