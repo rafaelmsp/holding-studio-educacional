@@ -3,7 +3,7 @@ import {useEffect,useMemo,useState} from 'react';
 import {QRCodeSVG} from 'qrcode.react';
 import {Fullscreen,Eye,ChevronsRight,MonitorUp,Users,Crown,Play} from 'lucide-react';
 import {motion,AnimatePresence} from 'framer-motion';
-import {CinematicShell,Brand,LiveStatus,Countdown,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
+import {CinematicShell,Brand,LiveStatus,Countdown,ChapterCue,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
 import {useGame,adminStorage} from '../services/store';
 import {useRoomRealtime,broadcastRoom} from '../services/realtime';
 import {playerUrl,action} from '../services/api';
@@ -69,6 +69,7 @@ export default function Screen(){
      {!code?<div className="projector-no-room"><h1>O TELÃO PRECISA DE UMA SALA</h1><p>Abra pelo botão ABRIR TELÃO da Central do Host.</p><a href="./?view=host">IR PARA O HOST</a></div>
        :<><div className="projector-main">
        <main className="projector-stage">
+        {room?.status==='running'&&!room.revealed?<ChapterCue round={round} caseTitle={room.case_title}/>:null}
         <AnimatePresence mode="wait">
          {!room||room.status==='waiting'?<motion.div key="waiting" className="projector-waiting" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} style={{backgroundImage:'linear-gradient(90deg,#06121b98,#040a18ea),url("'+BACKGROUNDS.lobby+'")'}}>
            <span className="red-sign">SALA {code}</span><h1>AGUARDANDO INÍCIO DA PARTIDA...</h1>

@@ -8,6 +8,7 @@ import {broadcastRoom,useRoomRealtime} from '../services/realtime';
 import {CASES,caseCover,avatar} from '../services/catalog';
 import {revision,requestId} from '../services/types';
 import {answeredAttempts} from '../services/score';
+import PodiumBoard from '../components/PodiumBoard';
 import {CinematicShell,Brand,LiveStatus,Countdown,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
 
 export default function Host(){
@@ -19,6 +20,20 @@ export default function Host(){
  const avatars=useGame(s=>s.avatars),presenceIds=useGame(s=>s.presenceIds);
  const [maxPlayers,setMaxPlayers]=useState(30),[seconds,setSeconds]=useState(60),[policy,setPolicy]=useState('host_reveal');
  const {refresh}=useRoomRealtime(code,'host');
+ const [copyFeedback,setCopyFeedback]=useState<'idle'|'success'|'error'>('idle');
+ useEffect(()=>{
+  if(copyFeedback==='idle')return;
+  const timer=window.setTimeout(()=>setCopyFeedback('idle'),3500);
+  return()=>window.clearTimeout(timer);
+ },[copyFeedback]);
+ const copyJoinLink=useCallback(async()=>{
+  if(!code)return;
+  try{
+   if(!navigator.clipboard?.writeText)throw new Error('Clipboard unavailable');
+   await navigator.clipboard.writeText(playerUrl(code));
+   setCopyFeedback('success');
+  }catch{setCopyFeedback('error');}
+ },[code]);
  useEffect(()=>{
    const params=new URLSearchParams(location.search),urlCode=params.get('room');
    if(urlCode&&!code){const stored=localStorage.getItem(adminStorage(urlCode.toUpperCase()));if(stored){setToken(stored);setCode(urlCode.toUpperCase());}}
@@ -108,7 +123,7 @@ export default function Host(){
            <p><b>01</b> Abra a câmera do celular.</p>
            <p><b>02</b> Aponte para o QR Code.</p>
            <p><b>03</b> Digite seu nome e escolha o personagem.</p>
-           <button type="button" onClick={()=>void navigator.clipboard?.writeText(playerUrl(code))} className="v6-copy-link"><Copy size={16}/> COPIAR LINK DE ENTRADA</button>
+           <button type="button" onClick={()=>void copyJoinLink()} className="v6-copy-link"><Copy size={16}/> {copyFeedback==='success'?'LINK COPIADO!':'COPIAR LINK DE ENTRADA'}</button>
           </div>
           <div className="v6-lobby-qr"><QRCodeSVG value={playerUrl(code)} size={190} fgColor="#06101e" bgColor="#fff" includeMargin aria-label="QR Code para entrar na sala"/></div>
          </div>
@@ -128,10 +143,10 @@ export default function Host(){
          <div className="room-qr"><QRCodeSVG value={playerUrl(code)} size={72} fgColor="#060d18" bgColor="#ffffff"/></div>
          <div className="room-current" style={{backgroundImage:'linear-gradient(90deg,#081421e8,#050d1dbb),url("'+caseCover(room?.case_key||selectedCase)+'")'}}>
            <small>CASO ATUAL</small><strong>{room?.case_title||CASES.find(x=>x.key===selectedCase)?.title}</strong>
-           <button type="button" onClick={()=>{void navigator.clipboard?.writeText(playerUrl(code));}}><Copy size={13}/> Copiar link do jogador</button>
+           <button type="button" onClick={()=>void copyJoinLink()}><Copy size={13}/> {copyFeedback==='success'?'Link copiado':'Copiar link do jogador'}</button>
          </div>
        </section>
-       <section className="live-layout">
+       <section className={'live-layout'+(room?.status==='finished'?' v62-host-final-mode':'')}>
          <div className="live-center">
            <div className="round-bar"><RoomBadge room={room}/><strong>RODADA {String(number).padStart(2,'0')}/08</strong><span className="mint">{room?.responded||0}/{room?.players_total||0} RESPONDERAM</span><Countdown room={room}/></div>
            {room?.question&&room.status!=='finished'?<div className="host-question">
@@ -140,7 +155,7 @@ export default function Host(){
                <h1>{room.question.text}</h1><AnswerRows question={room.question} revealed={room.revealed}/>
                {room.revealed&&room.question.explanation&&<p className="explanation">{room.question.explanation}</p>}
              </div>
-           </div>:room?.status==='finished'?<div className="host-empty final"><h1>PARTIDA FINALIZADA</h1><p>Confira o pódio no telão ou reinicie a sala.</p><button className="cinema-button gold" onClick={()=>void send('reset')}><RefreshCw size={17}/> VOLTAR AO LOBBY</button></div>:<div className="host-empty" style={{backgroundImage:'linear-gradient(#030b17aa,#050d1bea),url("'+caseCover(room?.case_key||selectedCase)+'")'}}>
+           </div>:room?.status==='finished'?<section className="host-finale" aria-label="Pódio final da partida"><PodiumBoard players={players} room={room} avatars={avatars} onRestart={()=>void send('reset')} restarting={busy}/></section>:<div className="host-empty" style={{backgroundImage:'linear-gradient(#030b17aa,#050d1bea),url("'+caseCover(room?.case_key||selectedCase)+'")'}}>
              <h1>AGUARDANDO O INÍCIO DA INVESTIGAÇÃO</h1><p>Compartilhe o QR Code e inicie a partida quando a turma estiver pronta.</p>
              <button className="cinema-button gold" onClick={()=>void send('start')} disabled={busy}><Play size={21}/> INICIAR PARTIDA</button>
            </div>}
@@ -171,6 +186,9 @@ export default function Host(){
        </section>
        <RoundRail round={number} finished={room?.status==='finished'}/>
        <ErrorLine message={error}/>
+       {copyFeedback!=='idle'&&<div className={'v62-toast '+copyFeedback} role="status" aria-live="polite">
+         <Copy size={17}/> {copyFeedback==='success'?'Link da sala copiado para compartilhar.':'Não foi possível copiar automaticamente. Use o QR Code.'}
+       </div>}
      </main>
    </div>}
    <AnimatePresence>{modal&&<motion.div className="modal-shade" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onMouseDown={e=>{if(e.currentTarget===e.target)setModal(null)}}>
