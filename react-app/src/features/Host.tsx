@@ -133,7 +133,7 @@ export default function Host(){
        <section className="live-layout">
          <div className="live-center">
            <div className="round-bar"><RoomBadge room={room}/><strong>RODADA {String(number).padStart(2,'0')}/08</strong><span className="mint">{room?.responded||0}/{room?.players_total||0} RESPONDERAM</span><Countdown room={room}/></div>
-           {room?.question&&room.status!=='waiting'&&room.status!=='finished'?<div className="host-question">
+           {room?.question&&room.status!=='finished'?<div className="host-question">
              <SceneMedia caseKey={room.case_key} caseTitle={room.case_title} round={number}/>
              <div className="question-copy"><span className="question-label">PERGUNTA DA RODADA {String(number).padStart(2,'0')}</span>
                <h1>{room.question.text}</h1><AnswerRows question={room.question} revealed={room.revealed}/>
