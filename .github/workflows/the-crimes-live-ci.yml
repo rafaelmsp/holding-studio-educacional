@@ -107,6 +107,7 @@ jobs:
           npm install --no-save playwright-core
           CHROME_PATH="$(command -v google-chrome || command -v chromium || true)"
           test -n "$CHROME_PATH"
+          export CHROME_PATH
           echo "CHROME_PATH=$CHROME_PATH" >> "$GITHUB_ENV"
           python3 -m http.server 8126 --directory .. > /tmp/the-crimes-http.log 2>&1 &
           sleep 2
