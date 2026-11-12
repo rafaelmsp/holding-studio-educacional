@@ -5,7 +5,7 @@ import {FolderOpen,Users,FileText,BarChart3,Settings2,Monitor,Eye,ChevronsRight,
 import {useGame,adminStorage} from '../services/store';
 import {action,screenUrl,playerUrl} from '../services/api';
 import {broadcastRoom,useRoomRealtime} from '../services/realtime';
-import {CASES,caseCover} from '../services/catalog';
+import {CASES,caseCover,avatar} from '../services/catalog';
 import {revision,requestId} from '../services/types';
 import {CinematicShell,Brand,LiveStatus,Countdown,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
 
@@ -85,7 +85,7 @@ export default function Host(){
        <label>Correção<select value={policy} onChange={e=>setPolicy(e.target.value)}><option value="host_reveal">Quando o Host revelar</option><option value="all_answered">Quando todos responderem</option><option value="immediate">Imediata no celular</option></select></label>
        <button className="cinema-button gold" type="button" onClick={create} disabled={busy}><Play size={20}/> {busy?'CRIANDO SALA...':'CRIAR SALA ONLINE'}</button>
      </section><ErrorLine message={error}/>
-   </div>:<div className="host-body">
+   </div>:<div className="host-body v6-host-body">
      <nav className="host-sidebar" aria-label="Navegação do Host">
        <div className="sidebar-label">CENTRAL DE CONTROLE</div>
        <button className="nav-current" onClick={()=>window.scrollTo({top:0,behavior:'smooth'})}><Play size={17}/> Partida ao Vivo</button>
@@ -97,6 +97,30 @@ export default function Host(){
        <img className="justice-statue" src="../assets/the-crimes-v3/ui/lady-justice.svg" alt="" aria-hidden="true"/>
      </nav>
      <main className="host-main">
+       {room?.status==='waiting'||!room?<section className="v6-host-lobby" aria-label="Sala aguardando jogadores">
+        <div className="v6-lobby-hero">
+         <span className="v6-eyebrow"><FolderOpen size={15}/> SALA DA PARTIDA</span>
+         <h1>{code}</h1><p className="v6-lobby-state"><span className="v6-online-dot"/> AGUARDANDO JOGADORES</p>
+         <div className="v6-lobby-columns">
+          <div className="v6-lobby-guide">
+           <strong>COMO PARTICIPAR</strong>
+           <p><b>01</b> Abra a câmera do celular.</p>
+           <p><b>02</b> Aponte para o QR Code.</p>
+           <p><b>03</b> Digite seu nome e escolha o personagem.</p>
+           <button type="button" onClick={()=>void navigator.clipboard?.writeText(playerUrl(code))} className="v6-copy-link"><Copy size={16}/> COPIAR LINK DE ENTRADA</button>
+          </div>
+          <div className="v6-lobby-qr"><QRCodeSVG value={playerUrl(code)} size={190} fgColor="#06101e" bgColor="#fff" includeMargin aria-label="QR Code para entrar na sala"/></div>
+         </div>
+         <div className="v6-lobby-case"><img src={caseCover(room?.case_key||selectedCase)} alt=""/><div><small>CASO SELECIONADO</small><strong>{room?.case_title||CASES.find(x=>x.key===selectedCase)?.title}</strong><span>8 rodadas de investigação jurídica</span></div></div>
+        </div>
+        <aside className="v6-lobby-roster">
+         <h2><Users size={21}/> JOGADORES NA SALA <span>{players.length}/{maxPlayers}</span></h2>
+         <div className="v6-roster-scroll">{players.length?players.map((p,i)=><div className="v6-roster-entry" key={p.player_id}>
+          <b>{String(i+1).padStart(2,'0')}</b><img src={avatar(p.avatar_id||avatars[p.player_id]||'detetive')} alt=""/><strong>{p.nickname}</strong><span className={'v6-presence '+(presenceIds.includes(p.player_id)||p.connected?'online':'offline')}>{presenceIds.includes(p.player_id)||p.connected?'● ONLINE':'○ CONECTANDO'}</span>
+         </div>):<div className="v6-roster-empty"><Users size={43}/><strong>Nenhum jogador ainda</strong><p>O primeiro participante aparecerá assim que entrar pelo QR Code.</p></div>}</div>
+         <div className="v6-roster-footer"><span><Users size={18}/> {online} online</span><span>PARTIDA SEGURA • TEMPO REAL</span></div>
+        </aside>
+       </section>:<>
        <section className="room-ribbon">
          <div><small><FolderOpen size={16}/> SALA ATIVA</small><strong className="room-code">{code}</strong></div>
          <div><RoomBadge room={room}/><small>Participe pelo QR Code</small></div>
@@ -125,6 +149,7 @@ export default function Host(){
            <section className="rank-panel"><h2><span>🏆</span> RANKING (TOP 5)</h2><RankList players={players} avatars={avatars} ids={presenceIds}/></section>
          </aside>
        </section>
+       </>}
        <section className="host-dock" aria-label="Controles administrativos">
          <button className="cinema-button secondary" onClick={()=>window.open(screenUrl(code),'the-crimes-react-screen')}><Monitor size={22}/> ABRIR TELÃO</button>
          {room?.status==='waiting'?<button className="cinema-button mint" disabled={busy} onClick={()=>void send('start')}><Play size={23}/> INICIAR PARTIDA</button>:null}
