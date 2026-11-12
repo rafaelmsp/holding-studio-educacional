@@ -101,3 +101,22 @@ jobs:
       - name: Verify React primary route and complete backup
         working-directory: .
         run: node tests/live-primary-react.test.cjs
+      - name: Browser QA V6 - Host, Projector, 2 phones and podium
+        if: github.ref == 'refs/heads/feature/the-crimes-v6-cinematic'
+        run: |
+          npm install --no-save playwright-core
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || true)"
+          test -n "$CHROME_PATH"
+          echo "CHROME_PATH=$CHROME_PATH" >> "$GITHUB_ENV"
+          python3 -m http.server 8126 --directory .. > /tmp/the-crimes-http.log 2>&1 &
+          sleep 2
+          TC_QA_OUTPUT_DIR=/tmp/the-crimes-v6 TC_QA_BASE=http://127.0.0.1:8126/react-live/ node qa-v6.cjs
+      - name: Upload V6 visual QA screenshots
+        if: always() && github.ref == 'refs/heads/feature/the-crimes-v6-cinematic'
+        uses: actions/upload-artifact@v4
+        with:
+          name: the-crimes-v6-visual-qa
+          path: /tmp/the-crimes-v6/
+          if-no-files-found: ignore
+          retention-days: 7
+
