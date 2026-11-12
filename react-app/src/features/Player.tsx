@@ -29,7 +29,7 @@ export default function Player(){
   if(nickname.trim().length<2||nickname.trim().length>24){setError('Informe um nome de 2 a 24 caracteres.');return;}
   setBusy(true);setError(null);
   try{
-   const r=await action<{ok:boolean;sessionToken:string;playerId:string}>('join',{code,nickname:nickname.trim(),sessionToken:session?.sessionToken});
+   const r=await action<{ok:boolean;sessionToken:string;playerId:string}>('join',{code,nickname:nickname.trim(),sessionToken:session?.sessionToken,avatarId:persona});
    const s:Session={playerId:r.playerId,sessionToken:r.sessionToken,nickname:nickname.trim(),avatarId:persona,genderFilter:gender};
    saveSession(code,s);setSession(s);await refresh();
   }catch(e){setError(e instanceof Error?e.message:'Não foi possível entrar na sala');}
@@ -90,7 +90,7 @@ export default function Player(){
  return <CinematicShell mode="player"><div className="player-app">
    <header className="player-header"><Brand small/><LiveStatus/></header>
    {status==='waiting'?<div className="player-lobby" style={{backgroundImage:'linear-gradient(#040e1ebd,#030817eb),url("'+BACKGROUNDS.lobby+'")'}}>
-     <img className="lobby-avatar" src={avatar(session.avatarId)} alt=""/>
+     <img className="lobby-avatar" src={avatar(player?.avatar_id||session.avatarId)} alt=""/>
      <span>JOGADOR CONECTADO • SALA {code}</span><h1>AGUARDANDO INICIAR A PARTIDA...</h1><p>O professor abrirá a primeira rodada. Mantenha esta tela aberta.</p>
      <QRCodeSVG value={location.href} size={90} bgColor="#fff"/><small>{publicRoom?.players_total||1} jogadores inscritos</small>
    </div>:status==='finished'?<div className="player-final" style={{backgroundImage:'linear-gradient(#05101bcc,#020814f6),url("'+BACKGROUNDS.final+'")'}}>
