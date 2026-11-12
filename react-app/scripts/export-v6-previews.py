@@ -6,7 +6,9 @@ folder=root/'docs'/'preview'/'v6'
 screens={
  '01-casos-host':'casos','02-host-lobby':'lobby','07-host-rodada':'host',
  '08-telao-rodada':'telao','09-mobile-pergunta':'mobile',
- '12-podio-final':'podio'
+ '12-podio-final':'podio',
+ '11-telao-revelacao':'revelacao',
+ '16-host-podio':'podio-host'
 }
 for source,target in screens.items():
  p=folder/(source+'.png')

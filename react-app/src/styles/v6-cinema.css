@@ -1,0 +1,179 @@
+/* THE CRIMES LIVE V6.2 — direção de cena cinematográfica.
+   Camada visual não altera tempo, pontuação, salas ou regras da API. */
+:root {
+  --v62-light-gold: #ffe0a3;
+  --v62-neon-cyan: #64dafa;
+  --v62-iron: #0a1b2a;
+  --v62-red: #f04b62;
+}
+.cinema-shell .scene-media{isolation:isolate}
+.cinema-shell .scene-media:before{
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(0,0,0,.16) 4px,transparent 5px);
+  opacity:.23;mix-blend-mode:multiply;
+}
+.v62-scene-record {
+  position:absolute;z-index:6;top:12px;left:13px;right:12px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  font:900 clamp(10px,.72vw,13px) "Bahnschrift SemiCondensed",Arial,sans-serif;
+  letter-spacing:.14em;color:#e2ecf2;text-shadow:0 2px 8px #000;
+  pointer-events:none;
+}
+.v62-scene-record span {
+  color:#ffe1e4;border:1px solid rgba(244,75,94,.75);border-radius:3px;
+  padding:5px 8px;background:rgba(90,8,23,.83);
+  box-shadow:inset 0 1px rgba(255,255,255,.17),0 0 11px #f04b6252;
+  animation:v62-rec-signal 2s ease-in-out infinite;
+}
+.v62-scene-record b {color:#e1f7fc;background:#051522a9;border:1px solid #56839b85;padding:5px 9px}
+@keyframes v62-rec-signal{50%{box-shadow:0 0 19px #f04b628c;filter:brightness(1.25)}}
+.cinema-shell .scene-media .scene-label{z-index:7;backdrop-filter:blur(3px)}
+/* Abertura de capítulo: visível brevemente no telão, nunca bloqueia cliques. */
+.v62-chapter-cue{
+  position:absolute;inset:0;z-index:16;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:14px;
+  pointer-events:none;text-align:center;overflow:hidden;
+  background:radial-gradient(ellipse 75% 70% at 50% 47%,rgba(38,14,16,.93),rgba(4,10,22,.97) 68%,#030914 100%);
+  box-shadow:inset 0 0 100px #000c;
+}
+.v62-chapter-cue:before{
+  content:"";position:absolute;width:150%;height:1px;top:24%;left:-25%;
+  background:linear-gradient(90deg,transparent,#e3a954,transparent);
+  box-shadow:0 0 30px #df803c77;
+}
+.v62-chapter-cue:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 50%,transparent 35%,rgba(0,0,0,.75) 100%);
+}
+.v62-chapter-cue > *{z-index:1}
+.v62-chapter-cue small{font-size:clamp(12px,1.05vw,20px);letter-spacing:.35em;color:#dfb777;font-weight:900}
+.v62-chapter-cue strong{
+  font:italic 950 clamp(65px,7vw,144px)/1 Georgia,"Times New Roman",serif;
+  color:#fff3dc;letter-spacing:-.045em;
+  text-shadow:0 3px #492719,0 0 36px #f5ae6575,0 0 68px #d938452e;
+}
+.v62-chapter-cue strong span{font-size:.36em;color:#e7a556;letter-spacing:.04em}
+.v62-chapter-cue p{font-size:clamp(18px,1.6vw,33px);font-weight:850;max-width:75%;margin:0;color:#cde6f0;letter-spacing:.045em}
+.v62-chapter-line{width:min(38vw,530px);height:2px;background:linear-gradient(90deg,transparent,#e6a95e,transparent);box-shadow:0 0 20px #e6a95e9e}
+/* Transições e ênfase narrativas ao revelar respostas. */
+.cinema-shell .answer-row.correct{
+  position:relative;
+  box-shadow:inset 0 0 0 1px #a0f9c444,0 0 16px #24df7b65!important;
+  animation:v62-answer-halo .86s ease-in-out 1;
+}
+@keyframes v62-answer-halo{
+  0%{filter:brightness(1);box-shadow:0 0 1px #37ee9b08}
+  45%{filter:brightness(1.37);box-shadow:0 0 24px #31ea8c9e}
+  100%{filter:brightness(1);box-shadow:0 0 16px #24df7b65}
+}
+.cinema-shell .answer-row.criminal:not(.correct){box-shadow:inset 0 0 0 1px #f1606c3a,0 0 13px #ed3b4c45!important}
+.cinema-shell .rank-entry{
+  transition:background-color .3s ease,box-shadow .3s ease;
+}
+.cinema-shell .rank-entry.champion{box-shadow:inset 3px 0 0 #ffcd76,0 0 14px #ffd08424}
+/* Host: pódio real, sem duplicar informações genéricas. */
+.cinema-host .v62-host-final-mode{
+  grid-template-columns:minmax(0,1fr);
+  gap:0;
+}
+.cinema-host .v62-host-final-mode .host-aside{display:none}
+.cinema-host .v62-host-final-mode .live-center{width:100%;min-width:0}
+.cinema-host .host-finale{
+  position:relative;min-height:600px;overflow:hidden;
+  border:1px solid #bc925b;border-radius:8px;
+  background:linear-gradient(115deg,#050a14d2,#110b12a9),url('../../assets/the-crimes-v6/backgrounds/podium.webp') center/cover;
+  box-shadow:0 0 0 1px #33251a,0 20px 42px #000b,inset 0 0 44px #0008;
+}
+.cinema-host .host-finale .v6-final-board{min-height:600px}
+.cinema-host .host-finale .v6-final-heading h1{font-size:clamp(32px,3.2vw,55px)}
+.cinema-host .host-finale .v6-final-grid{min-height:360px}
+.cinema-host .host-finale .v6-finish-info>strong{font-size:clamp(17px,1.85vw,32px)}
+.cinema-host .host-finale .v6-finish-medal{height:60px;width:60px}
+.cinema-host .host-finale .v6-class-summary{min-height:60px}
+.cinema-host .host-finale .v6-final-actions{min-height:54px}
+.cinema-host .host-finale .v6-restart{min-height:50px}
+.v62-toast{
+  position:fixed;z-index:100;bottom:clamp(17px,2.6vw,43px);right:clamp(17px,2.6vw,43px);
+  display:flex;align-items:center;gap:13px;max-width:min(440px,calc(100vw - 36px));
+  min-height:57px;padding:13px 20px;
+  background:linear-gradient(130deg,#0d2a31,#05201f);color:#e4ffef;
+  border:1px solid #68dba5;border-radius:7px;box-shadow:0 15px 42px #000d,0 0 16px #36e69d4f;
+  font-size:clamp(13px,.95vw,16px);line-height:1.35;font-weight:800;
+  animation:v62-toast-enter .32s cubic-bezier(.2,.8,.2,1) both;
+}
+.v62-toast.error{background:linear-gradient(130deg,#3d1120,#1d0c16);color:#ffdee4;border-color:#f45c73}
+@keyframes v62-toast-enter{from{opacity:0;transform:translateY(19px)}to{opacity:1;transform:translateY(0)}}
+.cinema-host .v6-copy-link:focus-visible{outline:3px solid #ffe0a3;outline-offset:3px}
+/* O palco celebra os resultados autênticos, sem ocultar retratos ou pontos. */
+.v6-final-board{position:relative;isolation:isolate}
+.v6-final-board > :not(.v62-award-sparks){position:relative;z-index:2}
+.v62-award-sparks{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.v62-award-sparks i{
+  position:absolute;top:-12%;width:4px;height:15px;
+  border-radius:2px;background:#e8a752;opacity:0;
+  box-shadow:0 0 8px #f8bd6780;
+  animation:v62-award-fall 5s linear infinite;
+}
+.v62-award-sparks i:nth-child(3n){background:#90d9f6;box-shadow:0 0 9px #88e6ff77}
+.v62-award-sparks i:nth-child(3n+1){background:#f6d393}
+@keyframes v62-award-fall{
+  0%{opacity:0;transform:translate3d(0,-5vh,0) rotate(-10deg)}
+  12%{opacity:.8}
+  84%{opacity:.75}
+  100%{opacity:0;transform:translate3d(40px,112vh,0) rotate(460deg)}
+}
+.v6-final-board .v6-finish-1{box-shadow:inset 0 0 0 3px #ffde8558,0 0 38px #f2b65d93,0 16px 30px #000e!important}
+/* Mobile: decisão importante sempre acessível, sem sobreposição do texto. */
+.cinema-player .v62-submit-answer{
+  position:sticky;bottom:max(10px,env(safe-area-inset-bottom));
+  z-index:10;
+  margin-top:17px;
+  min-height:68px;
+  box-shadow:0 12px 28px #000e,0 0 20px #de33475c!important;
+  border:2px solid rgba(255,173,165,.55)!important;
+}
+.cinema-player .v62-submit-answer:not(:disabled){animation:v62-ready-breathe 2.5s ease-in-out infinite}
+@keyframes v62-ready-breathe{50%{filter:brightness(1.14);box-shadow:0 13px 29px #000c,0 0 27px #ed475a9c}}
+.cinema-player .v62-confirmation{
+  border-color:#49ef9b!important;
+  background:linear-gradient(130deg,#063823,#09291d)!important;
+  box-shadow:0 0 24px #4ef89a3e,inset 0 1px #ddffe332;
+}
+.cinema-player .correction-panel{
+  border-left:4px solid #46e6a1!important;
+  box-shadow:inset 0 0 17px #13b48c2b;
+  animation:v62-reveal-panel .35s ease-out 1;
+}
+@keyframes v62-reveal-panel{from{opacity:.6;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+.cinema-join .persona-tile.selected{
+  outline:2px solid #ffcd81;
+  outline-offset:-2px;
+  box-shadow:0 0 22px #ffb45d65,inset 0 0 25px #db89413c!important;
+}
+.game-clock.urgent{
+  border-color:#fb657a!important;
+  color:#ffe8ea!important;
+  box-shadow:0 0 16px #f3425585!important;
+  animation:v62-clock-warning .9s ease-in-out infinite;
+}
+@keyframes v62-clock-warning{50%{filter:brightness(1.36)}}
+@media(max-width:1120px){
+  .cinema-host .host-finale .v6-final-board{min-height:600px}
+  .v62-toast{bottom:15px;right:15px}
+}
+@media(max-width:650px){
+  .v62-scene-record{font-size:10px;top:9px;left:9px;right:9px}
+  .v62-scene-record span,.v62-scene-record b{padding:4px 5px}
+  .cinema-player .v62-submit-answer{bottom:max(6px,env(safe-area-inset-bottom));min-height:64px}
+  .cinema-host .host-finale .v6-final-grid{min-height:360px}
+  .cinema-host .host-finale .v6-final-board{min-height:680px}
+}
+@media(prefers-reduced-motion:reduce){
+ .v62-scene-record span,.cinema-shell .answer-row.correct,
+ .v62-toast,.v62-award-sparks i,.cinema-player .v62-submit-answer:not(:disabled),
+ .cinema-player .correction-panel,.game-clock.urgent{
+  animation:none!important;
+ }
+ .v62-award-sparks{display:none}
+ .cinema-shell .rank-entry{transition:none!important}
+}

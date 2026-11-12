@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {motion} from 'framer-motion';
+import {motion,AnimatePresence,useReducedMotion} from 'framer-motion';
 import gsap from 'gsap';
 import {Clock3,Crown,ShieldCheck,Users,FolderOpen,Scale,Clapperboard,Wifi,WifiOff,ChevronRight} from 'lucide-react';
 import type {PublicRoom,PublicPlayer,QuestionOption,GameQuestion} from '../services/types';
@@ -67,20 +67,38 @@ export function SceneMedia({caseKey,round=1,caseTitle='',large=false,clock}:{cas
  return <div className={'scene-media '+(large?'scene-large':'')}>
   <motion.img key={caseKey+'-'+round} initial={{scale:1.07,opacity:.75}} animate={{scale:1,opacity:1}} transition={{duration:1.1,ease:'easeOut'}} src={caseScene(caseKey,round)} alt={'Cena ilustrativa de '+caseTitle+' na rodada '+round}/>
   <div className="scene-vignette"/>
+  <div className="v62-scene-record" aria-hidden="true"><span>● REC</span><b>ARQUIVO {String(round).padStart(2,'0')} / 08</b></div>
   <div className="scene-label"><small>CENA FICTÍCIA • RODADA {String(round).padStart(2,'0')}</small><strong>{caseTitle}</strong></div>
   {clock&&<div className="scene-clock">{clock}</div>}
  </div>;
 }
+export function ChapterCue({round,caseTitle}:{round:number;caseTitle:string}){
+ const reduced=useReducedMotion();
+ const [active,setActive]=useState(true);
+ useEffect(()=>{
+  setActive(true);
+  const handle=window.setTimeout(()=>setActive(false),1600);
+  return()=>window.clearTimeout(handle);
+ },[round,caseTitle]);
+ if(reduced)return null;
+ return <AnimatePresence>{active&&<motion.div key={round+'-'+caseTitle} className="v62-chapter-cue" aria-hidden="true"
+  initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:.3}}>
+   <div className="v62-chapter-line"/><small>UM NOVO CAPÍTULO DO DOSSIÊ</small>
+   <strong>RODADA {String(round).padStart(2,'0')} <span>/ 08</span></strong>
+   <p>{caseTitle}</p><div className="v62-chapter-line"/>
+  </motion.div>}</AnimatePresence>;
+}
+
 export function RankList({players,limit=5,avatars={},ids=[]}:{players:PublicPlayer[];limit?:number;avatars?:Record<string,string>;ids?:string[]}){
  const list=players.slice().sort((a,b)=>a.rank!=null&&b.rank!=null&&a.rank!==b.rank?Number(a.rank)-Number(b.rank):Number(b.score||0)-Number(a.score||0)).slice(0,limit);
  return <div className="rank-list">{Array.from({length:limit},(_,i)=>{
   const p=list[i];
-  return <div className={'rank-entry '+(!p?'vacant ':'')+(i===0?'champion':'')} key={p?.player_id||'vacant'+i}>
+  return <motion.div layout="position" transition={{layout:{duration:.3}}} className={'rank-entry '+(!p?'vacant ':'')+(i===0?'champion':'')} key={p?.player_id||'vacant'+i}>
     <b className={'rank-place pos'+(i+1)}>{i===0?'🥇':i===1?'🥈':i===2?'🥉':''}{i+1}º</b>
     {p?<img src={avatar(p.avatar_id||avatars[p.player_id]||'detetive')} alt="" className="rank-avatar"/>:<div className="rank-avatar rank-empty">◌</div>}
     <div className="rank-person"><strong>{p?.nickname||'AGUARDANDO'}</strong><small>{p?(ids.includes(p.player_id)?'● ONLINE':p.connected?'● CONECTADO':'○ OFFLINE'):'VAGA LIVRE'}</small></div>
     <div className="rank-result"><strong>{p?Number(p.score||0).toLocaleString('pt-BR')+' pts':'—'}</strong><small className={p?.ocultou_bens?'danger':'safe'}>{p?(p.ocultou_bens?'⚠ EXPOSIÇÃO':'✓ REGULAR'):'—'}</small></div>
-  </div>;
+  </motion.div>;
  })}</div>;
 }
 export function ClassProgress({room}:{room:PublicRoom}){
