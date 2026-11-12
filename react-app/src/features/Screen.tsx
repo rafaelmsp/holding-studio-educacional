@@ -63,7 +63,6 @@ export default function Screen(){
  };
  const online=ids.length||Number(room?.players_connected||0);
  const round=Math.max(1,Number(room?.current_round||1));
- const finalists=players.slice(0,3);
  return <CinematicShell mode="screen">
    <div className="projector">
      <header className="projector-header"><Brand small/><TopStats room={room} online={online}/><LiveStatus/></header>
