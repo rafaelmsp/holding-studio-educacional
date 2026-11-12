@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const p=s=>fs.readFileSync(s,'utf8');
-const assets=p('live/v3-assets.js'),app=p('live/app.js'),html=p('live/index.html'),css=p('live/ux-v41.css');
+const assets=p('legacy-live/v3-assets.js'),app=p('legacy-live/app.js'),html=p('legacy-live/index.html'),css=p('legacy-live/ux-v41.css');
 assert.ok(html.includes('ux-v41.css'), 'new cinema stylesheet must be loaded');
 assert.ok(/v(?:41|42)-prod-1/.test(html), 'new app cache must be busted');
 assert.ok(assets.includes('"version": "4.2.0"'));
@@ -19,7 +19,7 @@ assert.ok(css.includes('prefers-reduced-motion:reduce'),'Reduced motion opt-out'
 assert.ok(css.includes('lady-justice.svg'),'Decorative statue missing');
 assert.ok(app.includes('coverEl.style.setProperty'),'Case cover must remain dynamic');
 assert.ok(fs.statSync('assets/the-crimes-v3/ui/lady-justice.svg').size>1000);
-const showroom=p('live/showroom.html');
+const showroom=p('legacy-live/showroom.html');
 for(const tab of ['host','telao','jogador','entrada','resultado'])assert.ok(showroom.includes('data-screen="'+tab+'"'), 'missing showroom tab '+tab);
 for(const file of ['host.webp','telao.webp','jogador.webp','entrada.webp','resultado.webp'])assert.ok(fs.statSync('docs/preview/v41/'+file).size>15000,'missing screenshot '+file);
 assert.ok(showroom.includes('showroom')===false || showroom.includes('THE CRIMES'), 'showroom branding');

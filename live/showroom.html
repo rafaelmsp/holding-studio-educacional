@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#070e18">
-<meta name="description" content="Galeria de capturas reais do THE CRIMES LIVE V4.1: Host, telão, celular, entrada e resultado.">
-<title>THE CRIMES LIVE — Showcase cinematográfico V4.2</title>
+<meta name="description" content="Galeria de capturas reais do THE CRIMES LIVE V5.1: Host, telão, celular, entrada e resultado.">
+<title>THE CRIMES LIVE React — Showcase cinematográfico V5.1</title>
 <style>
 :root{
   color-scheme:dark;--night:#030814;--panel:#0d1a2a;--panel2:#071320;
@@ -136,13 +136,13 @@ h1 span{color:#ffcb73}
  <img class="mark" src="../assets/the-crimes-v3/ui/detective-mark.svg" alt="">
  <a href="./?view=host" class="brand">THE <em>CRIMES LIVE</em><small>JOGO JURÍDICO INVESTIGATIVO</small></a>
  <nav class="headlinks" aria-label="Acessos ao jogo">
-  <a class="action" href="../docs/THE_CRIMES_V41_CINEMATIC_ART.md">Ver documentação</a>
+  <a class="action" href="../docs/THE_CRIMES_V5_REACT.md">Ver documentação</a>
   <a class="action primary" href="./?view=host">▶ ABRIR JOGO</a>
  </nav>
 </div></header>
 <main class="wrap">
  <div class="hero">
-  <div><div class="kicker">DIREÇÃO DE ARTE · V4.2</div><h1>THE CRIMES <span>CINEMATIC</span></h1><p class="subtitle">Explore as cinco telas reais do jogo e as oito cenas da investigação. As capturas são testes do frontend funcional, e não modelos estáticos criados para simular botões.</p></div>
+  <div><div class="kicker">DIREÇÃO DE ARTE · V5.1</div><h1>THE CRIMES <span>CINEMATIC</span></h1><p class="subtitle">Explore as sete telas reais do jogo e as oito cenas da investigação. As capturas são testes do frontend React funcional, e não modelos estáticos criados para simular botões.</p></div>
   <div class="signal">CAPTURAS REAIS · TESTES APROVADOS</div>
  </div>
  <div class="deck">
@@ -152,12 +152,14 @@ h1 span{color:#ffcb73}
    <button class="tab" type="button" data-screen="telao" aria-pressed="false"><span class="tabIcon">▣</span><span><b>Telão</b><small>Projetor e ranking da turma</small></span></button>
    <button class="tab" type="button" data-screen="jogador" aria-pressed="false"><span class="tabIcon">▯</span><span><b>Celular</b><small>Missão e respostas do jogador</small></span></button>
    <button class="tab" type="button" data-screen="entrada" aria-pressed="false"><span class="tabIcon">♟</span><span><b>Entrada e personagens</b><small>Nome, perfis e identidade</small></span></button>
+   <button class="tab" type="button" data-screen="casos" aria-pressed="false"><span class="tabIcon">▤</span><span><b>Seleção de casos</b><small>6 cenários jurídicos ilustrados</small></span></button>
+   <button class="tab" type="button" data-screen="mobile-final" aria-pressed="false"><span class="tabIcon">★</span><span><b>Resultado no celular</b><small>Pontuação e situação final</small></span></button>
    <button class="tab" type="button" data-screen="resultado" aria-pressed="false"><span class="tabIcon">🏆</span><span><b>Resultado final</b><small>Encerramento e pódio</small></span></button>
    <div class="note"><strong>Como jogar de verdade?</strong>Use <b>ABRIR JOGO</b> para criar a sala no Host. No celular, entre pelo QR Code; use o botão ABRIR TELÃO do Host para uma tela com comandos autorizados.</div>
   </aside>
   <section class="viewer" aria-label="Captura da tela selecionada">
-   <div class="viewerTop"><strong id="shotTitle">Central do Host — V4.2</strong><small id="shotMeta">1440 × 900 • Partida em andamento</small></div>
-   <div id="snapshot" class="snapshot"><img id="shot" src="../docs/preview/v42/host.webp" alt="Captura real da Central do Host com pergunta e ranking"></div>
+   <div class="viewerTop"><strong id="shotTitle">Central do Host — V5.1</strong><small id="shotMeta">1440 × 900 • Partida em andamento</small></div>
+   <div id="snapshot" class="snapshot"><img id="shot" src="../docs/preview/v5/host.webp" alt="Captura real da Central do Host com pergunta e ranking"></div>
    <div class="viewerBottom"><p id="shotDescription" aria-live="polite">Central do professor: sala, QR Code, pergunta, ranking, controles reais e oito rodadas.</p><div class="pager"><button id="prev" type="button" aria-label="Tela anterior">‹</button><button id="next" type="button" aria-label="Próxima tela">›</button></div></div>
   </section>
  </div>
@@ -175,6 +177,16 @@ h1 span{color:#ffcb73}
    <a href="../assets/the-crimes-v3/scenes/credores-v42/08-scene.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v3/scenes/credores-v42/08-scene.webp" alt="Cenário ilustrativo da rodada 8"><span>08 · DEBATE</span></a>
   </div>
  </section>
+ <section class="sceneGallery" aria-label="Assets gráficos cinematográficos React V5.1">
+  <h2>Peças visuais da interface React</h2>
+  <p>Quatro fundos WebP reais, importados por Host, telão, entrada e encerramento. Os botões, perguntas e pontuação são componentes React renderizados sobre essas imagens.</p>
+  <div class="scenes">
+   <a href="../assets/the-crimes-v5/backgrounds/host-world.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v5/backgrounds/host-world.webp" alt="Cenário gráfico do Host"><span>CENTRAL / HOST</span></a>
+   <a href="../assets/the-crimes-v5/backgrounds/screen-frame.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v5/backgrounds/screen-frame.webp" alt="Cenário gráfico do projetor"><span>TELÃO / PROJETOR</span></a>
+   <a href="../assets/the-crimes-v5/backgrounds/join-noir.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v5/backgrounds/join-noir.webp" alt="Cenário gráfico de entrada"><span>ENTRADA / PERSONAGENS</span></a>
+   <a href="../assets/the-crimes-v5/backgrounds/final-stage.webp" target="_blank" rel="noopener"><img loading="lazy" src="../assets/the-crimes-v5/backgrounds/final-stage.webp" alt="Cenário gráfico do pódio"><span>RESULTADO / PÓDIO</span></a>
+  </div>
+ </section>
 </main>
 <footer class="wrap footerline">THE CRIMES LIVE · Material educacional · Cenas ilustrativas. Os textos e controles do jogo online são renderizados dinamicamente pelo frontend.</footer>
 <script>
@@ -182,8 +194,10 @@ h1 span{color:#ffcb73}
  const screens=[
   {key:'host',name:'Central do Host',file:'host.webp',meta:'1440 × 900 • Partida em andamento',description:'Central do professor com código, QR Code, ranking Top 5, pergunta e controles reais.'},
   {key:'telao',name:'Telão',file:'telao.webp',meta:'1920 × 1080 • Projetor de sala',description:'Pergunta, cena, alternativas, ranking e tempo projetados em um layout amplo.'},
-  {key:'jogador',name:'Celular',file:'jogador.webp',meta:'390 × 844 • Smartphone',description:'Personagem selecionado, foto do caso, quatro alternativas e botão RESPONDER.',phone:true},
+  {key:'jogador',name:'Celular',file:'celular.webp',meta:'390 × 844 • Smartphone',description:'Personagem selecionado, foto do caso, quatro alternativas e botão RESPONDER.',phone:true},
   {key:'entrada',name:'Entrada e personagens',file:'entrada.webp',meta:'1440 × 900 • Preparação do jogador',description:'Escolha de gênero visual, personagem, apelido e prévia do perfil.'},
+  {key:'casos',name:'Seleção de casos',file:'selecao-casos.webp',meta:'1440 × 900 · Tela do Host',description:'Seis investigações e escolha do cenário com ilustrações cinematográficas.'},
+  {key:'mobile-final',name:'Resultado no celular',file:'celular-resultado.webp',meta:'390 × 844 · Smartphone',description:'Pontuação, exposição, situação e resultado individual.',phone:true},
   {key:'resultado',name:'Resultado final',file:'resultado.webp',meta:'1920 × 1080 • Encerramento',description:'Pódio e resumo da turma após finalizar a partida.'}
  ];
  let active=0;
@@ -191,9 +205,9 @@ h1 span{color:#ffcb73}
  function select(index){
   active=(index+screens.length)%screens.length;
   const x=screens[active];
-  q('shot').src='../docs/preview/v42/'+x.file;
+  q('shot').src='../docs/preview/v5/'+x.file;
   q('shot').alt='Captura real da tela '+x.name;
-  q('shotTitle').textContent=x.name+' — V4.2';
+  q('shotTitle').textContent=x.name+' — V5.1';
   q('shotMeta').textContent=x.meta;
   q('shotDescription').textContent=x.description;
   q('snapshot').classList.toggle('phone',Boolean(x.phone));

@@ -7,6 +7,7 @@ on:
       - 'live/**'
       - 'react-app/**'
       - 'react-live/**'
+      - 'legacy-live/**'
       - 'assets/the-crimes-v5/**'
       - '.github/workflows/the-crimes-live-ci.yml'
   pull_request:
@@ -15,6 +16,7 @@ on:
       - 'live/**'
       - 'react-app/**'
       - 'react-live/**'
+      - 'legacy-live/**'
       - 'assets/the-crimes-v5/**'
 
 jobs:
@@ -35,36 +37,37 @@ jobs:
       - name: Check live JavaScript syntax
         working-directory: .
         run: |
-          node --check live/app.js
-          node --check live/v3-assets.js
-          node --check live/ux-personas.js
+          node --check legacy-live/app.js
+          node --check legacy-live/v3-assets.js
+          node --check legacy-live/ux-personas.js
           node tests/live-ux-v38.test.js
           node tests/live-ux-v40.test.js
           node tests/live-ux-v41.test.js
           node tests/live-ux-v42.test.js
-          test -s live/showroom.html
+          node tests/live-primary-react.test.cjs
+          test -s legacy-live/showroom.html
           test -s assets/the-crimes-v3/CREDITS.md
           test -s assets/the-crimes-v3/ui/lady-justice.svg
-          grep -q 'ux-v41.css' live/index.html
-          grep -q 'ux-v42.css' live/index.html
-          test -s live/ux-v42.css
+          grep -q 'ux-v41.css' legacy-live/index.html
+          grep -q 'ux-v42.css' legacy-live/index.html
+          test -s legacy-live/ux-v42.css
           for n in 01 02 03 04 05 06 07 08; do test -s "assets/the-crimes-v3/scenes/credores-v42/$n-scene.webp"; done
-          test -f live/ux-v38.css
-          test -f live/ux-v39.css
-          test -f live/ux-v40.css
+          test -f legacy-live/ux-v38.css
+          test -f legacy-live/ux-v39.css
+          test -f legacy-live/ux-v40.css
           test -s assets/the-crimes-v3/ui/detective-mark.svg
-          grep -q 'ux-v40.css' live/index.html
-          grep -q 'ux-v39.css' live/index.html
+          grep -q 'ux-v40.css' legacy-live/index.html
+          grep -q 'ux-v39.css' legacy-live/index.html
           for persona in detetive advogado delegado estrategista perita advogada investigadora analista especialista auditor arquivista mediador; do
             test -s "assets/the-crimes-v3/avatars/$persona.webp"
           done
-          grep -q 'ux-personas.js' live/index.html
-          grep -q 'ux-v38.css' live/index.html
+          grep -q 'ux-personas.js' legacy-live/index.html
+          grep -q 'ux-v38.css' legacy-live/index.html
       - name: Validate V3 production bundle and visual assets
         working-directory: .
         run: |
-          grep -q 'app.js?v=20261111-v42-prod-1' live/index.html
-          grep -q 'v3-assets.js?v=20261111-9' live/index.html
+          grep -q 'app.js?v=20261111-v42-prod-1' legacy-live/index.html
+          grep -q 'v3-assets.js?v=20261111-9' legacy-live/index.html
           test -f assets/the-crimes-v3/global/command-center.webp
           test -f assets/the-crimes-v3/global/courtroom.webp
           test -f assets/the-crimes-v3/global/investigation-keyart.webp
@@ -92,3 +95,6 @@ jobs:
         run: node tests/assets.test.cjs
       - name: Verify React V5 cinematic gallery and realtime channels
         run: npm run test:visual
+      - name: Verify React primary route and complete backup
+        working-directory: .
+        run: node tests/live-primary-react.test.cjs

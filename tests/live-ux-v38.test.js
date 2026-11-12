@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
-const js=fs.readFileSync('live/ux-personas.js','utf8');
+const js=fs.readFileSync('legacy-live/ux-personas.js','utf8');
 const window={};
 vm.runInNewContext(js,{window,encodeURIComponent}, {timeout:1500});
 const {profiles,avatar,find}=window.TC_PERSONAS;

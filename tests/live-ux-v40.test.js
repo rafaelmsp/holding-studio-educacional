@@ -1,7 +1,7 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const read=p=>fs.readFileSync(p,'utf8');
-const app=read('live/app.js'),css=read('live/ux-v40.css'),page=read('live/index.html');
+const app=read('legacy-live/app.js'),css=read('legacy-live/ux-v40.css'),page=read('legacy-live/index.html');
 const references=[
  ['uxHostTop','Host room and status'],['uxHostPrimary','Host priority actions'],['uxHostTools','Secondary tools'],
  ['uxHostRank','Live Top 5'],['uxHostSteps','Eight-round progress'],
