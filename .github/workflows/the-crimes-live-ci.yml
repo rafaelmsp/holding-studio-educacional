@@ -95,6 +95,9 @@ jobs:
         run: node tests/assets.test.cjs
       - name: Verify React V5 cinematic gallery and realtime channels
         run: npm run test:visual
+      - name: Verify avatar identity on staging backend (V6 only)
+        if: github.ref == 'refs/heads/feature/the-crimes-v6-cinematic'
+        run: node tests/v6-avatar.integration.cjs
       - name: Verify React primary route and complete backup
         working-directory: .
         run: node tests/live-primary-react.test.cjs
