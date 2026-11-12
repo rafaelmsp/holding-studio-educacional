@@ -97,6 +97,8 @@ jobs:
         run: npm run test:visual
       - name: Verify V6 art pack and player identity integration
         run: npm run test:v6
+      - name: Verify real response and accuracy metrics
+        run: npm run test:metrics
       - name: Verify React primary route and complete backup
         working-directory: .
         run: node tests/live-primary-react.test.cjs

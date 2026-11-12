@@ -7,6 +7,7 @@ import {action,screenUrl,playerUrl} from '../services/api';
 import {broadcastRoom,useRoomRealtime} from '../services/realtime';
 import {CASES,caseCover,avatar} from '../services/catalog';
 import {revision,requestId} from '../services/types';
+import {answeredAttempts} from '../services/score';
 import {CinematicShell,Brand,LiveStatus,Countdown,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
 
 export default function Host(){
@@ -178,7 +179,7 @@ export default function Host(){
        {(modal==='players'||modal==='reports')&&<div className="modal-scroll">
          {modal==='reports'&&<div className="report-metrics">
           <div><small>JOGADORES</small><strong>{players.length}</strong></div>
-          <div><small>ACERTOS</small><strong>{(()=>{const all=players.reduce((n,p)=>n+Object.values(p.counters||{}).reduce((a,b)=>a+Number(b||0),0),0);const correct=players.reduce((n,p)=>n+Number(p.counters?.correct||0),0);return all?Math.round(correct*100/all)+'%':'0%'})()}</strong></div>
+          <div><small>ACERTOS</small><strong>{(()=>{const all=players.reduce((n,p)=>n+answeredAttempts(p.counters),0);const correct=players.reduce((n,p)=>n+Number(p.counters?.correct||0),0);return all?Math.round(correct*100/all)+'%':'0%'})()}</strong></div>
           <div><small>EXPOSIÇÃO MÉDIA</small><strong>{room?.average_exposure||0}/100</strong></div>
           <div><small>OCULTAÇÕES</small><strong>{room?.ocultou_bens_count||0}</strong></div>
          </div>}

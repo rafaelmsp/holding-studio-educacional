@@ -2,10 +2,11 @@ import {motion} from 'framer-motion';
 import {Crown,Trophy,Scale,Users,Target,RotateCcw,ShieldCheck} from 'lucide-react';
 import type {PublicPlayer,PublicRoom} from '../services/types';
 import {avatar,characterPortrait,profileName} from '../services/catalog';
+import {answeredAttempts} from '../services/score';
 
 type Props={players:PublicPlayer[];room:PublicRoom;avatars?:Record<string,string>;onRestart?:()=>void;restarting?:boolean};
 const points=(n:number)=>new Intl.NumberFormat('pt-BR').format(n);
-const answered=(p:PublicPlayer)=>['correct','gray','risky','criminal'].reduce((sum,key)=>sum+Number(p.counters?.[key]||0),0);
+const answered=(p:PublicPlayer)=>answeredAttempts(p.counters);
 const hits=(p:PublicPlayer)=>Number(p.counters?.correct||0);
 export function CharacterFace({player,avatars={},hero=false}:{player:PublicPlayer;avatars?:Record<string,string>;hero?:boolean}){
  const id=player.avatar_id||avatars[player.player_id]||'detetive';

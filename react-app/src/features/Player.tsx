@@ -4,6 +4,7 @@ import {QRCodeSVG} from 'qrcode.react';
 import {ShieldCheck,Clock3,Crown,CheckCircle2,LogIn,LockKeyhole,AlertTriangle} from 'lucide-react';
 import {CinematicShell,Brand,LiveStatus,Countdown,RoundRail,AnswerRows,SceneMedia,ErrorLine} from '../components/Chrome';
 import {PERSONAS,avatar,BACKGROUNDS} from '../services/catalog';
+import {answeredAttempts,accuracyPercent} from '../services/score';
 import type {Gender} from '../services/catalog';
 import {useGame,getSession,saveSession} from '../services/store';
 import {action} from '../services/api';
@@ -86,7 +87,7 @@ export default function Player(){
  }
  const status=room?.status||publicRoom?.status||'waiting',answered=Boolean(own);
  const myRank=players.find(p=>p.player_id===player?.id)?.rank ?? (players.findIndex(p=>p.player_id===player?.id)>=0?players.findIndex(p=>p.player_id===player?.id)+1:'—');
- const counters=player?.counters||{},sum=Object.values(counters).reduce((a,b)=>a+Number(b||0),0),hit=sum?Math.round(Number(counters.correct||0)/sum*100):0;
+ const counters=player?.counters||{},sum=answeredAttempts(counters),hit=accuracyPercent(counters);
  return <CinematicShell mode="player"><div className="player-app">
    <header className="player-header"><Brand small/><LiveStatus/></header>
    {status==='waiting'?<div className="player-lobby" style={{backgroundImage:'linear-gradient(#040e1ebd,#030817eb),url("'+BACKGROUNDS.lobby+'")'}}>
