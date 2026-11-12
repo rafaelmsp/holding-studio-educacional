@@ -1,6 +1,6 @@
 {
   "name": "the-crimes-live-react",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,9 @@
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc --noEmit",
     "test:browser": "node qa-react.cjs",
-    "test:visual": "node tests/visual-v51.test.cjs"
+    "test:visual": "node tests/visual-v51.test.cjs",
+    "test:v6": "node tests/visual-v6.test.cjs",
+    "test:v6:browser": "node qa-v6.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.97.0",

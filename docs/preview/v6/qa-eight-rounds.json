@@ -1,0 +1,55 @@
+{
+  "pass": true,
+  "code": "CRIM-5909",
+  "rounds": [
+    {
+      "round": 1,
+      "question": "O crédito do fornecedor surgiu antes da transferência dos imóveis para a holding",
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 2,
+      "question": "A holding possui contrato social, contabilidade e regras de governança, mas o só",
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 3,
+      "question": "Um imóvel foi integralizado e o sócio recebeu quotas de valor equivalente. Antes",
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 4,
+      "question": "Depois da reorganização, o devedor ainda possui ativos livres suficientes para p",
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 5,
+      "question": "Já existe processo de execução quando um bem é transferido a terceiro. Qual pont",
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 6,
+      "question": "Qual conjunto de provas é mais útil para reconstruir a operação patrimonial sem ",
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 7,
+      "question": "Os requisitos jurídicos da fraude não foram demonstrados de forma suficiente. Qu",
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 8,
+      "question": "Ao final do caso de credores, qual estrutura de resposta demonstra melhor racioc",
+      "answered": true,
+      "revealed": true
+    }
+  ],
+  "errors": []
+}

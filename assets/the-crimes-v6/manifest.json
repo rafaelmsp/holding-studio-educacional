@@ -1,0 +1,49 @@
+{
+  "version": "6.0.0",
+  "source": "approved V5 licensed in-repository artwork, transformed as V6 individual assets",
+  "backgrounds": [
+    "host-control.webp",
+    "case-select.webp",
+    "lobby-qr.webp",
+    "projector.webp",
+    "podium.webp"
+  ],
+  "buttons": [
+    "gold-default.webp",
+    "gold-hover.webp",
+    "gold-pressed.webp",
+    "cyan-default.webp",
+    "cyan-hover.webp",
+    "cyan-pressed.webp",
+    "red-default.webp",
+    "red-hover.webp",
+    "red-pressed.webp",
+    "mint-default.webp",
+    "mint-hover.webp",
+    "mint-pressed.webp",
+    "steel-default.webp",
+    "steel-hover.webp",
+    "steel-pressed.webp"
+  ],
+  "portraits": [
+    "detetive.webp",
+    "advogado.webp",
+    "delegado.webp",
+    "estrategista.webp",
+    "perita.webp",
+    "advogada.webp",
+    "investigadora.webp",
+    "analista.webp",
+    "especialista.webp",
+    "auditor.webp",
+    "arquivista.webp",
+    "mediador.webp"
+  ],
+  "frames": [
+    "gold.svg",
+    "silver.svg",
+    "bronze.svg",
+    "cyan.svg",
+    "red.svg"
+  ]
+}

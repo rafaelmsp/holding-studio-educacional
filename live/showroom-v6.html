@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="theme-color" content="#030916">
+ <meta name="description" content="Galeria V6 do THE CRIMES LIVE: imagens reais de testes do jogo React cinematográfico, Host, telão, celular, lobby e pódio.">
+ <title>THE CRIMES LIVE · Galeria V6 Cinematográfica</title>
+ <style>
+  :root{color-scheme:dark;--gold:#f5c477;--red:#f94c65;--cyan:#4fcbe9;--muted:#b8cadb;background:#030814;font-family:Inter,Arial,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(130deg,#030815f2,#081524e8),url("../assets/the-crimes-v6/backgrounds/host-control.webp") fixed center/cover;color:#edf8ff}
+  a{color:inherit}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:19px clamp(18px,3vw,60px);background:#030914ec;border-bottom:2px solid #2e88ad;box-shadow:0 9px 24px #000a}
+  .brand{display:flex;flex-wrap:wrap;gap:9px;align-items:center;font:italic 900 clamp(20px,2.2vw,37px) Georgia,serif;letter-spacing:-.02em}
+  .brand b{font-style:normal;background:#891324;color:#fff;padding:1px 8px;border:1px solid #e74457;box-shadow:0 0 18px #e7445788;font:950 .76em Impact,Arial,sans-serif}
+  .top a,.links a{display:inline-flex;align-items:center;justify-content:center;border:1px solid #c28d49;background:linear-gradient(120deg,#322518,#9a6423,#312111);border-radius:5px;text-decoration:none;min-height:40px;padding:9px 17px;font-weight:850;font-size:12px;text-transform:uppercase;transition:filter .2s}
+  .top a:hover,.links a:hover{filter:brightness(1.25)}
+  main{max-width:1770px;margin:auto;padding:36px clamp(14px,2.8vw,52px) 60px}
+  .hero{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:30px;padding:10px 0 23px;border-bottom:1px solid #5c8b9f8e}
+  .eyebrow{display:inline-block;color:var(--gold);letter-spacing:.18em;font-size:12px;font-weight:950}
+  h1{font:italic 900 clamp(30px,4vw,63px) Georgia,serif;line-height:1.04;margin:14px 0 10px;text-shadow:0 3px 15px #000}
+  h1 em{font-style:normal;color:#ffd89a}
+  .hero p{color:#c0cbd8;max-width:790px;line-height:1.5;font-size:15px;margin:0}
+  .version{border:1px solid #427b9a;background:#0b1a2be9;padding:13px 20px;border-radius:5px;color:#75eeb4;font-size:13px;white-space:nowrap}
+  .gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+  .card{overflow:hidden;min-width:0;border:1px solid #5b96b5;background:linear-gradient(#102239f6,#030915fb);box-shadow:0 17px 33px #000d,0 0 18px #1c96b630}
+  .card:nth-child(3n + 1){border-color:#bd8b55}
+  .card .caption{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-height:78px;padding:14px 20px}
+  .caption .number{font:900 28px Georgia,serif;color:var(--gold)}
+  .caption .name{font-weight:900;font-size:19px}
+  .caption small{display:block;color:var(--muted);font-size:12px;flex:1 1 180px;line-height:1.35}
+  .card a.image-link{display:block;position:relative;overflow:hidden;border-top:1px solid #376687}
+  .card a.image-link:focus-visible{outline:3px solid #fff}
+  .card img{display:block;width:100%;height:auto;max-height:720px;object-fit:contain;background:#020710;transition:transform .5s ease}
+  .card a.image-link:hover img{transform:scale(1.017)}
+  .card a.image-link:after{content:"ABRIR CAPTURA";position:absolute;bottom:15px;right:15px;padding:8px 11px;border:1px solid #ffd49892;background:#091729e7;color:#fbd8a4;font-size:11px;font-weight:900}
+  .card.mobile{max-width:800px;grid-column:auto;justify-self:center}
+  .card.mobile img{width:auto;max-width:100%;height:640px;margin:auto}
+  .links{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;padding:34px 0 8px}
+  .note{margin:26px 0 0;padding:20px;border:1px solid #385e75;background:#071525e6;color:#b9cada;font-size:13px;line-height:1.55}
+  @media(max-width:920px){.gallery{grid-template-columns:1fr}.card.mobile{width:min(100%,660px)}.hero{display:block}.version{display:inline-block;margin-top:18px}}
+  @media(max-width:600px){.top{flex-direction:column;align-items:stretch}.top a{align-self:flex-start}.card .caption{padding:12px 13px;gap:8px}.caption .number{font-size:23px}.caption .name{font-size:16px}.caption small{font-size:12px}.card.mobile img{height:auto}.card a.image-link:after{font-size:9px}}
+  @media(prefers-reduced-motion:reduce){.card img{transition:none}}
+ </style>
+</head>
+<body>
+ <header class="top"><div class="brand">THE CRIMES <b>LIVE</b></div><a href="./?view=host">Voltar ao jogo React</a></header>
+ <main>
+  <div class="hero">
+   <div><span class="eyebrow">APRESENTAÇÃO DO PRODUTO · VERSÃO CINEMATOGRÁFICA 6</span>
+    <h1>Um jogo com visual de <em>investigação premium.</em></h1>
+    <p>Estas imagens são capturas reais da aplicação React durante uma partida de teste sincronizada pelo Supabase. Interface, pontuação, QR Code, escolhas e personagens são renderizados pelo próprio jogo.</p>
+   </div>
+   <div class="version">● BUILD V6 · TESTES REAIS</div>
+  </div>
+  <section class="gallery" aria-label="Galeria das telas do jogo">
+   <article class="card"><div class="caption"><span class="number">01</span><span class="name">Seleção dos casos</span><small>Seis investigações jurídicas para escolher e configurar</small></div><a class="image-link" href="../docs/preview/v6/casos.webp" target="_blank" rel="noopener"><img loading="lazy" alt="Tela real do Host exibindo a seleção de casos" src="../docs/preview/v6/casos.webp"></a></article>
+   <article class="card"><div class="caption"><span class="number">02</span><span class="name">Lobby cinematográfico</span><small>QR Code ao vivo, sala da partida e jogadores</small></div><a class="image-link" href="../docs/preview/v6/lobby.webp" target="_blank" rel="noopener"><img loading="lazy" alt="Lobby real com QR Code e lista de participantes" src="../docs/preview/v6/lobby.webp"></a></article>
+   <article class="card"><div class="caption"><span class="number">03</span><span class="name">Central do Host</span><small>Comandos administrativos, pergunta, cena, ranking e cronômetro</small></div><a class="image-link" href="../docs/preview/v6/host.webp" target="_blank" rel="noopener"><img loading="lazy" alt="Host real durante uma rodada" src="../docs/preview/v6/host.webp"></a></article>
+   <article class="card"><div class="caption"><span class="number">04</span><span class="name">Telão da turma</span><small>Visão de apresentação otimizada para projetor 1920 × 1080</small></div><a class="image-link" href="../docs/preview/v6/telao.webp" target="_blank" rel="noopener"><img loading="lazy" alt="Telão real exibindo a pergunta e o ranking" src="../docs/preview/v6/telao.webp"></a></article>
+   <article class="card mobile"><div class="caption"><span class="number">05</span><span class="name">Jogador no celular</span><small>Personagem, rodadas e respostas em interface própria</small></div><a class="image-link" href="../docs/preview/v6/mobile.webp" target="_blank" rel="noopener"><img loading="lazy" alt="Tela real de pergunta no celular" src="../docs/preview/v6/mobile.webp"></a></article>
+   <article class="card"><div class="caption"><span class="number">06</span><span class="name">Pódio cinematográfico</span><small>Vencedores reais, retratos escolhidos, medalhas e métricas</small></div><a class="image-link" href="../docs/preview/v6/podio.webp" target="_blank" rel="noopener"><img loading="lazy" alt="Tela real do pódio final com personagens" src="../docs/preview/v6/podio.webp"></a></article>
+  </section>
+  <nav class="links" aria-label="Navegação do jogo"><a href="./?view=host">Abrir o Host</a><a href="./?view=screen">Abrir o telão</a><a href="./?view=player">Abrir jogador</a></nav>
+  <p class="note">Galeria de homologação visual do THE CRIMES LIVE V6. Os participantes e a pontuação exibidos são dados de uma partida de demonstração; as imagens não são componentes clicáveis do jogo. Para interagir, abra a aplicação pelos links acima.</p>
+ </main>
+</body>
+</html>

@@ -1,0 +1,438 @@
+/* THE CRIMES LIVE V6 — cinematic theme. Components, labels and state stay real React. */
+:root{
+  --v6-ink:#030914;--v6-navy:#071726;--v6-steel:#183a53;
+  --v6-gold:#f2bd65;--v6-amber:#ffd48d;--v6-cyan:#43d9ff;
+  --v6-red:#e62d4c;--v6-mint:#38ed95;
+  --v6-glass:linear-gradient(146deg,rgba(10,30,46,.94),rgba(3,11,24,.95));
+  --v6-stroke:rgba(81,185,229,.63);--v6-metal:rgba(214,231,243,.15);
+}
+.cinema-shell{background:#02070f}
+.cinema-background{filter:saturate(1.18) contrast(1.13)!important;opacity:.85}
+.cinema-shell:before{opacity:.045}
+.cinema-ambient{background:radial-gradient(ellipse at 14% 15%,#ee193923,transparent 40%),radial-gradient(ellipse at 84% 61%,#009af420,transparent 41%);animation:v6-ambient-breathe 7s ease-in-out infinite alternate}
+@keyframes v6-ambient-breathe{from{opacity:.55}to{opacity:.98}}
+.game-header,.projector-header{position:relative;z-index:2;background:linear-gradient(180deg,#071223f8,#050a14f5)!important;border-bottom:1px solid #2f99be!important;box-shadow:0 10px 23px #000b,inset 0 -1px #d7254555}
+.game-header:after,.projector-header:after{content:"";position:absolute;bottom:-1px;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,#42dfff 42%,#e5354b 70%,transparent);pointer-events:none}
+.brandmark{filter:drop-shadow(0 3px 6px #0009)}
+.brandmark>div>strong{font-family:Georgia,"Times New Roman",serif!important;font-style:italic;letter-spacing:-.03em;text-shadow:0 2px 3px #000,0 0 18px #bb713f77}
+.brandmark>div>strong em{font-family:Impact,"Arial Narrow",sans-serif!important;font-style:normal!important;letter-spacing:.04em;border:1px solid #ff5c68;padding:0 .2em;background:#600d1fe8;box-shadow:0 0 18px #ea304c99,inset 0 0 12px #f2273a8c}
+.brandmark>div>small{letter-spacing:.22em!important}
+.live-state{border-radius:4px!important;box-shadow:inset 0 1px #fff2,0 0 13px #13c99233}
+.top-stats>div{background:linear-gradient(130deg,#0c2236e8,#020a16e8)!important;border:1px solid #417b9a!important;border-radius:5px!important;box-shadow:inset 0 1px #bceaff29}
+.top-stats>div strong{font-family:"Bahnschrift SemiCondensed",Impact,"Segoe UI",sans-serif}
+.room-status{border-radius:5px;letter-spacing:.06em}
+.cinema-button{
+  position:relative;overflow:hidden;border-radius:5px!important;
+  clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px),0 12px);
+  border:1px solid #65839e!important;letter-spacing:.035em!important;
+  text-shadow:0 2px 5px #0009;isolation:isolate;
+  box-shadow:inset 0 2px #ffffff51,inset 0 -8px 15px #0306128c,0 11px 25px #0009!important;
+  transition:transform .2s ease,filter .2s ease,box-shadow .2s ease;
+}
+.cinema-button:before{content:"";position:absolute;inset:2px;pointer-events:none;z-index:-1;background:linear-gradient(115deg,#fff3,transparent 31%,transparent 68%,#fff2);clip-path:inherit}
+.cinema-button:after{content:"";position:absolute;left:-90%;top:-10%;width:40%;height:120%;pointer-events:none;transform:skew(-25deg);background:linear-gradient(90deg,transparent,#fff9,transparent);transition:left .55s ease;opacity:.33}
+.cinema-button:hover:not(:disabled):after{left:130%}
+.cinema-button:hover:not(:disabled){transform:translateY(-3px) scale(1.012);filter:brightness(1.17);box-shadow:0 0 22px #43d9ff77,inset 0 1px #fff8!important}
+.cinema-button:active:not(:disabled){transform:translateY(1px) scale(.99)}
+.cinema-button.gold{background:linear-gradient(125deg,#5d3110,#d59734 31%,#ffe09b 52%,#a7661f 84%,#43210e)!important;color:#111017!important;text-shadow:0 1px #ffe5a3}
+.cinema-button.cyan,.cinema-button.secondary{background:linear-gradient(125deg,#051529,#176387 50%,#051226)!important;color:#e5faff!important}
+.cinema-button.danger{background:linear-gradient(125deg,#420610,#b21928 50%,#39020e)!important;color:#fff3ee!important}
+.cinema-button.mint{background:linear-gradient(125deg,#062a25,#138e65 50%,#073428)!important;color:#d7ffeb!important}
+.case-tile,.rank-panel,.class-progress,.round-bar,.host-question,.host-dock,.room-ribbon,.round-rail,.join-card,.player-identity,.projector-stage{
+ border-radius:7px!important;
+ box-shadow:0 12px 32px #000a,inset 0 1px #d0eafa1b,0 0 0 1px #06101d!important;
+}
+/* Case selection: cinema gallery and room configuration as separate panels */
+.setup-view{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(305px,.65fr);gap:17px;max-width:1850px;padding:25px clamp(15px,2vw,36px) 38px}
+.setup-title{grid-column:1/-1;position:relative;padding:10px 20px 14px;border-bottom:1px solid #467a9877;background:linear-gradient(90deg,#0b1f33b0,transparent)}
+.setup-title:before{content:"▣";position:absolute;left:-11px;top:18px;color:var(--v6-gold);font-size:22px}
+.setup-title h1{color:#fff!important;font-size:clamp(26px,2.5vw,44px)!important;letter-spacing:.03em}
+.setup-title h1 span{color:var(--v6-gold)}
+.setup-title p{margin-bottom:0;font-size:14px}
+.case-gallery{grid-template-columns:repeat(3,minmax(0,1fr));align-content:start;gap:15px}
+.case-tile{min-height:210px!important;aspect-ratio:1.43/1;isolation:isolate;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);border:1px solid #4f98b5!important}
+.case-tile img{filter:brightness(.83) contrast(1.06)!important;transition:transform .7s ease,filter .45s ease}
+.case-tile:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#020813d9 0%,transparent 58%,#07152833 100%);border:1px solid #a1e8f544}
+.case-tile:hover img,.case-tile.chosen img{transform:scale(1.085);filter:brightness(1.05) contrast(1.1)!important}
+.case-tile.chosen{outline:2px solid var(--v6-gold);outline-offset:-4px;box-shadow:0 0 20px #ffbf5eaa,inset 0 0 21px #c9862999!important}
+.case-tile-caption{z-index:2}
+.case-tile-caption strong{font-weight:1000;line-height:1.08}
+.create-room-panel{display:flex!important;flex-direction:column;align-items:stretch!important;gap:16px;margin-top:0!important;padding:22px!important;background:linear-gradient(165deg,#11283bee,#07111eec)!important;border:1px solid #b88e548c!important;min-height:100%}
+.create-room-panel:before{content:"⚙ CONFIGURAÇÃO DA SALA";display:block;color:var(--v6-gold);font:900 20px "Bahnschrift SemiCondensed","Segoe UI",sans-serif;letter-spacing:.055em;padding-bottom:15px;border-bottom:1px solid #54798a79}
+.create-room-panel label{gap:9px;font-size:12px;letter-spacing:.09em}
+.create-room-panel label input,.create-room-panel label select{background:#040e1c!important;border:1px solid #497b99!important;border-radius:5px!important;min-height:46px;color:#f1f7fe}
+.create-room-panel .cinema-button{margin-top:auto;min-height:76px;font-size:20px}
+.setup-view>.error-line{grid-column:1/-1}
+/* Host chrome */
+.host-body{max-width:1920px;grid-template-columns:clamp(173px,13.4vw,225px) minmax(0,1fr);gap:13px;padding:12px clamp(9px,.9vw,20px)}
+.host-sidebar{min-height:calc(100dvh - 120px);border:1px solid #3d7797!important;background:linear-gradient(175deg,#061526ed,#030b19f6)!important;box-shadow:0 15px 30px #000b,inset 0 1px #fff2!important}
+.host-sidebar button{border-radius:5px!important;margin:0 0 7px;min-height:44px;color:#dcecf9}
+.host-sidebar button:hover,.host-sidebar .nav-current{background:linear-gradient(95deg,#a22230,#3e0917)!important;color:#fff;box-shadow:inset 0 1px #ff81819c,0 0 16px #ef33447e}
+.sidebar-label{color:#f4c679!important;font-size:12px!important}
+.justice-statue{max-height:340px;object-fit:contain;filter:sepia(.18) contrast(1.2) drop-shadow(0 6px 20px #ad633c6b)}
+.host-main{gap:10px}
+.room-ribbon{grid-template-columns:minmax(124px,.55fr) minmax(140px,.58fr) 85px minmax(175px,1.4fr);min-height:92px;background:var(--v6-glass)!important}
+.room-code{font-size:clamp(23px,2vw,38px)!important;color:#ffc77f!important;text-shadow:0 0 21px #eaa84f76}
+.room-current{border:1px solid #f0b66d79}
+.live-layout{grid-template-columns:minmax(0,1.85fr) minmax(265px,.68fr);gap:11px}
+.round-bar{background:linear-gradient(105deg,#4b0b1ad9,#071a2aec 36%,#082b40ec 74%,#070f1ef5)!important;border-top:2px solid #48cafa!important}
+.round-bar strong{color:#95ebff!important;letter-spacing:.04em}
+.host-question{grid-template-columns:minmax(230px,44%) minmax(0,56%);min-height:440px;background:var(--v6-glass)!important;border-color:#449ac0!important}
+.host-question .scene-media{min-height:430px}
+.scene-media{overflow:hidden;border-color:#5aa9c8!important;background:#020610}
+.scene-media:after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px #8cdfff73,inset 0 0 33px #020710ba}
+.scene-media>img{filter:saturate(1.25) contrast(1.08)}
+.question-copy{background:linear-gradient(140deg,#091c2ff5,#020b18f6);border-left:1px solid #4b718677}
+.question-copy h1{font-size:clamp(19px,1.45vw,30px)!important;line-height:1.17!important;color:#f7f9fd}
+.question-label{background:linear-gradient(95deg,#7b1021,#320d17)!important;border:1px solid #aa485b;color:#fff3e9!important;box-shadow:0 3px 15px #e62d4c4d}
+.answer-row{border:1px solid #4a7f9d!important;border-radius:5px!important;background:linear-gradient(180deg,#183247dc,#07131fea)!important;box-shadow:inset 0 1px #d5f5ff2e,0 4px 9px #0008!important}
+.answer-row:hover.interactive:not(:disabled){background:linear-gradient(125deg,#164566,#081b33)!important;border-color:#67c8f6!important}
+.answer-row.selected{border-color:#47d8ff!important;background:linear-gradient(100deg,#124d80,#071a2b)!important;box-shadow:0 0 16px #43d9ff59!important}
+.answer-row.correct{border-color:#3eff8e!important;background:linear-gradient(100deg,#066b40,#073222)!important;box-shadow:inset 0 0 14px #00ff5d77,0 0 12px #39ec7a6b!important}
+.answer-row.criminal:not(.correct){border-color:#cb4756!important}
+.answer-letter{border-radius:5px!important}
+.rank-panel,.class-progress{background:var(--v6-glass)!important;border-color:#527f9c!important}
+.rank-panel h2{background:linear-gradient(90deg,#0e2337,#06101e)!important;color:#ffd389!important;border-bottom-color:#77603e}
+.rank-entry{background:linear-gradient(90deg,#091f30e9,#050f1ce5)!important}
+.rank-entry.champion{background:linear-gradient(90deg,#664017b8,#061421e9)!important}
+.rank-avatar{border:1px solid #b79a71;box-shadow:0 1px 9px #000}
+.rank-place.pos1{color:#ffe0a1}
+.rank-result strong{color:#ffcf79!important}
+.class-progress .progress-donut{box-shadow:0 0 23px #20f69a40,inset 0 0 0 7px #071723}
+.host-dock{background:linear-gradient(100deg,#0b2132f4,#040d1ae9)!important;border-color:#5a879d!important}
+.host-dock .cinema-button{min-height:68px;font-size:clamp(12px,1.12vw,18px)}
+.host-toolbox{z-index:5}
+.round-rail{background:linear-gradient(115deg,#061523f4,#03101beb)!important;border:1px solid #4b809f!important}
+.round-marker.done{background:#0c6b45!important;border-color:#38ef96!important}
+.round-marker.current{background:#035980!important;border-color:#55e5ff!important;box-shadow:0 0 16px #31cafa8d}
+.host-aside{gap:10px}
+/* Host lobby V6 */
+.v6-host-lobby{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(310px,.93fr);gap:13px;min-height:575px}
+.v6-lobby-hero,.v6-lobby-roster{position:relative;overflow:hidden;border:1px solid #cda36d;border-radius:7px;background:linear-gradient(150deg,#081624f1,#06111ded);box-shadow:inset 0 1px #ffdb986e,0 12px 33px #000b}
+.v6-lobby-hero{display:flex;flex-direction:column;align-items:stretch;text-align:center;gap:17px;padding:31px clamp(12px,2vw,36px);background:linear-gradient(145deg,#020d1cef,#051120f5),url('../../assets/the-crimes-v5/backgrounds/join-noir.webp') center/cover}
+.v6-eyebrow{display:flex;gap:8px;align-items:center;justify-content:center;color:#f3cd8c;font-size:12px;font-weight:950;letter-spacing:.19em}
+.v6-lobby-hero h1{font:italic 950 clamp(42px,5vw,88px)/1 Georgia,"Times New Roman",serif;color:#f8d59c;text-shadow:0 2px 1px #3e1c00,0 0 14px #e79d2bbd,0 0 35px #ed493a83;letter-spacing:-.035em;margin:2px 0}
+.v6-lobby-state{font-size:13px;font-weight:950;color:#59fcc6;letter-spacing:.16em;display:flex;gap:10px;align-items:center;justify-content:center}
+.v6-online-dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:#24f494;box-shadow:0 0 15px #1df594;animation:v6-pulse 2s infinite alternate}
+@keyframes v6-pulse{to{opacity:.55;box-shadow:0 0 4px #17bf69}}
+.v6-lobby-columns{display:grid;grid-template-columns:minmax(0,.9fr) minmax(170px,.75fr);gap:18px;text-align:left;align-items:center;margin-top:7px}
+.v6-lobby-guide{display:flex;flex-direction:column;gap:12px;background:#061424bd;padding:17px;border:1px solid #4d829a88;border-radius:7px}
+.v6-lobby-guide>strong{font-size:15px;color:#fff2e2;letter-spacing:.08em}
+.v6-lobby-guide p{display:flex;align-items:center;gap:11px;margin:0;font-size:14px;line-height:1.4;color:#f5f8fb}
+.v6-lobby-guide p b{border-radius:50%;background:linear-gradient(#245373,#091d2c);color:#fff;width:31px;height:31px;display:grid;place-items:center;flex:0 0 31px;border:1px solid #76bce3}
+.v6-lobby-qr{background:#fff;padding:11px;justify-self:center;border:7px solid #ef3349;border-radius:9px;box-shadow:0 0 18px #e5223fa8,0 0 0 4px #081420}
+.v6-lobby-qr svg{display:block;max-width:100%;height:auto}
+.v6-copy-link{display:flex;gap:8px;align-items:center;justify-content:center;border:1px solid #f3bb67;background:linear-gradient(#966329,#4b270a);color:#fff2d5;font-weight:900;min-height:42px;font-size:12px;cursor:pointer;border-radius:4px}
+.v6-lobby-case{display:flex;gap:13px;align-items:center;margin-top:auto;background:#061524c7;border:1px solid #447b91;border-radius:7px;text-align:left;overflow:hidden}
+.v6-lobby-case img{width:130px;height:85px;object-fit:cover}
+.v6-lobby-case>div{min-width:0;display:grid;gap:4px}
+.v6-lobby-case small{font-size:11px;letter-spacing:.1em;color:#f5d190}
+.v6-lobby-case strong{font-size:16px;color:#fff}
+.v6-lobby-case span{font-size:12px;color:#b9ccde}
+.v6-lobby-roster{display:flex;flex-direction:column;background:linear-gradient(155deg,#0b1c2bf8,#030914f6)!important;border-color:#4c94aa!important}
+.v6-lobby-roster h2{display:flex;align-items:center;gap:9px;font:950 18px "Bahnschrift SemiCondensed","Segoe UI",sans-serif;color:#f9e4c0;margin:0;padding:20px 18px;background:#0b1f31d9;border-bottom:1px solid #548ba06e}
+.v6-lobby-roster h2 span{margin-left:auto;font-size:17px;color:#71efc2}
+.v6-roster-scroll{overflow-y:auto;flex:1;max-height:500px;padding:10px 12px}
+.v6-roster-entry{display:grid;grid-template-columns:27px 45px minmax(0,1fr) auto;align-items:center;gap:9px;background:linear-gradient(90deg,#0d273a,#051322);border:1px solid #44788a65;border-radius:5px;margin-bottom:7px;padding:5px 9px}
+.v6-roster-entry>b{color:#f3c170;font-size:13px}.v6-roster-entry img{width:43px;height:45px;object-fit:cover;border-radius:5px;border:1px solid #6cadcb}
+.v6-roster-entry strong{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.v6-presence{font-size:10px;font-weight:850;white-space:nowrap}.v6-presence.online{color:#4ff4a4}.v6-presence.offline{color:#c3a8a8}
+.v6-roster-empty{display:flex;min-height:270px;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#9dc9df;text-align:center}
+.v6-roster-empty strong{font-size:20px;color:white}.v6-roster-empty p{max-width:310px;font-size:14px}
+.v6-roster-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:15px;border-top:1px solid #41718a;font-size:11px;font-weight:850;letter-spacing:.07em}
+.v6-roster-footer span:first-child{display:flex;align-items:center;gap:8px;color:#4af2a3}
+/* Projector: legible at 1920 × 1080 */
+.projector{background:#030814!important}
+.projector-header{height:94px!important;min-height:76px;grid-template-columns:minmax(235px,.85fr) minmax(420px,1.6fr) auto}
+.projector-main{grid-template-columns:minmax(0,1fr) minmax(265px,22%);gap:12px}
+.projector-stage{border-color:#4f97b7!important;background:linear-gradient(#071725,#040a15)}
+.projector-question{grid-template-columns:minmax(0,37%) minmax(0,63%);background:#061120}
+.projector-question-copy{background:linear-gradient(125deg,#0b1b2cf8,#050a17f9)!important;scrollbar-width:thin}
+.projector-question-copy h1{font-size:clamp(23px,2.05vw,39px)!important;line-height:1.16!important;max-width:28ch}
+.projector-question-copy .answer-row{min-height:clamp(59px,7.3vh,99px);font-size:clamp(16px,1.4vw,24px);padding:10px 13px}
+.projector-question-copy .answer-letter{font-size:clamp(19px,1.5vw,31px)}
+.projector-side{gap:11px}
+.projector-side .rank-panel h2{font-size:clamp(14px,1.15vw,22px)}
+.projector-footer{background:#060f1cf9!important;min-height:76px;border-top:1px solid #5598ac!important}
+.projector-controls .cinema-button{font-size:clamp(12px,.96vw,18px)}
+.projector .round-rail{min-height:53px}
+/* Final results and hero portraits */
+.projector-main:has(.v6-cinematic-final){grid-template-columns:minmax(0,1fr)}
+.projector-main:has(.v6-cinematic-final) .projector-side{display:none}
+.projector-stage:has(.v6-cinematic-final){border-color:#bd955b!important}
+.v6-cinematic-final{padding:0!important;display:block!important;overflow:auto!important;background-position:center;background-size:cover}
+.v6-final-board{height:100%;min-height:600px;width:100%;display:flex;flex-direction:column;gap:10px;text-align:center;padding:clamp(10px,1.2vw,22px);background:linear-gradient(85deg,#02081787,#0207136b)}
+.v6-final-heading{flex:0 0 auto}
+.v6-final-heading h1{font:italic 950 clamp(30px,2.4vw,50px) Georgia,"Times New Roman",serif;color:#f4f6f6;text-shadow:0 2px #000,0 0 20px #d69d59;margin:5px 0 2px}
+.v6-final-heading h1 em{font-style:normal;color:#fcce81}
+.v6-final-heading p{font-size:clamp(12px,.9vw,17px);letter-spacing:.08em;color:#c7d6e8;margin:5px 0}
+.v6-final-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.8fr) minmax(235px,.68fr);gap:15px}
+.v6-podium-wrap{position:relative;min-height:0;display:flex;align-items:end;padding:0 5px 4px}
+.v6-podium-stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.18fr) minmax(0,1fr);align-items:end;gap:14px;width:100%;height:100%}
+.v6-finish-card{position:relative;height:89%;min-width:0;display:flex;flex-direction:column;justify-content:end;align-items:center;isolation:isolate;border:2px solid #b7c6d4;background:linear-gradient(180deg,#0d1a2b12 0%,#040b16fa 71%);box-shadow:inset 0 0 0 4px #fff2,0 0 24px #b5cde955,0 15px 15px #000b;clip-path:polygon(18px 0,calc(100% - 18px) 0,100% 18px,100% calc(100% - 18px),calc(100% - 18px) 100%,18px 100%,0 calc(100% - 18px),0 18px);overflow:hidden}
+.v6-finish-card.v6-finish-1{height:100%;border-color:#ffc76b;box-shadow:inset 0 0 0 4px #ffde854d,0 0 32px #ffbe63a8,0 15px 15px #000c;background:linear-gradient(180deg,#1c162012,#463315e9 80%,#22140be8)}
+.v6-finish-card.v6-finish-3{border-color:#c4855f;box-shadow:0 0 20px #a35c5177,0 15px 15px #000b}
+.v6-finish-art{position:absolute;inset:0 0 25%;overflow:hidden;z-index:-1;mask-image:linear-gradient(to bottom,#000 75%,transparent 99%)}
+.v6-character-face{width:100%;height:100%;position:relative;overflow:hidden;display:grid;place-items:center;background:linear-gradient(#15314a,#020c16)}
+.v6-character-face img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:saturate(.95) contrast(1.1)}
+.v6-character-face.hero img{object-position:50% 16%;filter:contrast(1.17) saturate(.94)}
+.v6-face-glint{position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,#0009 0%,transparent 39%,#b1e5ff0c 67%,#0008)}
+.v6-finish-1 .v6-face-glint{background:linear-gradient(125deg,#4d250066,transparent 48%,#ffc65e19 76%,#210b0488)}
+.v6-empty-portrait{height:100%;display:grid;place-items:center;color:#9ab7c9}
+.v6-finish-medal{position:absolute;z-index:2;top:52%;left:50%;transform:translateX(-50%);width:68px;height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid #e3eef9;border-radius:50%;background:radial-gradient(circle at 40% 30%,#d5edfc,#376481 72%,#09192e);color:#fff;box-shadow:0 0 20px #d8f1ff9b,0 4px 13px #000b}
+.v6-finish-medal b{font:950 26px/1 Georgia,serif}
+.v6-finish-1 .v6-finish-medal{background:radial-gradient(circle at 40% 30%,#ffe0a0,#a96718 74%,#6b3207);border-color:#ffcd6d;box-shadow:0 0 23px #ffc459}
+.v6-finish-3 .v6-finish-medal{background:radial-gradient(circle at 40% 30%,#ffcb9b,#8a4225 74%,#391914);border-color:#dba47c;box-shadow:0 0 23px #da8752}
+.v6-finish-info{position:relative;z-index:1;margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:7px;width:100%;padding:35px 9px 14px;background:linear-gradient(0deg,#040916fc 10%,#081523ef 69%,transparent)}
+.v6-finish-1 .v6-finish-info{background:linear-gradient(0deg,#251706fd,#4d301ad9 56%,transparent)}
+.v6-finish-info>strong{font:950 clamp(18px,2vw,36px)/1.1 "Bahnschrift SemiCondensed","Segoe UI",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.v6-finish-score{font:950 clamp(23px,2.4vw,43px)/1 "Bahnschrift SemiCondensed","Segoe UI",sans-serif;color:#f7cd85;text-shadow:0 2px #0009}
+.v6-finish-score small{font-size:.48em;color:#faf1de}
+.v6-finish-hits{font-size:clamp(12px,1vw,20px);color:#e0e6ee;border-top:1px solid #fff3;width:90%;padding-top:8px}
+.v6-finish-info>small{font-size:clamp(10px,.76vw,14px);color:#7ff2b1}
+.v6-final-sidebar{display:flex;flex-direction:column;min-height:0;border:1px solid #bd9058;border-radius:7px;background:linear-gradient(150deg,#0d1d2ef2,#030811ed);overflow:hidden}
+.v6-final-sidebar h2{display:flex;align-items:center;gap:10px;flex:0 0 auto;text-align:left;font:950 clamp(16px,1.1vw,24px) "Bahnschrift SemiCondensed","Segoe UI",sans-serif;margin:0;color:#ffce86;padding:15px;border-bottom:1px solid #956a34;background:linear-gradient(90deg,#241b14,#06111f)}
+.v6-final-ranking{overflow-y:auto;scrollbar-width:thin;min-height:0;flex:1;padding:6px}
+.v6-final-rank-row{display:grid;grid-template-columns:28px 39px minmax(0,1fr) auto;gap:7px;align-items:center;min-height:47px;padding:4px 8px;border:1px solid #58768b5e;border-radius:5px;margin-bottom:5px;background:#0a1b29e0}
+.v6-final-rank-row b{font-size:15px;color:#cbd7dd}
+.v6-final-rank-row .v6-character-face{height:34px;width:34px;border-radius:50%;border:1px solid #a38460}
+.v6-final-rank-row>span{font-size:13px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:800}
+.v6-final-rank-row>strong{font-size:13px;color:#eace8d;white-space:nowrap}
+.v6-final-rank-row>strong small{font-size:10px}
+.v6-no-rank{padding:25px 12px;color:#b2c7d5;font-size:14px}
+.v6-class-summary{flex:0 0 auto;display:flex;align-items:center;justify-content:space-around;gap:4px;min-height:76px;border:1px solid #a3865f;border-radius:6px;background:linear-gradient(120deg,#1d160ff2,#091520f4);box-shadow:inset 0 1px #fff5}
+.v6-summary-caption{display:flex;align-items:center;gap:10px;max-width:200px;text-align:left;color:#f4ecdf;font:950 clamp(12px,1vw,20px)/1.1 "Bahnschrift SemiCondensed","Segoe UI",sans-serif}
+.v6-class-summary>div{display:flex;flex-wrap:wrap;gap:5px;align-items:center;justify-content:center;padding:3px 10px;border-left:1px solid #ad8e6655;min-height:40px}
+.v6-class-summary>div>span{font-size:clamp(10px,.7vw,13px);font-weight:850;color:#cad9e8}
+.v6-class-summary>div>b{font-size:clamp(17px,1.28vw,27px);color:#ffe1ab}
+.v6-class-summary .v6-mint{color:#66ffac}
+.v6-final-actions{display:flex;align-items:center;justify-content:center;gap:14px;min-height:66px}
+.v6-restart{min-width:320px}
+.v6-wait-host{font-size:13px;color:#d7e6f1;margin:0}
+/* Mobile: real portrait-oriented game */
+.cinema-player .player-app,.cinema-join .player-app{background:linear-gradient(145deg,#050c1af8,#020715f7)!important;border-color:#4f88a0!important;box-shadow:0 0 60px #000e}
+.cinema-player .player-header,.cinema-join .player-header{min-height:105px;background:linear-gradient(90deg,#04102099,#070e1ed9),url('../../assets/the-crimes-v5/backgrounds/join-noir.webp') center/cover!important;border-bottom:1px solid #e6354d;box-shadow:0 9px 22px #000a}
+.player-identity{background:linear-gradient(125deg,#122b40ef,#080f20f7)!important;min-height:85px;border-color:#7292a5!important;box-shadow:inset 0 1px #fff3,0 8px 18px #000b!important}
+.player-avatar{border-color:#e4ad68!important;box-shadow:0 0 12px #e7bd747c}
+.mobile-round-label{border:1px solid #51859e!important;border-radius:6px!important;background:#0b1b2be6!important;color:#cfe8f9!important}
+.gameplay .scene-media{border:1px solid #6bb2d5!important;box-shadow:0 8px 25px #000b}
+.player-question{background:linear-gradient(175deg,#0b1c2ced,#030b19f9);padding:8px 12px 16px;border:1px solid #315f79;border-radius:7px;margin-top:12px}
+.player-question h1{font-size:clamp(21px,4.7vw,27px)!important;line-height:1.23!important;margin:13px 0 17px;color:#fff5f8}
+.player-question .answer-row{min-height:72px!important;grid-template-columns:46px minmax(0,1fr) 24px}
+.player-question .answer-row>span{font-weight:650;line-height:1.3}
+.player-question .submit-answer{width:100%;min-height:71px;margin-top:18px;font-size:23px!important}
+.player-metrics{margin-top:16px}
+.player-lobby,.player-final{background-position:center!important;background-size:cover!important}
+.player-final .final-avatar{border-color:#e2bb6b!important;box-shadow:0 0 30px #f9cc6d66}
+.join-player{max-width:1250px!important}
+.join-card{border-color:#a67b4a!important;box-shadow:0 25px 50px #000d,inset 0 1px #ffe2b343!important}
+.join-heading{background:linear-gradient(90deg,#050c1bf0,#081729c4),url('../../assets/the-crimes-v5/backgrounds/join-noir.webp') center/cover!important}
+.persona-tile{border-color:#527f9b!important;box-shadow:inset 0 1px #fff2}
+.persona-tile.selected{border-color:#f6bb67!important;box-shadow:0 0 16px #edae608c!important}
+.persona-preview{background:linear-gradient(135deg,#142132,#071020)!important;border:1px solid #9c74488c;border-radius:7px}
+/* Layout corrections */
+@media(max-width:1320px){
+ .setup-view{grid-template-columns:minmax(0,1.6fr) minmax(275px,.75fr)}
+ .host-question{grid-template-columns:41% 59%}
+ .v6-host-lobby{grid-template-columns:minmax(0,1fr) minmax(270px,.88fr)}
+ .v6-lobby-qr svg{width:156px;height:156px}
+ .v6-class-summary>div{padding:3px 5px}
+ .v6-final-grid{grid-template-columns:minmax(0,1.8fr) minmax(220px,.65fr)}
+}
+@media(max-width:1120px){
+ .setup-view{grid-template-columns:minmax(0,1fr)}
+ .setup-title{grid-column:1}
+ .create-room-panel{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));min-height:0}
+ .create-room-panel:before{grid-column:1/-1}
+ .create-room-panel .cinema-button{grid-column:1/-1}
+ .host-body{grid-template-columns:154px minmax(0,1fr)}
+ .live-layout{grid-template-columns:minmax(0,1fr)}
+ .host-aside{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr)}
+ .host-sidebar{min-height:0}
+ .v6-host-lobby{grid-template-columns:minmax(0,1fr)}
+ .v6-lobby-roster{min-height:300px}
+ .v6-roster-scroll{max-height:240px}
+ .projector-main{grid-template-columns:minmax(0,1fr)}
+ .projector-side{display:none}
+}
+@media(max-width:800px){
+ .game-header{height:auto;min-height:84px;flex-wrap:wrap}
+ .host-body{display:flex;flex-direction:column;gap:9px}
+ .host-sidebar{width:100%;min-height:0;position:static;display:flex;align-items:center;gap:5px;overflow-x:auto;padding:8px}
+ .host-sidebar button{white-space:nowrap;flex:0 0 auto;font-size:12px;margin:0}
+ .host-sidebar .sidebar-label,.host-sidebar .justice-statue{display:none}
+ .host-main{width:100%}
+ .host-question{grid-template-columns:minmax(0,1fr)}
+ .host-question .scene-media{aspect-ratio:16/8;min-height:0;max-height:260px}
+ .host-question .question-copy{border-left:0;border-top:1px solid #5a94ab}
+ .room-ribbon{grid-template-columns:1fr 1fr}
+ .room-qr{display:none}
+ .live-layout{grid-template-columns:minmax(0,1fr)}
+ .host-dock{flex-wrap:wrap}
+ .host-dock .cinema-button{flex:1 1 180px}
+ .v6-lobby-columns{grid-template-columns:minmax(0,1fr) minmax(150px,.7fr)}
+ .v6-final-board{min-height:650px}
+ .v6-final-grid{grid-template-columns:1fr}
+ .v6-final-sidebar{display:none}
+ .projector{min-height:650px}
+ .projector-main{padding:8px}
+ .projector-question{grid-template-columns:38% 62%}
+}
+@media(max-width:650px){
+ .setup-view{padding:12px 10px}
+ .case-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .case-tile{min-height:154px!important;aspect-ratio:1.25/1}
+ .case-tile-caption span{display:none}
+ .create-room-panel{display:flex!important;padding:15px!important}
+ .create-room-panel .cinema-button{min-height:64px;font-size:17px}
+ .host-body{padding:8px}
+ .host-sidebar{overflow-x:auto;min-height:55px}
+ .host-main{gap:8px}
+ .v6-host-lobby{min-height:0}
+ .v6-lobby-hero{padding:18px 12px}
+ .v6-lobby-hero h1{font-size:45px}
+ .v6-lobby-columns{display:flex;flex-direction:column}
+ .v6-lobby-guide{width:100%}
+ .v6-lobby-qr svg{width:170px;height:170px}
+ .v6-lobby-case img{width:95px}
+ .v6-lobby-roster h2{font-size:16px}
+ .v6-roster-entry{grid-template-columns:22px 38px minmax(0,1fr) auto;padding:4px}
+ .v6-roster-entry img{width:36px;height:39px}
+ .v6-presence{font-size:9px}
+ .host-aside{grid-template-columns:minmax(0,1fr)}
+ .host-dock .cinema-button{flex:1 1 120px;min-height:58px}
+ .room-ribbon{min-height:0}
+ .projector{height:auto;min-height:100dvh;overflow:visible}
+ .projector-header{height:auto!important;min-height:65px}
+ .projector-main{display:block;min-height:450px}
+ .projector-stage{height:auto;min-height:450px}
+ .projector-question{display:flex;flex-direction:column;height:auto}
+ .projector-question .scene-media{max-height:230px}
+ .projector-question-copy{overflow:visible}
+ .projector-question-copy h1{font-size:23px!important}
+ .projector-footer{position:relative}
+ .v6-cinematic-final{overflow:visible!important}
+ .v6-final-board{height:auto;min-height:650px}
+ .v6-podium-stage{gap:5px;min-height:300px}
+ .v6-finish-card{height:90%;border-width:1px}
+ .v6-finish-card.v6-finish-1{height:100%}
+ .v6-finish-medal{width:46px;height:46px;top:44%}
+ .v6-finish-medal b{font-size:19px}
+ .v6-finish-medal svg{width:13px;height:13px}
+ .v6-finish-info{padding:24px 4px 10px;gap:6px}
+ .v6-finish-info>strong{font-size:15px}
+ .v6-finish-score{font-size:18px}
+ .v6-finish-hits{font-size:10px}
+ .v6-finish-info>small{font-size:9px}
+ .v6-class-summary{flex-wrap:wrap;padding:10px;gap:8px}
+ .v6-class-summary>div{flex:1 1 28%;border:0;border-top:1px solid #fff3}
+ .v6-summary-caption{width:100%;max-width:none;justify-content:center}
+ .v6-restart{min-width:0;max-width:100%;font-size:13px}
+ .player-identity{grid-template-columns:53px minmax(0,1fr) auto}
+ .player-question{padding:7px 9px 15px}
+ .player-question .answer-row{min-height:75px!important}
+ .cinema-player .player-header,.cinema-join .player-header{min-height:92px}
+ .join-player .join-card{margin:8px 9px 32px}
+}
+@media(max-width:380px){
+ .case-gallery{grid-template-columns:1fr 1fr}
+ .case-tile{min-height:135px!important}
+ .v6-lobby-hero h1{font-size:38px}
+ .game-header .brandmark{transform:scale(.88);transform-origin:left center}
+ .v6-final-heading h1{font-size:27px!important}
+ .v6-finish-info>strong{font-size:13px}
+ .v6-finish-score{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-ambient,.v6-online-dot{animation:none!important}
+ .cinema-button:hover:not(:disabled){transform:none!important}
+}
+
+/* V6 asset integration: true image skins, editable text and accessible hit targets */
+.cinema-button.gold{
+ background-image:url('../../assets/the-crimes-v6/buttons/gold-default.webp')!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important
+}
+.cinema-button.gold:hover:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/gold-hover.webp')!important}
+.cinema-button.gold:active:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/gold-pressed.webp')!important}
+.cinema-button.cyan{
+ background-image:url('../../assets/the-crimes-v6/buttons/cyan-default.webp')!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important
+}
+.cinema-button.cyan:hover:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/cyan-hover.webp')!important}
+.cinema-button.cyan:active:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/cyan-pressed.webp')!important}
+.cinema-button.danger{
+ background-image:url('../../assets/the-crimes-v6/buttons/red-default.webp')!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important
+}
+.cinema-button.danger:hover:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/red-hover.webp')!important}
+.cinema-button.danger:active:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/red-pressed.webp')!important}
+.cinema-button.mint{
+ background-image:url('../../assets/the-crimes-v6/buttons/mint-default.webp')!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important
+}
+.cinema-button.mint:hover:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/mint-hover.webp')!important}
+.cinema-button.mint:active:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/mint-pressed.webp')!important}
+.cinema-button.secondary{
+ background-image:url('../../assets/the-crimes-v6/buttons/steel-default.webp')!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important
+}
+.cinema-button.secondary:hover:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/steel-hover.webp')!important}
+.cinema-button.secondary:active:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/steel-pressed.webp')!important}
+.cinema-button:focus-visible{outline:3px solid #fbe3a5!important;outline-offset:3px}
+.cinema-button:disabled{filter:grayscale(.38) brightness(.65)!important;opacity:.7!important}
+.cinema-button.gold,.cinema-button.gold *{text-shadow:0 1px 1px #ffe9b67a}
+.v6-finish-card::after{
+ content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
+ background-image:url('../../assets/the-crimes-v6/frames/silver.svg');background-size:100% 100%;
+ opacity:.82;filter:drop-shadow(0 0 7px #ffffff42)
+}
+.v6-finish-card.v6-finish-1::after{background-image:url('../../assets/the-crimes-v6/frames/gold.svg')}
+.v6-finish-card.v6-finish-3::after{background-image:url('../../assets/the-crimes-v6/frames/bronze.svg')}
+.v6-finish-art .v6-character-face.hero{background:transparent}
+.v6-finish-art .v6-character-face.hero>img{
+ object-fit:cover;object-position:50% 17%;
+ filter:saturate(1.08) contrast(1.15) drop-shadow(0 1px 12px #000e)
+}
+.v6-finish-1 .v6-finish-art .v6-character-face.hero>img{
+ filter:saturate(1.08) contrast(1.18) drop-shadow(0 0 18px #dca450a3)
+}
+.v6-finish-info{padding-bottom:20px}
+.v6-lobby-hero{
+ background-image:linear-gradient(145deg,#020c1be9,#07182ff4),url('../../assets/the-crimes-v6/backgrounds/lobby-qr.webp')!important;
+ background-size:cover!important
+}
+.cinema-host:has(.setup-view) .cinema-background{
+ background-image:linear-gradient(90deg,#050c19a8,#02071494),url('../../assets/the-crimes-v6/backgrounds/case-select.webp')!important
+}
+.cinema-host .host-sidebar .justice-statue{display:none}
+.cinema-host .host-sidebar::after{
+ content:"";position:relative;display:block;pointer-events:none;
+ height:min(39dvh,385px);width:100%;min-height:200px;
+ background-image:url('../../assets/the-crimes-v6/decor/lady-justice-bronze.webp');
+ background-repeat:no-repeat;background-size:contain;background-position:center center;
+ filter:drop-shadow(0 0 16px #ba6b5188)
+}
+.cinema-host .v6-host-body .host-sidebar{overflow:hidden}
+.v6-lobby-case img{filter:saturate(1.16) contrast(1.13)}
+.case-tile .case-tile-caption{backdrop-filter:blur(1px)}
+.v6-final-sidebar,.v6-class-summary{backdrop-filter:blur(5px)}
+.v6-final-board .v6-finish-medal{box-shadow:0 0 16px #f8c983b0,0 4px 9px #000c}
+@media(max-width:1120px){
+ .cinema-host .host-sidebar::after{height:200px;min-height:0}
+}
+@media(max-width:800px){
+ .cinema-host .host-sidebar::after{display:none}
+}
+@media(max-width:650px){
+ .cinema-player .player-header .live-state,
+ .cinema-join .player-header .live-state{
+  font-size:0!important;letter-spacing:0!important;padding:8px!important;
+  min-width:32px!important;max-width:36px!important;justify-content:center!important;gap:0!important;
+  white-space:nowrap;overflow:hidden
+ }
+ .cinema-player .player-header .live-state svg,
+ .cinema-join .player-header .live-state svg{width:18px;height:18px;flex-shrink:0}
+ .cinema-player .player-header .brandmark,
+ .cinema-join .player-header .brandmark{max-width:calc(100% - 47px)}
+ .v6-finish-info{padding-bottom:10px}
+}

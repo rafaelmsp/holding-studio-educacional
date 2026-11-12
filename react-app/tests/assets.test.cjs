@@ -25,7 +25,7 @@ const css=txt(path.join(source,'src/styles/cinematic.css'));
 const catalog=txt(path.join(source,'src/services/catalog.ts'));
 for(const name of buttons)assert.ok(css.includes('button-'+name+'.webp'),'CSS does not load '+name);
 for(const name of panels)assert.ok(css.includes('panel-'+name+'.webp'),'CSS does not load panel '+name);
-for(const name of screen)assert.ok(catalog.includes(name+'.webp'),'React does not use background '+name);
+for(const name of ['host-control','projector','lobby-qr','podium'])assert.ok(catalog.includes(name+'.webp'),'React V6 must use cinematic background '+name);
 for(const name of ['detetive','advogado','delegado','estrategista','perita','advogada','investigadora','analista','especialista','auditor','arquivista','mediador']){
  const file=path.join(root,'assets','the-crimes-v3','avatars',name+'.webp');
  assert.ok(fs.existsSync(file),'Missing existing avatar '+name);
@@ -43,4 +43,4 @@ assert.match(html,/bundles\/index-[^"]+\.js/);
 assert.match(html,/bundles\/index-[^"]+\.css/);
 assert.ok(txt(path.join(source,'src/features/Screen.tsx')).includes('screenToken'),'Projector must not have public host actions');
 assert.ok(txt(path.join(source,'src/features/Player.tsx')).includes('sessionToken'),'Player must preserve session auth');
-console.log('V5 cinematic assets / 12 avatars / six cases x eight scenes / production build OK');
+console.log('V6 and legacy V5 cinematic assets / 12 avatars / six cases x eight scenes / production build OK');

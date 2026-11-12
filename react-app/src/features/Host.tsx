@@ -5,7 +5,7 @@ import {FolderOpen,Users,FileText,BarChart3,Settings2,Monitor,Eye,ChevronsRight,
 import {useGame,adminStorage} from '../services/store';
 import {action,screenUrl,playerUrl} from '../services/api';
 import {broadcastRoom,useRoomRealtime} from '../services/realtime';
-import {CASES,caseCover} from '../services/catalog';
+import {CASES,caseCover,avatar} from '../services/catalog';
 import {revision,requestId} from '../services/types';
 import {CinematicShell,Brand,LiveStatus,Countdown,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
 
@@ -85,7 +85,7 @@ export default function Host(){
        <label>Correção<select value={policy} onChange={e=>setPolicy(e.target.value)}><option value="host_reveal">Quando o Host revelar</option><option value="all_answered">Quando todos responderem</option><option value="immediate">Imediata no celular</option></select></label>
        <button className="cinema-button gold" type="button" onClick={create} disabled={busy}><Play size={20}/> {busy?'CRIANDO SALA...':'CRIAR SALA ONLINE'}</button>
      </section><ErrorLine message={error}/>
-   </div>:<div className="host-body">
+   </div>:<div className="host-body v6-host-body">
      <nav className="host-sidebar" aria-label="Navegação do Host">
        <div className="sidebar-label">CENTRAL DE CONTROLE</div>
        <button className="nav-current" onClick={()=>window.scrollTo({top:0,behavior:'smooth'})}><Play size={17}/> Partida ao Vivo</button>
@@ -97,6 +97,30 @@ export default function Host(){
        <img className="justice-statue" src="../assets/the-crimes-v3/ui/lady-justice.svg" alt="" aria-hidden="true"/>
      </nav>
      <main className="host-main">
+       {room?.status==='waiting'||!room?<section className="v6-host-lobby" aria-label="Sala aguardando jogadores">
+        <div className="v6-lobby-hero">
+         <span className="v6-eyebrow"><FolderOpen size={15}/> SALA DA PARTIDA</span>
+         <h1>{code}</h1><p className="v6-lobby-state"><span className="v6-online-dot"/> AGUARDANDO JOGADORES</p>
+         <div className="v6-lobby-columns">
+          <div className="v6-lobby-guide">
+           <strong>COMO PARTICIPAR</strong>
+           <p><b>01</b> Abra a câmera do celular.</p>
+           <p><b>02</b> Aponte para o QR Code.</p>
+           <p><b>03</b> Digite seu nome e escolha o personagem.</p>
+           <button type="button" onClick={()=>void navigator.clipboard?.writeText(playerUrl(code))} className="v6-copy-link"><Copy size={16}/> COPIAR LINK DE ENTRADA</button>
+          </div>
+          <div className="v6-lobby-qr"><QRCodeSVG value={playerUrl(code)} size={190} fgColor="#06101e" bgColor="#fff" includeMargin aria-label="QR Code para entrar na sala"/></div>
+         </div>
+         <div className="v6-lobby-case"><img src={caseCover(room?.case_key||selectedCase)} alt=""/><div><small>CASO SELECIONADO</small><strong>{room?.case_title||CASES.find(x=>x.key===selectedCase)?.title}</strong><span>8 rodadas de investigação jurídica</span></div></div>
+        </div>
+        <aside className="v6-lobby-roster">
+         <h2><Users size={21}/> JOGADORES NA SALA <span>{players.length}/{maxPlayers}</span></h2>
+         <div className="v6-roster-scroll">{players.length?players.map((p,i)=><div className="v6-roster-entry" key={p.player_id}>
+          <b>{String(i+1).padStart(2,'0')}</b><img src={avatar(p.avatar_id||avatars[p.player_id]||'detetive')} alt=""/><strong>{p.nickname}</strong><span className={'v6-presence '+(presenceIds.includes(p.player_id)||p.connected?'online':'offline')}>{presenceIds.includes(p.player_id)||p.connected?'● ONLINE':'○ CONECTANDO'}</span>
+         </div>):<div className="v6-roster-empty"><Users size={43}/><strong>Nenhum jogador ainda</strong><p>O primeiro participante aparecerá assim que entrar pelo QR Code.</p></div>}</div>
+         <div className="v6-roster-footer"><span><Users size={18}/> {online} online</span><span>PARTIDA SEGURA • TEMPO REAL</span></div>
+        </aside>
+       </section>:<>
        <section className="room-ribbon">
          <div><small><FolderOpen size={16}/> SALA ATIVA</small><strong className="room-code">{code}</strong></div>
          <div><RoomBadge room={room}/><small>Participe pelo QR Code</small></div>
@@ -109,7 +133,7 @@ export default function Host(){
        <section className="live-layout">
          <div className="live-center">
            <div className="round-bar"><RoomBadge room={room}/><strong>RODADA {String(number).padStart(2,'0')}/08</strong><span className="mint">{room?.responded||0}/{room?.players_total||0} RESPONDERAM</span><Countdown room={room}/></div>
-           {room?.question&&room.status!=='waiting'&&room.status!=='finished'?<div className="host-question">
+           {room?.question&&room.status!=='finished'?<div className="host-question">
              <SceneMedia caseKey={room.case_key} caseTitle={room.case_title} round={number}/>
              <div className="question-copy"><span className="question-label">PERGUNTA DA RODADA {String(number).padStart(2,'0')}</span>
                <h1>{room.question.text}</h1><AnswerRows question={room.question} revealed={room.revealed}/>
@@ -125,12 +149,13 @@ export default function Host(){
            <section className="rank-panel"><h2><span>🏆</span> RANKING (TOP 5)</h2><RankList players={players} avatars={avatars} ids={presenceIds}/></section>
          </aside>
        </section>
+       </>}
        <section className="host-dock" aria-label="Controles administrativos">
          <button className="cinema-button secondary" onClick={()=>window.open(screenUrl(code),'the-crimes-react-screen')}><Monitor size={22}/> ABRIR TELÃO</button>
          {room?.status==='waiting'?<button className="cinema-button mint" disabled={busy} onClick={()=>void send('start')}><Play size={23}/> INICIAR PARTIDA</button>:null}
          {room?.status==='paused'?<button className="cinema-button mint" disabled={busy} onClick={()=>void send('resume')}><Play size={23}/> CONTINUAR</button>:null}
          {isLive&&!room?.revealed?<button className="cinema-button cyan" disabled={busy||room?.locked&&room?.revealed} onClick={()=>void send('reveal')}><Eye size={24}/> REVELAR RESPOSTA</button>:null}
-         {isLive?<button className="cinema-button gold" disabled={busy} onClick={()=>void send('next')}><ChevronsRight size={25}/> PULAR / PRÓXIMA</button>:null}
+         {isLive?<button className="cinema-button gold" disabled={busy} onClick={()=>void send(number>=8?'finish':'next')}><ChevronsRight size={25}/> {number>=8?'CONCLUIR 8ª RODADA':'PULAR / PRÓXIMA'}</button>:null}
          {(isLive||room?.status==='paused')?<button className="cinema-button danger" disabled={busy} onClick={()=>void send('finish')}><Square size={22}/> ENCERRAR PARTIDA</button>:null}
          <details className="host-toolbox"><summary><SlidersHorizontal size={17}/> FERRAMENTAS</summary><div className="host-tools-popover">
            {isLive?<button onClick={()=>void send('pause')} disabled={busy}><Pause size={16}/> Pausar</button>:null}
@@ -139,7 +164,7 @@ export default function Host(){
            <button onClick={()=>setModal('cases')}><BookOpen size={16}/> Dossiês</button>
            <button onClick={()=>setModal('reports')}><BarChart3 size={16}/> Relatórios</button>
            <button onClick={()=>setModal('activity')}><FileText size={16}/> Atividade</button>
-           <button onClick={()=>window.open('./showroom.html','the-crimes-gallery')}><ExternalLink size={16}/> Galeria V4.2</button>
+           <button onClick={()=>window.open('./showroom-v6.html','the-crimes-v6-gallery')}><ExternalLink size={16}/> Galeria V6 cinematográfica</button>
            {(room?.status==='waiting'||room?.status==='finished')?<button onClick={()=>void send('reset')} disabled={busy}><RefreshCw size={16}/> Resetar sala</button>:null}
          </div></details>
        </section>
