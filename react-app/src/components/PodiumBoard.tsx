@@ -1,16 +1,16 @@
 import {motion} from 'framer-motion';
 import {Crown,Trophy,Scale,Users,Target,RotateCcw,ShieldCheck} from 'lucide-react';
 import type {PublicPlayer,PublicRoom} from '../services/types';
-import {avatar,profileName} from '../services/catalog';
+import {avatar,characterPortrait,profileName} from '../services/catalog';
 
 type Props={players:PublicPlayer[];room:PublicRoom;avatars?:Record<string,string>;onRestart?:()=>void;restarting?:boolean};
 const points=(n:number)=>new Intl.NumberFormat('pt-BR').format(n);
-const answered=(p:PublicPlayer)=>Object.values(p.counters||{}).reduce((s,v)=>s+Number(v||0),0);
+const answered=(p:PublicPlayer)=>['correct','gray','risky','criminal'].reduce((sum,key)=>sum+Number(p.counters?.[key]||0),0);
 const hits=(p:PublicPlayer)=>Number(p.counters?.correct||0);
 export function CharacterFace({player,avatars={},hero=false}:{player:PublicPlayer;avatars?:Record<string,string>;hero?:boolean}){
  const id=player.avatar_id||avatars[player.player_id]||'detetive';
  return <div className={'v6-character-face '+(hero?'hero':'')}>
-  <img loading="eager" src={avatar(id)} alt={'Personagem '+profileName(id)+' de '+player.nickname}/>
+  <img loading="eager" src={hero?characterPortrait(id):avatar(id)} alt={'Personagem '+profileName(id)+' de '+player.nickname}/>
   <span className="v6-face-glint" aria-hidden="true"/>
  </div>;
 }

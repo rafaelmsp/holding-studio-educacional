@@ -76,7 +76,7 @@ jobs:
           done
 
   react-build:
-    name: React V5 cinematic build
+    name: React V6 cinematic build
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -89,12 +89,14 @@ jobs:
           cache: npm
           cache-dependency-path: react-app/package-lock.json
       - run: npm ci --no-audit --no-fund
-      - name: Typecheck and build React V5
+      - name: Typecheck and build React V6
         run: npm run build
       - name: Validate artwork, 12 characters and 48 scenes
         run: node tests/assets.test.cjs
       - name: Verify React V5 cinematic gallery and realtime channels
         run: npm run test:visual
+      - name: Verify V6 art pack and player identity integration
+        run: npm run test:v6
       - name: Verify React primary route and complete backup
         working-directory: .
         run: node tests/live-primary-react.test.cjs

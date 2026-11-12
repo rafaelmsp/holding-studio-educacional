@@ -346,3 +346,93 @@
  .cinema-ambient,.v6-online-dot{animation:none!important}
  .cinema-button:hover:not(:disabled){transform:none!important}
 }
+
+/* V6 asset integration: true image skins, editable text and accessible hit targets */
+.cinema-button.gold{
+ background-image:url('../../assets/the-crimes-v6/buttons/gold-default.webp')!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important
+}
+.cinema-button.gold:hover:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/gold-hover.webp')!important}
+.cinema-button.gold:active:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/gold-pressed.webp')!important}
+.cinema-button.cyan{
+ background-image:url('../../assets/the-crimes-v6/buttons/cyan-default.webp')!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important
+}
+.cinema-button.cyan:hover:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/cyan-hover.webp')!important}
+.cinema-button.cyan:active:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/cyan-pressed.webp')!important}
+.cinema-button.danger{
+ background-image:url('../../assets/the-crimes-v6/buttons/red-default.webp')!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important
+}
+.cinema-button.danger:hover:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/red-hover.webp')!important}
+.cinema-button.danger:active:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/red-pressed.webp')!important}
+.cinema-button.mint{
+ background-image:url('../../assets/the-crimes-v6/buttons/mint-default.webp')!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important
+}
+.cinema-button.mint:hover:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/mint-hover.webp')!important}
+.cinema-button.mint:active:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/mint-pressed.webp')!important}
+.cinema-button.secondary{
+ background-image:url('../../assets/the-crimes-v6/buttons/steel-default.webp')!important;
+ background-size:100% 100%!important;background-repeat:no-repeat!important
+}
+.cinema-button.secondary:hover:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/steel-hover.webp')!important}
+.cinema-button.secondary:active:not(:disabled){background-image:url('../../assets/the-crimes-v6/buttons/steel-pressed.webp')!important}
+.cinema-button:focus-visible{outline:3px solid #fbe3a5!important;outline-offset:3px}
+.cinema-button:disabled{filter:grayscale(.38) brightness(.65)!important;opacity:.7!important}
+.cinema-button.gold,.cinema-button.gold *{text-shadow:0 1px 1px #ffe9b67a}
+.v6-finish-card::after{
+ content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
+ background-image:url('../../assets/the-crimes-v6/frames/silver.svg');background-size:100% 100%;
+ opacity:.82;filter:drop-shadow(0 0 7px #ffffff42)
+}
+.v6-finish-card.v6-finish-1::after{background-image:url('../../assets/the-crimes-v6/frames/gold.svg')}
+.v6-finish-card.v6-finish-3::after{background-image:url('../../assets/the-crimes-v6/frames/bronze.svg')}
+.v6-finish-art .v6-character-face.hero{background:transparent}
+.v6-finish-art .v6-character-face.hero>img{
+ object-fit:cover;object-position:50% 17%;
+ filter:saturate(1.08) contrast(1.15) drop-shadow(0 1px 12px #000e)
+}
+.v6-finish-1 .v6-finish-art .v6-character-face.hero>img{
+ filter:saturate(1.08) contrast(1.18) drop-shadow(0 0 18px #dca450a3)
+}
+.v6-finish-info{padding-bottom:20px}
+.v6-lobby-hero{
+ background-image:linear-gradient(145deg,#020c1be9,#07182ff4),url('../../assets/the-crimes-v6/backgrounds/lobby-qr.webp')!important;
+ background-size:cover!important
+}
+.cinema-host:has(.setup-view) .cinema-background{
+ background-image:linear-gradient(90deg,#050c19a8,#02071494),url('../../assets/the-crimes-v6/backgrounds/case-select.webp')!important
+}
+.cinema-host .host-sidebar .justice-statue{display:none}
+.cinema-host .host-sidebar::after{
+ content:"";position:relative;display:block;pointer-events:none;
+ height:min(39dvh,385px);width:100%;min-height:200px;
+ background-image:url('../../assets/the-crimes-v6/decor/lady-justice-bronze.webp');
+ background-repeat:no-repeat;background-size:contain;background-position:center center;
+ filter:drop-shadow(0 0 16px #ba6b5188)
+}
+.cinema-host .v6-host-body .host-sidebar{overflow:hidden}
+.v6-lobby-case img{filter:saturate(1.16) contrast(1.13)}
+.case-tile .case-tile-caption{backdrop-filter:blur(1px)}
+.v6-final-sidebar,.v6-class-summary{backdrop-filter:blur(5px)}
+.v6-final-board .v6-finish-medal{box-shadow:0 0 16px #f8c983b0,0 4px 9px #000c}
+@media(max-width:1120px){
+ .cinema-host .host-sidebar::after{height:200px;min-height:0}
+}
+@media(max-width:800px){
+ .cinema-host .host-sidebar::after{display:none}
+}
+@media(max-width:650px){
+ .cinema-player .player-header .live-state,
+ .cinema-join .player-header .live-state{
+  font-size:0!important;letter-spacing:0!important;padding:8px!important;
+  min-width:32px!important;max-width:36px!important;justify-content:center!important;gap:0!important;
+  white-space:nowrap;overflow:hidden
+ }
+ .cinema-player .player-header .live-state svg,
+ .cinema-join .player-header .live-state svg{width:18px;height:18px;flex-shrink:0}
+ .cinema-player .player-header .brandmark,
+ .cinema-join .player-header .brandmark{max-width:calc(100% - 47px)}
+ .v6-finish-info{padding-bottom:10px}
+}

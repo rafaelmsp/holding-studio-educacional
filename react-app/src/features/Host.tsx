@@ -155,7 +155,7 @@ export default function Host(){
          {room?.status==='waiting'?<button className="cinema-button mint" disabled={busy} onClick={()=>void send('start')}><Play size={23}/> INICIAR PARTIDA</button>:null}
          {room?.status==='paused'?<button className="cinema-button mint" disabled={busy} onClick={()=>void send('resume')}><Play size={23}/> CONTINUAR</button>:null}
          {isLive&&!room?.revealed?<button className="cinema-button cyan" disabled={busy||room?.locked&&room?.revealed} onClick={()=>void send('reveal')}><Eye size={24}/> REVELAR RESPOSTA</button>:null}
-         {isLive?<button className="cinema-button gold" disabled={busy} onClick={()=>void send('next')}><ChevronsRight size={25}/> PULAR / PRÓXIMA</button>:null}
+         {isLive?<button className="cinema-button gold" disabled={busy} onClick={()=>void send(number>=8?'finish':'next')}><ChevronsRight size={25}/> {number>=8?'CONCLUIR 8ª RODADA':'PULAR / PRÓXIMA'}</button>:null}
          {(isLive||room?.status==='paused')?<button className="cinema-button danger" disabled={busy} onClick={()=>void send('finish')}><Square size={22}/> ENCERRAR PARTIDA</button>:null}
          <details className="host-toolbox"><summary><SlidersHorizontal size={17}/> FERRAMENTAS</summary><div className="host-tools-popover">
            {isLive?<button onClick={()=>void send('pause')} disabled={busy}><Pause size={16}/> Pausar</button>:null}
@@ -164,7 +164,7 @@ export default function Host(){
            <button onClick={()=>setModal('cases')}><BookOpen size={16}/> Dossiês</button>
            <button onClick={()=>setModal('reports')}><BarChart3 size={16}/> Relatórios</button>
            <button onClick={()=>setModal('activity')}><FileText size={16}/> Atividade</button>
-           <button onClick={()=>window.open('./showroom.html','the-crimes-gallery')}><ExternalLink size={16}/> Galeria V4.2</button>
+           <button onClick={()=>window.open('./showroom-v6.html','the-crimes-v6-gallery')}><ExternalLink size={16}/> Galeria V6 cinematográfica</button>
            {(room?.status==='waiting'||room?.status==='finished')?<button onClick={()=>void send('reset')} disabled={busy}><RefreshCw size={16}/> Resetar sala</button>:null}
          </div></details>
        </section>
