@@ -1,7 +1,7 @@
-import {useCallback,useEffect,useState} from 'react';
+import {useCallback,useEffect,useRef,useState} from 'react';
 import {motion,AnimatePresence} from 'framer-motion';
 import {QRCodeSVG} from 'qrcode.react';
-import {FolderOpen,Users,FileText,BarChart3,Settings2,Monitor,Eye,ChevronsRight,Square,LockKeyhole,Pause,Play,RefreshCw,Copy,BookOpen,SlidersHorizontal,ExternalLink} from 'lucide-react';
+import {FolderOpen,Users,FileText,BarChart3,Settings2,Monitor,Eye,ChevronsRight,Square,LockKeyhole,Pause,Play,RefreshCw,Copy,BookOpen,SlidersHorizontal,ExternalLink,Menu,X,Share2} from 'lucide-react';
 import {useGame,adminStorage} from '../services/store';
 import {action,screenUrl,playerUrl} from '../services/api';
 import {broadcastRoom,useRoomRealtime} from '../services/realtime';
@@ -20,6 +20,26 @@ export default function Host(){
  const avatars=useGame(s=>s.avatars),presenceIds=useGame(s=>s.presenceIds);
  const [maxPlayers,setMaxPlayers]=useState(30),[seconds,setSeconds]=useState(60),[policy,setPolicy]=useState('host_reveal');
  const {refresh}=useRoomRealtime(code,'host');
+ const [navOpen,setNavOpen]=useState(false);
+ const navToggle=useRef<HTMLButtonElement>(null);
+ const mobileNav=useRef<HTMLElement>(null);
+ useEffect(()=>{
+  if(!navOpen)return;
+  const nav=mobileNav.current;
+  const buttons=()=>Array.from(nav?.querySelectorAll<HTMLButtonElement>('button')||[]);
+  buttons()[0]?.focus();
+  const handle=(event:KeyboardEvent)=>{
+   if(event.key==='Escape'){setNavOpen(false);navToggle.current?.focus();}
+   if(event.key==='Tab'){
+    const items=buttons(),first=items[0],last=items.at(-1);
+    if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}
+    else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
+   }
+  };
+  document.addEventListener('keydown',handle);
+  return()=>document.removeEventListener('keydown',handle);
+ },[navOpen]);
+ const closeNav=()=>{setNavOpen(false);navToggle.current?.focus();};
  const [copyFeedback,setCopyFeedback]=useState<'idle'|'success'|'error'>('idle');
  useEffect(()=>{
   if(copyFeedback==='idle')return;
@@ -34,6 +54,14 @@ export default function Host(){
    setCopyFeedback('success');
   }catch{setCopyFeedback('error');}
  },[code]);
+ const shareJoinLink=async()=>{
+  if(!code)return;
+  if(navigator.share){
+   try{await navigator.share({title:'THE CRIMES LIVE',text:'Entre na sala '+code,url:playerUrl(code)});return;}
+   catch(error){if(error instanceof DOMException&&error.name==='AbortError')return;}
+  }
+  await copyJoinLink();
+ };
  useEffect(()=>{
    const params=new URLSearchParams(location.search),urlCode=params.get('room');
    if(urlCode&&!code){const stored=localStorage.getItem(adminStorage(urlCode.toUpperCase()));if(stored){setToken(stored);setCode(urlCode.toUpperCase());}}
@@ -88,7 +116,7 @@ export default function Host(){
  const number=Number(room?.current_round||1),isLive=room?.status==='running';
  return <CinematicShell mode="host">
    <header className="game-header">
-     <Brand/><div className="header-content">{code?<TopStats room={room} online={online}/>:<p className="head-slogan">INVESTIGAÇÃO • ESTRATÉGIA • DIREITO • NEGÓCIOS</p>}</div><LiveStatus/>
+     {code&&token&&<button ref={navToggle} type="button" className="v7-nav-toggle" aria-label="Abrir menu do Host" aria-expanded={navOpen} aria-controls="v7-mobile-nav" onClick={()=>setNavOpen(true)}><Menu size={24}/></button>}<Brand/><div className="header-content">{code?<TopStats room={room} online={online}/>:<p className="head-slogan">INVESTIGAÇÃO • ESTRATÉGIA • DIREITO • NEGÓCIOS</p>}</div><LiveStatus/>
    </header>
    {!code||!token?<div className="setup-view">
      <div className="setup-title"><h1>ESCOLHA O <span>CASO DA AULA</span></h1><p>Crie uma investigação ao vivo com personagens, respostas e ranking em tempo real.</p></div>
@@ -102,6 +130,12 @@ export default function Host(){
        <button className="cinema-button gold" type="button" onClick={create} disabled={busy}><Play size={20}/> {busy?'CRIANDO SALA...':'CRIAR SALA ONLINE'}</button>
      </section><ErrorLine message={error}/>
    </div>:<div className="host-body v6-host-body">
+     {navOpen&&<div className="v7-nav-shade" onClick={closeNav}>
+      <nav id="v7-mobile-nav" ref={mobileNav} className="v7-mobile-nav" role="dialog" aria-modal="true" aria-label="Menu do Host" onClick={e=>e.stopPropagation()}>
+       <header><strong>CENTRAL DE CONTROLE</strong><button type="button" aria-label="Fechar menu" onClick={closeNav}><X size={24}/></button></header>
+       {([{key:'lobby',label:'Lobby / Sala',icon:Users},{key:'cases',label:'Casos e Perguntas',icon:FileText},{key:'players',label:'Jogadores',icon:Users},{key:'reports',label:'Relatórios',icon:BarChart3},{key:'settings',label:'Configurações',icon:Settings2}] as const).map(item=><button type="button" key={item.key} onClick={()=>{closeNav();setModal(item.key);}}><item.icon size={21}/>{item.label}</button>)}
+      </nav>
+     </div>}
      <nav className="host-sidebar" aria-label="Navegação do Host">
        <div className="sidebar-label">CENTRAL DE CONTROLE</div>
        <button className="nav-current" onClick={()=>window.scrollTo({top:0,behavior:'smooth'})}><Play size={17}/> Partida ao Vivo</button>
@@ -125,6 +159,7 @@ export default function Host(){
            <p><b>03</b> Digite seu nome e escolha o personagem.</p>
            <button type="button" onClick={()=>void copyJoinLink()} className="v6-copy-link"><Copy size={16}/> {copyFeedback==='success'?'LINK COPIADO!':'COPIAR LINK DE ENTRADA'}</button>
           </div>
+          <button type="button" className="v7-share-link cinema-button gold" onClick={()=>void shareJoinLink()}><Share2 size={20}/> COMPARTILHAR SALA</button>
           <div className="v6-lobby-qr"><QRCodeSVG value={playerUrl(code)} size={190} fgColor="#06101e" bgColor="#fff" includeMargin aria-label="QR Code para entrar na sala"/></div>
          </div>
          <div className="v6-lobby-case"><img src={caseCover(room?.case_key||selectedCase)} alt=""/><div><small>CASO SELECIONADO</small><strong>{room?.case_title||CASES.find(x=>x.key===selectedCase)?.title}</strong><span>8 rodadas de investigação jurídica</span></div></div>
