@@ -9,6 +9,21 @@
     "mobile": {
       "path": "backgrounds/mobile.webp",
       "origin": "OpenAI image generation, 2026-11-12"
+    },
+    "round": {
+      "path": "backgrounds/round.webp",
+      "origin": "OpenAI image generation, 2026-11-12",
+      "source": "clean production art, no text or interactive content"
+    },
+    "player": {
+      "path": "backgrounds/player.webp",
+      "origin": "OpenAI image generation, 2026-11-12",
+      "source": "clean production art, no text or interactive content"
+    },
+    "podium": {
+      "path": "backgrounds/podium.webp",
+      "origin": "OpenAI image generation, 2026-11-12",
+      "source": "clean production art, no text or interactive content"
     }
   },
   "preserved": {

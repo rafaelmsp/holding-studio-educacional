@@ -227,3 +227,10 @@
  .cinema-shell .v6-finish-card.v6-finish-1{height:330px}
  .cinema-shell .v6-finish-info>strong{white-space:normal}
 }
+.cinema-host:is(.v7-phase-running,.v7-phase-paused) .cinema-background,.cinema-screen .cinema-background{background-image:url('../../../assets/the-crimes-v7/backgrounds/round.webp')!important}
+.cinema-shell.v7-phase-finished .cinema-background{background-image:url('../../../assets/the-crimes-v7/backgrounds/podium.webp')!important}
+.cinema-host .host-finale{background-image:linear-gradient(#05091645,#05091670),url('../../../assets/the-crimes-v7/backgrounds/podium.webp')}
+@media(max-width:760px){
+ .cinema-player .cinema-background{background-image:url('../../../assets/the-crimes-v7/backgrounds/player.webp')!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .cinema-background{background-image:url('../../../assets/the-crimes-v7/backgrounds/mobile.webp')!important}
+}

@@ -40,7 +40,7 @@ export default function Host(){
    }
   };
   document.addEventListener('keydown',handle);
-  return()=>{document.removeEventListener('keydown',handle);document.body.style.overflow=previousOverflow;};
+  return()=>{document.removeEventListener('keydown',handle);document.body.style.overflow=previousOverflow;requestAnimationFrame(()=>navToggle.current?.focus());};
  },[navOpen]);
  const closeNav=()=>{setNavOpen(false);navToggle.current?.focus();};
  const [copyFeedback,setCopyFeedback]=useState<'idle'|'success'|'error'>('idle');

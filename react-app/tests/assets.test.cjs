@@ -25,8 +25,8 @@ const css=txt(path.join(source,'src/styles/cinematic.css'));
 const catalog=txt(path.join(source,'src/services/catalog.ts'));
 for(const name of buttons)assert.ok(css.includes('button-'+name+'.webp'),'CSS does not load '+name);
 for(const name of panels)assert.ok(css.includes('panel-'+name+'.webp'),'CSS does not load panel '+name);
-for(const name of ['desktop','lobby-qr','podium'])assert.ok(catalog.includes(name+'.webp'),'Catalog must use a production background '+name);
-for(const name of ['desktop','mobile']){
+for(const name of ['desktop','mobile','round','podium','player'])assert.ok(catalog.includes(name+'.webp'),'Catalog must use a production background '+name);
+for(const name of ['desktop','mobile','round','podium','player']){
  const asset=path.join(root,'assets/the-crimes-v7/backgrounds',name+'.webp');
  assert.ok(fs.statSync(asset).size>20000,'V7 production art missing: '+name);
 }

@@ -54,6 +54,7 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
   if(width<760){
    await page.getByRole('button',{name:'Abrir menu do Host'}).click();await page.getByRole('dialog',{name:'Menu do Host'}).waitFor();
    await page.keyboard.press('Escape');assert.equal(await page.locator('.v7-mobile-nav').count(),0);
+   await page.getByRole('button',{name:'Abrir menu do Host'}).evaluate(button=>new Promise(resolve=>requestAnimationFrame(()=>resolve(button===document.activeElement)))).then(focused=>assert.ok(focused,'Menu trigger must regain focus')); 
    await page.getByRole('button',{name:'COMPARTILHAR SALA'}).click();assert.ok((await page.evaluate(()=>window.qaShared.url)).includes('view=player&room=CRIM-1234'));
   }
   state='running';round=3;await page.reload();await page.locator('.host-question').waitFor();await capture('host-round');

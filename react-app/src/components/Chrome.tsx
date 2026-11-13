@@ -92,10 +92,11 @@ export function ChapterCue({round,caseTitle}:{round:number;caseTitle:string}){
 }
 
 export function RankList({players,limit=5,avatars={},ids=[]}:{players:PublicPlayer[];limit?:number;avatars?:Record<string,string>;ids?:string[]}){
+ const reduced=useReducedMotion();
  const list=players.slice().sort((a,b)=>a.rank!=null&&b.rank!=null&&a.rank!==b.rank?Number(a.rank)-Number(b.rank):Number(b.score||0)-Number(a.score||0)).slice(0,limit);
  return <div className="rank-list">{Array.from({length:limit},(_,i)=>{
   const p=list[i];
-  return <motion.div layout="position" transition={{layout:{duration:.3}}} className={'rank-entry '+(!p?'vacant ':'')+(i===0?'champion':'')} key={p?.player_id||'vacant'+i}>
+  return <motion.div layout="position" transition={{layout:{duration:reduced?0:.3}}} className={'rank-entry '+(!p?'vacant ':'')+(i===0?'champion':'')} key={p?.player_id||'vacant'+i}>
     <b className={'rank-place pos'+(i+1)}>{i===0?'🥇':i===1?'🥈':i===2?'🥉':''}{i+1}º</b>
     {p?<img src={avatar(p.avatar_id||avatars[p.player_id]||'detetive')} alt="" className="rank-avatar"/>:<div className="rank-avatar rank-empty">◌</div>}
     <div className="rank-person"><strong>{p?.nickname||'AGUARDANDO'}</strong><small>{p?(ids.includes(p.player_id)?'● ONLINE':p.connected?'● CONECTADO':'○ OFFLINE'):'VAGA LIVRE'}</small></div>

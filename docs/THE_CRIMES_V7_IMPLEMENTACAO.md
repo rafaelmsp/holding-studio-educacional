@@ -20,6 +20,9 @@ Data: 12/11/2026. Base: V6.2 (`e4742ac`). Trabalho isolado no PR #4.
 | --- | --- | --- |
 | `assets/the-crimes-v7/backgrounds/desktop.webp` | Geração de imagem, 12/11/2026 | Host e telão |
 | `assets/the-crimes-v7/backgrounds/mobile.webp` | Geração de imagem, 12/11/2026 | Host móvel e jogador |
+| `assets/the-crimes-v7/backgrounds/round.webp` | Geração de imagem, 12/11/2026 | Rodada e telão |
+| `assets/the-crimes-v7/backgrounds/player.webp` | Geração de imagem, 12/11/2026 | Jogador no celular |
+| `assets/the-crimes-v7/backgrounds/podium.webp` | Geração de imagem, 12/11/2026 | Final da partida |
 | `assets/the-crimes-v7/props/detective.webp` | Geração com transparência, 12/11/2026 | Identidade do cabeçalho |
 | `assets/the-crimes-v6/portraits/*` | Arte existente | Pódio, IDs preservados |
 | Catálogo de cenas e avatares | Arte existente | Seis casos, oito cenas por caso |
@@ -45,4 +48,4 @@ O navegador conectado não estava disponível e o Chromium local não pôde inic
 | Elementos gráficos | Fundos limpos e detetive recortado, botões e frames reutilizáveis | Não há um novo pacote completo de props e 12 retratos refeitos |
 | Pódio | 2–1–3, retratos persistidos e medalhas reposicionadas | Resultados dependem das respostas reais disponíveis |
 
-Não declarar equivalência visual integral ou V7 totalmente homologada sem revisão das capturas mais recentes. Permanecem distintos: teste automatizado com fixtures, comparação artística e homologação com professor/celulares reais. Leitura física do QR, desempenho em aparelhos e partida em produção não foram comprovados nesta execução.
+Não declarar equivalência visual integral ou V7 totalmente homologada sem revisão das capturas mais recentes. Permanecem distintos: teste automatizado com fixtures, comparação artística e homologação com professor/celulares reais. Leitura física do QR e desempenho em aparelhos reais não foram comprovados nesta execução. O teste contra o Supabase real passou no workflow 43353812683: três jogadores, resposta, revelação, pódio com avatares persistidos, reinício e oito rodadas; log `ERRORS []`. O pacote final ainda precisa passar por seus próprios checks após a integração das últimas artes.
