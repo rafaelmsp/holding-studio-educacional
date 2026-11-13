@@ -57,6 +57,7 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
    await page.getByRole('button',{name:'COMPARTILHAR SALA'}).click();assert.ok((await page.evaluate(()=>window.qaShared.url)).includes('view=player&room=CRIM-1234'));
   }
   state='running';round=3;await page.reload();await page.locator('.host-question').waitFor();await capture('host-round');
+  if(width>=1672){const dock=await page.locator('.host-dock').boundingBox();assert.ok(dock.y+dock.height<=(width===1920?1080:941),'Host actions must fit first viewport');}
   revealed=true;await page.reload();await page.locator('.answer-row.correct').waitFor();await capture('host-reveal');
   state='finished';round=8;await page.reload();await page.locator('.v6-final-board').waitFor();await capture('host-podium');
   assert.equal(await page.locator('.v6-finish-card').count(),3);

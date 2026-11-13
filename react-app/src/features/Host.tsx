@@ -26,6 +26,8 @@ export default function Host(){
  const mobileNav=useRef<HTMLElement>(null);
  useEffect(()=>{
   if(!navOpen)return;
+  const previousOverflow=document.body.style.overflow;
+  document.body.style.overflow='hidden';
   const nav=mobileNav.current;
   const buttons=()=>Array.from(nav?.querySelectorAll<HTMLButtonElement>('button')||[]);
   buttons()[0]?.focus();
@@ -38,7 +40,7 @@ export default function Host(){
    }
   };
   document.addEventListener('keydown',handle);
-  return()=>document.removeEventListener('keydown',handle);
+  return()=>{document.removeEventListener('keydown',handle);document.body.style.overflow=previousOverflow;};
  },[navOpen]);
  const closeNav=()=>{setNavOpen(false);navToggle.current?.focus();};
  const [copyFeedback,setCopyFeedback]=useState<'idle'|'success'|'error'>('idle');
@@ -116,7 +118,7 @@ export default function Host(){
  const online=presenceIds.length||Number(room?.players_connected||0);
  const number=Number(room?.current_round||1),isLive=room?.status==='running';
  return <CinematicShell mode="host">
-   <header className="game-header">
+   <header className="game-header" inert={navOpen}>
      {code&&token&&<button ref={navToggle} type="button" className="v7-nav-toggle" aria-label="Abrir menu do Host" aria-expanded={navOpen} aria-controls="v7-mobile-nav" onClick={()=>setNavOpen(true)}><Menu size={24}/></button>}<Brand/><div className="header-content">{code?<TopStats room={room} online={online}/>:<p className="head-slogan">INVESTIGAÇÃO • ESTRATÉGIA • DIREITO • NEGÓCIOS</p>}</div><LiveStatus/>
    </header>
    {!code||!token?<div className="setup-view">
@@ -137,7 +139,7 @@ export default function Host(){
        {([{key:'lobby',label:'Lobby / Sala',icon:Users},{key:'cases',label:'Casos e Perguntas',icon:FileText},{key:'players',label:'Jogadores',icon:Users},{key:'reports',label:'Relatórios',icon:BarChart3},{key:'settings',label:'Configurações',icon:Settings2}] as const).map(item=><button type="button" key={item.key} onClick={()=>{closeNav();setModal(item.key);}}><item.icon size={21}/>{item.label}</button>)}
       </nav>
      </div>}
-     <nav className="host-sidebar" aria-label="Navegação do Host">
+     <nav className="host-sidebar" inert={navOpen} aria-label="Navegação do Host">
        <div className="sidebar-label">CENTRAL DE CONTROLE</div>
        <button className="nav-current" onClick={()=>window.scrollTo({top:0,behavior:'smooth'})}><Play size={17}/> Partida ao Vivo</button>
        <button onClick={()=>setModal('lobby')}><Users size={17}/> Lobby / Sala</button>
@@ -147,7 +149,7 @@ export default function Host(){
        <button onClick={()=>setModal('settings')}><Settings2 size={17}/> Configurações</button>
        <img className="justice-statue" src="../assets/the-crimes-v3/ui/lady-justice.svg" alt="" aria-hidden="true"/>
      </nav>
-     <main className="host-main">
+     <main className="host-main" inert={navOpen}>
        {room?.status==='waiting'||!room?<section className="v6-host-lobby" aria-label="Sala aguardando jogadores">
         <div className="v6-lobby-hero">
          <span className="v6-eyebrow"><FolderOpen size={15}/> SALA DA PARTIDA</span>

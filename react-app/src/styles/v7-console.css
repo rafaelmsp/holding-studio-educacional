@@ -64,7 +64,7 @@
 .cinema-shell .answer-row.selected:not(.correct){background:linear-gradient(110deg,#114967,#08273c)!important;border-color:#43d9ff!important;box-shadow:inset 0 0 0 3px #071523,0 0 15px #43d9ff66!important}
 .v7-telemetry{padding:20px;text-align:center;margin-bottom:14px}
 .v7-telemetry h2{display:flex;align-items:center;justify-content:center;gap:10px;font:700 19px Georgia,serif;color:#f2bd65;margin:0 0 12px}
-.v7-telemetry .game-clock{font:italic 900 clamp(32px,3vw,55px)/1 Georgia,serif;display:flex;justify-content:center;border-radius:2px;padding:12px;color:#fff4ec;background:#25060e;border:1px solid #ef5971;box-shadow:0 0 12px #e62d4c66;min-width:0}
+.v7-telemetry .game-clock{font:italic 900 clamp(22px,2.3vw,44px)/1 Georgia,serif;display:flex;justify-content:center;border-radius:2px;padding:12px;color:#fff4ec;background:#25060e;border:1px solid #ef5971;box-shadow:0 0 12px #e62d4c66;min-width:0}
 .v7-telemetry p{margin:10px 0 0;font-size:12px;letter-spacing:.1em;color:#f5d6df}
 .cinema-shell .rank-panel{padding:14px}
 .cinema-shell .rank-panel h2{font:700 19px Georgia,serif;color:#f2bd65;border-bottom:1px solid #9c7b43;padding-bottom:12px}
@@ -170,4 +170,44 @@
 @media(prefers-reduced-motion:reduce){
  .cinema-shell *,.cinema-shell *::before,.cinema-shell *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
  .cinema-shell .cinema-button:hover:not(:disabled){transform:none}
+}
+/* Composition corrections after comparing the first CI captures to GM-02/03/05. */
+.cinema-host .question-copy .answer-rows{margin-top:0}
+.cinema-shell .v6-finish-medal{top:12px!important;left:12px!important;bottom:auto!important;right:auto!important;transform:none!important;width:46px;height:46px}
+.cinema-shell .v6-finish-score{font-size:clamp(22px,2.1vw,36px)}
+.cinema-host .live-layout.v62-host-final-mode{display:block}
+.cinema-shell .brand-detective{object-fit:contain;object-position:bottom}
+.cinema-host .host-sidebar .justice-statue{display:none!important}
+@media(min-width:1250px){
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused,.v7-phase-finished) .host-sidebar{display:none!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused,.v7-phase-finished) .host-body{grid-template-columns:minmax(0,1fr);padding:16px 26px;min-height:0}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused,.v7-phase-finished) .room-ribbon{display:none}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-body{height:calc(100dvh - 90px);box-sizing:border-box}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-main{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:12px;min-height:0}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .live-layout{min-height:0;height:100%;grid-template-columns:minmax(0,2.9fr) minmax(300px,1fr)}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .live-center{display:grid;grid-template-rows:auto minmax(0,1fr);min-height:0}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question{min-height:0!important;height:100%;grid-template-columns:minmax(0,.9fr) minmax(0,1.5fr)}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question>.scene-media{height:100%;min-height:0!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .question-copy{overflow-y:auto;padding:18px;min-height:0;justify-content:flex-start}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .question-copy h1{font:700 clamp(24px,1.8vw,34px)/1.2 Georgia,serif!important;margin:8px 0 20px}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .answer-row{min-height:72px;font-size:18px;padding:12px}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .answer-row>span{font-size:18px}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-aside{display:flex;flex-direction:column;gap:12px;min-height:0;overflow-y:auto}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .rank-panel{min-height:0;overflow-y:auto;flex:1}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock{padding:0}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock .cinema-button{min-height:60px}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-toolbox summary{min-height:60px}
+ .cinema-host.v7-phase-finished .live-center>.round-bar{display:none}
+ .cinema-host.v7-phase-finished .host-finale{width:100%}
+ .cinema-host.v7-phase-finished .v6-final-board{min-height:0;padding:20px}
+ .cinema-host.v7-phase-finished .v6-final-grid{min-height:0}
+ .cinema-host.v7-phase-finished .v6-podium-stage{padding-top:16px}
+ .cinema-host.v7-phase-finished .v6-finish-art{height:210px}
+}
+@media(max-width:760px){
+ .cinema-player .scene-label{padding:14px 12px 10px}
+ .cinema-player .scene-label strong{font-size:17px}
+ .cinema-host .v6-finish-medal{width:34px;height:34px;top:8px!important;left:8px!important;font-size:12px}
+ .cinema-host .v6-finish-medal svg{width:14px;height:14px}
+ .v7-player-final-guidance{line-height:1.5;padding:16px;color:#dcecf9}
 }
