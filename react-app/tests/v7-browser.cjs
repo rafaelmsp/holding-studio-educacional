@@ -61,6 +61,7 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
   revealed=true;await page.reload();await page.locator('.answer-row.correct').waitFor();await capture('host-reveal');
   state='finished';round=8;await page.reload();await page.locator('.v6-final-board').waitFor();await capture('host-podium');
   assert.equal(await page.locator('.v6-finish-card').count(),3);
+  const portrait=await page.locator('.v6-finish-1 .v6-finish-art').boundingBox();assert.ok(portrait.height>220,'Winner portrait must remain visible above stats');
   if(width>=1672){state='running';round=3;revealed=false;await page.goto(base+'?view=screen&room=CRIM-1234');await page.locator('.projector-question').waitFor();await capture('screen-round');}
   else{
    state='running';round=1;revealed=false;

@@ -15,5 +15,12 @@
     "portraits": "../the-crimes-v6/portraits/ (12 stable IDs)",
     "scenes": "existing catalog, 6 cases x 8 scenes"
   },
-  "ui": "React text and controls; CSS metal frames; Lucide icons"
+  "ui": "React text and controls; CSS metal frames; Lucide icons",
+  "props": {
+    "detective": {
+      "path": "props/detective.webp",
+      "origin": "OpenAI image generation, 2026-11-12",
+      "alpha": true
+    }
+  }
 }

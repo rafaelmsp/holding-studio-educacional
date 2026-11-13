@@ -211,3 +211,19 @@
  .cinema-host .v6-finish-medal svg{width:14px;height:14px}
  .v7-player-final-guidance{line-height:1.5;padding:16px;color:#dcecf9}
 }
+/* Keep the portraits in a stage with a definite height; percentage heights
+   collapsed when the final board stopped inheriting a viewport height. */
+.cinema-shell .v6-podium-stage{height:390px;min-height:390px}
+.cinema-shell .v6-finish-card{height:350px}
+.cinema-shell .v6-finish-card.v6-finish-1{height:390px}
+.cinema-shell .v6-finish-art{height:auto!important;inset:0 0 22%;z-index:0}
+.cinema-shell .v6-finish-info{z-index:1}
+.cinema-shell .v6-finish-medal{z-index:2}
+.cinema-host.v7-phase-finished .v6-final-grid{flex:0 0 auto}
+.cinema-host.v7-phase-finished .v6-final-actions{padding-bottom:0}
+@media(max-width:760px){
+ .cinema-shell .v6-podium-stage{height:330px;min-height:330px}
+ .cinema-shell .v6-finish-card{height:300px}
+ .cinema-shell .v6-finish-card.v6-finish-1{height:330px}
+ .cinema-shell .v6-finish-info>strong{white-space:normal}
+}
