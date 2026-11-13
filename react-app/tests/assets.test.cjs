@@ -25,7 +25,12 @@ const css=txt(path.join(source,'src/styles/cinematic.css'));
 const catalog=txt(path.join(source,'src/services/catalog.ts'));
 for(const name of buttons)assert.ok(css.includes('button-'+name+'.webp'),'CSS does not load '+name);
 for(const name of panels)assert.ok(css.includes('panel-'+name+'.webp'),'CSS does not load panel '+name);
-for(const name of ['host-control','projector','lobby-qr','podium'])assert.ok(catalog.includes(name+'.webp'),'React V6 must use cinematic background '+name);
+const v7Art=JSON.parse(txt(path.join(root,'assets/the-crimes-v7/manifest.json')));
+for(const name of ['bg-host-lobby-desktop','bg-round-projector','bg-host-lobby-mobile','bg-podium']){
+ assert.ok(v7Art.backgrounds[name],'V7 background missing from manifest: '+name);
+ const entry=v7Art.backgrounds[name];assert.ok(fs.existsSync(path.join(root,entry.path)),'V7 background file missing: '+entry.path);
+}
+assert.ok(catalog.includes('the-crimes-v7/backgrounds/'),'React V7 must use cinematic production assets');
 for(const name of ['detetive','advogado','delegado','estrategista','perita','advogada','investigadora','analista','especialista','auditor','arquivista','mediador']){
  const file=path.join(root,'assets','the-crimes-v3','avatars',name+'.webp');
  assert.ok(fs.existsSync(file),'Missing existing avatar '+name);

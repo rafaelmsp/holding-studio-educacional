@@ -1,0 +1,338 @@
+/* THE CRIMES LIVE V7 — genuine responsive game UI, never screenshots as controls. */
+@import '../design/tokens.css';
+@import '../design/effects.css';
+html{background:#030914;color-scheme:dark}
+body{min-width:320px;overflow-x:hidden}
+.cinema-shell{overflow-x:clip;background-color:var(--v7-base)}
+.cinema-shell,.cinema-shell button,.cinema-shell input,.cinema-shell select{font-family:var(--v7-ui)}
+.cinema-shell h1,.cinema-shell h2,.cinema-shell h3{overflow-wrap:break-word}
+.cinema-background{background-size:cover!important;background-position:center center!important;opacity:.75;filter:saturate(1.09) contrast(1.08)!important}
+.cinema-host .cinema-background{background-image:linear-gradient(100deg,#061021bf,#02091695),url('../../assets/the-crimes-v7/backgrounds/desktop/bg-host-lobby-desktop.webp')!important}
+.cinema-screen .cinema-background{background-image:linear-gradient(100deg,#030a17ba,#020916aa),url('../../assets/the-crimes-v7/backgrounds/projector/bg-round-projector.webp')!important}
+.cinema-player .cinema-background,.cinema-join .cinema-background{background-image:linear-gradient(150deg,#050a1ac5,#020710e5),url('../../assets/the-crimes-v7/backgrounds/mobile/bg-player-mobile.webp')!important}
+.cinema-shell .game-header,.cinema-shell .projector-header{isolation:isolate}
+.cinema-shell .brandmark>div>strong{color:#fff9ed}
+.cinema-shell .brandmark>div>strong em{color:white}
+.cinema-shell .brandmark>div>small{font-weight:900}
+.cinema-shell .cinema-button.v7-button,
+.cinema-shell .cinema-button{touch-action:manipulation}
+.cinema-shell .cinema-button:not(:disabled){cursor:pointer}
+.cinema-shell .cinema-button:disabled{cursor:not-allowed}
+.cinema-shell :is(button,a,input,select,summary):focus-visible{outline:3px solid #ffdf9b!important;outline-offset:3px!important}
+.cinema-shell .v7-button{min-height:50px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.cinema-shell .v7-button:active:not(:disabled){transform:translateY(2px) scale(.99)}
+.cinema-shell .answer-row.interactive:disabled{cursor:default}
+.cinema-shell .answer-row.correct:not(.interactive){outline:1px solid #43ed98}
+.v7-mobile-nav{display:none}
+.v7-share-room{display:flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:8px}
+.v7-share-room button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:43px;padding:8px 12px;border:1px solid #e6b06b;border-radius:5px;background:linear-gradient(#61401f,#24160f);color:#ffe8bf;font:900 12px var(--v7-ui);cursor:pointer}
+.v7-share-room button:first-child{background:linear-gradient(#125071,#0a2036);border-color:#41bbe2;color:#e3f9ff}
+.v7-share-room input{flex:1 1 100%;min-width:0;padding:12px;color:#f3f9ff;border:1px solid #7dc5dc;background:#071525}
+.v7-share-room button:hover:not(:disabled){filter:brightness(1.18)}
+.v7-reconnect{margin:18px auto;max-width:480px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:15px;padding:15px;background:#2b1322;border:1px solid #ed5a69;border-radius:6px}
+.v7-reconnect button{min-height:45px;color:#fff;background:#145677;padding:9px 14px;border:1px solid #58d8ff;border-radius:4px}
+.cinema-shell .v7-badge-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+/* Host lobby / game control desktop */
+.cinema-host .game-header{min-height:88px;padding:0 clamp(10px,1.1vw,22px);gap:16px}
+.cinema-host .game-header .brandmark{min-width:clamp(255px,22vw,400px)}
+.cinema-host .game-header .brand-detective{width:96px;height:90px;object-fit:contain}
+.cinema-host .game-header .brandmark>div>strong{font-size:clamp(30px,2.35vw,49px)!important}
+.cinema-host .host-body{grid-template-columns:clamp(170px,13.8vw,235px) minmax(0,1fr);gap:12px;padding:10px 13px 16px}
+.cinema-host .host-sidebar{background:linear-gradient(155deg,#081928ed,#030713fb)!important;border:1px solid #4685a2!important;border-radius:5px}
+.cinema-host .host-sidebar button{display:flex;gap:10px;align-items:center;padding:9px 12px;width:100%;text-align:left;min-height:49px;letter-spacing:.015em;font-weight:850}
+.cinema-host .host-main{display:flex;flex-direction:column;min-width:0;gap:10px}
+.cinema-host .v6-host-lobby{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(290px,.85fr);gap:13px;min-height:570px}
+.cinema-host .v6-lobby-hero{background:linear-gradient(140deg,#04101ddf,#061728e0),url('../../assets/the-crimes-v7/backgrounds/desktop/bg-host-lobby-desktop.webp') center/cover!important;min-width:0}
+.cinema-host .v6-lobby-hero::before{content:"";position:absolute;inset:0;pointer-events:none;border:1px solid #edbd76aa;box-shadow:inset 0 0 36px #000a}
+.cinema-host .v6-lobby-hero>*{position:relative}
+.cinema-host .v6-lobby-hero h1{font-size:clamp(43px,4vw,73px);color:#ffdd9e;letter-spacing:.01em}
+.cinema-host .v6-lobby-columns{grid-template-columns:minmax(0,1fr) minmax(160px,190px);gap:clamp(8px,1vw,18px);margin-top:0}
+.cinema-host .v6-lobby-guide{min-width:0;background:linear-gradient(155deg,#061728ed,#061120e6);border:1px solid #50b2d4b8;box-shadow:0 9px 23px #0008}
+.cinema-host .v6-lobby-guide p{font-size:clamp(12px,1vw,15px)}
+.cinema-host .v6-lobby-qr{max-width:100%;background:white;box-shadow:0 0 0 4px #1a2735,0 0 35px #df38475c}
+.cinema-host .v6-lobby-case{min-height:92px;background:linear-gradient(112deg,#0d2738e8,#07121ff8);border-color:#ad824a}
+.cinema-host .v6-lobby-case img{height:90px;width:140px;object-fit:cover}
+.cinema-host .v6-lobby-roster{min-height:540px;background:linear-gradient(#061725ee,#030b17f9)!important}
+.cinema-host .v6-roster-empty{min-height:240px}
+.cinema-host .v6-roster-scroll{max-height:485px}
+.cinema-host .v6-roster-entry{min-height:54px}
+.cinema-host .room-ribbon{min-width:0}
+.cinema-host .room-code{font-size:clamp(22px,2vw,36px)}
+.cinema-host .host-dock{position:relative;z-index:4;display:flex;flex-wrap:wrap;gap:7px}
+.cinema-host .host-dock>.cinema-button{flex:1 1 146px;min-width:0;min-height:60px!important;font-size:clamp(12px,.95vw,17px)!important}
+.cinema-host .host-toolbox{flex:0 1 140px;min-width:110px}
+.cinema-host .host-toolbox summary{min-height:60px;display:flex;align-items:center;justify-content:center;gap:6px}
+.cinema-host .round-rail{min-height:53px}
+.cinema-host .host-question{grid-template-columns:minmax(0,39%) minmax(0,61%);min-height:390px}
+.cinema-host .host-question .scene-media{min-height:390px}
+.cinema-host .question-copy{min-width:0;overflow-y:auto;max-height:560px}
+.cinema-host .question-copy .answer-row{min-height:61px}
+.cinema-host .question-copy .answer-row>span{font-size:clamp(14px,1vw,18px)}
+.cinema-host .host-finale{min-height:560px}
+.cinema-host .host-finale .v6-final-board{min-height:560px}
+/* Telão: left scene 28%, central question 46%, right ranking 26%. */
+.projector{min-height:100dvh;background:var(--v7-base)!important}
+.projector .projector-header{height:88px!important;min-height:88px;grid-template-columns:minmax(220px,.78fr) minmax(0,1.5fr) auto}
+.projector .projector-header .brandmark strong{font-size:clamp(28px,2.1vw,44px)}
+.projector .projector-header .brand-detective{height:84px!important;width:85px}
+.projector .projector-main{grid-template-columns:minmax(0,74%) minmax(220px,26%);padding:10px 12px;gap:10px;min-width:0}
+.projector .projector-stage{min-width:0;overflow:hidden;background:linear-gradient(#0b2531,#040c17)}
+.projector .projector-question{grid-template-columns:minmax(0,38%) minmax(0,62%)}
+.projector .projector-question-copy{overflow-y:auto;min-width:0;scrollbar-width:thin;background:linear-gradient(160deg,#091928f8,#030b18fa)!important;padding:clamp(14px,1.15vw,24px)}
+.projector .projector-question-copy h1{font-size:clamp(26px,1.95vw,43px)!important;max-width:38ch;line-height:1.2}
+.projector .projector-question-copy .answer-row{min-height:clamp(56px,7.2vh,89px);font-size:clamp(17px,1.16vw,23px)!important;line-height:1.27}
+.projector .projector-question-copy .answer-letter{font-size:clamp(22px,1.5vw,29px)}
+.projector .projector-side{min-width:0}
+.projector .projector-side .rank-entry{min-height:56px}
+.projector .projector-footer{position:relative;min-height:76px;display:flex;align-items:center;gap:13px}
+.projector .projector-controls{min-width:0;display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+.projector .projector-controls .cinema-button{min-height:50px;font-size:clamp(12px,.98vw,17px)}
+.projector .projector-explanation{border-left:4px solid #42dc95;padding:12px;background:linear-gradient(100deg,#05271fea,#091722f9);color:#ebffef}
+.projector .v6-final-board{background:linear-gradient(95deg,#020718a8,#030b16a4),url('../../assets/the-crimes-v7/backgrounds/projector/bg-final-projector.webp') center/cover}
+.projector .v6-finish-info>strong{white-space:normal;overflow-wrap:anywhere}
+.projector .v6-final-ranking{overflow-y:auto}
+.projector .v6-final-grid{grid-template-columns:minmax(0,1.75fr) minmax(200px,.67fr)}
+/* Player: phone-first, independent game layout and crisp answer cards. */
+.cinema-player .player-app,.cinema-join .player-app{max-width:750px;margin-inline:auto;min-height:100dvh;padding-bottom:env(safe-area-inset-bottom)}
+.cinema-player .player-header,.cinema-join .player-header{height:88px;min-height:88px;background:linear-gradient(90deg,#040e1de4,#060f22ce),url('../../assets/the-crimes-v7/backgrounds/mobile/bg-player-mobile.webp') center/cover!important}
+.cinema-player .gameplay{display:flex;flex-direction:column;gap:9px;padding:9px max(9px,env(safe-area-inset-left)) 20px}
+.cinema-player .player-identity{min-width:0;min-height:80px;box-shadow:var(--v7-frame-shadow)!important}
+.cinema-player .player-identity>div:not(.player-score){min-width:0}
+.cinema-player .player-identity strong{overflow-wrap:anywhere}
+.cinema-player .mobile-round-label{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:8px 11px;font-size:14px;font-weight:950}
+.cinema-player .mobile-round-label .round-rail{min-width:0;flex:1}
+.cinema-player .gameplay .scene-media{max-height:400px;aspect-ratio:16/9;min-height:0}
+.cinema-player .gameplay .scene-media>img{object-fit:cover}
+.cinema-player .player-question{padding:13px 13px 19px;margin-top:0;border:1px solid #56a7c7}
+.cinema-player .player-question h1{font-size:clamp(23px,4.65vw,32px)!important;line-height:1.26;margin:8px 0 14px}
+.cinema-player .player-question .answer-rows{gap:8px}
+.cinema-player .player-question .answer-row{min-height:65px!important;padding:10px;grid-template-columns:42px minmax(0,1fr) 22px}
+.cinema-player .player-question .answer-row>span{font-size:clamp(15px,3.6vw,19px);line-height:1.33}
+.cinema-player .player-question .answer-row.selected:not(.correct){outline:2px solid #74ebff}
+.cinema-player .player-question .answer-letter{font-size:18px}
+.cinema-player .submit-answer.v62-submit-answer{position:sticky;bottom:max(8px,env(safe-area-inset-bottom));z-index:9;min-height:64px;width:100%;background-image:url('../../assets/the-crimes-v7/ui/buttons/gold-default.webp')!important;color:#23170e!important;border-color:#efd68e!important;font-size:20px!important;box-shadow:0 10px 24px #000c,0 0 14px #dda4405a!important}
+.cinema-player .submit-answer.v62-submit-answer:hover:not(:disabled){background-image:url('../../assets/the-crimes-v7/ui/buttons/gold-hover.webp')!important}
+.cinema-player .submit-answer.v62-submit-answer:active:not(:disabled){background-image:url('../../assets/the-crimes-v7/ui/buttons/gold-pressed.webp')!important}
+.cinema-player .player-lobby,.cinema-player .player-final{background-image:linear-gradient(155deg,#030818cb,#020815e9),url('../../assets/the-crimes-v7/backgrounds/mobile/bg-player-mobile.webp')!important}
+.cinema-player .player-final{padding-bottom:30px}
+.cinema-player .player-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+.cinema-player .player-metrics>span{min-width:0}
+.cinema-player .player-metrics small{font-size:10px}
+.cinema-player .player-metrics strong{overflow-wrap:anywhere;font-size:13px}
+.cinema-join .join-heading{background-image:linear-gradient(95deg,#020818ee,#07223ad2),url('../../assets/the-crimes-v7/backgrounds/desktop/bg-lobby-empty.webp')!important}
+.cinema-join .persona-preview>img{object-position:50% 14%}
+.cinema-join .persona-tile{min-height:125px}
+.cinema-join .join-cta{min-width:180px}
+/* Accessibility & responsive layouts */
+@media(min-width:1200px) and (min-height:740px) and (max-height:980px){
+ .cinema-host .game-header{min-height:85px;height:85px}
+ .cinema-host .host-body{padding-top:7px;padding-bottom:7px}
+ .cinema-host .v6-host-lobby{min-height:545px}
+ .cinema-host .host-dock>.cinema-button{min-height:57px!important}
+ .cinema-host .host-toolbox summary{min-height:57px}
+ .projector .projector-question-copy .answer-row{min-height:60px}
+}
+@media(max-width:1199px){
+ .projector .projector-main{grid-template-columns:minmax(0,1fr)}
+ .projector .projector-side{display:none}
+ .projector .projector-question{grid-template-columns:36% 64%}
+ .cinema-host .v6-host-lobby{grid-template-columns:minmax(0,1fr)}
+ .cinema-host .v6-lobby-roster{min-height:260px}
+ .cinema-host .v6-roster-scroll{max-height:235px}
+}
+@media(max-width:850px){
+ .cinema-host .game-header{height:84px!important;min-height:84px!important;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:6px;padding:0 10px;flex-wrap:nowrap}
+ .cinema-host .game-header .brandmark{min-width:0!important;max-width:100%;transform:none!important;gap:3px}
+ .cinema-host .game-header .brand-detective{height:65px!important;width:60px!important;object-fit:contain}
+ .cinema-host .game-header .brandmark>div>strong{font-size:clamp(19px,5.2vw,29px)!important;line-height:1.05;white-space:nowrap}
+ .cinema-host .game-header .brandmark>div>small{font-size:8px;letter-spacing:.07em!important}
+ .cinema-host .game-header .brand-fingerprint{display:none}
+ .cinema-host .header-content{display:none!important}
+ .cinema-host .game-header .live-state{font-size:0!important;width:31px;min-width:31px;padding:7px!important;display:grid;place-items:center;overflow:hidden}
+ .cinema-host .game-header .live-state svg{font-size:initial;width:18px;height:18px}
+ .v7-mobile-nav{display:block;z-index:60;position:relative}
+ .v7-menu-trigger{min-width:51px;min-height:48px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;color:#def3ff;background:#10263b;border:1px solid #5ba7c4;border-radius:6px;font:800 9px var(--v7-ui)}
+ .v7-menu-overlay{position:fixed;inset:0;z-index:110;background:#010714c9;display:flex;align-items:stretch;justify-content:flex-end}
+ .v7-menu-drawer{width:min(340px,88vw);height:100dvh;display:flex;flex-direction:column;gap:4px;overflow-y:auto;padding:17px;background:linear-gradient(150deg,#082339,#030b17);border-left:2px solid #56caed;box-shadow:-14px 0 32px #000e}
+ .v7-menu-drawer>header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:16px;margin-bottom:10px;border-bottom:1px solid #4d8ba6}
+ .v7-menu-drawer>header strong{font-size:19px;color:#ffdca5}
+ .v7-menu-drawer>header button{min-height:44px;min-width:44px;display:grid;place-items:center;background:#2d1423;border:1px solid #e65768;border-radius:5px;color:white}
+ .v7-menu-drawer>button{display:flex;align-items:center;gap:12px;text-align:left;min-height:52px;padding:11px;background:#0b2538;border:1px solid #4687aa;border-radius:5px;color:#f0f7ff;font-weight:850}
+ .v7-menu-drawer>button:disabled{opacity:.45}
+ .v7-menu-drawer>button svg:last-child:not(:first-child){margin-left:auto}
+ .v7-menu-drawer footer{margin-top:auto;padding:13px 0;display:flex;gap:9px;align-items:center;font-size:12px;color:#b8c9d5}
+ .cinema-host .host-body{display:block;min-width:0;padding:8px max(8px,env(safe-area-inset-left)) 18px;gap:0}
+ .cinema-host .host-sidebar{display:none!important}
+ .cinema-host .host-main{width:100%;gap:10px;padding-bottom:218px}
+ .cinema-host .v6-host-lobby{display:flex;flex-direction:column;gap:11px;min-height:0}
+ .cinema-host .v6-lobby-hero{gap:11px;padding:17px 12px 13px;min-height:0;background-image:linear-gradient(160deg,#031222e2,#061426eb),url('../../assets/the-crimes-v7/backgrounds/mobile/bg-host-lobby-mobile.webp')!important}
+ .cinema-host .v6-lobby-hero h1{font-size:clamp(37px,9vw,53px)}
+ .cinema-host .v6-lobby-columns{display:grid;grid-template-columns:minmax(0,1fr);justify-content:center;gap:10px;margin-top:0}
+ .cinema-host .v6-lobby-guide{width:100%;padding:13px;gap:8px}
+ .cinema-host .v6-lobby-guide p{font-size:13px}
+ .cinema-host .v6-lobby-guide p b{width:27px;height:27px;flex-basis:27px}
+ .cinema-host .v6-lobby-qr{max-width:100%;padding:8px;border-width:5px}
+ .cinema-host .v6-lobby-qr svg{width:min(175px,48vw);height:auto}
+ .cinema-host .v6-lobby-case{min-height:80px}
+ .cinema-host .v6-lobby-case img{width:93px;height:91px;flex-shrink:0}
+ .cinema-host .v6-lobby-case strong{font-size:14px}
+ .cinema-host .v6-lobby-case span{font-size:11px}
+ .cinema-host .v6-lobby-roster{min-height:0;border-radius:6px}
+ .cinema-host .v6-lobby-roster h2{font-size:15px;padding:12px}
+ .cinema-host .v6-roster-scroll{padding:8px;max-height:245px;min-height:76px}
+ .cinema-host .v6-roster-entry{grid-template-columns:23px 38px minmax(0,1fr) auto;gap:5px;min-height:47px;padding:4px}
+ .cinema-host .v6-roster-entry img{width:37px;height:38px}
+ .cinema-host .v6-roster-entry strong{font-size:12px}
+ .cinema-host .v6-presence{font-size:9px}
+ .cinema-host .v6-roster-empty{min-height:130px;padding:10px 0;gap:4px}
+ .cinema-host .v6-roster-empty strong{font-size:15px}
+ .cinema-host .v6-roster-empty p{font-size:12px}
+ .cinema-host .v6-roster-footer{padding:8px 10px;font-size:10px;flex-wrap:wrap}
+ .cinema-host .room-ribbon{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;padding:10px;min-height:0}
+ .cinema-host .room-ribbon .room-qr{display:none}
+ .cinema-host .room-current{grid-column:1/-1;padding:12px;min-height:75px}
+ .cinema-host .room-ribbon>div{min-width:0}
+ .cinema-host .live-layout{display:block}
+ .cinema-host .host-question{display:flex;flex-direction:column;min-height:0}
+ .cinema-host .host-question .scene-media{height:auto;min-height:0;aspect-ratio:16/9;max-height:280px}
+ .cinema-host .host-question .question-copy{max-height:none;overflow:visible;padding:13px}
+ .cinema-host .question-copy h1{font-size:22px!important}
+ .cinema-host .host-aside{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin-top:8px}
+ .cinema-host .rank-panel{min-width:0}
+ .cinema-host .round-bar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:5px;padding:7px;min-height:50px}
+ .cinema-host .round-bar strong{font-size:17px!important}
+ .cinema-host .host-dock{position:fixed;left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:max(0px,env(safe-area-inset-bottom));z-index:35;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:8px;background:linear-gradient(145deg,#061b2afb,#071322fc)!important;box-shadow:0 -10px 27px #000d,0 0 0 1px #376b87!important}
+ .cinema-host .host-dock>.cinema-button{width:100%;min-width:0;min-height:56px!important;padding:8px 5px;font-size:12px!important;line-height:1.18}
+ .cinema-host .host-dock>.cinema-button svg{width:19px;height:19px;min-width:19px}
+ .cinema-host .host-toolbox{min-width:0;flex:none}
+ .cinema-host .host-toolbox summary{min-height:56px;padding:7px;white-space:nowrap;font-size:12px}
+ .cinema-host .host-tools-popover{position:absolute;bottom:100%;right:0;width:min(280px,calc(100vw - 30px));z-index:40}
+ .cinema-host .round-rail{width:100%;min-height:52px;padding:6px 7px}
+ .cinema-host .round-rail .rail-caption{font-size:10px}
+ .cinema-host .round-markers{gap:2px}
+ .cinema-host .round-marker{font-size:9px;min-width:0}
+ .cinema-host .host-finale,.cinema-host .host-finale .v6-final-board{min-height:690px}
+ .cinema-host .modal-content{max-width:calc(100vw - 14px);max-height:92dvh;overflow:auto}
+}
+@media(max-width:650px){
+ .cinema-host .setup-view{display:flex;flex-direction:column;padding:12px 9px;gap:11px}
+ .cinema-host .setup-title{padding:8px 12px}
+ .cinema-host .setup-title h1{font-size:27px!important}
+ .cinema-host .case-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .cinema-host .case-tile{min-height:135px!important;aspect-ratio:1.14/1}
+ .cinema-host .case-tile-caption strong{font-size:13px}
+ .cinema-host .create-room-panel{display:flex!important;flex-direction:column;padding:15px!important;gap:10px}
+ .cinema-host .create-room-panel label{font-size:12px}
+ .cinema-host .create-room-panel .cinema-button{min-height:62px!important;font-size:17px!important}
+ .projector .projector-header{height:auto!important;min-height:74px;grid-template-columns:1fr auto}
+ .projector .projector-header .top-stats{display:none}
+ .projector .projector-main{display:block;padding:7px}
+ .projector .projector-question{display:flex;flex-direction:column}
+ .projector .projector-question .scene-media{min-height:0;aspect-ratio:16/9;max-height:300px}
+ .projector .projector-question-copy{overflow:visible}
+ .projector .projector-question-copy h1{font-size:25px!important;max-width:100%}
+ .projector .projector-question-copy .answer-row{min-height:64px}
+ .projector .projector-footer{display:flex;flex-wrap:wrap;padding:10px}
+ .projector .projector-controls{width:100%;justify-content:center}
+ .cinema-player .player-header,.cinema-join .player-header{min-height:80px;height:80px}
+ .cinema-player .player-header .brandmark,.cinema-join .player-header .brandmark{max-width:calc(100% - 47px)}
+ .cinema-player .player-header .brand-detective,.cinema-join .player-header .brand-detective{height:78px;width:65px}
+ .cinema-player .player-header .brandmark strong,.cinema-join .player-header .brandmark strong{font-size:24px!important}
+ .cinema-player .player-header .brandmark small,.cinema-join .player-header .brandmark small{font-size:8px}
+ .cinema-player .player-question h1{font-size:clamp(21px,5.2vw,27px)!important}
+ .cinema-player .gameplay{padding-inline:9px}
+ .cinema-player .gameplay .scene-media{max-height:295px}
+ .cinema-player .mobile-round-label{gap:6px}
+ .cinema-player .mobile-round-label .rail-caption{display:none}
+ .cinema-player .mobile-round-label .round-marker{font-size:9px;padding:4px 2px}
+ .cinema-player .player-question .answer-row{min-height:65px!important}
+ .cinema-join .join-card{margin:5px 7px 20px}
+ .cinema-join .join-footer{display:flex;flex-direction:column;gap:9px}
+ .cinema-join .join-cta{width:100%}
+}
+@media(max-width:380px){
+ .cinema-host .game-header .brandmark>div>strong{font-size:19px!important}
+ .cinema-host .v6-lobby-hero h1{font-size:36px}
+ .cinema-host .v6-lobby-case img{width:75px}
+ .cinema-host .host-dock{gap:5px;padding:6px}
+ .cinema-host .host-dock>.cinema-button{font-size:11px!important}
+ .cinema-player .player-question .answer-row{grid-template-columns:36px minmax(0,1fr) 20px}
+ .cinema-player .player-metrics{gap:3px}
+}
+@media(prefers-reduced-motion:reduce){
+ .v7-phase-tag,.v7-share-room button,.v7-case-beat{animation:none!important;transition:none!important}
+}
+
+/* V7 final polish after real-device screenshots */
+.cinema-shell .brand-detective{object-fit:cover!important;object-position:50% 9%!important;border-bottom-left-radius:35%;mask-image:linear-gradient(180deg,#000 4%,#000 75%,transparent 100%);filter:drop-shadow(0 0 12px #65bbd266)}
+.cinema-host .v6-lobby-hero{background-image:linear-gradient(145deg,#04101d9e,#061728ad),url('../../assets/the-crimes-v7/backgrounds/desktop/bg-host-lobby-desktop.webp')!important}
+.projector .projector-main:has(.v6-cinematic-final){grid-template-columns:minmax(0,1fr)!important}
+.projector .projector-main:has(.v6-cinematic-final) .projector-stage{width:100%;min-width:0}
+.projector .v6-finish-medal{top:32%!important}
+.projector .v6-finish-info{padding-top:55px}
+.projector .v6-finish-info>strong{line-height:1.14;max-width:98%}
+.projector .v6-finish-1 .v6-finish-info{background:linear-gradient(0deg,#1e1405fd,#49331eea 68%,#1e1a17de)}
+.cinema-host .host-finale .v6-finish-medal{top:32%!important}
+.cinema-host .host-finale .v6-finish-info{padding-top:51px}
+@media(max-width:850px){
+ .cinema-host .v6-lobby-hero{background-image:linear-gradient(160deg,#031222b2,#061426af),url('../../assets/the-crimes-v7/backgrounds/mobile/bg-host-lobby-mobile.webp')!important}
+ .cinema-host .game-header .brand-detective{object-position:45% 18%!important}
+}
+
+/* Isolated interactive V7 showroom — explicitly simulated, never a real match. */
+.v7-showroom-shell{--v7-base:#050916;min-height:100dvh;color:#f5f7fc;background:linear-gradient(115deg,#030817ec,#07182ee7),url('../../assets/the-crimes-v7/backgrounds/desktop/bg-host-lobby-desktop.webp') center/cover fixed;font-family:var(--v7-ui)}
+.v7-showroom-shell *{box-sizing:border-box}
+.v7-showroom-header{display:flex;align-items:center;gap:clamp(12px,2vw,25px);padding:10px clamp(12px,2vw,28px);border-bottom:2px solid #3fa6ca;background:#050e1bf2;min-height:100px}
+.v7-showroom-header>.brandmark{min-width:250px}
+.v7-showroom-header>.brandmark>div>strong{font:italic 900 clamp(24px,2.2vw,35px) Georgia,serif}
+.v7-showroom-header>.brandmark>.brand-detective{height:80px;width:76px;object-fit:cover;object-position:50% 10%;mask-image:linear-gradient(#000 70%,transparent)}
+.v7-showroom-header>div:nth-child(2){display:grid;gap:4px;margin-left:auto;text-align:right}
+.v7-showroom-header>div:nth-child(2)>strong{font:900 clamp(16px,1.5vw,26px) Georgia,serif;color:#ffda91}
+.v7-showroom-header>div:nth-child(2)>small{font-size:12px;color:#c8dfec}
+.v7-showroom-header>a{display:flex;gap:7px;align-items:center;justify-content:center;color:#e0faff;border:1px solid #65c4e2;padding:10px;background:#0a2c48;text-decoration:none;font-weight:900;min-height:48px;border-radius:6px}
+.v7-showroom-warning{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:13px clamp(12px,2vw,28px);padding:11px 14px;background:#332215ee;border:1px solid #ad8047;color:#f5deb2;font-size:13px}
+.v7-showroom-warning b{letter-spacing:.05em}
+.v7-showroom-tabs{display:flex;flex-wrap:wrap;gap:7px;margin:0 clamp(12px,2vw,28px) 13px}
+.v7-showroom-tabs button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:48px;padding:10px 18px;border:1px solid #4787a5;border-radius:5px;color:#cee8f8;background:#071e2f;font-weight:900;cursor:pointer}
+.v7-showroom-tabs button.active{background:linear-gradient(135deg,#563419,#1e1821);border-color:#f8c470;color:#ffe4af;box-shadow:0 0 15px #f5ad5277}
+.v7-showroom-preview{max-width:1800px;margin:0 auto;padding:0 clamp(12px,2vw,28px) 15px;min-height:485px}
+.v7-showroom-preview .v7-frame{padding:18px}
+.v7-showroom-host{display:grid;gap:10px;max-width:1120px;margin:auto;min-height:560px;text-align:center;background:linear-gradient(150deg,#040e1ddb,#09192bdc),url('../../assets/the-crimes-v7/backgrounds/desktop/bg-host-lobby-desktop.webp') center/cover!important}
+.v7-showroom-host>h1{font:italic 950 clamp(39px,5vw,70px) Georgia,serif;color:#ffdb93;text-shadow:0 0 21px #db975894;margin:4px}
+.v7-showroom-host>.v7-phase-tag{justify-self:center}
+.v7-showroom-columns{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}
+.v7-showroom-columns>.v7-frame{min-height:172px;display:flex;flex-direction:column;gap:9px}
+.v7-showroom-columns h2{font-size:19px;color:#ffdd9c;margin:0}
+.v7-showroom-columns p{font-size:14px;color:#d1e6f4;line-height:1.5;margin:0}
+.v7-showroom-columns img{height:112px;width:100%;object-fit:cover;border-radius:5px}
+.v7-showroom-columns small{color:#c8d3e2}
+.v7-showroom-question{display:grid;grid-template-columns:minmax(0,38%) minmax(0,62%);gap:10px;min-height:540px}
+.v7-showroom-question>.scene-media{height:540px}
+.v7-showroom-question>.v7-frame{overflow:auto;max-height:650px}
+.v7-showroom-question .v7-badge-row{display:flex;align-items:center;justify-content:space-between;gap:7px;flex-wrap:wrap}
+.v7-showroom-question h1{font-size:clamp(24px,2.1vw,38px);line-height:1.23;max-width:39ch}
+.v7-showroom-question .answer-row{min-height:65px;font-size:clamp(16px,1.2vw,23px)}
+.v7-showroom-explanation{padding:13px;border-left:3px solid #52ebac;background:#092b20;color:#e6fcec}
+.v7-showroom-phone{width:min(400px,100%);min-height:650px;margin:auto;padding:15px;background:linear-gradient(#081c2df8,#030916),url('../../assets/the-crimes-v7/backgrounds/mobile/bg-player-mobile.webp') center/cover;border:2px solid #52abca;border-radius:25px;box-shadow:0 18px 45px #000d}
+.v7-showroom-player-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:11px;font-size:12px;color:#ffcd80}
+.v7-showroom-phone .scene-media{aspect-ratio:16/9;min-height:0}
+.v7-showroom-phone h2{font-size:22px;line-height:1.24;color:#f4f7fa}
+.v7-showroom-phone .answer-row{min-height:67px;font-size:15px}
+.v7-showroom-phone>.cinema-button{width:100%;margin:14px 0 5px}
+.v7-showroom-podium{max-width:1450px;margin:auto;min-height:600px;background:linear-gradient(#02091593,#040c19c4),url('../../assets/the-crimes-v7/backgrounds/desktop/bg-podium.webp') center/cover;border:1px solid #b99863}
+.v7-showroom-podium .v6-final-board{height:620px}
+.v7-showroom-controls{position:sticky;bottom:0;z-index:5;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:10px 15px;background:#051522fa;border-top:1px solid #4d9ac0}
+.v7-showroom-controls .cinema-button{min-height:50px;flex:0 1 225px}
+@media(max-width:800px){
+ .v7-showroom-header{flex-wrap:wrap;min-height:80px}
+ .v7-showroom-header>div:nth-child(2){display:none}
+ .v7-showroom-header>.brandmark{min-width:0}
+ .v7-showroom-header>a{margin-left:auto;font-size:11px;padding:8px}
+ .v7-showroom-question{display:flex;flex-direction:column}
+ .v7-showroom-question>.scene-media{height:auto;aspect-ratio:16/9}
+ .v7-showroom-question>.v7-frame{max-height:none}
+ .v7-showroom-columns{grid-template-columns:1fr}
+ .v7-showroom-warning{font-size:11px}
+ .v7-showroom-podium .v6-final-board{height:auto;min-height:680px}
+ .v7-showroom-controls .cinema-button{flex:1 1 130px;font-size:12px}
+}

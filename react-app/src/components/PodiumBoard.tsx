@@ -1,4 +1,4 @@
-import {motion} from 'framer-motion';
+import {motion,useReducedMotion} from 'framer-motion';
 import {Crown,Trophy,Scale,Users,Target,RotateCcw,ShieldCheck} from 'lucide-react';
 import type {PublicPlayer,PublicRoom} from '../services/types';
 import {avatar,characterPortrait,profileName} from '../services/catalog';
@@ -17,9 +17,10 @@ export function CharacterFace({player,avatars={},hero=false}:{player:PublicPlaye
 }
 function FinishCard({player,rank,avatars}:{player:PublicPlayer|null;rank:number;avatars?:Record<string,string>}){
  const total=player?answered(player):0,right=player?hits(player):0,accuracy=total?Math.round(right/total*100):0;
+ const reduceMotion=useReducedMotion();
  return <motion.article className={'v6-finish-card v6-finish-'+rank+(player?'':' is-vacant')}
-  initial={{opacity:0,y:38,scale:.94}} animate={{opacity:1,y:0,scale:1}}
-  transition={{duration:.55,delay:rank===1?.15:rank===2?.45:.7}}>
+  initial={reduceMotion?false:{opacity:0,y:38,scale:.94}} animate={{opacity:1,y:0,scale:1}}
+  transition={reduceMotion?{duration:0}:{duration:.55,delay:rank===1?.15:rank===2?.45:.7}}>
   <div className="v6-finish-art">{player?<CharacterFace player={player} avatars={avatars} hero/>:<div className="v6-empty-portrait"><Users size={35}/></div>}</div>
   <div className="v6-finish-medal" aria-label={rank+'º lugar'}>{rank===1?<Crown size={21}/>:<Trophy size={16}/>}<b>{rank}</b></div>
   <div className="v6-finish-info">

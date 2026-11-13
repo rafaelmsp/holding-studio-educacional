@@ -9,6 +9,7 @@ import {useRoomRealtime,broadcastRoom} from '../services/realtime';
 import {playerUrl,action} from '../services/api';
 import {requestId} from '../services/types';
 import {BACKGROUNDS} from '../services/catalog';
+import {CaseBeat,PhaseTag} from '../components/v7/V7UI';
 
 export default function Screen(){
  const code=useGame(s=>s.code),room=useGame(s=>s.room),players=useGame(s=>s.players);
@@ -81,7 +82,7 @@ export default function Screen(){
          </motion.div>:room.question?<motion.div key={'round-'+round} className="projector-question" initial={{opacity:.45}} animate={{opacity:1}} exit={{opacity:0}}>
            <SceneMedia caseKey={room.case_key} caseTitle={room.case_title} round={round} large/>
            <section className="projector-question-copy">
-             <div className="question-round"><span>PERGUNTA DA RODADA {String(round).padStart(2,'0')}</span><Countdown room={room}/></div>
+             <div className="question-round"><span>PERGUNTA DA RODADA {String(round).padStart(2,'0')}</span><Countdown room={room}/></div><CaseBeat round={round} compact/>
              <h1>{room.question.text}</h1>
              <AnswerRows question={room.question} revealed={room.revealed}/>
              {room.revealed?<div className="projector-explanation"><strong>RESPOSTA REVELADA</strong><p>{room.question.explanation||'Observe a alternativa juridicamente adequada e a fundamentação do caso.'}</p></div>:<div className="projector-stats"><span><Users size={17}/> RESPOSTAS RECEBIDAS <b>{room.responded}/{room.players_total}</b></span><span>STATUS <b>{room.locked?'BLOQUEADO':'RESPONDENDO...'}</b></span></div>}
@@ -95,7 +96,7 @@ export default function Screen(){
        </aside>
       </div>
       <RoundRail round={round} finished={room?.status==='finished'}/>
-      <footer className="projector-footer"><span className="footer-room">SALA {code} <RoomBadge room={room}/></span>
+      <footer className="projector-footer"><span className="footer-room">SALA {code} <RoomBadge room={room}/> <PhaseTag room={room}/></span>
        <div className="projector-controls">
          {screenToken&&room?.status==='running'&&!room?.revealed?<button disabled={busy} className="cinema-button cyan" onClick={()=>void command('reveal')}><Eye size={22}/> REVELAR RESPOSTA</button>:null}
          {screenToken&&room?.status==='running'?<button disabled={busy} className="cinema-button gold" onClick={()=>void command('next')}><ChevronsRight size={22}/> {round>=8?'ENCERRAR':'PULAR / PRÓXIMA'}</button>:null}

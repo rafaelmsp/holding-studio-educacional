@@ -9,6 +9,7 @@ import {CASES,caseCover,avatar} from '../services/catalog';
 import {revision,requestId} from '../services/types';
 import {answeredAttempts} from '../services/score';
 import PodiumBoard from '../components/PodiumBoard';
+import {MobileHostNav,ShareRoom,CaseBeat,PhaseTag,AccessibilityAnnouncement} from '../components/v7/V7UI';
 import {CinematicShell,Brand,LiveStatus,Countdown,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
 
 export default function Host(){
@@ -35,8 +36,11 @@ export default function Host(){
   }catch{setCopyFeedback('error');}
  },[code]);
  useEffect(()=>{
-   const params=new URLSearchParams(location.search),urlCode=params.get('room');
-   if(urlCode&&!code){const stored=localStorage.getItem(adminStorage(urlCode.toUpperCase()));if(stored){setToken(stored);setCode(urlCode.toUpperCase());}}
+   const params=new URLSearchParams(location.search),urlCode=(params.get('room')||'').trim().toUpperCase();
+   if(!urlCode)return;
+   const stored=localStorage.getItem(adminStorage(urlCode));
+   if(stored&&stored!==useGame.getState().adminToken)setToken(stored);
+   if(urlCode!==code)setCode(urlCode);
  },[code,setCode,setToken]);
  const create=async()=>{
   setBusy(true);setError(null);
@@ -51,7 +55,7 @@ export default function Host(){
  const send=useCallback(async(name:string)=>{
   if(!code||!token||busy)return;
   const missing=Math.max(0,Number(room?.players_total||0)-Number(room?.responded||0));
-  if(name==='next'&&!confirm(missing>0?'Há '+missing+' jogador(es) sem responder. Avançar mesmo assim?':!room?.revealed?'Avançar sem revelar a resposta desta rodada?':'Ir para a próxima rodada?'))return;
+  if(name==='next'&&(missing>0||!room?.revealed)&&!confirm(missing>0?'Há '+missing+' jogador(es) sem responder. Avançar mesmo assim?':'Avançar sem revelar a resposta desta rodada?'))return;
   if(name==='finish'&&!confirm('Encerrar a partida para todos os jogadores?'))return;
   if(name==='reset'&&!confirm('Resetar respostas e pontuações? Jogadores permanecerão na sala.'))return;
   setBusy(true);setError(null);
@@ -88,7 +92,7 @@ export default function Host(){
  const number=Number(room?.current_round||1),isLive=room?.status==='running';
  return <CinematicShell mode="host">
    <header className="game-header">
-     <Brand/><div className="header-content">{code?<TopStats room={room} online={online}/>:<p className="head-slogan">INVESTIGAÇÃO • ESTRATÉGIA • DIREITO • NEGÓCIOS</p>}</div><LiveStatus/>
+     <Brand/><MobileHostNav onNavigate={setModal} onScreen={()=>window.open(screenUrl(code),'the-crimes-react-screen')} code={code}/><div className="header-content">{code?<TopStats room={room} online={online}/>:<p className="head-slogan">INVESTIGAÇÃO • ESTRATÉGIA • DIREITO • NEGÓCIOS</p>}</div><LiveStatus/>
    </header>
    {!code||!token?<div className="setup-view">
      <div className="setup-title"><h1>ESCOLHA O <span>CASO DA AULA</span></h1><p>Crie uma investigação ao vivo com personagens, respostas e ranking em tempo real.</p></div>
@@ -116,14 +120,14 @@ export default function Host(){
        {room?.status==='waiting'||!room?<section className="v6-host-lobby" aria-label="Sala aguardando jogadores">
         <div className="v6-lobby-hero">
          <span className="v6-eyebrow"><FolderOpen size={15}/> SALA DA PARTIDA</span>
-         <h1>{code}</h1><p className="v6-lobby-state"><span className="v6-online-dot"/> AGUARDANDO JOGADORES</p>
+         <h1>{code}</h1><p className="v6-lobby-state"><span className="v6-online-dot"/> AGUARDANDO JOGADORES</p><PhaseTag room={room}/>
          <div className="v6-lobby-columns">
           <div className="v6-lobby-guide">
            <strong>COMO PARTICIPAR</strong>
            <p><b>01</b> Abra a câmera do celular.</p>
            <p><b>02</b> Aponte para o QR Code.</p>
            <p><b>03</b> Digite seu nome e escolha o personagem.</p>
-           <button type="button" onClick={()=>void copyJoinLink()} className="v6-copy-link"><Copy size={16}/> {copyFeedback==='success'?'LINK COPIADO!':'COPIAR LINK DE ENTRADA'}</button>
+           <ShareRoom url={playerUrl(code)} onFeedback={(_,ok)=>setCopyFeedback(ok?'success':'error')}/>
           </div>
           <div className="v6-lobby-qr"><QRCodeSVG value={playerUrl(code)} size={190} fgColor="#06101e" bgColor="#fff" includeMargin aria-label="QR Code para entrar na sala"/></div>
          </div>
@@ -152,7 +156,7 @@ export default function Host(){
            {room?.question&&room.status!=='finished'?<div className="host-question">
              <SceneMedia caseKey={room.case_key} caseTitle={room.case_title} round={number}/>
              <div className="question-copy"><span className="question-label">PERGUNTA DA RODADA {String(number).padStart(2,'0')}</span>
-               <h1>{room.question.text}</h1><AnswerRows question={room.question} revealed={room.revealed}/>
+               <h1>{room.question.text}</h1><CaseBeat round={number} compact/><AnswerRows question={room.question} revealed={room.revealed}/>
                {room.revealed&&room.question.explanation&&<p className="explanation">{room.question.explanation}</p>}
              </div>
            </div>:room?.status==='finished'?<section className="host-finale" aria-label="Pódio final da partida"><PodiumBoard players={players} room={room} avatars={avatars} onRestart={()=>void send('reset')} restarting={busy}/></section>:<div className="host-empty" style={{backgroundImage:'linear-gradient(#030b17aa,#050d1bea),url("'+caseCover(room?.case_key||selectedCase)+'")'}}>
@@ -185,6 +189,7 @@ export default function Host(){
          </div></details>
        </section>
        <RoundRail round={number} finished={room?.status==='finished'}/>
+       <AccessibilityAnnouncement>{busy?'Processando comando do Host':room?.revealed?'Alternativa correta revelada':'Aguardando comando'}</AccessibilityAnnouncement>
        <ErrorLine message={error}/>
        {copyFeedback!=='idle'&&<div className={'v62-toast '+copyFeedback} role="status" aria-live="polite">
          <Copy size={17}/> {copyFeedback==='success'?'Link da sala copiado para compartilhar.':'Não foi possível copiar automaticamente. Use o QR Code.'}
