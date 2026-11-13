@@ -1,3 +1,4 @@
+import RoundTelemetry from '../components/RoundTelemetry';
 import {useCallback,useEffect,useRef,useState} from 'react';
 import {motion,AnimatePresence} from 'framer-motion';
 import {QRCodeSVG} from 'qrcode.react';
@@ -162,10 +163,10 @@ export default function Host(){
           <button type="button" className="v7-share-link cinema-button gold" onClick={()=>void shareJoinLink()}><Share2 size={20}/> COMPARTILHAR SALA</button>
           <div className="v6-lobby-qr"><QRCodeSVG value={playerUrl(code)} size={190} fgColor="#06101e" bgColor="#fff" includeMargin aria-label="QR Code para entrar na sala"/></div>
          </div>
-         <div className="v6-lobby-case"><img src={caseCover(room?.case_key||selectedCase)} alt=""/><div><small>CASO SELECIONADO</small><strong>{room?.case_title||CASES.find(x=>x.key===selectedCase)?.title}</strong><span>8 rodadas de investigação jurídica</span></div></div>
+         <button type="button" className="v6-lobby-case" onClick={()=>setModal('cases')} aria-label="Ver detalhes do caso selecionado"><img src={caseCover(room?.case_key||selectedCase)} alt=""/><div><small>CASO SELECIONADO</small><strong>{room?.case_title||CASES.find(x=>x.key===selectedCase)?.title}</strong><span>8 rodadas de investigação jurídica</span></div><ChevronsRight size={24}/></button>
         </div>
         <aside className="v6-lobby-roster">
-         <h2><Users size={21}/> JOGADORES NA SALA <span>{players.length}/{maxPlayers}</span></h2>
+         <h2><Users size={21}/> JOGADORES NA SALA <span>{players.length}/{Number((admin?.room as unknown as {maxPlayers?:number})?.maxPlayers)||maxPlayers}</span></h2>
          <div className="v6-roster-scroll">{players.length?players.map((p,i)=><div className="v6-roster-entry" key={p.player_id}>
           <b>{String(i+1).padStart(2,'0')}</b><img src={avatar(p.avatar_id||avatars[p.player_id]||'detetive')} alt=""/><strong>{p.nickname}</strong><span className={'v6-presence '+(presenceIds.includes(p.player_id)||p.connected?'online':'offline')}>{presenceIds.includes(p.player_id)||p.connected?'● ONLINE':'○ CONECTANDO'}</span>
          </div>):<div className="v6-roster-empty"><Users size={43}/><strong>Nenhum jogador ainda</strong><p>O primeiro participante aparecerá assim que entrar pelo QR Code.</p></div>}</div>
@@ -196,6 +197,7 @@ export default function Host(){
            </div>}
          </div>
          <aside className="host-aside">
+           {room&&room.status!=='finished'&&<RoundTelemetry room={room}/>}
            {room?<ClassProgress room={room}/>:null}
            <section className="rank-panel"><h2><span>🏆</span> RANKING (TOP 5)</h2><RankList players={players} avatars={avatars} ids={presenceIds}/></section>
          </aside>
@@ -203,7 +205,7 @@ export default function Host(){
        </>}
        <section className="host-dock" aria-label="Controles administrativos">
          <button className="cinema-button secondary" onClick={()=>window.open(screenUrl(code),'the-crimes-react-screen')}><Monitor size={22}/> ABRIR TELÃO</button>
-         {room?.status==='waiting'?<button className="cinema-button mint" disabled={busy} onClick={()=>void send('start')}><Play size={23}/> INICIAR PARTIDA</button>:null}
+         {room?.status==='waiting'?<button className="cinema-button gold" disabled={busy} onClick={()=>void send('start')}><Play size={23}/> INICIAR PARTIDA</button>:null}
          {room?.status==='paused'?<button className="cinema-button mint" disabled={busy} onClick={()=>void send('resume')}><Play size={23}/> CONTINUAR</button>:null}
          {isLive&&!room?.revealed?<button className="cinema-button cyan" disabled={busy||room?.locked&&room?.revealed} onClick={()=>void send('reveal')}><Eye size={24}/> REVELAR RESPOSTA</button>:null}
          {isLive?<button className="cinema-button gold" disabled={busy} onClick={()=>void send(number>=8?'finish':'next')}><ChevronsRight size={25}/> {number>=8?'CONCLUIR 8ª RODADA':'PULAR / PRÓXIMA'}</button>:null}

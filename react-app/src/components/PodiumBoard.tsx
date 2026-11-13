@@ -1,4 +1,4 @@
-import {motion} from 'framer-motion';
+import {motion,useReducedMotion} from 'framer-motion';
 import {Crown,Trophy,Scale,Users,Target,RotateCcw,ShieldCheck} from 'lucide-react';
 import type {PublicPlayer,PublicRoom} from '../services/types';
 import {avatar,characterPortrait,profileName} from '../services/catalog';
@@ -16,10 +16,11 @@ export function CharacterFace({player,avatars={},hero=false}:{player:PublicPlaye
  </div>;
 }
 function FinishCard({player,rank,avatars}:{player:PublicPlayer|null;rank:number;avatars?:Record<string,string>}){
+ const reduced=useReducedMotion();
  const total=player?answered(player):0,right=player?hits(player):0,accuracy=total?Math.round(right/total*100):0;
  return <motion.article className={'v6-finish-card v6-finish-'+rank+(player?'':' is-vacant')}
-  initial={{opacity:0,y:38,scale:.94}} animate={{opacity:1,y:0,scale:1}}
-  transition={{duration:.55,delay:rank===1?.15:rank===2?.45:.7}}>
+  initial={reduced?false:{opacity:0,y:38,scale:.94}} animate={{opacity:1,y:0,scale:1}}
+  transition={{duration:reduced?0:.55,delay:reduced?0:rank===3?0:rank===2?.3:.6}}>
   <div className="v6-finish-art">{player?<CharacterFace player={player} avatars={avatars} hero/>:<div className="v6-empty-portrait"><Users size={35}/></div>}</div>
   <div className="v6-finish-medal" aria-label={rank+'º lugar'}>{rank===1?<Crown size={21}/>:<Trophy size={16}/>}<b>{rank}</b></div>
   <div className="v6-finish-info">
@@ -57,7 +58,7 @@ export default function PodiumBoard({players,room,avatars={},onRestart,restartin
    <div><Target size={18}/><span>DESCOBERTAS</span><b>{room.ocultacao_descoberta_count??'—'}</b></div>
   </div>
   <div className="v6-final-actions">{onRestart?<button type="button" className="cinema-button gold v6-restart" onClick={onRestart} disabled={restarting}>
-   <RotateCcw size={20}/> JOGAR NOVAMENTE / VOLTAR AO LOBBY
+   <RotateCcw size={20}/> VOLTAR AO LOBBY
   </button>:<p className="v6-wait-host">Aguarde o professor para iniciar uma nova partida.</p>}</div>
  </div>;
 }

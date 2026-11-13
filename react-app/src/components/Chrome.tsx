@@ -64,8 +64,9 @@ export function AnswerRows({question,revealed=false,selected=null,onSelect,disab
  </div>;
 }
 export function SceneMedia({caseKey,round=1,caseTitle='',large=false,clock}:{caseKey:string;round?:number;caseTitle?:string;large?:boolean;clock?:React.ReactNode}){
+ const reduced=useReducedMotion();
  return <div className={'scene-media '+(large?'scene-large':'')}>
-  <motion.img key={caseKey+'-'+round} initial={{scale:1.07,opacity:.75}} animate={{scale:1,opacity:1}} transition={{duration:1.1,ease:'easeOut'}} src={caseScene(caseKey,round)} alt={'Cena ilustrativa de '+caseTitle+' na rodada '+round}/>
+  <motion.img key={caseKey+'-'+round} initial={reduced?false:{scale:1.07,opacity:.75}} animate={{scale:1,opacity:1}} transition={{duration:reduced?0:1.1,ease:'easeOut'}} src={caseScene(caseKey,round)} alt={'Cena ilustrativa de '+caseTitle+' na rodada '+round}/>
   <div className="scene-vignette"/>
   <div className="v62-scene-record" aria-hidden="true"><span>● REC</span><b>ARQUIVO {String(round).padStart(2,'0')} / 08</b></div>
   <div className="scene-label"><small>CENA FICTÍCIA • RODADA {String(round).padStart(2,'0')}</small><strong>{caseTitle}</strong></div>
