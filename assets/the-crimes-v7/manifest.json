@@ -1,0 +1,136 @@
+{
+  "version": "7.0.0",
+  "generated_by": "scripts/build-v7-art.py",
+  "policy": "Backgrounds have no UI, QR, names, scores, captions or buttons. All functional text and interaction is React.",
+  "source_notice": "Derived from existing photographic/vector art already in this repository; preserve and review upstream provenance before redistribution.",
+  "backgrounds": {
+    "bg-host-lobby-desktop": {
+      "path": "assets/the-crimes-v7/backgrounds/desktop/bg-host-lobby-desktop.webp",
+      "width": 1792,
+      "height": 1008,
+      "source": "assets/the-crimes-v6/backgrounds/host-control.webp",
+      "bytes": 122456
+    },
+    "bg-round-desktop": {
+      "path": "assets/the-crimes-v7/backgrounds/desktop/bg-round-desktop.webp",
+      "width": 1792,
+      "height": 1008,
+      "source": "assets/the-crimes-v3/global/investigation-keyart.webp",
+      "bytes": 137606
+    },
+    "bg-podium": {
+      "path": "assets/the-crimes-v7/backgrounds/desktop/bg-podium.webp",
+      "width": 1792,
+      "height": 1008,
+      "source": "assets/the-crimes-v3/global/courtroom.webp",
+      "bytes": 137262
+    },
+    "bg-lobby-empty": {
+      "path": "assets/the-crimes-v7/backgrounds/desktop/bg-lobby-empty.webp",
+      "width": 1792,
+      "height": 1008,
+      "source": "assets/the-crimes-v3/global/command-center.webp",
+      "bytes": 113702
+    },
+    "bg-reveal": {
+      "path": "assets/the-crimes-v7/backgrounds/desktop/bg-reveal.webp",
+      "width": 1792,
+      "height": 1008,
+      "source": "assets/the-crimes-v3/global/courtroom.webp",
+      "bytes": 112988
+    },
+    "bg-loading": {
+      "path": "assets/the-crimes-v7/backgrounds/desktop/bg-loading.webp",
+      "width": 1792,
+      "height": 1008,
+      "source": "assets/the-crimes-v6/backgrounds/host-control.webp",
+      "bytes": 95198
+    },
+    "bg-host-lobby-mobile": {
+      "path": "assets/the-crimes-v7/backgrounds/mobile/bg-host-lobby-mobile.webp",
+      "width": 864,
+      "height": 1536,
+      "source": "assets/the-crimes-v6/backgrounds/host-control.webp",
+      "bytes": 35686
+    },
+    "bg-player-mobile": {
+      "path": "assets/the-crimes-v7/backgrounds/mobile/bg-player-mobile.webp",
+      "width": 864,
+      "height": 1536,
+      "source": "assets/the-crimes-v3/global/investigation-keyart.webp",
+      "bytes": 42128
+    },
+    "bg-round-projector": {
+      "path": "assets/the-crimes-v7/backgrounds/projector/bg-round-projector.webp",
+      "width": 1920,
+      "height": 1080,
+      "source": "assets/the-crimes-v3/global/investigation-keyart.webp",
+      "bytes": 160746
+    },
+    "bg-final-projector": {
+      "path": "assets/the-crimes-v7/backgrounds/projector/bg-final-projector.webp",
+      "width": 1920,
+      "height": 1080,
+      "source": "assets/the-crimes-v3/global/courtroom.webp",
+      "bytes": 147310
+    }
+  },
+  "characters": {
+    "portraits": [
+      "advogada.webp",
+      "advogado.webp",
+      "analista.webp",
+      "arquivista.webp",
+      "auditor.webp",
+      "delegado.webp",
+      "detetive.webp",
+      "especialista.webp",
+      "estrategista.webp",
+      "investigadora.webp",
+      "mediador.webp",
+      "perita.webp"
+    ],
+    "avatars": [
+      "advogada.webp",
+      "advogado.webp",
+      "analista.webp",
+      "arquivista.webp",
+      "auditor.webp",
+      "delegado.webp",
+      "detetive.webp",
+      "especialista.webp",
+      "estrategista.webp",
+      "investigadora.webp",
+      "mediador.webp",
+      "perita.webp"
+    ]
+  },
+  "frames": [
+    "frame-panel-bronze.svg",
+    "frame-panel-cyan.svg",
+    "frame-panel-gold.svg",
+    "frame-panel-red.svg",
+    "frame-panel-silver.svg"
+  ],
+  "buttons": [
+    "cyan-default.webp",
+    "cyan-hover.webp",
+    "cyan-pressed.webp",
+    "gold-default.webp",
+    "gold-hover.webp",
+    "gold-pressed.webp",
+    "mint-default.webp",
+    "mint-hover.webp",
+    "mint-pressed.webp",
+    "red-default.webp",
+    "red-hover.webp",
+    "red-pressed.webp",
+    "steel-default.webp",
+    "steel-hover.webp",
+    "steel-pressed.webp"
+  ],
+  "fx": [
+    "fx/grain.png",
+    "fx/light-streaks.svg"
+  ]
+}

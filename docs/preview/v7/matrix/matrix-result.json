@@ -1,0 +1,295 @@
+{
+  "pass": true,
+  "checks": 36,
+  "errors": [],
+  "matrix": [
+    {
+      "viewport": "320x800",
+      "tab": "Host",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 320
+    },
+    {
+      "viewport": "320x800",
+      "tab": "Telão",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 320
+    },
+    {
+      "viewport": "320x800",
+      "tab": "Jogador",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 320
+    },
+    {
+      "viewport": "320x800",
+      "tab": "Pódio",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 320
+    },
+    {
+      "viewport": "360x800",
+      "tab": "Host",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 360
+    },
+    {
+      "viewport": "360x800",
+      "tab": "Telão",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 360
+    },
+    {
+      "viewport": "360x800",
+      "tab": "Jogador",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 360
+    },
+    {
+      "viewport": "360x800",
+      "tab": "Pódio",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 360
+    },
+    {
+      "viewport": "390x844",
+      "tab": "Host",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 390
+    },
+    {
+      "viewport": "390x844",
+      "tab": "Telão",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 390
+    },
+    {
+      "viewport": "390x844",
+      "tab": "Jogador",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 390
+    },
+    {
+      "viewport": "390x844",
+      "tab": "Pódio",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 390
+    },
+    {
+      "viewport": "412x915",
+      "tab": "Host",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 412
+    },
+    {
+      "viewport": "412x915",
+      "tab": "Telão",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 412
+    },
+    {
+      "viewport": "412x915",
+      "tab": "Jogador",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 412
+    },
+    {
+      "viewport": "412x915",
+      "tab": "Pódio",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 412
+    },
+    {
+      "viewport": "640x900",
+      "tab": "Host",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 640
+    },
+    {
+      "viewport": "640x900",
+      "tab": "Telão",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 640
+    },
+    {
+      "viewport": "640x900",
+      "tab": "Jogador",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 640
+    },
+    {
+      "viewport": "640x900",
+      "tab": "Pódio",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 640
+    },
+    {
+      "viewport": "768x1024",
+      "tab": "Host",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 768
+    },
+    {
+      "viewport": "768x1024",
+      "tab": "Telão",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 768
+    },
+    {
+      "viewport": "768x1024",
+      "tab": "Jogador",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 768
+    },
+    {
+      "viewport": "768x1024",
+      "tab": "Pódio",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 768
+    },
+    {
+      "viewport": "1280x720",
+      "tab": "Host",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1280
+    },
+    {
+      "viewport": "1280x720",
+      "tab": "Telão",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1280
+    },
+    {
+      "viewport": "1280x720",
+      "tab": "Jogador",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1280
+    },
+    {
+      "viewport": "1280x720",
+      "tab": "Pódio",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1280
+    },
+    {
+      "viewport": "1672x941",
+      "tab": "Host",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1672
+    },
+    {
+      "viewport": "1672x941",
+      "tab": "Telão",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1672
+    },
+    {
+      "viewport": "1672x941",
+      "tab": "Jogador",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1672
+    },
+    {
+      "viewport": "1672x941",
+      "tab": "Pódio",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1672
+    },
+    {
+      "viewport": "1920x1080",
+      "tab": "Host",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1920
+    },
+    {
+      "viewport": "1920x1080",
+      "tab": "Telão",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1920
+    },
+    {
+      "viewport": "1920x1080",
+      "tab": "Jogador",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1920
+    },
+    {
+      "viewport": "1920x1080",
+      "tab": "Pódio",
+      "overflow": false,
+      "broken": [],
+      "clipped": false,
+      "document": 1920
+    }
+  ]
+}

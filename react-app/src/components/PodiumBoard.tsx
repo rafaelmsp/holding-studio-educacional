@@ -1,8 +1,9 @@
-import {motion} from 'framer-motion';
+import {motion,useReducedMotion} from 'framer-motion';
 import {Crown,Trophy,Scale,Users,Target,RotateCcw,ShieldCheck} from 'lucide-react';
 import type {PublicPlayer,PublicRoom} from '../services/types';
 import {avatar,characterPortrait,profileName} from '../services/catalog';
 import {answeredAttempts} from '../services/score';
+import {orderPodiumPlayers} from '../services/ranking';
 
 type Props={players:PublicPlayer[];room:PublicRoom;avatars?:Record<string,string>;onRestart?:()=>void;restarting?:boolean};
 const points=(n:number)=>new Intl.NumberFormat('pt-BR').format(n);
@@ -17,9 +18,10 @@ export function CharacterFace({player,avatars={},hero=false}:{player:PublicPlaye
 }
 function FinishCard({player,rank,avatars}:{player:PublicPlayer|null;rank:number;avatars?:Record<string,string>}){
  const total=player?answered(player):0,right=player?hits(player):0,accuracy=total?Math.round(right/total*100):0;
+ const reduceMotion=useReducedMotion();
  return <motion.article className={'v6-finish-card v6-finish-'+rank+(player?'':' is-vacant')}
-  initial={{opacity:0,y:38,scale:.94}} animate={{opacity:1,y:0,scale:1}}
-  transition={{duration:.55,delay:rank===1?.15:rank===2?.45:.7}}>
+  initial={reduceMotion?false:{opacity:0,y:38,scale:.94}} animate={{opacity:1,y:0,scale:1}}
+  transition={reduceMotion?{duration:0}:{duration:.55,delay:rank===1?.15:rank===2?.45:.7}}>
   <div className="v6-finish-art">{player?<CharacterFace player={player} avatars={avatars} hero/>:<div className="v6-empty-portrait"><Users size={35}/></div>}</div>
   <div className="v6-finish-medal" aria-label={rank+'º lugar'}>{rank===1?<Crown size={21}/>:<Trophy size={16}/>}<b>{rank}</b></div>
   <div className="v6-finish-info">
@@ -31,7 +33,7 @@ function FinishCard({player,rank,avatars}:{player:PublicPlayer|null;rank:number;
  </motion.article>;
 }
 export default function PodiumBoard({players,room,avatars={},onRestart,restarting=false}:Props){
- const ordered=[...players].sort((a,b)=>a.rank!=null&&b.rank!=null&&a.rank!==b.rank?Number(a.rank)-Number(b.rank):Number(b.score||0)-Number(a.score||0)||a.nickname.localeCompare(b.nickname,'pt-BR'));
+ const ordered=orderPodiumPlayers(players);
  const total=ordered.reduce((s,p)=>s+answered(p),0),correct=ordered.reduce((s,p)=>s+hits(p),0),pct=total?Math.round(correct/total*100):null;
  return <div className="v6-final-board">
   <div className="v62-award-sparks" aria-hidden="true">{Array.from({length:18},(_,i)=><i key={i} style={{left:((i*23+7)%96)+'%',animationDelay:(-(i%9)*.43)+'s',animationDuration:(4.2+(i%5)*.6)+'s'}}/>)}</div>

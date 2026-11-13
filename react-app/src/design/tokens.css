@@ -1,0 +1,10 @@
+/* V7 — source of truth for cinematic colors and proportional scale. */
+:root {
+ --v7-base:#050916; --v7-deep:#071523; --v7-cyan:#43d9ff; --v7-gold:#f2bd65;
+ --v7-red:#e62d4c; --v7-green:#38ed95; --v7-text:#f5f7fc; --v7-muted:#b5c9d7;
+ --v7-stroke:rgba(101,192,224,.68);
+ --v7-glass:linear-gradient(136deg,rgba(7,25,42,.97),rgba(3,10,23,.96));
+ --v7-serif:Georgia,"Times New Roman",serif;
+ --v7-ui:"Bahnschrift SemiCondensed","Arial Narrow",system-ui,sans-serif;
+ --v7-frame-shadow:inset 0 1px rgba(255,255,255,.16),0 17px 38px rgba(0,0,0,.68),0 0 19px rgba(45,205,255,.16);
+}

@@ -1,0 +1,114 @@
+{
+  "pass": true,
+  "code": "CRIM-1679",
+  "elapsedMs": 45776,
+  "proof": [
+    {
+      "check": "host-desktop-lobby",
+      "width": 1672,
+      "document": 1672
+    },
+    {
+      "check": "host-reload-token",
+      "ok": true
+    },
+    {
+      "check": "host-mobile-lobby-360",
+      "width": 360,
+      "document": 360
+    },
+    {
+      "check": "host-mobile-lobby-390",
+      "width": 390,
+      "document": 390
+    },
+    {
+      "check": "host-mobile-lobby-412",
+      "width": 412,
+      "document": 412
+    },
+    {
+      "check": "mobile-menu-and-dialog-keyboard",
+      "ok": true
+    },
+    {
+      "check": "player-mobile-round-390",
+      "width": 390,
+      "document": 390
+    },
+    {
+      "check": "player-mobile-round-360",
+      "width": 360,
+      "document": 360
+    },
+    {
+      "check": "player-mobile-round-412",
+      "width": 412,
+      "document": 412
+    },
+    {
+      "check": "screen-projector-round",
+      "width": 1920,
+      "document": 1920
+    },
+    {
+      "round": 1,
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 2,
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 3,
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 4,
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 5,
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 6,
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 7,
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "round": 8,
+      "answered": true,
+      "revealed": true
+    },
+    {
+      "check": "reset-to-lobby",
+      "ok": true
+    }
+  ],
+  "errors": [],
+  "artifacts": [
+    "01_host_lobby_mobile_390x844.png",
+    "02_host_lobby_desktop_1672x941.png",
+    "03_rodada_desktop_telao_1672x941.png",
+    "04_jogador_mobile_390x844.png",
+    "05_podio_final_desktop_1672x941.png",
+    "06_player_final_mobile.png",
+    "07_showroom_host.png",
+    "08_showroom_podium.png",
+    "host_lobby_mobile_360x800.png",
+    "host_lobby_mobile_412x915.png",
+    "jogador_mobile_360x800.png",
+    "jogador_mobile_412x915.png"
+  ]
+}

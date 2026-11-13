@@ -9,6 +9,7 @@ on:
       - 'react-live/**'
       - 'legacy-live/**'
       - 'assets/the-crimes-v5/**'
+      - 'assets/the-crimes-v7/**'
       - '.github/workflows/the-crimes-live-ci.yml'
   pull_request:
     paths:
@@ -18,6 +19,7 @@ on:
       - 'react-live/**'
       - 'legacy-live/**'
       - 'assets/the-crimes-v5/**'
+      - 'assets/the-crimes-v7/**'
 
 jobs:
   check:
@@ -76,7 +78,7 @@ jobs:
           done
 
   react-build:
-    name: React V6 cinematic build
+    name: React V7 cinematic build
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -89,7 +91,7 @@ jobs:
           cache: npm
           cache-dependency-path: react-app/package-lock.json
       - run: npm ci --no-audit --no-fund
-      - name: Typecheck and build React V6
+      - name: Typecheck and build React V7
         run: npm run build
       - name: Validate artwork, 12 characters and 48 scenes
         run: node tests/assets.test.cjs
@@ -101,6 +103,12 @@ jobs:
         run: npm run test:v62
       - name: Verify real response and accuracy metrics
         run: npm run test:metrics
+      - name: Verify V7 layered art, scenes and independent view contracts
+        run: npm run test:v7
+      - name: Verify V7 classroom narrative and deterministic ranking
+        run: |
+          npm run test:v7:stages
+          npm run test:v7:ranking
       - name: Verify React primary route and complete backup
         working-directory: .
         run: node tests/live-primary-react.test.cjs

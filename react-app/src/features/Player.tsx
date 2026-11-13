@@ -11,6 +11,7 @@ import {action} from '../services/api';
 import {useRoomRealtime,broadcastRoom} from '../services/realtime';
 import {exposureLabel,currentRound,roundKey,requestId} from '../services/types';
 import type {Session} from '../services/types';
+import {CaseBeat,PhaseTag,ReconnectMessage} from '../components/v7/V7UI';
 
 export default function Player(){
  const code=useGame(s=>s.code),publicRoom=useGame(s=>s.room),players=useGame(s=>s.players);
@@ -24,7 +25,7 @@ export default function Player(){
  const actualRound=currentRound(room),key=roundKey(room);
  const own=(player?.answers||[]).find(a=>a.round_key===key)||(player?.answers||[]).find(a=>a.question_id===question?.id);
  useEffect(()=>{setSelected(null);setCorrection(null);},[key,question?.id]);
- useEffect(()=>{if(code){const restore=getSession(code);if(restore)setSession(restore);}},[code]);
+ useEffect(()=>{setSession(code?getSession(code):null);},[code]);
  const join=async()=>{
   if(!code)return;
   if(nickname.trim().length<2||nickname.trim().length>24){setError('Informe um nome de 2 a 24 caracteres.');return;}
@@ -57,7 +58,10 @@ export default function Player(){
  const stats=[['SALA',code],['JOGADORES',String(publicRoom?.players_total||0)],['CASO',publicRoom?.case_title||'Aguardando'],['RODADA',String(publicRoom?.current_round||1).padStart(2,'0')+'/08']];
  if(!code)return <CinematicShell mode="join"><div className="player-no-room"><Brand/><h1>ENTRE NA INVESTIGAÇÃO</h1><p>Leia o QR Code apresentado pelo professor ou informe uma sala.</p><form onSubmit={e=>{e.preventDefault();const data=new FormData(e.currentTarget);location.href='./?view=player&room='+encodeURIComponent(String(data.get('code')||'').toUpperCase());}}><input name="code" placeholder="CRIM-0000" required pattern="CRIM-[0-9]{4}"/><button type="submit" className="cinema-button gold">ENTRAR</button></form></div></CinematicShell>;
 
- if(!session||!snapshot){
+ if(session&&!snapshot){
+  return <CinematicShell mode="join"><div className="player-app v7-restore-screen"><Brand/><h1>RECONECTANDO AO DOSSIÊ</h1><p>Restaurando sua identidade e a rodada em andamento.</p><ReconnectMessage retry={()=>void refresh()}/><ErrorLine message={error}/>{error&&<button type="button" className="cinema-button secondary" onClick={()=>{localStorage.removeItem('tc-player-'+code);setSession(null);}}>ENTRAR COM NOVA IDENTIDADE</button>}</div></CinematicShell>;
+ }
+ if(!session){
   return <CinematicShell mode="join"><div className="player-app join-player">
     <header className="player-header"><Brand small/><LiveStatus/></header>
     <main className="join-card">
@@ -105,11 +109,11 @@ export default function Player(){
        <div><small>SALA {code}</small><strong>{player?.nickname||session.nickname}</strong></div>
        <div className="player-score"><Crown size={18}/><strong>{player?.score||0} pts</strong><small>EXPOSIÇÃO: {exposureLabel(player?.exposure)}</small></div>
       </section>
-      <div className="mobile-round-label">RODADA {actualRound} DE 8 <RoundRail round={actualRound}/></div>
-      <SceneMedia caseKey={room.caseKey||publicRoom?.case_key||'credores'} round={actualRound} caseTitle={question.caseTitle||publicRoom?.case_title||''} clock={<Countdown room={publicRoom}/>}/>
+      <div className="mobile-round-label">RODADA {actualRound} DE 8 <RoundRail round={actualRound}/></div><PhaseTag room={publicRoom}/>
+      <SceneMedia caseKey={room.caseKey||publicRoom?.case_key||'credores'} round={actualRound} caseTitle={question.caseTitle||publicRoom?.case_title||''} clock={<Countdown room={publicRoom}/>}/><CaseBeat round={actualRound} compact/>
       <section className="player-question"><h1>{question.text}</h1><AnswerRows question={question} revealed={Boolean(room.revealed)} selected={own?Number(own.option_index):selected} disabled={answered||Boolean(room.locked)||status!=='running'||busy} onSelect={setSelected}/>
        {!answered?<button type="button" className="cinema-button danger submit-answer v62-submit-answer" disabled={selected===null||busy||Boolean(room.locked)||status!=='running'} onClick={answer}><CheckCircle2 size={26}/> {busy?'ENVIANDO...':'RESPONDER'}</button>
-         :<motion.div className="answered-notice v62-confirmation" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:.28}}><CheckCircle2 size={24}/> RESPOSTA REGISTRADA — AGUARDE A PRÓXIMA RODADA</motion.div>}
+         :<motion.div className="answered-notice v62-confirmation" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} transition={{duration:.28}}><CheckCircle2 size={24}/> {room.revealed?'CORREÇÃO EXIBIDA — AGUARDE A PRÓXIMA RODADA':'RESPOSTA REGISTRADA — AGUARDE A REVELAÇÃO'}</motion.div>}
        {answered&&(room.revealed||correction?.correctIndex!==undefined)?<div className="correction-panel"><strong>RESPOSTA REVELADA</strong><p>{correction?.correctText||question.options.find(o=>o.index===question.correctIndex)?.text||'Confira a resposta no telão.'}</p><p>{correction?.explanation||question.explanation||''}</p></div>:null}
        {answered&&room.correctionPolicy!=='host_reveal'&&!room.revealed&&!correction?<button className="cinema-button secondary" onClick={showCorrect} disabled={busy}><LockKeyhole size={17}/> CONSULTAR CORREÇÃO</button>:null}
        <div className="player-metrics"><span><small>PONTOS</small><strong>{player?.score||0}</strong></span><span><small>EXPOSIÇÃO</small><strong>{exposureLabel(player?.exposure)} ({player?.exposure||0})</strong></span><span><small>OCULTAÇÃO</small><strong>{player?.ocultou_bens?'SIM':'NÃO'}</strong></span></div>

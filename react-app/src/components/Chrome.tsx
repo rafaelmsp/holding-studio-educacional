@@ -4,12 +4,12 @@ import gsap from 'gsap';
 import {Clock3,Crown,ShieldCheck,Users,FolderOpen,Scale,Clapperboard,Wifi,WifiOff,ChevronRight} from 'lucide-react';
 import type {PublicRoom,PublicPlayer,QuestionOption,GameQuestion} from '../services/types';
 import {exposureLabel,timeLeft,formatClock} from '../services/types';
-import {BACKGROUNDS,avatar,caseScene} from '../services/catalog';
+import {BACKGROUNDS,avatar,caseScene,characterPortrait} from '../services/catalog';
 import {useGame} from '../services/store';
 
 export function Brand({small=false}:{small?:boolean}){
  return <div className={'brandmark '+(small?'compact':'')}>
-  <img src="../assets/the-crimes-v3/ui/detective-mark.svg" alt="" className="brand-detective"/>
+  <img src={characterPortrait("detetive")} alt="" className="brand-detective"/>
   <div><strong>THE <span>CRIMES</span> <em>LIVE</em></strong><small>JOGO JURÍDICO INVESTIGATIVO</small></div>
   <span className="brand-fingerprint" aria-hidden="true">◉</span>
  </div>;
@@ -24,7 +24,7 @@ export function CinematicShell({children,mode='host'}:{children:React.ReactNode;
  },[mode]);
  return <div ref={ref} className={'cinema-shell cinema-'+mode}>
    <div className="cinema-background" style={{backgroundImage:'linear-gradient(92deg,rgba(3,9,23,.60),rgba(4,9,20,.30) 44%,rgba(3,9,23,.58)),url("'+bg+'")'}}/>
-   <div className="cinema-ambient"/>
+   <div className="cinema-ambient"/><div className="v7-fx-layer" aria-hidden="true"/>
    {children}
  </div>;
 }
@@ -52,7 +52,7 @@ export function AnswerRows({question,revealed=false,selected=null,onSelect,disab
 }){
  return <div className={'answer-rows '+className}>
  {question.options.map((answer:QuestionOption,i)=>{
-   const letter=String.fromCharCode(65+i),correct=revealed&&answer.kind==='correct',risk=revealed&&answer.kind==='criminal';
+   const letter=String.fromCharCode(65+i),correct=revealed&&(answer.kind==='correct'||answer.index===question.correctIndex),risk=revealed&&answer.kind==='criminal'&&!correct;
    return onSelect?
      <button type="button" key={answer.index} className={'answer-row interactive '+(selected===answer.index?'selected ':'')+(correct?'correct ':risk?'criminal ':'')} aria-pressed={selected===answer.index} disabled={disabled} onClick={()=>onSelect(answer.index)}>
        <b className="answer-letter">{letter}</b><span>{answer.text}</span>{selected===answer.index&&<ShieldCheck className="answer-check" size={24}/>}

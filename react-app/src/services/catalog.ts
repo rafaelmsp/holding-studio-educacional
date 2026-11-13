@@ -25,8 +25,8 @@ export const PERSONAS=[
 ] as const;
 export type Persona=typeof PERSONAS[number];
 export type Gender=Persona['gender'];
-export const avatar=(id:string)=>'../assets/the-crimes-v3/avatars/'+(PERSONAS.some(x=>x.id===id)?id:'detetive')+'.webp';
-export const characterPortrait=(id:string)=>'../assets/the-crimes-v6/portraits/'+(PERSONAS.some(x=>x.id===id)?id:'detetive')+'.webp';
+export const avatar=(id:string)=>'../assets/the-crimes-v7/characters/avatars/'+(PERSONAS.some(x=>x.id===id)?id:'detetive')+'.webp';
+export const characterPortrait=(id:string)=>'../assets/the-crimes-v7/characters/portraits/'+(PERSONAS.some(x=>x.id===id)?id:'detetive')+'.webp';
 export function caseScene(key:string,round:number){
  const sceneNames=['01_contexto','02_estrutura','03_instrumento','04_efeito','05_conflito','06_apuracao','07_consequencias','08_debate'];
  const k=(key in manifest.cases?key:'credores') as keyof typeof manifest.cases;
@@ -35,7 +35,7 @@ export function caseScene(key:string,round:number){
 }
 export function caseCover(key:string){const k=(key in manifest.cases?key:'credores') as keyof typeof manifest.cases;return manifest.cases[k].cover;}
 export const BACKGROUNDS={
-host:'../assets/the-crimes-v6/backgrounds/host-control.webp', screen:'../assets/the-crimes-v6/backgrounds/projector.webp',join:'../assets/the-crimes-v6/backgrounds/lobby-qr.webp',
-lobby:'../assets/the-crimes-v6/backgrounds/lobby-qr.webp',final:'../assets/the-crimes-v6/backgrounds/podium.webp',city:manifest.global.city,
+host:'../assets/the-crimes-v7/backgrounds/desktop/bg-host-lobby-desktop.webp', screen:'../assets/the-crimes-v7/backgrounds/projector/bg-round-projector.webp',join:'../assets/the-crimes-v7/backgrounds/mobile/bg-player-mobile.webp',
+lobby:'../assets/the-crimes-v7/backgrounds/desktop/bg-lobby-empty.webp',final:'../assets/the-crimes-v7/backgrounds/desktop/bg-podium.webp',city:manifest.global.city,
 };
 export function profileName(id:string){return PERSONAS.find(p=>p.id===id)?.name||'Detetive';}

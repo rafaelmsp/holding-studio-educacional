@@ -1,0 +1,120 @@
+{
+  "environment": "Headless Chrome, local Python HTTP static server; screenshots and metrics are lab estimates only",
+  "tested": [
+    {
+      "view": "host",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "wallMs": 1181,
+      "navigationDomContentLoadedMs": 64,
+      "navigationLoadMs": 65,
+      "jsRequests": 11,
+      "jsTransferredKB": 713,
+      "imageRequests": 10,
+      "imageTransferredKB": 1155,
+      "totalResourceRequests": 22,
+      "longTaskCount": 1,
+      "longTaskTotalMs": 130,
+      "brokenImages": 0,
+      "overflow": false
+    },
+    {
+      "view": "player",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "wallMs": 972,
+      "navigationDomContentLoadedMs": 65,
+      "navigationLoadMs": 66,
+      "jsRequests": 9,
+      "jsTransferredKB": 697,
+      "imageRequests": 4,
+      "imageTransferredKB": 88,
+      "totalResourceRequests": 16,
+      "longTaskCount": 0,
+      "longTaskTotalMs": 0,
+      "brokenImages": 0,
+      "overflow": false
+    },
+    {
+      "view": "showroom",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wallMs": 1076,
+      "navigationDomContentLoadedMs": 66,
+      "navigationLoadMs": 67,
+      "jsRequests": 7,
+      "jsTransferredKB": 461,
+      "imageRequests": 10,
+      "imageTransferredKB": 344,
+      "totalResourceRequests": 20,
+      "longTaskCount": 1,
+      "longTaskTotalMs": 117,
+      "brokenImages": 0,
+      "overflow": false
+    },
+    {
+      "view": "host",
+      "viewport": {
+        "width": 1672,
+        "height": 941
+      },
+      "wallMs": 1076,
+      "navigationDomContentLoadedMs": 69,
+      "navigationLoadMs": 70,
+      "jsRequests": 11,
+      "jsTransferredKB": 713,
+      "imageRequests": 10,
+      "imageTransferredKB": 1155,
+      "totalResourceRequests": 24,
+      "longTaskCount": 1,
+      "longTaskTotalMs": 134,
+      "brokenImages": 0,
+      "overflow": false
+    },
+    {
+      "view": "showroom",
+      "viewport": {
+        "width": 1672,
+        "height": 941
+      },
+      "wallMs": 1076,
+      "navigationDomContentLoadedMs": 67,
+      "navigationLoadMs": 68,
+      "jsRequests": 7,
+      "jsTransferredKB": 461,
+      "imageRequests": 10,
+      "imageTransferredKB": 344,
+      "totalResourceRequests": 20,
+      "longTaskCount": 1,
+      "longTaskTotalMs": 138,
+      "brokenImages": 0,
+      "overflow": false
+    },
+    {
+      "view": "screen",
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "wallMs": 1029,
+      "navigationDomContentLoadedMs": 70,
+      "navigationLoadMs": 72,
+      "jsRequests": 10,
+      "jsTransferredKB": 698,
+      "imageRequests": 3,
+      "imageTransferredKB": 199,
+      "totalResourceRequests": 16,
+      "longTaskCount": 1,
+      "longTaskTotalMs": 87,
+      "brokenImages": 0,
+      "overflow": false
+    }
+  ],
+  "errors": []
+}
