@@ -1,7 +1,7 @@
 {
   "pass": true,
-  "code": "CRIM-1997",
-  "elapsedMs": 43309,
+  "code": "CRIM-1679",
+  "elapsedMs": 45776,
   "proof": [
     {
       "check": "host-desktop-lobby",
@@ -13,14 +13,38 @@
       "ok": true
     },
     {
-      "check": "host-mobile-lobby",
+      "check": "host-mobile-lobby-360",
+      "width": 360,
+      "document": 360
+    },
+    {
+      "check": "host-mobile-lobby-390",
       "width": 390,
       "document": 390
     },
     {
-      "check": "player-mobile-round",
+      "check": "host-mobile-lobby-412",
+      "width": 412,
+      "document": 412
+    },
+    {
+      "check": "mobile-menu-and-dialog-keyboard",
+      "ok": true
+    },
+    {
+      "check": "player-mobile-round-390",
       "width": 390,
       "document": 390
+    },
+    {
+      "check": "player-mobile-round-360",
+      "width": 360,
+      "document": 360
+    },
+    {
+      "check": "player-mobile-round-412",
+      "width": 412,
+      "document": 412
     },
     {
       "check": "screen-projector-round",
@@ -81,6 +105,10 @@
     "05_podio_final_desktop_1672x941.png",
     "06_player_final_mobile.png",
     "07_showroom_host.png",
-    "08_showroom_podium.png"
+    "08_showroom_podium.png",
+    "host_lobby_mobile_360x800.png",
+    "host_lobby_mobile_412x915.png",
+    "jogador_mobile_360x800.png",
+    "jogador_mobile_412x915.png"
   ]
 }

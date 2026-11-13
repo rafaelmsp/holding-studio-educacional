@@ -105,6 +105,10 @@ jobs:
         run: npm run test:metrics
       - name: Verify V7 layered art, scenes and independent view contracts
         run: npm run test:v7
+      - name: Verify V7 classroom narrative and deterministic ranking
+        run: |
+          npm run test:v7:stages
+          npm run test:v7:ranking
       - name: Verify React primary route and complete backup
         working-directory: .
         run: node tests/live-primary-react.test.cjs

@@ -41,15 +41,26 @@ const screenshot=async(page,name)=>page.screenshot({path:path.join(OUT,name+'.pn
   assert.equal((await host.locator('.v6-lobby-hero h1').innerText()).trim(),code,'host token restored on reload');
   proof.push({check:'host-reload-token',ok:true});
 
+  for(const [width,height] of [[360,800],[390,844],[412,915]]){
+    await host.setViewportSize({width,height});
+    await host.locator('.v7-menu-trigger').waitFor();
+    assert.equal(await host.locator('.host-sidebar').isVisible(),false,'desktop menu hidden on mobile');
+    await overflow(host,'host-mobile-lobby-'+width);
+    await screenshot(host,width===390?'01_host_lobby_mobile_390x844':'host_lobby_mobile_'+width+'x'+height);
+  }
   await host.setViewportSize({width:390,height:844});
-  await host.locator('.v7-menu-trigger').waitFor();
-  assert.equal(await host.locator('.host-sidebar').isVisible(),false,'desktop menu hidden on mobile');
-  await overflow(host,'host-mobile-lobby');
-  await screenshot(host,'01_host_lobby_mobile_390x844');
   await host.locator('.v7-menu-trigger').click();
   await host.getByRole('navigation',{name:'Menu do Host'}).getByRole('button',{name:/Jogadores/}).waitFor();
-  await host.getByRole('navigation',{name:'Menu do Host'}).getByRole('button',{name:/Fechar menu/}).click();
-  assert.equal(await host.locator('.v7-menu-overlay').count(),0,'mobile drawer closes');
+  await host.keyboard.press('Escape');
+  assert.equal(await host.locator('.v7-menu-overlay').count(),0,'mobile drawer closes by Escape');
+  assert.equal(await host.locator('.v7-menu-trigger').evaluate(el=>document.activeElement===el),true,'menu trigger regains focus');
+  await host.locator('.v7-menu-trigger').click();
+  await host.getByRole('navigation',{name:'Menu do Host'}).getByRole('button',{name:/Jogadores/}).click();
+  await host.getByRole('dialog',{name:'JOGADORES'}).waitFor();
+  await host.waitForFunction(()=>document.activeElement?.getAttribute('aria-label')==='Fechar');
+  await host.keyboard.press('Escape');
+  await host.getByRole('dialog').waitFor({state:'detached',timeout:6000});
+  proof.push({check:'mobile-menu-and-dialog-keyboard',ok:true});
   await host.setViewportSize({width:1672,height:941});
 
   await player.goto(BASE+'?view=player&room='+code,{waitUntil:'domcontentloaded'});
@@ -71,8 +82,14 @@ const screenshot=async(page,name)=>page.screenshot({path:path.join(OUT,name+'.pn
    assert.equal(await player.locator('.answered-notice').count(),0,'fresh option state round '+round);
    assert.equal(await player.locator('.player-question .answer-row').count(),4,'four answers round '+round);
    if(round===1){
-    await overflow(player,'player-mobile-round');
+    await overflow(player,'player-mobile-round-390');
     await screenshot(player,'04_jogador_mobile_390x844');
+    for(const [width,height] of [[360,800],[412,915]]){
+      await player.setViewportSize({width,height});
+      await overflow(player,'player-mobile-round-'+width);
+      await screenshot(player,'jogador_mobile_'+width+'x'+height);
+    }
+    await player.setViewportSize({width:390,height:844});
     await overflow(screen,'screen-projector-round');
     await screen.setViewportSize({width:1672,height:941});
     await screenshot(screen,'03_rodada_desktop_telao_1672x941');

@@ -14,12 +14,19 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
   await p.locator('.v7-showroom-question').waitFor();
   await p.getByRole('button',{name:/REVELAR CORREÇÃO/}).click();
   assert.equal(await p.locator('.v7-showroom-question .answer-row.correct').count(),1);
+  await p.getByRole('button',{name:/OCULTAR CORREÇÃO/}).click();
   await p.getByRole('navigation',{name:'Prévia de interfaces'}).getByRole('button',{name:'Jogador'}).click();
   await p.locator('.v7-showroom-phone .answer-row').first().click();
   await p.getByRole('button',{name:/CONFIRMAR RESPOSTA DEMO/}).click();
   assert.equal(await p.locator('.v7-showroom-phone .answer-row.correct').count(),1);
   await p.getByRole('navigation',{name:'Prévia de interfaces'}).getByRole('button',{name:'Pódio'}).click();
   await p.locator('.v7-showroom-podium .v6-final-board').waitFor();
+  for(const count of [1,2,3,4]){
+    await p.getByLabel('Quantidade fictícia de jogadores').selectOption(String(count));
+    assert.equal(await p.locator('.v7-showroom-podium .v6-finish-card.is-vacant').count(),Math.max(0,3-count),'vacant podium places for '+count);
+    const total=await p.locator('.v7-showroom-podium .v6-class-summary').innerText();
+    assert.match(total,new RegExp('JOGADORES\\s+'+count),'participant total for '+count);
+  }
   await p.screenshot({path:path.join(dir,'08_showroom_podium.png')});
   const box=await p.locator('.v7-showroom-podium').boundingBox();
   assert.ok(box.width>1200,'showroom podium must be wide');

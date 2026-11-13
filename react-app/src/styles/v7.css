@@ -336,3 +336,38 @@ body{min-width:320px;overflow-x:hidden}
  .v7-showroom-podium .v6-final-board{height:auto;min-height:680px}
  .v7-showroom-controls .cinema-button{flex:1 1 130px;font-size:12px}
 }
+
+/* V7 showroom: scenario sizing controls are keyboard and touch accessible. */
+.v7-showroom-participants{display:flex;align-items:center;gap:8px;color:#ffe0a2;font-weight:900;font-size:12px}
+.v7-showroom-participants select{min-height:48px;min-width:60px;padding:10px;background:#0a2135;color:#fff;border:1px solid #84c9e2;border-radius:4px}
+.v7-showroom-phone .v7-showroom-explanation{font-size:13px;line-height:1.45;margin:10px 0;color:#e9fffa}
+@media(max-width:650px){.v7-showroom-participants{flex:1 1 100%;justify-content:center}}
+
+/* Compact showcase on phones: keep viewport space for the scene, not toolbars. */
+@media(max-width:650px){
+ .v7-showroom-header{min-height:69px;padding:5px 9px;flex-wrap:nowrap;gap:5px}
+ .v7-showroom-header>.brandmark{flex:1 1 0;min-width:0;gap:1px}
+ .v7-showroom-header .brandmark>.brand-detective{height:58px!important;width:48px!important;flex-shrink:0}
+ .v7-showroom-header .brandmark>div>strong{font-size:clamp(17px,5.5vw,23px)!important;white-space:nowrap}
+ .v7-showroom-header .brandmark>div>small{display:none}
+ .v7-showroom-header>a{font-size:0;flex:0 0 45px;width:45px;height:44px;min-height:44px;padding:6px;margin-left:0}
+ .v7-showroom-header>a svg{height:22px;width:22px}
+ .v7-showroom-warning{margin:8px 9px;padding:8px 10px;font-size:10px;line-height:1.3;gap:5px}
+ .v7-showroom-warning svg{width:16px;height:16px}
+ .v7-showroom-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin:0 9px 9px}
+ .v7-showroom-tabs button{min-width:0;min-height:52px;padding:5px 2px;display:flex;flex-direction:column;gap:2px;font-size:11px}
+ .v7-showroom-tabs button svg{height:17px;width:17px}
+ .v7-showroom-preview{padding-inline:9px}
+ .v7-showroom-host{min-height:0;padding:12px!important}
+ .v7-showroom-host h1{font-size:36px}
+ .v7-showroom-phone{border-radius:18px;padding:11px}
+ .v7-showroom-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:5px;padding:6px 8px;max-width:100vw}
+ .v7-showroom-controls>.cinema-button{flex:1 1 0;min-width:0;min-height:54px;padding:5px 3px;font-size:clamp(9px,2.7vw,12px);line-height:1.1}
+ .v7-showroom-controls>.cinema-button svg{height:16px;width:16px;min-width:16px}
+ .v7-showroom-participants{flex:1 0 100%;min-height:43px;justify-content:center}
+ .v7-showroom-participants select{min-height:43px;padding:6px}
+}
+
+.v7-route-loading{min-height:100dvh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:radial-gradient(circle at 50% 40%,#173147,#020714 72%);color:#e7f8ff;font-family:var(--v7-ui);text-align:center}
+.v7-route-loading strong{font:italic 900 clamp(28px,4vw,48px) Georgia,serif;color:#f6d394;text-shadow:0 0 25px #cf823755}
+.v7-route-loading p{font-weight:800;letter-spacing:.08em}

@@ -3,6 +3,7 @@ import {Crown,Trophy,Scale,Users,Target,RotateCcw,ShieldCheck} from 'lucide-reac
 import type {PublicPlayer,PublicRoom} from '../services/types';
 import {avatar,characterPortrait,profileName} from '../services/catalog';
 import {answeredAttempts} from '../services/score';
+import {orderPodiumPlayers} from '../services/ranking';
 
 type Props={players:PublicPlayer[];room:PublicRoom;avatars?:Record<string,string>;onRestart?:()=>void;restarting?:boolean};
 const points=(n:number)=>new Intl.NumberFormat('pt-BR').format(n);
@@ -32,7 +33,7 @@ function FinishCard({player,rank,avatars}:{player:PublicPlayer|null;rank:number;
  </motion.article>;
 }
 export default function PodiumBoard({players,room,avatars={},onRestart,restarting=false}:Props){
- const ordered=[...players].sort((a,b)=>a.rank!=null&&b.rank!=null&&a.rank!==b.rank?Number(a.rank)-Number(b.rank):Number(b.score||0)-Number(a.score||0)||a.nickname.localeCompare(b.nickname,'pt-BR'));
+ const ordered=orderPodiumPlayers(players);
  const total=ordered.reduce((s,p)=>s+answered(p),0),correct=ordered.reduce((s,p)=>s+hits(p),0),pct=total?Math.round(correct/total*100):null;
  return <div className="v6-final-board">
   <div className="v62-award-sparks" aria-hidden="true">{Array.from({length:18},(_,i)=><i key={i} style={{left:((i*23+7)%96)+'%',animationDelay:(-(i%9)*.43)+'s',animationDuration:(4.2+(i%5)*.6)+'s'}}/>)}</div>

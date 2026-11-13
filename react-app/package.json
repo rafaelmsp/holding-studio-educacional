@@ -17,6 +17,10 @@
     "test:v7": "node --test tests/v7-integrity.test.cjs",
     "test:v7:browser": "node qa-v7.cjs",
     "test:v7:showroom": "node qa-v7-showroom.cjs",
+    "test:v7:stages": "node --experimental-strip-types --test tests/showroom-v7.test.mjs",
+    "test:v7:ranking": "node --experimental-strip-types --test tests/ranking-v7.test.mjs",
+    "test:v7:matrix": "node qa-v7-matrix.cjs",
+    "test:v7:performance": "node qa-v7-performance.cjs",
     "art:v7": "python scripts/build-v7-art.py"
   },
   "dependencies": {

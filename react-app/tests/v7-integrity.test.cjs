@@ -39,7 +39,7 @@ test('six scenarios have eight separate scene images, not an identical case imag
 test('React V7 has independent views, real QR, drawer, scene and responsive rules',()=>{
  const host=read('src/features/Host.tsx'),player=read('src/features/Player.tsx'),screen=read('src/features/Screen.tsx');
  const app=read('src/App.tsx'),v7=read('src/styles/v7.css');
- assert.match(app,/view==='host'|return <Host\/>/);
+ assert.match(app,/import\('\.\/features\/Host'\)/);
  assert.match(app,/view==='player'/);
  assert.match(app,/view==='screen'/);
  assert.match(host,/<ShareRoom/);

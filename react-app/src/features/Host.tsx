@@ -1,4 +1,4 @@
-import {useCallback,useEffect,useState} from 'react';
+import {useCallback,useEffect,useRef,useState} from 'react';
 import {motion,AnimatePresence} from 'framer-motion';
 import {QRCodeSVG} from 'qrcode.react';
 import {FolderOpen,Users,FileText,BarChart3,Settings2,Monitor,Eye,ChevronsRight,Square,LockKeyhole,Pause,Play,RefreshCw,Copy,BookOpen,SlidersHorizontal,ExternalLink} from 'lucide-react';
@@ -18,10 +18,27 @@ export default function Host(){
  const selectedCase=useGame(s=>s.selectedCase),setCase=useGame(s=>s.setCase);
  const busy=useGame(s=>s.busy),setBusy=useGame(s=>s.setBusy),error=useGame(s=>s.error),setError=useGame(s=>s.setError);
  const modal=useGame(s=>s.modal),setModal=useGame(s=>s.setModal);
+ const dialogRef=useRef<HTMLElement>(null);
  const avatars=useGame(s=>s.avatars),presenceIds=useGame(s=>s.presenceIds);
  const [maxPlayers,setMaxPlayers]=useState(30),[seconds,setSeconds]=useState(60),[policy,setPolicy]=useState('host_reveal');
  const {refresh}=useRoomRealtime(code,'host');
  const [copyFeedback,setCopyFeedback]=useState<'idle'|'success'|'error'>('idle');
+ useEffect(()=>{
+  if(!modal)return;
+  const previous=document.activeElement instanceof HTMLElement?document.activeElement:null;
+  const focusTimer=window.setTimeout(()=>dialogRef.current?.querySelector<HTMLElement>('header button')?.focus(),0);
+  const onKey=(event:KeyboardEvent)=>{
+   if(event.key==='Escape'){event.preventDefault();setModal(null);return;}
+   if(event.key!=='Tab'||!dialogRef.current)return;
+   const available=[...dialogRef.current.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),[tabindex]:not([tabindex="-1"])')];
+   if(!available.length){event.preventDefault();return;}
+   const first=available[0],last=available[available.length-1];
+   if(event.shiftKey&&(document.activeElement===first||!dialogRef.current.contains(document.activeElement))){event.preventDefault();last.focus();}
+   if(!event.shiftKey&&(document.activeElement===last||!dialogRef.current.contains(document.activeElement))){event.preventDefault();first.focus();}
+  };
+  window.addEventListener('keydown',onKey);
+  return()=>{window.clearTimeout(focusTimer);window.removeEventListener('keydown',onKey);previous?.focus();};
+ },[modal,setModal]);
  useEffect(()=>{
   if(copyFeedback==='idle')return;
   const timer=window.setTimeout(()=>setCopyFeedback('idle'),3500);
@@ -197,8 +214,8 @@ export default function Host(){
      </main>
    </div>}
    <AnimatePresence>{modal&&<motion.div className="modal-shade" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onMouseDown={e=>{if(e.currentTarget===e.target)setModal(null)}}>
-     <motion.section className="modal-content" initial={{scale:.95,y:20}} animate={{scale:1,y:0}} exit={{scale:.96,y:10}} role="dialog" aria-modal="true" aria-label={modal}>
-       <header><strong>{modal==='players'?'JOGADORES':modal==='reports'?'RELATÓRIO DA TURMA':modal==='cases'?'DOSSIÊS DOS CASOS':modal==='settings'?'CONFIGURAÇÕES DA SALA':modal==='activity'?'ATIVIDADE RECENTE':'LOBBY / SALA'}</strong><button onClick={()=>setModal(null)} aria-label="Fechar">✕</button></header>
+     <motion.section ref={dialogRef} className="modal-content" initial={{scale:.95,y:20}} animate={{scale:1,y:0}} exit={{scale:.96,y:10}} role="dialog" aria-modal="true" aria-labelledby="v7-host-dialog-title">
+       <header><strong id="v7-host-dialog-title">{modal==='players'?'JOGADORES':modal==='reports'?'RELATÓRIO DA TURMA':modal==='cases'?'DOSSIÊS DOS CASOS':modal==='settings'?'CONFIGURAÇÕES DA SALA':modal==='activity'?'ATIVIDADE RECENTE':'LOBBY / SALA'}</strong><button onClick={()=>setModal(null)} aria-label="Fechar">✕</button></header>
        {(modal==='players'||modal==='reports')&&<div className="modal-scroll">
          {modal==='reports'&&<div className="report-metrics">
           <div><small>JOGADORES</small><strong>{players.length}</strong></div>
