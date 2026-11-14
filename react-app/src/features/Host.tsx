@@ -153,6 +153,7 @@ export default function Host(){
        {room?.status==='waiting'||!room?<section className="v6-host-lobby" aria-label="Sala aguardando jogadores">
         <div className="v6-lobby-hero">
          <span className="v6-eyebrow"><FolderOpen size={15}/> SALA DA PARTIDA</span>
+         <p className="v72-premium-identifier" aria-hidden="true"><span className="v72-premium-marker"/>DOSSIÊ DE INVESTIGAÇÃO<span className="v72-premium-marker"/></p>
          <h1>{code}</h1><p className="v6-lobby-state"><span className="v6-online-dot"/> AGUARDANDO JOGADORES</p>
          <div className="v6-lobby-columns">
           <div className="v6-lobby-guide">

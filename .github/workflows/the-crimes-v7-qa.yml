@@ -27,6 +27,16 @@ jobs:
         run: python3 -m http.server 8148 --bind 127.0.0.1 > /tmp/the-crimes-server.log 2>&1 &
       - name: Verify responsive layouts and interactions with mocked rooms
         run: node react-app/tests/v7-browser.cjs
+      - name: Verify V7.2 layered Host and touch desktop-site fallback
+        env:
+          TC_QA_BASE: http://127.0.0.1:8148/live/
+          TC_QA_OUT: /tmp/the-crimes-v7-qa/v72-premium
+        run: node react-app/tests/v72-host-touch.cjs
+      - name: Verify V7.2 scene assets and full-width projector finale
+        env:
+          TC_QA_BASE: http://127.0.0.1:8148/live/
+          TC_QA_OUT: /tmp/the-crimes-v7-qa/v72-scenes
+        run: node react-app/tests/v72-scene-layers.cjs
       - name: Exercise real multiplayer room and eight rounds
         working-directory: react-app
         env:

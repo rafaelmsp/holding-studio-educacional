@@ -1,0 +1,33 @@
+{
+  "version": "7.2.0-alpha",
+  "stage": "player-screen-podium",
+  "source_pr": 5,
+  "policy": "Backgrounds are clean photography only; never encode QR, nickname, score, timer, options, or rank in pixels",
+  "provenance": "Curated from PR #5 branch feat/the-crimes-v7-cinematic, where images were composited from preexisting V3/V6 photographic assets. Not generated from the newer Golden Master screenshots.",
+  "scenes": {
+    "telao-rodada.webp": {
+      "source": "assets/the-crimes-v7/backgrounds/projector/bg-round-projector.webp",
+      "upstream": "assets/the-crimes-v3/global/investigation-keyart.webp",
+      "size": "1920x1080",
+      "use": "Screen running/paused"
+    },
+    "telao-final.webp": {
+      "source": "assets/the-crimes-v7/backgrounds/projector/bg-final-projector.webp",
+      "upstream": "assets/the-crimes-v3/global/courtroom.webp",
+      "size": "1920x1080",
+      "use": "Screen finished"
+    },
+    "jogador-mobile.webp": {
+      "source": "assets/the-crimes-v7/backgrounds/mobile/bg-player-mobile.webp",
+      "upstream": "assets/the-crimes-v3/global/investigation-keyart.webp",
+      "size": "864x1536",
+      "use": "Player/join backdrop"
+    },
+    "podio-desktop.webp": {
+      "source": "assets/the-crimes-v7/backgrounds/desktop/bg-podium.webp",
+      "upstream": "assets/the-crimes-v3/global/courtroom.webp",
+      "size": "1792x1008",
+      "use": "Host finished"
+    }
+  }
+}

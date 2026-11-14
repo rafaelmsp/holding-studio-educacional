@@ -26,6 +26,10 @@ export function CinematicShell({children,mode='host'}:{children:React.ReactNode;
  return <div ref={ref} className={'cinema-shell cinema-'+mode+' v7-phase-'+phase}>
    <div className="cinema-background" style={{backgroundImage:'linear-gradient(92deg,rgba(3,9,23,.60),rgba(4,9,20,.30) 44%,rgba(3,9,23,.58)),url("'+bg+'")'}}/>
    <div className="cinema-ambient"/>
+   {mode==='host'&&<div className="v72-premium-art" aria-hidden="true">
+     <img className="v72-art-justice" src="../assets/the-crimes-v6/decor/lady-justice-bronze.webp" alt="" loading="eager"/>
+     <img className="v72-art-detective" src="../assets/the-crimes-v7/props/detective.webp" alt="" loading="eager"/>
+   </div>}
    {children}
  </div>;
 }
