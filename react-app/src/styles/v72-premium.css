@@ -1,0 +1,71 @@
+/* THE CRIMES LIVE V7.2 — independent cinematic layers.
+   Artwork is strictly decorative: live QR, names, scores and buttons remain DOM.
+   Phase 1 uses existing verified premium V6/V7 artworks, never UI screenshots. */
+.cinema-host .v72-premium-art{position:fixed;inset:86px 0 0;z-index:0;pointer-events:none;overflow:hidden;isolation:isolate}
+.cinema-host .v72-premium-art::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 15% 80%,rgba(12,127,170,.13),transparent),radial-gradient(ellipse 54% 48% at 88% 30%,rgba(224,138,46,.11),transparent);z-index:0}
+.cinema-host .v72-premium-art img{position:absolute;display:block;object-fit:contain;pointer-events:none;user-select:none}
+.cinema-host .v72-art-justice{left:max(-52px,calc((100vw - 1920px)/2));bottom:clamp(5px,6vh,100px);height:clamp(330px,55vh,780px);max-width:28vw;opacity:.48;filter:drop-shadow(0 9px 30px rgba(250,179,65,.32)) contrast(1.15) saturate(1.08)}
+.cinema-host .v72-art-detective{right:max(-56px,calc((100vw - 1920px)/2));bottom:-12px;height:clamp(240px,45vh,610px);max-width:23vw;opacity:.28;filter:drop-shadow(0 10px 30px rgba(67,217,255,.26)) saturate(.75)}
+.cinema-host .game-header,.cinema-host .host-body,.cinema-host .setup-view{position:relative;z-index:2}
+.cinema-host .v6-lobby-hero{isolation:isolate;overflow:hidden;backdrop-filter:blur(9px);background:linear-gradient(148deg,rgba(4,18,32,.9),rgba(3,13,26,.76)),url('../../../assets/the-crimes-v7/backgrounds/desktop.webp') center/cover!important;border-image:none}
+.cinema-host .v6-lobby-hero::before{content:"";pointer-events:none;position:absolute;inset:0;z-index:0;background:linear-gradient(116deg,transparent 20%,rgba(67,217,255,.06) 56%,transparent 84%),radial-gradient(circle at 50% 0,rgba(246,188,91,.13),transparent 43%)}
+.cinema-host .v6-lobby-hero>*{position:relative;z-index:1}
+.cinema-host .v6-lobby-hero .v6-lobby-columns{border-color:#86714d;background:linear-gradient(90deg,rgba(2,10,19,.77),rgba(3,15,29,.5));box-shadow:0 9px 34px rgba(0,0,0,.24)}
+.cinema-host .v6-lobby-hero .v6-lobby-qr{border-color:#e7b55d;box-shadow:0 0 0 4px rgba(5,15,27,.8),0 0 29px rgba(235,165,62,.42)}
+.cinema-host .v6-lobby-hero .v6-lobby-case{border-color:#cb9656;background:linear-gradient(110deg,rgba(7,22,36,.94),rgba(8,23,35,.8));box-shadow:0 0 17px rgba(235,165,62,.18)}
+.cinema-host .v6-lobby-roster,.cinema-host .rank-panel{backdrop-filter:blur(8px);background:linear-gradient(148deg,rgba(10,30,47,.9),rgba(3,12,25,.82))!important}
+.cinema-host .host-dock{backdrop-filter:blur(8px);background:linear-gradient(90deg,rgba(4,13,27,.91),rgba(6,19,32,.8))}
+.cinema-host .v72-premium-identifier{color:#ecbd73;font:700 10px/1.35 Georgia,serif;letter-spacing:.19em;text-transform:uppercase;text-align:center;text-shadow:0 0 13px rgba(230,173,93,.32);margin:0}
+.cinema-host .v72-premium-identifier .v72-premium-marker{display:inline-block;width:24px;height:1px;background:linear-gradient(90deg,transparent,#edbc70);vertical-align:middle;margin-right:9px}
+.cinema-host .v72-premium-identifier .v72-premium-marker:last-child{margin-right:0;margin-left:9px;transform:rotate(180deg)}
+/* Phone/tablet browser 'desktop site' option can report ~980 CSS pixels.
+   A coarse primary pointer still deserves a usable Host layout. */
+@media(max-width:760px), (pointer:coarse) and (max-width:1100px){
+ .cinema-host .v72-premium-art{display:none}
+ .cinema-host .game-header:has(.v7-nav-toggle){display:grid;grid-template-columns:48px minmax(0,1fr);grid-template-rows:auto auto auto;gap:7px;padding:9px 11px;min-height:0;height:auto}
+ .cinema-host .game-header .v7-nav-toggle{display:grid;grid-column:1;grid-row:1;place-items:center;min-height:48px;min-width:48px}
+ .cinema-host .game-header:has(.v7-nav-toggle) .brandmark{grid-column:2;grid-row:1;min-width:0!important;width:100%;max-width:100%;transform:none!important}
+ .cinema-host .game-header .brandmark>div{min-width:0;margin-left:0}
+ .cinema-host .game-header .brandmark strong{font-size:clamp(17px,3.2vw,24px)!important}
+ .cinema-host .game-header .brandmark small{font-size:7px!important;letter-spacing:.04em!important}
+ .cinema-host .game-header .brandmark .brand-detective,.cinema-host .game-header .brand-fingerprint{display:none!important}
+ .cinema-host .game-header:has(.v7-nav-toggle) .live-state{grid-column:1/-1;grid-row:2;justify-self:end;min-height:30px;font-size:10px;white-space:normal}
+ .cinema-host .game-header:has(.v7-nav-toggle) .header-content{grid-column:1/-1;grid-row:3;min-width:0;order:unset}
+ .cinema-host .host-sidebar{display:none!important}
+ .cinema-host .host-body{display:block!important;padding:10px 10px 25px!important;min-height:0;height:auto!important}
+ .cinema-host .host-main{display:flex!important;flex-direction:column;min-width:0;height:auto!important;gap:11px}
+ .cinema-host .v6-host-lobby{display:flex!important;flex-direction:column;gap:12px;min-height:0}
+ .cinema-host .v6-lobby-hero{padding:18px 13px!important;gap:13px;min-height:0;background:linear-gradient(155deg,rgba(5,19,34,.92),rgba(4,14,25,.86)),url('../../../assets/the-crimes-v7/backgrounds/mobile.webp') top center/cover!important}
+ .cinema-host .v6-lobby-hero h1{font-size:clamp(37px,9vw,62px);overflow-wrap:anywhere}
+ .cinema-host .v6-lobby-columns{display:flex!important;flex-direction:column;gap:14px!important;align-items:center;padding:12px;width:100%}
+ .cinema-host .v6-lobby-guide{width:100%;padding:6px}
+ .cinema-host .v6-lobby-guide p{font-size:15px;line-height:1.42}
+ .cinema-host .v6-lobby-qr{order:0}
+ .cinema-host .v6-lobby-qr svg{height:min(208px,55vw);width:min(208px,55vw)}
+ .cinema-host .v7-share-link{display:flex;order:1;width:100%;min-height:52px;justify-content:center}
+ .cinema-host .v6-lobby-guide{order:2}
+ .cinema-host .v6-lobby-case{min-height:90px;margin:0}
+ .cinema-host .v6-lobby-case strong{font-size:16px;overflow-wrap:anywhere}
+ .cinema-host .v6-lobby-roster{min-height:220px}
+ .cinema-host .v6-roster-scroll{max-height:320px;overflow:auto}
+ .cinema-host .host-dock{position:sticky;bottom:0;z-index:30;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;padding:10px 8px calc(10px + env(safe-area-inset-bottom));margin:0}
+ .cinema-host .host-dock .cinema-button{min-width:0;min-height:52px;font-size:12px;white-space:normal}
+ .cinema-host .host-toolbox{grid-column:1/-1;min-width:0}
+ .cinema-host .v72-premium-identifier{font-size:9px;letter-spacing:.10em}
+ .cinema-host .v72-premium-identifier .v72-premium-marker{width:10px;margin-right:5px}
+ .cinema-host .v72-premium-identifier .v72-premium-marker:last-child{margin-left:5px}
+ .cinema-host .room-ribbon{display:flex;flex-wrap:wrap}
+ .cinema-host .live-layout{display:flex!important;flex-direction:column;height:auto!important;min-height:0}
+ .cinema-host .host-question{display:flex!important;flex-direction:column;height:auto!important;min-height:0!important}
+ .cinema-host .host-question .scene-media{min-height:220px!important;max-height:42dvh}
+ .cinema-host .host-aside{display:flex;flex-direction:column;overflow:visible}
+ .cinema-host .round-bar{flex-wrap:wrap;height:auto}
+ .cinema-host .host-finale{min-width:0}
+}
+@media(max-width:380px){
+ .cinema-host .game-header .brandmark strong{font-size:17px!important}
+ .cinema-host .v6-lobby-hero h1{font-size:36px}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-host .v72-premium-art{animation:none;transition:none}
+}
