@@ -9,12 +9,13 @@ import {useGame} from '../services/store';
 
 export function Brand({small=false}:{small?:boolean}){
  return <div className={'brandmark '+(small?'compact':'')}>
-  <img src="../assets/the-crimes-v3/ui/detective-mark.svg" alt="" className="brand-detective"/>
+  <img src="../assets/the-crimes-v7/props/detective.webp" alt="" className="brand-detective"/>
   <div><strong>THE <span>CRIMES</span> <em>LIVE</em></strong><small>JOGO JURÍDICO INVESTIGATIVO</small></div>
   <span className="brand-fingerprint" aria-hidden="true">◉</span>
  </div>;
 }
 export function CinematicShell({children,mode='host'}:{children:React.ReactNode;mode?:'host'|'screen'|'player'|'join'}){
+ const phase=useGame(s=>s.room?.status||'setup');
  const bg=mode==='host'?BACKGROUNDS.host:mode==='screen'?BACKGROUNDS.screen:mode==='join'?BACKGROUNDS.join:BACKGROUNDS.city;
  const ref=useRef<HTMLDivElement>(null);
  useEffect(()=>{
@@ -22,7 +23,7 @@ export function CinematicShell({children,mode='host'}:{children:React.ReactNode;
   const context=gsap.context(()=>{gsap.fromTo('.cinema-ambient',{opacity:.58},{opacity:.88,duration:4.5,yoyo:true,repeat:-1,ease:'sine.inOut'});},ref);
   return()=>context.revert();
  },[mode]);
- return <div ref={ref} className={'cinema-shell cinema-'+mode}>
+ return <div ref={ref} className={'cinema-shell cinema-'+mode+' v7-phase-'+phase}>
    <div className="cinema-background" style={{backgroundImage:'linear-gradient(92deg,rgba(3,9,23,.60),rgba(4,9,20,.30) 44%,rgba(3,9,23,.58)),url("'+bg+'")'}}/>
    <div className="cinema-ambient"/>
    {children}
@@ -64,8 +65,9 @@ export function AnswerRows({question,revealed=false,selected=null,onSelect,disab
  </div>;
 }
 export function SceneMedia({caseKey,round=1,caseTitle='',large=false,clock}:{caseKey:string;round?:number;caseTitle?:string;large?:boolean;clock?:React.ReactNode}){
+ const reduced=useReducedMotion();
  return <div className={'scene-media '+(large?'scene-large':'')}>
-  <motion.img key={caseKey+'-'+round} initial={{scale:1.07,opacity:.75}} animate={{scale:1,opacity:1}} transition={{duration:1.1,ease:'easeOut'}} src={caseScene(caseKey,round)} alt={'Cena ilustrativa de '+caseTitle+' na rodada '+round}/>
+  <motion.img key={caseKey+'-'+round} initial={reduced?false:{scale:1.07,opacity:.75}} animate={{scale:1,opacity:1}} transition={{duration:reduced?0:1.1,ease:'easeOut'}} src={caseScene(caseKey,round)} alt={'Cena ilustrativa de '+caseTitle+' na rodada '+round}/>
   <div className="scene-vignette"/>
   <div className="v62-scene-record" aria-hidden="true"><span>● REC</span><b>ARQUIVO {String(round).padStart(2,'0')} / 08</b></div>
   <div className="scene-label"><small>CENA FICTÍCIA • RODADA {String(round).padStart(2,'0')}</small><strong>{caseTitle}</strong></div>
@@ -90,10 +92,11 @@ export function ChapterCue({round,caseTitle}:{round:number;caseTitle:string}){
 }
 
 export function RankList({players,limit=5,avatars={},ids=[]}:{players:PublicPlayer[];limit?:number;avatars?:Record<string,string>;ids?:string[]}){
+ const reduced=useReducedMotion();
  const list=players.slice().sort((a,b)=>a.rank!=null&&b.rank!=null&&a.rank!==b.rank?Number(a.rank)-Number(b.rank):Number(b.score||0)-Number(a.score||0)).slice(0,limit);
  return <div className="rank-list">{Array.from({length:limit},(_,i)=>{
   const p=list[i];
-  return <motion.div layout="position" transition={{layout:{duration:.3}}} className={'rank-entry '+(!p?'vacant ':'')+(i===0?'champion':'')} key={p?.player_id||'vacant'+i}>
+  return <motion.div layout="position" transition={{layout:{duration:reduced?0:.3}}} className={'rank-entry '+(!p?'vacant ':'')+(i===0?'champion':'')} key={p?.player_id||'vacant'+i}>
     <b className={'rank-place pos'+(i+1)}>{i===0?'🥇':i===1?'🥈':i===2?'🥉':''}{i+1}º</b>
     {p?<img src={avatar(p.avatar_id||avatars[p.player_id]||'detetive')} alt="" className="rank-avatar"/>:<div className="rank-avatar rank-empty">◌</div>}
     <div className="rank-person"><strong>{p?.nickname||'AGUARDANDO'}</strong><small>{p?(ids.includes(p.player_id)?'● ONLINE':p.connected?'● CONECTADO':'○ OFFLINE'):'VAGA LIVRE'}</small></div>
@@ -113,7 +116,7 @@ export function TopStats({room,online}:{room:PublicRoom|null;online:number}){
   <div><small><FolderOpen size={13}/> CASO ATUAL</small><strong className="gold">{room?.case_title||'Investigação'}</strong></div>
   <div><small><Users size={13}/> JOGADORES</small><strong className="mint">{online} online</strong></div>
   <div><small><Scale size={13}/> RODADA</small><strong>{room?room.current_round+'/8':'—/8'}</strong></div>
-  <div><small>◉ PROGRESSO</small><strong>{room?(room.status==='waiting'?0:Math.round(Math.max(0,Math.min(8,Number(room.current_round)))/8*100))+'%':'0%'}</strong></div>
+  <div><small>SALA / CÓDIGO</small><strong className="gold">{room?.code||'—'}</strong></div>
  </div>;
 }
 export function SectionTitle({children,icon}:{children:React.ReactNode;icon?:React.ReactNode}){return <h3 className="section-heading">{icon||<Crown size={20}/>} {children}<ChevronRight size={17} className="section-arrow"/></h3>;}

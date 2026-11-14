@@ -6,7 +6,7 @@ const BASE=process.env.TC_V6_QA_BASE||'http://127.0.0.1:8148/react-live/';
 const OUT=process.env.TC_V6_QA_OUT||path.resolve(__dirname,'../docs/preview/v6');
 fs.mkdirSync(OUT,{recursive:true});
 (async()=>{
- const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true,args:['--no-sandbox']});
+ const browser=await chromium.launch({executablePath:process.env.TC_CHROME||(process.platform==='win32'?'C:/Program Files/Google/Chrome/Application/chrome.exe':undefined),headless:true,args:['--no-sandbox']});
  const errors=[];const results=[];let host,screen;
  const log=(page,label)=>{
   page.on('pageerror',e=>errors.push(label+' JS: '+e.message));

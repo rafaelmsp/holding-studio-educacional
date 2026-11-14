@@ -1,7 +1,8 @@
-import {useCallback,useEffect,useState} from 'react';
+import RoundTelemetry from '../components/RoundTelemetry';
+import {useCallback,useEffect,useRef,useState} from 'react';
 import {motion,AnimatePresence} from 'framer-motion';
 import {QRCodeSVG} from 'qrcode.react';
-import {FolderOpen,Users,FileText,BarChart3,Settings2,Monitor,Eye,ChevronsRight,Square,LockKeyhole,Pause,Play,RefreshCw,Copy,BookOpen,SlidersHorizontal,ExternalLink} from 'lucide-react';
+import {FolderOpen,Users,FileText,BarChart3,Settings2,Monitor,Eye,ChevronsRight,Square,LockKeyhole,Pause,Play,RefreshCw,Copy,BookOpen,SlidersHorizontal,ExternalLink,Menu,X,Share2} from 'lucide-react';
 import {useGame,adminStorage} from '../services/store';
 import {action,screenUrl,playerUrl} from '../services/api';
 import {broadcastRoom,useRoomRealtime} from '../services/realtime';
@@ -20,6 +21,28 @@ export default function Host(){
  const avatars=useGame(s=>s.avatars),presenceIds=useGame(s=>s.presenceIds);
  const [maxPlayers,setMaxPlayers]=useState(30),[seconds,setSeconds]=useState(60),[policy,setPolicy]=useState('host_reveal');
  const {refresh}=useRoomRealtime(code,'host');
+ const [navOpen,setNavOpen]=useState(false);
+ const navToggle=useRef<HTMLButtonElement>(null);
+ const mobileNav=useRef<HTMLElement>(null);
+ useEffect(()=>{
+  if(!navOpen)return;
+  const previousOverflow=document.body.style.overflow;
+  document.body.style.overflow='hidden';
+  const nav=mobileNav.current;
+  const buttons=()=>Array.from(nav?.querySelectorAll<HTMLButtonElement>('button')||[]);
+  buttons()[0]?.focus();
+  const handle=(event:KeyboardEvent)=>{
+   if(event.key==='Escape'){setNavOpen(false);navToggle.current?.focus();}
+   if(event.key==='Tab'){
+    const items=buttons(),first=items[0],last=items.at(-1);
+    if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}
+    else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
+   }
+  };
+  document.addEventListener('keydown',handle);
+  return()=>{document.removeEventListener('keydown',handle);document.body.style.overflow=previousOverflow;requestAnimationFrame(()=>navToggle.current?.focus());};
+ },[navOpen]);
+ const closeNav=()=>{setNavOpen(false);navToggle.current?.focus();};
  const [copyFeedback,setCopyFeedback]=useState<'idle'|'success'|'error'>('idle');
  useEffect(()=>{
   if(copyFeedback==='idle')return;
@@ -34,6 +57,14 @@ export default function Host(){
    setCopyFeedback('success');
   }catch{setCopyFeedback('error');}
  },[code]);
+ const shareJoinLink=async()=>{
+  if(!code)return;
+  if(navigator.share){
+   try{await navigator.share({title:'THE CRIMES LIVE',text:'Entre na sala '+code,url:playerUrl(code)});return;}
+   catch(error){if(error instanceof DOMException&&error.name==='AbortError')return;}
+  }
+  await copyJoinLink();
+ };
  useEffect(()=>{
    const params=new URLSearchParams(location.search),urlCode=params.get('room');
    if(urlCode&&!code){const stored=localStorage.getItem(adminStorage(urlCode.toUpperCase()));if(stored){setToken(stored);setCode(urlCode.toUpperCase());}}
@@ -87,8 +118,8 @@ export default function Host(){
  const online=presenceIds.length||Number(room?.players_connected||0);
  const number=Number(room?.current_round||1),isLive=room?.status==='running';
  return <CinematicShell mode="host">
-   <header className="game-header">
-     <Brand/><div className="header-content">{code?<TopStats room={room} online={online}/>:<p className="head-slogan">INVESTIGAÇÃO • ESTRATÉGIA • DIREITO • NEGÓCIOS</p>}</div><LiveStatus/>
+   <header className="game-header" inert={navOpen}>
+     {code&&token&&<button ref={navToggle} type="button" className="v7-nav-toggle" aria-label="Abrir menu do Host" aria-expanded={navOpen} aria-controls="v7-mobile-nav" onClick={()=>setNavOpen(true)}><Menu size={24}/></button>}<Brand/><div className="header-content">{code?<TopStats room={room} online={online}/>:<p className="head-slogan">INVESTIGAÇÃO • ESTRATÉGIA • DIREITO • NEGÓCIOS</p>}</div><LiveStatus/>
    </header>
    {!code||!token?<div className="setup-view">
      <div className="setup-title"><h1>ESCOLHA O <span>CASO DA AULA</span></h1><p>Crie uma investigação ao vivo com personagens, respostas e ranking em tempo real.</p></div>
@@ -102,7 +133,13 @@ export default function Host(){
        <button className="cinema-button gold" type="button" onClick={create} disabled={busy}><Play size={20}/> {busy?'CRIANDO SALA...':'CRIAR SALA ONLINE'}</button>
      </section><ErrorLine message={error}/>
    </div>:<div className="host-body v6-host-body">
-     <nav className="host-sidebar" aria-label="Navegação do Host">
+     {navOpen&&<div className="v7-nav-shade" onClick={closeNav}>
+      <nav id="v7-mobile-nav" ref={mobileNav} className="v7-mobile-nav" role="dialog" aria-modal="true" aria-label="Menu do Host" onClick={e=>e.stopPropagation()}>
+       <header><strong>CENTRAL DE CONTROLE</strong><button type="button" aria-label="Fechar menu" onClick={closeNav}><X size={24}/></button></header>
+       {([{key:'lobby',label:'Lobby / Sala',icon:Users},{key:'cases',label:'Casos e Perguntas',icon:FileText},{key:'players',label:'Jogadores',icon:Users},{key:'reports',label:'Relatórios',icon:BarChart3},{key:'settings',label:'Configurações',icon:Settings2}] as const).map(item=><button type="button" key={item.key} onClick={()=>{closeNav();setModal(item.key);}}><item.icon size={21}/>{item.label}</button>)}
+      </nav>
+     </div>}
+     <nav className="host-sidebar" inert={navOpen} aria-label="Navegação do Host">
        <div className="sidebar-label">CENTRAL DE CONTROLE</div>
        <button className="nav-current" onClick={()=>window.scrollTo({top:0,behavior:'smooth'})}><Play size={17}/> Partida ao Vivo</button>
        <button onClick={()=>setModal('lobby')}><Users size={17}/> Lobby / Sala</button>
@@ -112,7 +149,7 @@ export default function Host(){
        <button onClick={()=>setModal('settings')}><Settings2 size={17}/> Configurações</button>
        <img className="justice-statue" src="../assets/the-crimes-v3/ui/lady-justice.svg" alt="" aria-hidden="true"/>
      </nav>
-     <main className="host-main">
+     <main className="host-main" inert={navOpen}>
        {room?.status==='waiting'||!room?<section className="v6-host-lobby" aria-label="Sala aguardando jogadores">
         <div className="v6-lobby-hero">
          <span className="v6-eyebrow"><FolderOpen size={15}/> SALA DA PARTIDA</span>
@@ -125,12 +162,13 @@ export default function Host(){
            <p><b>03</b> Digite seu nome e escolha o personagem.</p>
            <button type="button" onClick={()=>void copyJoinLink()} className="v6-copy-link"><Copy size={16}/> {copyFeedback==='success'?'LINK COPIADO!':'COPIAR LINK DE ENTRADA'}</button>
           </div>
+          <button type="button" className="v7-share-link cinema-button gold" onClick={()=>void shareJoinLink()}><Share2 size={20}/> COMPARTILHAR SALA</button>
           <div className="v6-lobby-qr"><QRCodeSVG value={playerUrl(code)} size={190} fgColor="#06101e" bgColor="#fff" includeMargin aria-label="QR Code para entrar na sala"/></div>
          </div>
-         <div className="v6-lobby-case"><img src={caseCover(room?.case_key||selectedCase)} alt=""/><div><small>CASO SELECIONADO</small><strong>{room?.case_title||CASES.find(x=>x.key===selectedCase)?.title}</strong><span>8 rodadas de investigação jurídica</span></div></div>
+         <button type="button" className="v6-lobby-case" onClick={()=>setModal('cases')} aria-label="Ver detalhes do caso selecionado"><img src={caseCover(room?.case_key||selectedCase)} alt=""/><div><small>CASO SELECIONADO</small><strong>{room?.case_title||CASES.find(x=>x.key===selectedCase)?.title}</strong><span>8 rodadas de investigação jurídica</span></div><ChevronsRight size={24}/></button>
         </div>
         <aside className="v6-lobby-roster">
-         <h2><Users size={21}/> JOGADORES NA SALA <span>{players.length}/{maxPlayers}</span></h2>
+         <h2><Users size={21}/> JOGADORES NA SALA <span>{players.length}/{Number((admin?.room as unknown as {maxPlayers?:number})?.maxPlayers)||maxPlayers}</span></h2>
          <div className="v6-roster-scroll">{players.length?players.map((p,i)=><div className="v6-roster-entry" key={p.player_id}>
           <b>{String(i+1).padStart(2,'0')}</b><img src={avatar(p.avatar_id||avatars[p.player_id]||'detetive')} alt=""/><strong>{p.nickname}</strong><span className={'v6-presence '+(presenceIds.includes(p.player_id)||p.connected?'online':'offline')}>{presenceIds.includes(p.player_id)||p.connected?'● ONLINE':'○ CONECTANDO'}</span>
          </div>):<div className="v6-roster-empty"><Users size={43}/><strong>Nenhum jogador ainda</strong><p>O primeiro participante aparecerá assim que entrar pelo QR Code.</p></div>}</div>
@@ -161,6 +199,7 @@ export default function Host(){
            </div>}
          </div>
          <aside className="host-aside">
+           {room&&room.status!=='finished'&&<RoundTelemetry room={room}/>}
            {room?<ClassProgress room={room}/>:null}
            <section className="rank-panel"><h2><span>🏆</span> RANKING (TOP 5)</h2><RankList players={players} avatars={avatars} ids={presenceIds}/></section>
          </aside>
@@ -168,7 +207,7 @@ export default function Host(){
        </>}
        <section className="host-dock" aria-label="Controles administrativos">
          <button className="cinema-button secondary" onClick={()=>window.open(screenUrl(code),'the-crimes-react-screen')}><Monitor size={22}/> ABRIR TELÃO</button>
-         {room?.status==='waiting'?<button className="cinema-button mint" disabled={busy} onClick={()=>void send('start')}><Play size={23}/> INICIAR PARTIDA</button>:null}
+         {room?.status==='waiting'?<button className="cinema-button gold" disabled={busy} onClick={()=>void send('start')}><Play size={23}/> INICIAR PARTIDA</button>:null}
          {room?.status==='paused'?<button className="cinema-button mint" disabled={busy} onClick={()=>void send('resume')}><Play size={23}/> CONTINUAR</button>:null}
          {isLive&&!room?.revealed?<button className="cinema-button cyan" disabled={busy||room?.locked&&room?.revealed} onClick={()=>void send('reveal')}><Eye size={24}/> REVELAR RESPOSTA</button>:null}
          {isLive?<button className="cinema-button gold" disabled={busy} onClick={()=>void send(number>=8?'finish':'next')}><ChevronsRight size={25}/> {number>=8?'CONCLUIR 8ª RODADA':'PULAR / PRÓXIMA'}</button>:null}

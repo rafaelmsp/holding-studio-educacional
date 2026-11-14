@@ -1,0 +1,41 @@
+{
+  "version": 7,
+  "backgrounds": {
+    "desktop": {
+      "path": "backgrounds/desktop.webp",
+      "origin": "OpenAI image generation, 2026-11-12",
+      "source": "clean production art; no embedded UI"
+    },
+    "mobile": {
+      "path": "backgrounds/mobile.webp",
+      "origin": "OpenAI image generation, 2026-11-12"
+    },
+    "round": {
+      "path": "backgrounds/round.webp",
+      "origin": "OpenAI image generation, 2026-11-12",
+      "source": "clean production art, no text or interactive content"
+    },
+    "player": {
+      "path": "backgrounds/player.webp",
+      "origin": "OpenAI image generation, 2026-11-12",
+      "source": "clean production art, no text or interactive content"
+    },
+    "podium": {
+      "path": "backgrounds/podium.webp",
+      "origin": "OpenAI image generation, 2026-11-12",
+      "source": "clean production art, no text or interactive content"
+    }
+  },
+  "preserved": {
+    "portraits": "../the-crimes-v6/portraits/ (12 stable IDs)",
+    "scenes": "existing catalog, 6 cases x 8 scenes"
+  },
+  "ui": "React text and controls; CSS metal frames; Lucide icons",
+  "props": {
+    "detective": {
+      "path": "props/detective.webp",
+      "origin": "OpenAI image generation, 2026-11-12",
+      "alpha": true
+    }
+  }
+}

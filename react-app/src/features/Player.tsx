@@ -98,7 +98,7 @@ export default function Player(){
      <span className="red-sign">CASO ENCERRADO</span><img src={avatar(session.avatarId)} alt="" className="final-avatar"/>
      <h1>{player?.nickname}</h1><strong className="final-score">{player?.score||0} PONTOS</strong>
      <div className="final-grid">{[['POSIÇÃO','#'+myRank],['RODADAS',sum+'/8'],['ACERTOS',hit+'%'],['EXPOSIÇÃO',exposureLabel(player?.exposure)]].map(([a,b])=><div key={a}><small>{a}</small><strong>{b}</strong></div>)}</div>
-     <section className="final-verdict"><h2>{player?.final_result?.resultLabel||'RESULTADO FINAL'}</h2><p>Ocultou bens: <b>{player?.ocultou_bens?'SIM':'NÃO'}</b> • Descoberta: <b>{player?.ocultacao_descoberta?'SIM':'NÃO'}</b></p><p>Patrimônio bloqueado: <b>{Number(player?.patrimonio_bloqueado||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</b></p></section>
+     <section className="final-verdict"><h2>{player?.final_result?.resultLabel||'RESULTADO FINAL'}</h2><p>Ocultou bens: <b>{player?.ocultou_bens?'SIM':'NÃO'}</b> • Descoberta: <b>{player?.ocultacao_descoberta?'SIM':'NÃO'}</b></p><p>Patrimônio bloqueado: <b>{Number(player?.patrimonio_bloqueado||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</b></p></section><p className="v7-player-final-guidance">Confira o pódio no telão. Aguarde o professor para uma nova partida.</p>
    </div>:question&&room?<main className="gameplay">
       <section className="player-identity">
        <img src={avatar(session.avatarId)} alt="" className="player-avatar"/>

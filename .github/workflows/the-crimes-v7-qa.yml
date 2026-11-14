@@ -1,0 +1,41 @@
+name: The Crimes V7 browser QA
+on:
+  pull_request:
+    paths:
+      - 'react-app/**'
+      - 'assets/the-crimes-v7/**'
+      - '.github/workflows/the-crimes-v7-qa.yml'
+  workflow_dispatch:
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: react-app/package-lock.json
+      - run: npm ci --no-audit --no-fund
+        working-directory: react-app
+      - run: npm run build
+        working-directory: react-app
+      - run: npx playwright-core install --with-deps chromium
+        working-directory: react-app
+      - name: Start static preview
+        run: python3 -m http.server 8148 --bind 127.0.0.1 > /tmp/the-crimes-server.log 2>&1 &
+      - name: Verify responsive layouts and interactions with mocked rooms
+        run: node react-app/tests/v7-browser.cjs
+      - name: Exercise real multiplayer room and eight rounds
+        working-directory: react-app
+        env:
+          TC_V6_QA_BASE: http://127.0.0.1:8148/live/
+          TC_V6_QA_OUT: /tmp/the-crimes-v7-qa/real-multiplayer
+        run: node qa-v6.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: the-crimes-v7-screenshots
+          path: /tmp/the-crimes-v7-qa
+          retention-days: 14

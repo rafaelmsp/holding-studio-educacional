@@ -1,3 +1,4 @@
+import RoundTelemetry from '../components/RoundTelemetry';
 import PodiumBoard from '../components/PodiumBoard';
 import {useEffect,useMemo,useState} from 'react';
 import {QRCodeSVG} from 'qrcode.react';
@@ -90,6 +91,7 @@ export default function Screen(){
         </AnimatePresence>
        </main>
        <aside className="projector-side">
+         {room&&room.status!=='waiting'&&room.status!=='finished'&&<RoundTelemetry room={room}/>}
          {room&&<ClassProgress room={room}/>}
          <section className="rank-panel"><h2><Crown size={21}/> RANKING (TOP 5)</h2><RankList players={players} ids={ids} avatars={avatars}/></section>
        </aside>

@@ -35,7 +35,7 @@ export function caseScene(key:string,round:number){
 }
 export function caseCover(key:string){const k=(key in manifest.cases?key:'credores') as keyof typeof manifest.cases;return manifest.cases[k].cover;}
 export const BACKGROUNDS={
-host:'../assets/the-crimes-v6/backgrounds/host-control.webp', screen:'../assets/the-crimes-v6/backgrounds/projector.webp',join:'../assets/the-crimes-v6/backgrounds/lobby-qr.webp',
-lobby:'../assets/the-crimes-v6/backgrounds/lobby-qr.webp',final:'../assets/the-crimes-v6/backgrounds/podium.webp',city:manifest.global.city,
+host:'../assets/the-crimes-v7/backgrounds/desktop.webp', screen:'../assets/the-crimes-v7/backgrounds/round.webp',join:'../assets/the-crimes-v7/backgrounds/mobile.webp',
+lobby:'../assets/the-crimes-v6/backgrounds/lobby-qr.webp',final:'../assets/the-crimes-v7/backgrounds/podium.webp',city:'../assets/the-crimes-v7/backgrounds/player.webp',
 };
 export function profileName(id:string){return PERSONAS.find(p=>p.id===id)?.name||'Detetive';}
