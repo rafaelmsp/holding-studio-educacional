@@ -49,3 +49,16 @@ O navegador conectado não estava disponível e o Chromium local não pôde inic
 | Pódio | 2–1–3, retratos persistidos e medalhas reposicionadas | Resultados dependem das respostas reais disponíveis |
 
 Não declarar equivalência visual integral ou V7 totalmente homologada sem revisão das capturas mais recentes. Permanecem distintos: teste automatizado com fixtures, comparação artística e homologação com professor/celulares reais. Leitura física do QR e desempenho em aparelhos reais não foram comprovados nesta execução. O teste contra o Supabase real passou no workflow 43353812683: três jogadores, resposta, revelação, pódio com avatares persistidos, reinício e oito rodadas; log `ERRORS []`. O pacote final ainda precisa passar por seus próprios checks após a integração das últimas artes.
+
+## Correção V7.1 — geometria móvel (13/11/2026)
+
+Após examinar as capturas da execução QA 43354457851, foram encontradas duas regressões que os testes iniciais não acusavam:
+
+1. **Host, 360–412 px:** a marca `THE CRIMES LIVE` colidia com `LiveStatus` no cabeçalho, que usava itens flex em uma única linha. A correção organiza menu, marca, estado da conexão e métricas em linhas de grid independentes, preservando o texto como HTML.
+2. **Pódio, 360–412 px:** os cartões estavam com `width:33.333%` *dentro* de colunas que já tinham um terço do espaço do grid. A correção aplica `width:100%` e espaçamentos/tamanhos de texto ajustados, preservando a ordem 2–1–3, os retratos e as medalhas.
+
+A suíte `react-app/tests/v7-browser.cjs` ganhou duas regressões de geometria: nenhum cruzamento entre marca e estado de conexão; nenhuma largura de cartão de pódio inferior a 80 px ou fora do palco. As artes, 48 cenas e 12 personagens não foram alterados.
+
+Os bundles de `live/` e `react-live/` foram reconstruídos a partir do código-fonte, não substituídos por placeholders. O build e os testes locais `test:metrics`, `test:v62`, `test:v6`, `test:visual`, integridade de assets e integridade da rota principal passaram. Observação: o script indicado no MD de transferência como `test:metrics4` não existe na árvore atual; o script efetivo é `test:metrics`.
+
+**Limites:** aprovação de testes automatizados não equivale a validação com QR físico, aparelhos Android/iOS reais, legibilidade no projetor ou comparação artística pixel a pixel. A publicação pública deve ser conferida após integrar o PR.
