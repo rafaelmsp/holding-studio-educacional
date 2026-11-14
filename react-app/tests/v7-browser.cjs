@@ -50,6 +50,16 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
    results.push({width,name,passed:true});
   };
   await page.goto(base+'?view=host&room=CRIM-1234');await page.locator('.v6-host-lobby').waitFor();await capture('host-lobby');
+  if(width<760){
+   const header=await page.evaluate(()=>{
+    const brand=document.querySelector('.game-header .brandmark').getBoundingClientRect();
+    const status=document.querySelector('.game-header .live-state').getBoundingClientRect();
+    const title=document.querySelector('.game-header .brandmark strong').getBoundingClientRect();
+    return {overlap:brand.left<status.right&&brand.right>status.left&&brand.top<status.bottom&&brand.bottom>status.top,titleRight:title.right};
+   });
+   assert.ok(!header.overlap,`${width}: Host brand must not overlap connection status`);
+   assert.ok(header.titleRight<=width+1,`${width}: Host brand must stay inside the screen`);
+  }
   await page.getByRole('button',{name:'Ver detalhes do caso selecionado'}).click();await page.getByRole('dialog').waitFor();await page.getByRole('button',{name:'Fechar',exact:true}).click();
   if(width<760){
    await page.getByRole('button',{name:'Abrir menu do Host'}).click();await page.getByRole('dialog',{name:'Menu do Host'}).waitFor();
@@ -63,6 +73,14 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
   state='finished';round=8;await page.reload();await page.locator('.v6-final-board').waitFor();await capture('host-podium');
   assert.equal(await page.locator('.v6-finish-card').count(),3);
   const portrait=await page.locator('.v6-finish-1 .v6-finish-art').boundingBox();assert.ok(portrait.height>220,'Winner portrait must remain visible above stats');
+  if(width<760){
+   const podium=await page.locator('.v6-podium-stage').evaluate(stage=>{
+    const area=stage.getBoundingClientRect();
+    return {right:area.right,cards:[...stage.querySelectorAll('.v6-finish-card')].map(card=>{const rect=card.getBoundingClientRect();return {width:rect.width,right:rect.right};})};
+   });
+   assert.ok(podium.cards.every(c=>c.width>=80),`${width}: podium cards must be readable, not one-third of their grid cells: ${JSON.stringify(podium.cards)}`);
+   assert.ok(podium.cards.every(c=>c.right<=podium.right+2),`${width}: podium cards must stay within the stage`);
+  }
   if(width>=1672){state='running';round=3;revealed=false;await page.goto(base+'?view=screen&room=CRIM-1234');await page.locator('.projector-question').waitFor();await capture('screen-round');}
   else{
    state='running';round=1;revealed=false;
