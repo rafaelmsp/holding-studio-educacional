@@ -41,3 +41,24 @@ node react-app/tests/v7-browser.cjs
 ```
 
 Próxima etapa visual: separar arte original aprovada em recortes transparentes com licenciamento/proveniência verificados, integrar nos 5 estados prioritários sem apagar o conteúdo do jogo, e comparar lado a lado com Golden Masters.
+
+## Etapa 2 — Jogador, telão e pódio em layers (14/11/2026)
+
+Quatro imagens cinematográficas sem interface gravada foram recuperadas da branch do PR #5 e copiadas para `assets/the-crimes-v72/scenes/`, com manifesto de proveniência:
+
+| Asset V7.2 | Origem do PR #5 | Aplicação |
+| --- | --- | --- |
+| `telao-rodada.webp` | `bg-round-projector.webp` | Telão durante rodada e pausa |
+| `telao-final.webp` | `bg-final-projector.webp` | Telão na finalização |
+| `jogador-mobile.webp` | `bg-player-mobile.webp` | Fundo do jogador / escolha da persona |
+| `podio-desktop.webp` | `bg-podium.webp` | Pódio do Host |
+
+As imagens do PR #5 foram derivadas de materiais fotográficos já existentes nas versões V3/V6. A etapa não incorpora uma nova imagem gerada nesta conversa nem presume fidelidade pixel a pixel com os Golden Masters. Os assets novos entram no build Vite como WebP em `live/bundles` e `react-live/bundles`, com URL versionada por hash.
+
+O CSS `v72-premium.css` agora estiliza separadamente os cenários das rodadas do telão, a entrada e as perguntas do jogador, e a iluminação em três tons do pódio. Texto jurídico, avatar persistido, perguntas, alternativas, QR, pontuação, cronômetro, ranking e resultados continuam renderizados por React com dados reais.
+
+**Correção de apresentação:** o pódio do telão antes reservava uma coluna invisível do grid para um painel lateral oculto, usando aproximadamente 70% da tela. A regra final `.cinema-screen .projector-main:has(.v6-cinematic-final)` utiliza toda a largura, mantém o ranking adicional visível no próprio pódio e impede a sobreposição do quadro-resumo aos cartões. Confirmar nas capturas V7.2.
+
+Novo teste `react-app/tests/v72-scene-layers.cjs` cobrindo `screen-round`, `screen-final`, `player-join` e `host-final`: confirma 200 e assinatura RIFF/WEBP dos quatro fundos, ausência de overflow horizontal e erros em console, 4 alternativas reais em DOM, pódio com 3 cartões e uso de ao menos 88% da largura na final do telão. Imagens/estados são de simulação QA; não representam dados reais de jogadores.
+
+**Pendente para homologação artística:** separar e otimizar props transparentes Premium novos, painel do Host com fidelidade às referências, aplicação das 48 cenas a layouts móveis reais, comparar cada modo com a referência original e teste QR com câmera no projetor. Sem aprovação visual do usuário, não promover o PR #6 à `main`.

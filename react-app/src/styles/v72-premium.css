@@ -69,3 +69,100 @@
 @media(prefers-reduced-motion:reduce){
  .cinema-host .v72-premium-art{animation:none;transition:none}
 }
+
+/* V7.2 scene pack — four repurposed, text-free cinematic assets.
+   Source: PR #5 assets; provenance in assets/the-crimes-v72/manifest.json.
+   Never rasterize game data: question, clock, ranking and scores are live DOM. */
+.cinema-screen:is(.v7-phase-running,.v7-phase-paused) .cinema-background{
+ background-image:linear-gradient(100deg,rgba(2,8,19,.55),rgba(2,8,19,.48) 55%,rgba(1,8,20,.64)),url('../../../assets/the-crimes-v72/scenes/telao-rodada.webp')!important;
+ background-position:center 42%!important;background-size:cover!important;filter:saturate(1.05) contrast(1.09)!important;
+}
+.cinema-screen.v7-phase-finished .cinema-background{
+ background-image:linear-gradient(95deg,rgba(2,7,18,.66),rgba(2,8,20,.57)),url('../../../assets/the-crimes-v72/scenes/telao-final.webp')!important;
+ background-position:center 35%!important;filter:saturate(1.08) contrast(1.12)!important;
+}
+.cinema-player .cinema-background,.cinema-join .cinema-background{
+ background-image:linear-gradient(180deg,rgba(1,7,18,.56),rgba(1,7,18,.58) 46%,rgba(1,7,18,.81)),url('../../../assets/the-crimes-v72/scenes/jogador-mobile.webp')!important;
+ background-position:center top!important;background-size:cover!important;
+}
+.cinema-host.v7-phase-finished .cinema-background{
+ background-image:linear-gradient(100deg,rgba(2,8,19,.62),rgba(2,8,19,.46)),url('../../../assets/the-crimes-v72/scenes/podio-desktop.webp')!important;
+ background-position:center 36%!important;
+}
+.cinema-player.v7-phase-finished .cinema-background,.cinema-screen.v7-phase-finished .cinema-background{background-size:cover!important}
+.cinema-player .player-header,.cinema-join .player-header{
+ background:linear-gradient(110deg,rgba(2,9,21,.94),rgba(6,19,33,.79))!important;
+ border-bottom:1px solid rgba(227,177,92,.64);box-shadow:0 8px 25px #0009;
+}
+.cinema-player .player-identity{
+ background:linear-gradient(110deg,rgba(3,12,25,.96),rgba(8,30,44,.87))!important;
+ border:1px solid #a98651!important;box-shadow:inset 0 1px #f9d5a05c,0 8px 22px #0009,0 0 15px #a5732c24!important;
+}
+.cinema-player .player-question{isolation:isolate;position:relative}
+.cinema-player .player-question h1{
+ color:#f9f4ed!important;text-shadow:0 2px 12px #000b;max-width:42ch;
+ padding:13px 12px 14px;margin:15px 0!important;
+ background:linear-gradient(115deg,rgba(2,12,24,.93),rgba(4,19,32,.88));
+ border:1px solid #507992;border-left:3px solid #d8ac66;
+ box-shadow:inset 0 1px #bfe9ff22,0 8px 16px #0009;
+}
+.cinema-player .scene-media{border:1px solid #c49c5d!important;box-shadow:0 0 0 3px #051321,0 0 20px #cc965340,0 10px 26px #000b}
+.cinema-player .answer-row{border-radius:5px!important;min-height:70px;background:linear-gradient(115deg,rgba(8,27,43,.97),rgba(3,13,25,.97))!important;
+ border-color:#426e89!important;box-shadow:inset 0 1px #7ccdfd19,0 4px 12px #000b!important}
+.cinema-player .answer-row.interactive:hover{border-color:#5dd8ff!important;box-shadow:0 0 14px #4dd8ff44!important}
+.cinema-player .answer-row.selected:not(.correct){border-color:#4aeaff!important;background:linear-gradient(110deg,#125073,#061e35)!important;box-shadow:0 0 17px #43d9ff7a!important}
+.cinema-player .answer-row.correct{border-color:#38ed95!important;background:linear-gradient(100deg,#0d4b2c,#061b1c)!important}
+.cinema-player .answer-row.risky,.cinema-player .answer-row.criminal{border-color:#e85f68!important}
+.cinema-player .submit-answer{box-shadow:0 7px 28px #000a,0 0 16px #b8813466!important;border-radius:4px!important}
+.cinema-screen .projector-question{isolation:isolate;position:relative}
+.cinema-screen .projector-question>.scene-media{border:1px solid #ba965e;box-shadow:inset 0 0 0 3px #071826,0 0 24px #a778414d;overflow:hidden}
+.cinema-screen .projector-question-copy{
+ background:linear-gradient(123deg,rgba(5,17,30,.96),rgba(2,10,22,.93))!important;
+ border-color:#a88a5d!important;box-shadow:inset 0 1px rgba(238,202,151,.27),0 7px 24px #000a!important;
+}
+.cinema-screen .rank-panel,.cinema-screen .v7-telemetry{background:linear-gradient(145deg,rgba(8,27,40,.94),rgba(2,10,21,.9))!important}
+.cinema-screen .projector-side{backdrop-filter:blur(5px)}
+/* Finale: separate spotlight layer behind the dynamic trio of player cards. */
+.cinema-shell .v6-podium-wrap{isolation:isolate;overflow:hidden}
+.cinema-shell .v6-podium-wrap::before{
+ content:"";position:absolute;inset:4% 4% 0;z-index:0;pointer-events:none;
+ background:radial-gradient(ellipse 31% 75% at 50% 65%,rgba(255,192,83,.27),transparent 85%),
+ radial-gradient(ellipse 21% 65% at 18% 70%,rgba(157,202,241,.16),transparent 88%),
+ radial-gradient(ellipse 21% 65% at 82% 70%,rgba(255,138,75,.18),transparent 88%);
+ opacity:.94;
+}
+.cinema-shell .v6-podium-stage{position:relative;z-index:1}
+.cinema-shell .v6-finish-card.v6-finish-1{border-color:#ffd879!important;box-shadow:0 0 0 1px rgba(255,225,146,.63),0 0 40px rgba(248,174,56,.45),0 17px 31px #000c!important}
+.cinema-shell .v6-finish-card.v6-finish-2{border-color:#99c3da!important;box-shadow:0 0 17px rgba(154,207,234,.28),0 14px 27px #000b!important}
+.cinema-shell .v6-finish-card.v6-finish-3{border-color:#d59a73!important;box-shadow:0 0 17px rgba(226,141,90,.25),0 14px 27px #000b!important}
+.cinema-shell .v6-final-heading h1{text-shadow:0 2px 2px #000,0 0 27px rgba(231,167,73,.43)}
+@media(max-width:760px){
+ .cinema-screen .projector-question-copy{background:linear-gradient(145deg,rgba(4,17,29,.97),rgba(1,8,17,.95))!important}
+ .cinema-player .player-question h1{font-size:clamp(20px,5vw,25px)!important;padding:12px}
+ .cinema-player .answer-row{min-height:68px}
+ .cinema-shell .v6-podium-wrap::before{inset:0}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-shell .v6-podium-wrap::before{animation:none!important}
+}
+
+/* Projector finale occupies the whole projection surface.
+   Previous V7 grid reserved an invisible ranking sidebar column. */
+.cinema-screen .projector-main:has(.v6-cinematic-final){
+ display:block!important;width:100%;max-width:100%;grid-template-columns:minmax(0,1fr)!important;
+}
+.cinema-screen .projector-main:has(.v6-cinematic-final) .projector-side{display:none!important}
+.cinema-screen .projector-stage:has(.v6-cinematic-final){
+ display:block;width:100%;max-width:100%;min-width:0;min-height:0;
+}
+.cinema-screen .projector-final.v6-cinematic-final{width:100%;max-width:100%;min-height:0}
+@media(min-width:1200px){
+ .cinema-screen .v6-final-board{min-height:0;height:auto;min-height:690px;overflow:visible}
+ .cinema-screen .v6-final-grid{min-height:395px}
+ .cinema-screen .v6-podium-stage{height:390px;min-height:390px;padding:10px 0 0}
+ .cinema-screen .v6-finish-info{padding:13px 8px 10px;gap:5px}
+ .cinema-screen .v6-finish-info>strong{font-size:clamp(19px,1.45vw,26px)}
+ .cinema-screen .v6-finish-score{font-size:clamp(25px,1.9vw,33px)}
+ .cinema-screen .v6-finish-hits{font-size:clamp(11px,.95vw,16px)}
+ .cinema-screen .v6-finish-info>small{font-size:clamp(10px,.70vw,13px)}
+}
