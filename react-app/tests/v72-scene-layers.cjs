@@ -74,8 +74,11 @@ const tests=[
     const isInline=cssImage.includes('data:image/svg+xml');
     assert.ok(isInline||cssImage.includes(item.expected),
      t.name+' missing ornamental SVG layer '+item.expected+': '+cssImage.slice(0,160));
-    const overlayUrl=[...cssImage.matchAll(/url\(([^)]+)\)/g)]
-     .map(m=>m[1].replaceAll('"','').replaceAll("'",'')).at(-1);
+    // Use the outer CSS url(...) boundary: inlined SVGs may themselves
+    // contain unescaped parentheses such as fill='url(%23gold)'.
+    const wrap=cssImage.trim();
+    const overlayUrl=wrap.startsWith('url(')&&wrap.endsWith(')')
+     ?wrap.slice(4,-1).trim().replace(/^["']|["']$/g,''):null;
     assert.ok(overlayUrl,t.name+' ornamental SVG URL not found');
     let markup;
     if(isInline){
@@ -87,7 +90,7 @@ const tests=[
      assert.equal(result.status(),200,t.name+' missing ornament '+item.expected);
      markup=(await result.body()).toString('utf8');
     }
-    assert.ok(markup.includes('<svg'),t.name+' expected real SVG markup');
+    assert.ok(markup.includes('<svg')&&markup.includes('</svg>'),t.name+' expected a complete SVG image');
     assert.ok(!/<script\b/i.test(markup),t.name+' ornament must be script-free');
    }
    if(t.view==='screen'&&t.status==='running')assert.equal(await page.locator('.answer-row').count(),4,'four live options');
