@@ -219,3 +219,21 @@
  .cinema-player .player-question::after,
  .cinema-shell .v6-final-heading::before{transition:none;animation:none}
 }
+
+/* V7.2 visual QA adjustment: heavy corner artwork must never compete with
+   the text of legal questions, ranking scores or interactive answer rows. */
+.cinema-screen .projector-question-copy::after{
+ opacity:.20!important;
+}
+.cinema-screen .rank-panel::after,
+.cinema-shell .v6-final-sidebar::after{
+ opacity:.18!important;
+}
+.cinema-player .player-question::after{
+ opacity:.18;
+}
+@media(max-width:760px){
+ /* Full-height panel proportions distort the 16:9 engraving on phones.
+    Retain the premium question border, remove only its decorative overlay. */
+ .cinema-player .player-question::after{display:none}
+}
