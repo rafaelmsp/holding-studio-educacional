@@ -85,7 +85,10 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
   else{
    state='running';round=1;revealed=false;
    await page.goto(base+'?view=player&room=CRIM-1234');await page.locator('#nickname').fill('Teste Ana');await page.getByRole('button',{name:'Feminino',exact:true}).click();await page.getByRole('button',{name:/Perita/}).first().click();await capture('player-join');
-   await page.getByRole('button',{name:'ENTRAR NA PARTIDA',exact:true}).click();await page.locator('.gameplay').waitFor();await capture('player-question');
+   await page.getByRole('button',{name:'ENTRAR NA PARTIDA',exact:true}).click();await page.locator('.gameplay').waitFor();
+   const mobileOrnament=await page.locator('.player-question').evaluate(el=>getComputedStyle(el,'::after').display);
+   assert.equal(mobileOrnament,'none',`${width}: decorative frame must not overlap answers on a phone`);
+   await capture('player-question');
    assert.equal(await page.locator('.submit-answer').isDisabled(),true);
    await page.locator('.answer-row.interactive').nth(1).click();assert.equal(await page.locator('.answer-row.correct').count(),0);
    await page.getByRole('button',{name:'RESPONDER',exact:true}).click();await page.locator('.answered-notice').waitFor();assert.equal(actionCalls.filter(x=>x.action==='answer').length,1);await capture('player-answered');
