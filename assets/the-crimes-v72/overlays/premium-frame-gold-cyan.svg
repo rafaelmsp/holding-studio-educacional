@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none" preserveAspectRatio="none">
+<title>Moldura cinematográfica Premium sem texto</title>
+<defs>
+ <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#5c3918"/><stop offset=".16" stop-color="#fff2c4"/><stop offset=".39" stop-color="#b97b2e"/><stop offset=".63" stop-color="#f0c17d"/><stop offset="1" stop-color="#5b3414"/></linearGradient>
+ <linearGradient id="cyan" x1="0" x2="1"><stop stop-color="#144457"/><stop offset=".5" stop-color="#89efff"/><stop offset="1" stop-color="#144457"/></linearGradient>
+ <linearGradient id="edge"><stop stop-color="#b9d8e3" stop-opacity=".74"/><stop offset=".4" stop-color="#7c9caf" stop-opacity=".12"/><stop offset=".6" stop-color="#8d5f2a" stop-opacity=".12"/><stop offset="1" stop-color="#ddb77b" stop-opacity=".77"/></linearGradient>
+ <radialGradient id="lens"><stop stop-color="#fff8de" stop-opacity=".86"/><stop offset=".19" stop-color="#f6c87e" stop-opacity=".52"/><stop offset="1" stop-color="#bd6c28" stop-opacity="0"/></radialGradient>
+ <filter id="glow" x="-90%" y="-90%" width="280%" height="280%"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<rect x="5" y="5" width="1590" height="890" rx="14" stroke="url(#edge)" stroke-width="3" opacity=".67"/>
+<rect x="15" y="15" width="1570" height="870" rx="10" stroke="#82b9c9" stroke-width="1" opacity=".26"/>
+<rect x="27" y="27" width="1546" height="846" rx="5" stroke="#edc08c" stroke-width=".7" opacity=".19"/>
+<path d="M320 7H1280M320 893H1280" stroke="url(#cyan)" stroke-width="2.5" opacity=".44"/>
+<g id="corner">
+ <path d="M11 246V64Q11 11 66 11H324" stroke="#dea95d" stroke-width="7" stroke-linecap="round"/>
+ <path d="M22 205V68Q22 23 68 23H270" stroke="#8df0ff" stroke-opacity=".65" stroke-width="2.6"/>
+ <path d="M36 166V85Q36 38 85 38H238" stroke="#8c683b" stroke-width="2"/>
+ <path d="M11 166L37 139L37 91L80 45L159 45" stroke="url(#gold)" stroke-width="3.5"/>
+ <path d="M52 49Q92 92 135 49M53 67Q90 110 135 67" stroke="url(#gold)" stroke-width="3" opacity=".85"/>
+ <path d="M68 52C82 38 103 38 117 52C103 65 82 65 68 52Z" fill="url(#gold)" opacity=".7"/>
+ <path d="M52 115Q104 85 116 147Q90 129 68 145M115 49Q158 35 180 81Q150 74 138 92" stroke="#cfa267" stroke-width="2" opacity=".65"/>
+ <path d="M11 243L47 210L47 167L67 150" stroke="url(#gold)" stroke-width="3" opacity=".6"/>
+ <path d="M164 11L142 37L180 37L204 11" stroke="#e0b370" stroke-width="2.5" opacity=".88"/>
+ <path d="M68 38L82 23L96 38L82 53Z" fill="#e6c188" opacity=".8"/>
+ <path d="M44 44h28M44 50h22M44 56h17" stroke="#65c4d5" stroke-width="1.4"/>
+ <circle cx="53" cy="53" r="12" fill="url(#lens)"/>
+ <circle cx="53" cy="53" r="3" fill="#ffe0aa"/>
+</g>
+<use href="#corner"/>
+<use href="#corner" transform="translate(1600 0) scale(-1 1)"/>
+<use href="#corner" transform="translate(0 900) scale(1 -1)"/>
+<use href="#corner" transform="translate(1600 900) scale(-1 -1)"/>
+<g opacity=".82" stroke="url(#gold)" stroke-width="2.2">
+ <path d="M665 12l19 13h29l20-13m202 0l-19 13h-29l-20-13" />
+ <path d="M665 888l19-13h29l20 13m202 0l-19-13h-29l-20 13" />
+</g>
+<g opacity=".45"><ellipse cx="800" cy="9" rx="170" ry="22" fill="url(#lens)" filter="url(#glow)"/><ellipse cx="800" cy="891" rx="170" ry="22" fill="url(#lens)" filter="url(#glow)"/></g>
+</svg>
