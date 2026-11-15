@@ -32,7 +32,7 @@ Comandos principais:
 cd /workspace/scratch/dd955f9c50f2/holding-studio-educacional
 npm --prefix react-app ci
 npm --prefix react-app run build
-npm --prefix react-app run test:metrics4
+npm --prefix react-app run test:metrics
 npm --prefix react-app run test:v62
 npm --prefix react-app run test:v6
 npm --prefix react-app run test:visual
