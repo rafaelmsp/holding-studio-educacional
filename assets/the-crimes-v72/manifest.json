@@ -60,5 +60,83 @@
       "use": "Empty roster / screen waiting atmosphere",
       "dynamic_content": "none"
     }
+  },
+  "premium_v72_master": {
+    "source_policy": "derived compositions of existing repository art, not newly AI-generated or a Golden Master screenshot",
+    "assets": {
+      "lobby-premium.webp": {
+        "source_files": [
+          "assets/the-crimes-v6/backgrounds/lobby-qr.webp",
+          "assets/the-crimes-v7/backgrounds/desktop.webp",
+          "assets/the-crimes-v3/global/command-center.webp"
+        ],
+        "composition": "independent text-free photographic blend, vignettes, teal/bronze lighting",
+        "generator": "react-app/scripts/generate_v72_premium.py",
+        "size": "1920x1080",
+        "sha256": "c96901aff3c31ef3cee2b868467c29b98edd1ae138a378df6a2b8ff95a4d8d33",
+        "dynamic_content": "none",
+        "usage": "lobby"
+      },
+      "host-live-premium.webp": {
+        "source_files": [
+          "assets/the-crimes-v6/backgrounds/host-control.webp",
+          "assets/the-crimes-v7/backgrounds/round.webp",
+          "assets/the-crimes-v3/global/investigation-keyart.webp"
+        ],
+        "composition": "independent text-free photographic blend, vignettes, teal/bronze lighting",
+        "generator": "react-app/scripts/generate_v72_premium.py",
+        "size": "1920x1080",
+        "sha256": "7141dbbcd678934852acb41a3fce8ad5a2c96ecf99a592b0438cb255872f6d1e",
+        "dynamic_content": "none",
+        "usage": "host"
+      },
+      "player-premium.webp": {
+        "source_files": [
+          "assets/the-crimes-v72/scenes/jogador-mobile.webp",
+          "assets/the-crimes-v7/backgrounds/player.webp"
+        ],
+        "composition": "independent text-free photographic blend, vignettes, teal/bronze lighting",
+        "generator": "react-app/scripts/generate_v72_premium.py",
+        "size": "864x1536",
+        "sha256": "97a4b68f44b54342e33d3f38bf833e9a100021e83a2bf1fb1e17c3ba711d53a6",
+        "dynamic_content": "none",
+        "usage": "player"
+      },
+      "projector-premium.webp": {
+        "source_files": [
+          "assets/the-crimes-v6/backgrounds/projector.webp",
+          "assets/the-crimes-v72/scenes/telao-rodada.webp",
+          "assets/the-crimes-v7/backgrounds/round.webp"
+        ],
+        "composition": "independent text-free photographic blend, vignettes, teal/bronze lighting",
+        "generator": "react-app/scripts/generate_v72_premium.py",
+        "size": "1920x1080",
+        "sha256": "56a70c1d287f4f0bd2c2f26550679b56b56390d88f0122e9ed424495575e6f26",
+        "dynamic_content": "none",
+        "usage": "screen"
+      },
+      "podium-premium.webp": {
+        "source_files": [
+          "assets/the-crimes-v6/backgrounds/podium.webp",
+          "assets/the-crimes-v72/scenes/podio-desktop.webp",
+          "assets/the-crimes-v7/backgrounds/podium.webp"
+        ],
+        "composition": "independent text-free photographic blend, vignettes, teal/bronze lighting",
+        "generator": "react-app/scripts/generate_v72_premium.py",
+        "size": "1920x1080",
+        "sha256": "1e269083345f5f978b4bf08b32871956e92055ba5fe9ffaeaf564863c48c7920",
+        "dynamic_content": "none",
+        "usage": "podium"
+      },
+      "podium-spotlights.png": {
+        "source_files": [],
+        "composition": "original three-color transparent Gaussian spotlights, no person/text/score",
+        "generator": "react-app/scripts/generate_v72_premium.py",
+        "size": "1920x1080",
+        "sha256": "4698c0ba2a7d8ec99fef77641fcd1eb18f3ab9b3580f0dfa996e2e3ec5407ded",
+        "dynamic_content": "none",
+        "usage": "podium"
+      }
+    }
   }
 }

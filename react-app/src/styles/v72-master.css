@@ -1,0 +1,139 @@
+/* THE CRIMES LIVE V7.2 MASTER PREMIUM
+ * 10 visual work packages: I01-I10 (8 points each).
+ * New photographic backdrops are produced by generate_v72_premium.py,
+ * from repo-owned V3/V6/V7 photos, not screenshot UI or copied Golden Masters.
+ * Controls, scores, QR, user text and the 48 legal scenes stay live React DOM.
+ */
+:root{
+ --v72-cyan:#48d7fa;
+ --v72-amber:#efbe72;
+ --v72-copper:#e38e6d;
+ --v72-ink:rgba(3,11,24,.94);
+ --v72-master-ornament:url('../../../assets/the-crimes-v72/overlays/premium-frame-gold-cyan.svg');
+}
+/* I01 — lobby photographic scenario */
+.cinema-host:is(.v7-phase-setup,.v7-phase-waiting)>.cinema-background{
+ background-image:linear-gradient(90deg,#010918ce,#0412226b 46%,#020713c9),url('../../../assets/the-crimes-v72/premium/lobby-premium.webp')!important;
+ background-position:center top!important;
+ background-size:cover!important;
+ filter:saturate(1.1) contrast(1.06);
+}
+.cinema-host .v6-lobby-hero{
+ background-image:linear-gradient(135deg,rgba(2,12,26,.94),rgba(3,20,34,.76)),url('../../../assets/the-crimes-v72/premium/lobby-premium.webp')!important;
+ background-position:center 35%!important;background-size:cover!important;
+}
+/* I02 — live QR, guided entry, status, participant cards all on top of art */
+.cinema-host .v6-lobby-hero{border:1px solid rgba(221,171,101,.87)!important;box-shadow:0 0 0 1px rgba(20,87,110,.9),inset 0 0 55px #081626a6,0 24px 70px #0008!important}
+.cinema-host .v6-lobby-hero h1{font-family:Georgia,serif;letter-spacing:.025em;color:#ffe3a7;text-shadow:0 3px 24px #e9a74a55,0 2px 3px #000}
+.cinema-host .v6-lobby-hero .v6-online-dot{box-shadow:0 0 0 5px rgba(39,229,155,.16),0 0 13px #43ffb8}
+.cinema-host .v6-lobby-hero .v6-lobby-columns{
+ backdrop-filter:blur(9px);border:1px solid #557a8ca6;background:linear-gradient(110deg,#041324d9,#071628bd)!important;
+}
+.cinema-host .v6-lobby-hero .v6-lobby-qr{
+ background:#fff!important;padding:7px;border:5px solid #bd8c4c!important;border-radius:4px;
+ outline:2px solid #041825;box-shadow:0 0 0 4px #0f2d42,0 0 28px #e8b45b77!important;
+}
+.cinema-host .v6-lobby-guide strong{letter-spacing:.095em;color:#f6daa3}
+.cinema-host .v6-lobby-guide p{line-height:1.4;min-height:32px}
+.cinema-host .v6-lobby-guide p b{background:linear-gradient(#216180,#092538);border:1px solid #5ad0f2;box-shadow:inset 0 1px #a9e4f44d}
+.cinema-host .v6-lobby-hero .v6-copy-link,.cinema-host .v7-share-link{min-height:46px;touch-action:manipulation}
+.cinema-host .v6-lobby-hero .v6-lobby-case{min-height:88px!important;position:relative;border:1px solid #d3a264!important;box-shadow:inset 0 1px #ffe7a34d,0 0 16px #a9762e42!important}
+.cinema-host .v6-roster-entry{border-bottom:1px solid #3d6276;min-height:52px}
+.cinema-host .v6-roster-entry:focus-within,.cinema-host .v6-lobby-case:focus-visible{outline:3px solid #9de7fc;outline-offset:3px}
+/* I03 — Host running/paused has its own scene; caseScene() stays in React */
+.cinema-host:is(.v7-phase-running,.v7-phase-paused)>.cinema-background{
+ background-image:linear-gradient(97deg,#020914e0,#06172584 46%,#030915e0),url('../../../assets/the-crimes-v72/premium/host-live-premium.webp')!important;
+ background-position:center center!important;background-size:cover!important;
+}
+/* I04 — Host question/controls styled as cinematic investigation panels */
+.cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question{border:1px solid #d7a35d!important;box-shadow:inset 0 0 0 2px #051525,0 0 27px rgba(40,188,239,.17)!important}
+.cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question .scene-media{border-right:1px solid #947149}
+.cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question .question-copy{
+ background:linear-gradient(125deg,#041324f5,#02101ff2)!important;
+}
+.cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question .question-copy h1{color:#f6f4f1;text-shadow:0 2px 13px #000a}
+.cinema-host:is(.v7-phase-running,.v7-phase-paused) .round-bar{border-color:#ae8451!important;box-shadow:inset 0 1px #f0bf6b56,0 9px 24px #0007}
+.cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock .cinema-button:focus-visible{outline:3px solid #a9eeff;outline-offset:3px}
+.cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-aside .rank-panel{background:linear-gradient(150deg,#051627f2,#07111fe9)!important}
+/* I05 — vertical photographic backdrop for phone, independent of avatars */
+.cinema-player>.cinema-background,.cinema-join>.cinema-background{
+ background-image:linear-gradient(180deg,#010915dc,#051324a6 37%,#020a18e8),url('../../../assets/the-crimes-v72/premium/player-premium.webp')!important;
+ background-position:center top!important;background-size:cover!important;filter:saturate(1.08);
+}
+/* I06 — accessible, tactile player controls and premium question card */
+.cinema-player .player-question{background:linear-gradient(145deg,rgba(4,14,28,.93),rgba(4,19,33,.88));border:1px solid #916b43;box-shadow:0 15px 42px #0008}
+.cinema-player .player-question h1{font:700 clamp(20px,3.6vw,27px)/1.35 Georgia,serif!important;letter-spacing:0!important;color:#fff8ee!important}
+.cinema-player .player-question .answer-rows{display:flex;flex-direction:column;gap:10px!important}
+.cinema-player .answer-row.interactive{min-height:64px!important;touch-action:manipulation}
+.cinema-player .answer-row.interactive:focus-visible{outline:3px solid #b8effb;outline-offset:3px}
+.cinema-player .answer-row.interactive.selected:not(.correct){border-color:#6ef1ff!important;box-shadow:0 0 0 1px #83f2ff9c,inset 0 0 18px #2386b963,0 0 19px #20bbec87!important}
+.cinema-player .submit-answer:not(:disabled){min-height:62px;touch-action:manipulation}
+.cinema-player .player-metrics{background:linear-gradient(130deg,#051b2ae3,#09101fe8);border:1px solid #7391a0}
+/* I07 — widescreen projector background. Never insert fixed QR/question text. */
+.cinema-screen:is(.v7-phase-running,.v7-phase-paused)>.cinema-background{
+ background-image:linear-gradient(92deg,#020815d5,#0311218d 48%,#010714da),url('../../../assets/the-crimes-v72/premium/projector-premium.webp')!important;
+ background-position:center top!important;background-size:cover!important;
+}
+.cinema-screen:is(.v7-phase-waiting,.v7-phase-setup)>.cinema-background{
+ background-image:linear-gradient(90deg,#020815d4,#071b2890),url('../../../assets/the-crimes-v72/premium/lobby-premium.webp')!important;
+}
+/* I08 — projector hierarchy; 720p overrides remain in v72-premium.css */
+.cinema-screen .projector-question>.scene-media{border:1px solid #b68a51!important;box-shadow:0 0 0 2px #04182b,0 0 18px #bc924536!important}
+.cinema-screen .projector-question-copy{border:1px solid #a98a5d!important;background:linear-gradient(120deg,#06182cfa,#020a19fa)!important}
+.cinema-screen .projector-header .live-state{box-shadow:0 0 13px rgba(23,224,163,.14)}
+.cinema-screen .projector-footer .cinema-button:focus-visible{outline:3px solid #b6edff;outline-offset:4px}
+.cinema-screen .projector-side .rank-panel{border:1px solid #b39365!important}
+.cinema-screen .projector-side .rank-entry.champion{background:linear-gradient(95deg,#74502259,#091a2e)!important}
+/* I09 — final podium photo and original transparent light rays. */
+.cinema-host.v7-phase-finished>.cinema-background,.cinema-screen.v7-phase-finished>.cinema-background{
+ background-image:linear-gradient(90deg,#030816b9,#0b0b1a58,#030817b2),url('../../../assets/the-crimes-v72/premium/podium-premium.webp')!important;
+ background-position:center center!important;background-size:cover!important;
+}
+.cinema-shell .v6-podium-wrap{position:relative;isolation:isolate}
+.cinema-shell .v6-podium-wrap::before{
+ background-image:url('../../../assets/the-crimes-v72/premium/podium-spotlights.png'),
+ radial-gradient(ellipse 36% 75% at 49% 65%,rgba(251,188,82,.17),transparent 78%)!important;
+ background-size:100% 100%,cover!important;background-position:center!important;
+ opacity:.72!important;
+}
+/* I10 — dynamic 2-1-3 ranking with legible cards/secondary standings */
+.cinema-shell .v6-finish-card{border-radius:3px;box-shadow:0 16px 38px #000a,0 0 14px #55b5e62e}
+.cinema-shell .v6-finish-card.v6-finish-1{box-shadow:0 0 0 1px #ffebac,0 0 38px #edb25274,0 16px 34px #000c!important}
+.cinema-shell .v6-finish-card.v6-finish-2{box-shadow:0 0 0 1px #d1e8f5,0 0 27px #9ccbe26f,0 16px 34px #000c!important}
+.cinema-shell .v6-finish-card.v6-finish-3{box-shadow:0 0 0 1px #d8a98a,0 0 27px #de8e5c64,0 16px 34px #000c!important}
+.cinema-shell .v6-finish-info{background:linear-gradient(0deg,#030a17f6,#071c2ad9)}
+.cinema-shell .v6-finish-info>strong{overflow-wrap:anywhere;line-height:1.2;text-shadow:0 2px 6px #000}
+.cinema-shell .v6-finish-info .v6-finish-score{color:#ffd88f;text-shadow:0 2px 10px #000a}
+.cinema-shell .v6-final-sidebar{border-color:#c09b67!important;background:linear-gradient(135deg,#081a2be8,#020917f1)!important}
+.cinema-shell .v6-class-summary{border:1px solid #9b7b50!important;background:linear-gradient(105deg,#041321ed,#101b2ae8)!important}
+.cinema-shell .v6-restart:focus-visible{outline:3px solid #c4edff;outline-offset:4px}
+/* Cross-device: keep all game data above background, never move click handlers. */
+.cinema-host .v6-lobby-hero,.cinema-host .host-question,.cinema-player .player-question,.cinema-screen .projector-stage{
+ isolation:isolate;
+}
+@media(max-width:760px),(pointer:coarse) and (max-width:1100px){
+ .cinema-host .v6-lobby-hero{
+  background-image:linear-gradient(160deg,#031324ed,#051b2bdb),url('../../../assets/the-crimes-v72/premium/player-premium.webp')!important;
+  background-position:center 26%!important;
+ }
+ .cinema-host .v6-lobby-hero .v6-lobby-columns{padding:12px 10px}
+ .cinema-host .v6-lobby-hero .v6-lobby-qr{max-width:100%;min-width:0}
+ .cinema-host .v6-lobby-guide p{font-size:15px}
+ .cinema-host .host-question>.scene-media{border-right:none}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question .question-copy h1{font-size:clamp(19px,4vw,27px)!important}
+ .cinema-player .player-question{padding:10px!important}
+ .cinema-player .player-question h1{font-size:clamp(19px,5vw,23px)!important;line-height:1.28!important}
+ .cinema-player .answer-row.interactive{min-height:68px!important}
+ .cinema-player .submit-answer{min-height:66px!important}
+ .cinema-shell .v6-finish-info>strong{font-size:clamp(12px,3.5vw,17px)}
+ .cinema-shell .v6-final-sidebar{min-width:0}
+}
+/* 720p styles in v72-premium.css intentionally override large desktop typographic sizing. */
+@media(min-width:1101px) and (max-height:800px){
+ .cinema-screen .projector-question-copy h1{font-size:clamp(17px,1.5vw,22px)!important;line-height:1.14!important}
+ .cinema-screen .projector-side .rank-panel{overflow:hidden}
+ .cinema-screen .projector-main{min-height:0}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-shell .v6-podium-wrap::before,.cinema-player .answer-row.interactive{transition:none!important;animation:none!important}
+}

@@ -8,12 +8,15 @@ const options=['Integralizar patrimônio com registro regular.','Transferir bens
 const question={id:'q-3',round:3,text:'Qual conduta caracteriza fraude contra credores na constituição de uma holding familiar?',options:options.map((text,index)=>({index,text})),correctIndex:1,explanation:'O esvaziamento patrimonial pode prejudicar os credores.'};
 const players=Array.from({length:5},(_,i)=>({player_id:'p'+i,room_id:'qa',nickname:['Ana','Bruno','Carla','Diana','Edu'][i],score:4500-i*600,rank:i+1,avatar_id:['perita','advogado','analista','detetive','delegado'][i],connected:true,counters:{correct:6-i,gray:1,risky:1,criminal:0}}));
 const tests=[
- {name:'screen-round',view:'screen',status:'running',width:1920,selector:'.projector-question',art:'telao-rodada'},
- {name:'screen-round-hd',view:'screen',status:'running',width:1280,height:720,selector:'.projector-question',art:'telao-rodada'},
- {name:'screen-final',view:'screen',status:'finished',width:1920,selector:'.v6-final-board',art:'telao-final'},
- {name:'screen-final-hd',view:'screen',status:'finished',width:1280,height:720,selector:'.v6-final-board',art:'telao-final'},
- {name:'player-join',view:'player',status:'waiting',width:390,selector:'.join-player',art:'jogador-mobile'},
- {name:'host-final',view:'host',status:'finished',width:1672,selector:'.v6-final-board',art:'podio-desktop'},
+ {name:'host-lobby-premium',view:'host',status:'waiting',width:1672,selector:'.v6-host-lobby',art:'lobby-premium'},
+ {name:'host-live-premium',view:'host',status:'running',width:1672,selector:'.host-question',art:'host-live-premium'},
+ {name:'screen-wait-premium',view:'screen',status:'waiting',width:1920,selector:'.projector-waiting',art:'lobby-premium'},
+ {name:'screen-round',view:'screen',status:'running',width:1920,selector:'.projector-question',art:'projector-premium'},
+ {name:'screen-round-hd',view:'screen',status:'running',width:1280,height:720,selector:'.projector-question',art:'projector-premium'},
+ {name:'screen-final',view:'screen',status:'finished',width:1920,selector:'.v6-final-board',art:'podium-premium'},
+ {name:'screen-final-hd',view:'screen',status:'finished',width:1280,height:720,selector:'.v6-final-board',art:'podium-premium'},
+ {name:'player-join',view:'player',status:'waiting',width:390,selector:'.join-player',art:'player-premium'},
+ {name:'host-final',view:'host',status:'finished',width:1672,selector:'.v6-final-board',art:'podium-premium'},
 ];
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
@@ -94,6 +97,21 @@ const tests=[
     }
     assert.ok(markup.includes('<svg')&&markup.includes('</svg>'),t.name+' expected a complete SVG image');
     assert.ok(!/<script\b/i.test(markup),t.name+' ornament must be script-free');
+   }
+   if(t.name==='host-lobby-premium'){
+    const qr=await page.locator('.v6-lobby-qr svg').boundingBox();
+    assert.ok(qr&&qr.width>=140&&qr.height>=140,'lobby must retain a real, readable QR SVG');
+    assert.ok(await page.locator('.v6-lobby-guide').count(),'lobby must retain step-by-step instructions');
+    assert.ok(await page.locator('.v6-lobby-case').count(),'selected case must be a live control');
+   }
+   if(t.name==='host-live-premium'){
+    assert.equal(await page.locator('.host-question .answer-row').count(),4,'Host must show four dynamic options');
+    assert.ok(await page.locator('.host-dock .cinema-button').count()>=1,'Host controls remain interactive');
+   }
+   if(t.status==='finished'){
+    assert.deepEqual(await page.locator('.v6-finish-medal b').allTextContents(),['2','1','3'],'podium order 2-1-3');
+    const spotlight=await page.locator('.v6-podium-wrap').evaluate(el=>getComputedStyle(el,'::before').backgroundImage);
+    assert.ok(spotlight.includes('podium-spotlights'),'finale must use independent premium lighting layer');
    }
    if(t.view==='screen'&&t.status==='running')assert.equal(await page.locator('.answer-row').count(),4,'four live options');
    if(t.height===720){
