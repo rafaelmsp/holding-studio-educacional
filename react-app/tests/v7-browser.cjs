@@ -84,7 +84,22 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
   if(width>=1672){state='running';round=3;revealed=false;await page.goto(base+'?view=screen&room=CRIM-1234');await page.locator('.projector-question').waitFor();await capture('screen-round');}
   else{
    state='running';round=1;revealed=false;
-   await page.goto(base+'?view=player&room=CRIM-1234');await page.locator('#nickname').fill('Teste Ana');await page.getByRole('button',{name:'Feminino',exact:true}).click();await page.getByRole('button',{name:/Perita/}).first().click();await capture('player-join');
+   await page.goto(base+'?view=player&room=CRIM-1234');await page.locator('#nickname').fill('Teste Ana');
+   await page.getByRole('button',{name:'Feminino',exact:true}).click();
+   assert.equal(await page.locator('.persona-tile').count(),4,'Each persona category must show four portraits');
+   const perita=page.getByRole('button',{name:/Perita/}).first();
+   await perita.click();
+   assert.equal(await page.locator('.persona-tile.selected').count(),1,'Exactly one selected dossier');
+   assert.equal(await perita.getAttribute('aria-pressed'),'true','Selected dossier must announce pressed');
+   assert.match(await perita.locator('.persona-art-badge').innerText(),/SELECIONADO/,'Selected dossier has premium visual badge');
+   assert.equal(await page.locator('.persona-preview h2').innerText(),'Perita','Preview follows selection');
+   await page.getByRole('button',{name:/Advogada/}).first().click();
+   assert.equal(await page.locator('.persona-preview h2').innerText(),'Advogada','Preview updates for other character');
+   await perita.focus();await page.keyboard.press('Space');
+   assert.equal(await perita.getAttribute('aria-pressed'),'true','Keyboard Space must select persona');
+   assert.equal(await page.locator('.persona-preview h2').innerText(),'Perita','Keyboard selection updates preview');
+   assert.equal(await page.locator('.persona-tile.selected').count(),1,'Selection remains exclusive after keyboard');
+   await capture('player-join');
    await page.getByRole('button',{name:'ENTRAR NA PARTIDA',exact:true}).click();await page.locator('.gameplay').waitFor();
    const mobileOrnament=await page.locator('.player-question').evaluate(el=>getComputedStyle(el,'::after').display);
    assert.equal(mobileOrnament,'none',`${width}: decorative frame must not overlap answers on a phone`);

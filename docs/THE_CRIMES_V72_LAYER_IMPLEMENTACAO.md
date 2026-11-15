@@ -119,3 +119,15 @@ Com base no conceito móvel Premium, a V7.2 agora tem diferenciação explícita
 **Nota de proveniência:** o recorte fotorrealista novo de Justiça, gerado nesta conversa, permanece como arte separada; esta etapa não copia a fotografia para o repositório, para não degrada-la nem criar arquivo ausente. O recorte já integrado `justice-bronze-cutout.webp` continua sendo o original existente V6/V7. Não confundir esses arquivos.
 
 **Release:** PR #6 permanece draft; a V7.1 da main não será mesclada antes de aprovação visual e verificação física.
+
+## Etapa 7 — seleção cinematográfica de personagens (15/11/2026)
+
+A captura comparativa da experiência móvel mostrou que os 12 retratos fotográficos já estavam corretos, mas os cartões de escolha ainda não tinham hierarquia Premium semelhante às referências. Reutilizamos os mesmos 12 assets e IDs sem alterar filtros, armazenamento de sessão ou lógica multiplayer.
+
+- `Player.tsx`: cada `persona-tile` ganhou `persona-art`, fotografia original, badge visual `DOSSIÊ` / `SELECIONADO` (aria-hidden para evitar duplicar anúncio), e estado semântico `aria-pressed` mantido. `persona-preview h2` anuncia mudanças por `aria-live=polite`.
+- A animação da prévia agora respeita `prefers-reduced-motion`, evitando transições quando reduzidas.
+- `v72-premium.css`: molduras ciano/bronze em layers, badge dourado, retrato com vinheta, estados hover limitados a ponteiro fino, foco forte por teclado, espaçamentos móveis e transparência de acabamento. Nada de texto/número pré-renderizado no WebP.
+- `v7-browser.cjs`: a suíte verifica filtro com quatro personagens, uma única seleção, badge correto, troca Perita→Advogada→Perita com teclado Espaço, `aria-pressed` e prévia atualizada. Capturas móveis seguem 360, 390 e 412 px e compatibilidade dos 12 perfis.
+- Preservado o botão `ENTRAR NA PARTIDA`, código da sala e submissão ao Supabase. Nenhuma mudança nas rotas de API, arte ou 48 cenas jurídicas.
+
+Arte fotográfica nova da Justiça: permanece em avaliação e fora desta etapa, porque exige transferência do binário original e validação da qualidade do recorte em resolução de desktop. Não introduzir um link vazio para a imagem nem afirmar que ela foi publicada. PR permanece draft até revisão visual e teste físico.

@@ -400,3 +400,94 @@
  .cinema-player .answer-row.interactive,
  .cinema-player .submit-answer:not(:disabled){transition:none!important}
 }
+
+/* V7.2.7 — premium selectable dossiers.
+   The portrait is a real image; badge/name/role remain selectable live DOM. */
+.cinema-join .persona-grid{align-items:stretch}
+.cinema-join .persona-tile{
+ position:relative;isolation:isolate;display:flex;flex-direction:column;
+ border:1px solid rgba(86,172,206,.7)!important;border-radius:5px!important;
+ padding:0 0 11px;background:linear-gradient(155deg,#092234,#040b16)!important;
+ box-shadow:inset 0 1px #c7edff1c,0 9px 21px #0009!important;
+ transition:transform .19s ease,border-color .19s ease,box-shadow .19s ease;
+ outline-offset:3px;
+}
+.cinema-join .persona-tile .persona-art{
+ position:relative;isolation:isolate;overflow:hidden;width:100%;aspect-ratio:4/4.6;
+ background:linear-gradient(160deg,#081927,#050a11);
+ border-bottom:1px solid #647f8e;
+}
+.cinema-join .persona-tile .persona-art img{
+ display:block;width:100%;height:100%;aspect-ratio:unset!important;
+ object-fit:cover;object-position:center 17%;
+ border:0!important;filter:saturate(.84) contrast(1.08);
+ transition:filter .19s ease,transform .3s ease;
+}
+.cinema-join .persona-tile .persona-art::after{
+ content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+ background:linear-gradient(180deg,rgba(5,9,18,.33),transparent 24%,transparent 47%,rgba(2,10,19,.91)),
+ linear-gradient(125deg,rgba(30,186,238,.07),transparent 55%,rgba(210,116,64,.09));
+}
+.cinema-join .persona-tile .persona-art-badge{
+ position:absolute;left:7px;top:8px;z-index:2;
+ display:flex;align-items:center;gap:3px;min-height:22px;padding:3px 7px;
+ font:800 9px/1.1 Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;
+ color:#d7e7ed;border:1px solid #4a879e;border-radius:3px;
+ background:linear-gradient(110deg,rgba(6,21,34,.97),rgba(4,10,19,.93));
+ text-shadow:0 1px 3px #000;box-shadow:0 3px 10px #0009;
+ width:max-content;max-width:calc(100% - 14px);
+}
+.cinema-join .persona-tile>strong{font-size:clamp(12px,1vw,16px);margin:10px 5px 2px;color:#f3f7f8}
+.cinema-join .persona-tile>span{font-size:10px;color:#a9c6d2;white-space:normal;overflow-wrap:anywhere}
+.cinema-join .persona-tile.selected{
+ border:2px solid #ffd27e!important;
+ background:linear-gradient(160deg,#3c2a1d,#080f19)!important;
+ box-shadow:0 0 0 2px #26170c,0 0 24px #f0ae4a65,inset 0 1px #ffda9b59!important;
+ transform:translateY(-2px);
+}
+.cinema-join .persona-tile.selected .persona-art img{filter:contrast(1.08) saturate(1.10)}
+.cinema-join .persona-tile.selected .persona-art-badge{
+ color:#1c1b16;border-color:#fff0bb;
+ background:linear-gradient(100deg,#f4cc79,#d99f50);
+ text-shadow:none;box-shadow:0 0 14px #d29a4d88;
+}
+.cinema-join .persona-tile:focus-visible{
+ outline:3px solid #7febff!important;outline-offset:4px;
+ box-shadow:0 0 0 6px rgba(33,164,211,.26),0 9px 21px #0009!important;
+}
+@media(hover:hover) and (pointer:fine){
+ .cinema-join .persona-tile:not(.selected):hover{
+  transform:translateY(-3px);border-color:#8de4ff!important;
+  box-shadow:0 0 19px rgba(51,181,218,.3),0 11px 24px #000a!important;
+ }
+ .cinema-join .persona-tile:hover .persona-art img{transform:scale(1.04)}
+}
+.cinema-join .persona-preview{
+ position:relative;isolation:isolate;overflow:hidden;
+ border:1px solid #c4a16a!important;border-radius:5px!important;
+ box-shadow:inset 0 0 0 2px #051424,inset 0 0 0 3px #8b6f48,0 12px 28px #0009!important;
+}
+.cinema-join .persona-preview::before{
+ content:"";position:absolute;left:8px;right:8px;top:8px;height:1px;
+ pointer-events:none;background:linear-gradient(90deg,transparent,#f8d89e,transparent);
+ opacity:.7;
+}
+.cinema-join .persona-preview>img{
+ border:1px solid #bc9b61!important;border-radius:3px!important;
+ box-shadow:0 0 0 3px #051522,0 0 25px rgba(216,172,104,.24),0 12px 23px #000b!important;
+}
+.cinema-join .persona-preview>span{font-size:11px;letter-spacing:.18em;color:#f4c681}
+@media(max-width:760px){
+ .cinema-join .persona-grid{gap:9px}
+ .cinema-join .persona-tile{min-height:0}
+ .cinema-join .persona-tile .persona-art-badge{font-size:8px;min-height:20px;left:5px;top:5px;padding:3px 5px}
+ .cinema-join .persona-tile.selected{transform:none}
+ .cinema-join .persona-preview{padding:15px}
+ .cinema-join .persona-preview>img{height:clamp(210px,57vw,295px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-join .persona-tile,
+ .cinema-join .persona-art img{transition:none!important;animation:none!important}
+ .cinema-join .persona-tile.selected,
+ .cinema-join .persona-tile:hover{transform:none!important}
+}
