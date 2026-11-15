@@ -166,3 +166,56 @@
  .cinema-screen .v6-finish-hits{font-size:clamp(11px,.95vw,16px)}
  .cinema-screen .v6-finish-info>small{font-size:clamp(10px,.70vw,13px)}
 }
+
+/* V7.2 original transparent ornaments: independent visual layers, not a screenshot. 
+   SVG frame/seal have no text, controls or game values. Keep pointer targets unobstructed. */
+:root{
+ --v72-premium-frame:url('../../../assets/the-crimes-v72/overlays/premium-frame-gold-cyan.svg');
+ --v72-premium-seal:url('../../../assets/the-crimes-v72/overlays/premium-justice-seal.svg');
+}
+/* Overlay the existing pseudo-element frame instead of rasterizing the content. */
+.cinema-host .v6-lobby-hero::after,
+.cinema-screen .projector-question-copy::after,
+.cinema-screen .rank-panel::after,
+.cinema-shell .v6-final-sidebar::after{
+ background-image:var(--v72-premium-frame);
+ background-repeat:no-repeat;
+ background-size:100% 100%;
+ background-position:center;
+ border-color:transparent;
+ pointer-events:none!important;
+ opacity:.84;
+}
+/* The phone question has no preexisting ornamental overlay. */
+.cinema-player .player-question::after{
+ content:"";
+ position:absolute;
+ inset:2px;
+ z-index:2;
+ background-image:var(--v72-premium-frame);
+ background-repeat:no-repeat;
+ background-size:100% 100%;
+ pointer-events:none;
+ opacity:.68;
+}
+/* Gold legal crest is a faded watermark behind the result heading. */
+.cinema-shell .v6-final-heading{position:relative;isolation:isolate}
+.cinema-shell .v6-final-heading::before{
+ content:"";position:absolute;
+ top:0;right:clamp(8px,4vw,65px);
+ width:clamp(64px,7vw,128px);
+ aspect-ratio:1;
+ background:var(--v72-premium-seal) center/contain no-repeat;
+ opacity:.20;
+ pointer-events:none;
+ z-index:0;
+}
+.cinema-shell .v6-final-heading>*{position:relative;z-index:1}
+@media(max-width:760px){
+ .cinema-player .player-question::after{inset:2px;opacity:.56}
+ .cinema-shell .v6-final-heading::before{right:5px;top:5px;width:60px;opacity:.12}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-player .player-question::after,
+ .cinema-shell .v6-final-heading::before{transition:none;animation:none}
+}
