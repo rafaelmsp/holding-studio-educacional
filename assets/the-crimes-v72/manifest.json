@@ -44,5 +44,21 @@
       "dynamic_content": "none"
     }
   },
-  "release_note": "The additional generated high-resolution photorealistic Lady Justice PNG is a local concept artifact only, not committed to this branch. Do not claim inclusion or deployment until the binary is uploaded and QA passes."
+  "release_note": "The additional generated high-resolution photorealistic Lady Justice PNG is a local concept artifact only, not committed to this branch. Do not claim inclusion or deployment until the binary is uploaded and QA passes.",
+  "props": {
+    "justice-bronze-cutout.webp": {
+      "source": "assets/the-crimes-v6/decor/lady-justice-bronze.webp",
+      "process": "Warm-highlight alpha masking + feathered edges",
+      "generator": "react-app/scripts/generate_v72_props.py",
+      "use": "Host sidebar / cinematic art layer",
+      "dynamic_content": "none"
+    },
+    "evidence-lens-cutout.webp": {
+      "source": "assets/the-crimes-v72/scenes/podio-desktop.webp",
+      "process": "Photographic crop with alpha vignette",
+      "generator": "react-app/scripts/generate_v72_props.py",
+      "use": "Empty roster / screen waiting atmosphere",
+      "dynamic_content": "none"
+    }
+  }
 }

@@ -237,3 +237,43 @@
     Retain the premium question border, remove only its decorative overlay. */
  .cinema-player .player-question::after{display:none}
 }
+
+/* V7.2.4: photorealistic foreground props as true transparent WebP layers.
+   Both derived from existing source photos, unlike flat UI screenshots. */
+.cinema-host .host-sidebar::after{
+ background-image:url('../../../assets/the-crimes-v72/props/justice-bronze-cutout.webp')!important;
+ background-position:center bottom!important;background-size:contain!important;
+ filter:drop-shadow(0 7px 20px rgba(231,169,83,.36))!important;
+ opacity:.94;
+}
+.cinema-host.v7-phase-waiting .v72-art-justice{display:none}
+.cinema-host .v72-art-justice{opacity:.72;filter:drop-shadow(0 8px 24px rgba(241,189,114,.3)) saturate(1.13) contrast(1.06)}
+.cinema-host .v6-roster-empty{
+ position:relative;isolation:isolate;overflow:hidden;
+}
+.cinema-host .v6-roster-empty::before{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:url('../../../assets/the-crimes-v72/props/evidence-lens-cutout.webp') center 70%/cover no-repeat;
+ opacity:.34;filter:contrast(1.13) saturate(.82);
+}
+.cinema-host .v6-roster-empty::after{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:linear-gradient(180deg,rgba(1,11,23,.55),rgba(1,11,23,.70));
+}
+.cinema-host .v6-roster-empty>*{position:relative;z-index:1}
+.cinema-screen .projector-waiting{position:relative;isolation:isolate}
+.cinema-screen .projector-waiting::after{
+ content:"";position:absolute;right:0;bottom:0;width:min(30vw,480px);height:min(33vh,280px);z-index:0;pointer-events:none;
+ background:url('../../../assets/the-crimes-v72/props/evidence-lens-cutout.webp') bottom right/contain no-repeat;
+ opacity:.28;
+}
+.cinema-screen .projector-waiting>*{position:relative;z-index:1}
+@media(max-width:760px), (pointer:coarse) and (max-width:1100px){
+ .cinema-host .v6-roster-empty::before{opacity:.12}
+ .cinema-screen .projector-waiting::after{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-host .host-sidebar::after,
+ .cinema-host .v6-roster-empty::before,
+ .cinema-screen .projector-waiting::after{animation:none;transition:none}
+}

@@ -76,3 +76,16 @@ Foi gerada nesta conversa uma **estátua nova de Justiça** em PNG RGBA de alta 
 **Restrição de release:** como a alteração de fonte CSS ocorreu via GitHub, os bundles versionados em `live/` e `react-live/` ainda precisam ser reconstruídos a partir do commit final e registrados no PR antes de mesclar. A workflow de PR executa o build e verifica o código-fonte, mas não publica os bundles automaticamente. O PR permanece draft; a V7.1 pública não foi alterada.
 
 Revisão pendente: fidelidade das molduras às referências conceituais em capturas mobile e telão, verificação física do QR, eventual substituição do elemento antigo pelo PNG Premium da Justiça, sem modificar as oito rodadas e as 48 cenas.
+
+## Etapa 4 — props fotográficos com transparência e estados de espera (15/11/2026)
+
+Criados em `assets/the-crimes-v72/props/` dois elementos derivados de fotografias que já integram o projeto:
+
+- `justice-bronze-cutout.webp` (400 × 672): máscara de transparência por realces bronze, retirada de partes do fundo vermelho e suavização das bordas a partir de `assets/the-crimes-v6/decor/lady-justice-bronze.webp`. Substitui o plano retangular antigo da Justiça na barra lateral do Host e na camada ambiental fixa do Host.
+- `evidence-lens-cutout.webp` (646 × 555): composição fotográfica de lupa e documentos extraída de `assets/the-crimes-v72/scenes/podio-desktop.webp`, com recorte e máscara alfa suave. Fica por trás do aviso de sala vazia do Host; também aparece como detalhe atmosférico na espera do telão.
+
+O script reprodutível `react-app/scripts/generate_v72_props.py` usa Pillow e NumPy somente para recriar os binários de arte durante o desenvolvimento. A aplicação publicada não depende de Python. Foram mantidos `pointer-events:none`, prioridade do QR e do texto em DOM, breakpoint sensível a ponteiro coarse e `prefers-reduced-motion`.
+
+`react-app/tests/v72-host-touch.cjs` passou a verificar o caminho do recorte da Justiça e os fundos CSS do cenário de evidências, além de suas verificações de dimensões 390/980/1672, sobreposição e QR. A origem e os nomes dos binários estão descritos em `assets/the-crimes-v72/manifest.json`.
+
+**Observação de proveniência:** estas duas imagens são recortes novos de fotos pré-existentes no repositório, não são a PNG inédita da Justiça gerada no ChatGPT. A PNG de alta resolução permanece como arte conceitual externa até eventual incorporação própria e validação de fidelidade.

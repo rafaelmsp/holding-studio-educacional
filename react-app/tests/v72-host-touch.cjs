@@ -36,10 +36,25 @@ const room={room_id:'qa',code:'CRIM-1234',case_key:'credores',case_title:'Fraude
      sidebar:document.querySelector('.host-sidebar')?getComputedStyle(document.querySelector('.host-sidebar')).display:'missing',
      qrSize:qr?.width,overlap,
      art:document.querySelectorAll('.v72-premium-art img').length,
+     justiceSrc:document.querySelector('.v72-art-justice')?.getAttribute('src'),
+     sidebarArt:getComputedStyle(document.querySelector('.host-sidebar'),'::after').backgroundImage,
+     rosterArt:getComputedStyle(document.querySelector('.v6-roster-empty'),'::before').backgroundImage,
      badImages:[...document.images].filter(i=>i.complete&&!i.naturalWidth).map(i=>i.src)};
    });
    await page.screenshot({path:path.join(out,'host-'+width+(touch?'-touch':'-desktop')+'.png'),fullPage:width!==980});
    assert.equal(metrics.art,2,'two independent premium props');
+   assert.ok(metrics.justiceSrc?.includes('justice-bronze-cutout.webp'),`${width}: premium Justice must use the transparent cutout`);
+   assert.ok(metrics.sidebarArt.includes('justice-bronze-cutout'),`${width}: sidebar photo prop missing`);
+   assert.ok(metrics.rosterArt.includes('evidence-lens-cutout'),`${width}: waiting-room cinematic evidence prop missing`);
+   for(const [label,background] of [['Justice',metrics.sidebarArt],['Evidence',metrics.rosterArt]]){
+    const url=background.match(/url\(([^)]+)\)/)?.[1]?.replaceAll('"','').replaceAll("'",'');
+    assert.ok(url,`${width}: ${label} has no valid CSS image URL`);
+    const response=await page.request.get(url);
+    assert.equal(response.status(),200,`${width}: ${label} prop must exist, not resolve to the SPA HTML`);
+    const bytes=await response.body();
+    assert.equal(bytes.toString('ascii',0,4),'RIFF',`${width}: ${label} must be RIFF/WebP`);
+    assert.equal(bytes.toString('ascii',8,12),'WEBP',`${width}: ${label} must be WebP bytes`);
+   }
    assert.ok(metrics.scroll<=metrics.width+1,'no horizontal overflow: '+JSON.stringify(metrics));
    assert.deepEqual(metrics.badImages,[],'no broken images');
    assert.deepEqual(errors,[],'no runtime exceptions');
