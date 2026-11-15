@@ -89,3 +89,21 @@ O script reprodutível `react-app/scripts/generate_v72_props.py` usa Pillow e Nu
 `react-app/tests/v72-host-touch.cjs` passou a verificar o caminho do recorte da Justiça e os fundos CSS do cenário de evidências, além de suas verificações de dimensões 390/980/1672, sobreposição e QR. A origem e os nomes dos binários estão descritos em `assets/the-crimes-v72/manifest.json`.
 
 **Observação de proveniência:** estas duas imagens são recortes novos de fotos pré-existentes no repositório, não são a PNG inédita da Justiça gerada no ChatGPT. A PNG de alta resolução permanece como arte conceitual externa até eventual incorporação própria e validação de fidelidade.
+
+## Etapa 5 — Compatibilidade real com projetores HD (15/11/2026)
+
+A auditoria visual revelou falhas relevantes no modo `screen` em 1280×720: cabeçalho sobrepondo os indicadores, área da pergunta ultrapassando os botões inferiores, ranking secundário cortado e, na finalização, cartões de pódio cobertos pelas estatísticas.
+
+A correção está confinada a `react-app/src/styles/v72-premium.css`, em `@media(min-width:1101px) and (max-height:800px)`, preservando o visual 1080p e o player mobile.
+
+- Header do telão: grid e marca compactos, sem conflito com os KPIs.
+- Rodada: cena e pergunta redimensionadas; quatro opções, tempo, status e controle permanecem visíveis sem scroll para a questão de regressão QA.
+- Ranking: telemetria condensada permite visualizar efetivamente o TOP 5 na mesma superfície do projetor.
+- Pódio: cards HD de 237/257 px e resumo de turma posicionados sem recobrimento; mantida ordem 2–1–3.
+- Rodapé/controles: confinados à área do viewport em 720p.
+- `react-app/tests/v72-scene-layers.cjs`: adicionados casos `screen-round-hd` e `screen-final-hd` (1280×720), assert de geometria, cabeçalho sem sobreposição e visibilidade da quinta posição do ranking, além dos testes anteriores.
+- QA registra screenshots específicas para avaliação de legibilidade física.
+
+Restrições: os testes automatizados usam uma pergunta/alternativas de tamanho representativo. Casos particularmente longos podem exigir rolagem interna no telão; não cortar textos jurídicos. Homologação em projetor real permanece necessária. A arte fotográfica nova da Justiça criada no chat não foi incorporada nesta etapa; nenhum arquivo PNG/AVIF não validado foi associado à aplicação.
+
+**Release:** PR #6 deve permanecer como draft até revisão artística e validação física. Publicação V7.1 (main) não afetada.

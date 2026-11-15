@@ -9,7 +9,9 @@ const question={id:'q-3',round:3,text:'Qual conduta caracteriza fraude contra cr
 const players=Array.from({length:5},(_,i)=>({player_id:'p'+i,room_id:'qa',nickname:['Ana','Bruno','Carla','Diana','Edu'][i],score:4500-i*600,rank:i+1,avatar_id:['perita','advogado','analista','detetive','delegado'][i],connected:true,counters:{correct:6-i,gray:1,risky:1,criminal:0}}));
 const tests=[
  {name:'screen-round',view:'screen',status:'running',width:1920,selector:'.projector-question',art:'telao-rodada'},
+ {name:'screen-round-hd',view:'screen',status:'running',width:1280,height:720,selector:'.projector-question',art:'telao-rodada'},
  {name:'screen-final',view:'screen',status:'finished',width:1920,selector:'.v6-final-board',art:'telao-final'},
+ {name:'screen-final-hd',view:'screen',status:'finished',width:1280,height:720,selector:'.v6-final-board',art:'telao-final'},
  {name:'player-join',view:'player',status:'waiting',width:390,selector:'.join-player',art:'jogador-mobile'},
  {name:'host-final',view:'host',status:'finished',width:1672,selector:'.v6-final-board',art:'podio-desktop'},
 ];
@@ -18,7 +20,7 @@ const tests=[
  const browser=await chromium.launch(process.env.TC_CHROME?{executablePath:process.env.TC_CHROME,headless:true}:{headless:true});
  try{
   for(const t of tests){
-   const ctx=await browser.newContext({viewport:{width:t.width,height:t.width>760?1080:844},reducedMotion:'reduce'});
+   const ctx=await browser.newContext({viewport:{width:t.width,height:t.height||(t.width>760?1080:844)},reducedMotion:'reduce'});
    await ctx.addInitScript(()=>localStorage.setItem('tc-admin-CRIM-1234','qa-admin'));
    const room=()=>({room_id:'qa',code:'CRIM-1234',case_key:'credores',case_title:'Fraude contra credores',status:t.status,room_revision:3,current_round:3,round_key:'round-3',
     question:t.status==='running'?question:null,question_time_sec:60,deadline_at:new Date(Date.now()+45000).toISOString(),locked:false,revealed:false,responded:2,players_total:5,players_connected:5,entry_open:true});
@@ -94,8 +96,30 @@ const tests=[
     assert.ok(!/<script\b/i.test(markup),t.name+' ornament must be script-free');
    }
    if(t.view==='screen'&&t.status==='running')assert.equal(await page.locator('.answer-row').count(),4,'four live options');
+   if(t.height===720){
+    await page.screenshot({path:path.join(out,t.name+'.png'),fullPage:true});
+    const geometry=await page.evaluate(()=>{
+     const rect=s=>document.querySelector(s)?.getBoundingClientRect();
+     const copy=document.querySelector('.projector-question-copy');
+     return {footerBottom:rect('.projector-footer')?.bottom,footerTop:rect('.projector-footer')?.top,
+      stageBottom:rect('.projector-stage')?.bottom,stageWidth:rect('.projector-stage')?.width,
+      copyHeight:copy?.clientHeight,copyScrollHeight:copy?.scrollHeight,viewport:innerHeight,
+      rankLastBottom:rect('.projector-side .rank-entry:last-child')?.bottom,
+      rankPanelBottom:rect('.projector-side .rank-panel')?.bottom,
+      brandRight:rect('.projector-header .brandmark')?.right,
+      topStatsLeft:rect('.projector-header .top-stats')?.left};
+    });
+    console.log('V72 PROJECTOR HD GEOMETRY',t.name,JSON.stringify(geometry));
+    assert.ok(geometry.footerBottom<=geometry.viewport+2,t.name+' footer must be visible on 720p');
+    assert.ok(geometry.stageBottom<=geometry.footerTop+4,t.name+' stage must not overlap projector controls');
+    if(t.status==='running'){
+     assert.ok(geometry.copyScrollHeight<=geometry.copyHeight+3,t.name+' legal question and four answers must fit without scroll at 720p');
+     assert.ok(geometry.rankLastBottom<=geometry.rankPanelBottom+2,t.name+' TOP 5 ranking must be visible on 720p');
+     assert.ok(geometry.brandRight<=geometry.topStatsLeft+2,t.name+' brand and KPIs must not overlap on 720p');
+    }
+   }
    if(t.status==='finished')assert.equal(await page.locator('.v6-finish-card').count(),3,'dynamic 2-1-3 podium');
-   if(t.name==='screen-final'){
+   if(t.name.startsWith('screen-final')){
     const layout=await page.evaluate(()=>{
      const b=s=>document.querySelector(s).getBoundingClientRect();
      return {stageWidth:b('.projector-stage').width,mainWidth:b('.projector-main').width,
