@@ -1,6 +1,6 @@
 {
   "version": "7.2.0-alpha",
-  "stage": "player-screen-podium",
+  "stage": "premium-layered-ui",
   "source_pr": 5,
   "policy": "Backgrounds are clean photography only; never encode QR, nickname, score, timer, options, or rank in pixels",
   "provenance": "Curated from PR #5 branch feat/the-crimes-v7-cinematic, where images were composited from preexisting V3/V6 photographic assets. Not generated from the newer Golden Master screenshots.",
@@ -29,5 +29,20 @@
       "size": "1792x1008",
       "use": "Host finished"
     }
-  }
+  },
+  "overlays": {
+    "premium-frame-gold-cyan.svg": {
+      "source": "original vector created for V7.2",
+      "format": "SVG, fully transparent",
+      "use": "Host lobby, projector question/ranking, player question, finale ranking",
+      "dynamic_content": "none"
+    },
+    "premium-justice-seal.svg": {
+      "source": "original vector created for V7.2",
+      "format": "SVG, fully transparent",
+      "use": "Faded legal crest behind podium heading",
+      "dynamic_content": "none"
+    }
+  },
+  "release_note": "The additional generated high-resolution photorealistic Lady Justice PNG is a local concept artifact only, not committed to this branch. Do not claim inclusion or deployment until the binary is uploaded and QA passes."
 }
