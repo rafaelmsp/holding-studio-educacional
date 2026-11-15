@@ -91,6 +91,19 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
    await capture('player-question');
    assert.equal(await page.locator('.submit-answer').isDisabled(),true);
    await page.locator('.answer-row.interactive').nth(1).click();assert.equal(await page.locator('.answer-row.correct').count(),0);
+   const selectedState=await page.evaluate(()=>{
+    const answer=document.querySelector('.answer-row.interactive.selected');
+    const submit=document.querySelector('.submit-answer');
+    return {selected:!!answer,pressed:answer?.getAttribute('aria-pressed'),disabled:submit?.disabled,background:getComputedStyle(submit).backgroundImage,
+      viewport:document.documentElement.scrollWidth,width:innerWidth};
+   });
+   assert.equal(selectedState.selected,true,'Player selected answer must have an active skin');
+   assert.equal(selectedState.pressed,'true','Selected answer must expose aria-pressed');
+   assert.equal(selectedState.disabled,false,'Submit activates only after choosing an answer');
+   assert.ok(selectedState.background.includes('linear-gradient'),`Player active CTA must be Premium red, not the old static gold image: ${selectedState.background}`);
+   assert.ok(!selectedState.background.includes('gold-default'),'Active submit must not use the gold disabled bitmap');
+   assert.ok(selectedState.viewport<=selectedState.width+1,'Player selection must not cause horizontal overflow');
+   await capture('player-selected');
    await page.getByRole('button',{name:'RESPONDER',exact:true}).click();await page.locator('.answered-notice').waitFor();assert.equal(actionCalls.filter(x=>x.action==='answer').length,1);await capture('player-answered');
    for(round=2;round<=8;round++){answers=[];await page.reload();await page.locator('.gameplay').waitFor();await page.locator('.answer-row.interactive').nth(1).click();await page.getByRole('button',{name:'RESPONDER',exact:true}).click();await page.locator('.answered-notice').waitFor();}
    state='finished';round=8;await page.reload();await page.locator('.player-final').waitFor();await capture('player-final');

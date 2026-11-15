@@ -107,3 +107,15 @@ A correção está confinada a `react-app/src/styles/v72-premium.css`, em `@medi
 Restrições: os testes automatizados usam uma pergunta/alternativas de tamanho representativo. Casos particularmente longos podem exigir rolagem interna no telão; não cortar textos jurídicos. Homologação em projetor real permanece necessária. A arte fotográfica nova da Justiça criada no chat não foi incorporada nesta etapa; nenhum arquivo PNG/AVIF não validado foi associado à aplicação.
 
 **Release:** PR #6 deve permanecer como draft até revisão artística e validação física. Publicação V7.1 (main) não afetada.
+
+## Etapa 6 — skin cinematográfica interativa do jogador (15/11/2026)
+
+Com base no conceito móvel Premium, a V7.2 agora tem diferenciação explícita entre estados `não selecionado`, `alternativa selecionada`, `botão Responder habilitado` e `resposta enviada`, sem imagens estáticas contendo perguntas ou placares:
+
+- `react-app/src/styles/v72-premium.css`: alternativa ativa em ciano com glow e contorno; botão ativo em vermelho cinematográfico, em substituição ao antigo bitmap dourado; botão desativado permanece atenuado. `focus-visible` mantém navegação por teclado; `prefers-reduced-motion` desativa transições.
+- `react-app/tests/v7-browser.cjs`: assert de estado `aria-pressed=true`, botão só habilitado após escolha, gradiente Premium ativo (não bitmap dourado) e ausência de overflow móvel; nova captura `player-selected` nas três larguras de celular.
+- QA local antes do commit: 37 capturas de navegação e jogo completo com oito rodadas simuladas, aprovadas. Imagens foram conferidas visualmente; alternativa B destacada, CTA vermelho e texto legível.
+
+**Nota de proveniência:** o recorte fotorrealista novo de Justiça, gerado nesta conversa, permanece como arte separada; esta etapa não copia a fotografia para o repositório, para não degrada-la nem criar arquivo ausente. O recorte já integrado `justice-bronze-cutout.webp` continua sendo o original existente V6/V7. Não confundir esses arquivos.
+
+**Release:** PR #6 permanece draft; a V7.1 da main não será mesclada antes de aprovação visual e verificação física.
