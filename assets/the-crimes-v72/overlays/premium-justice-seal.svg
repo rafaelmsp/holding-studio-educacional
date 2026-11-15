@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+<title>Brasão cinematográfico da Justiça, transparente</title>
+<defs>
+ <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8f541b"/><stop offset=".16" stop-color="#ffe3a1"/><stop offset=".36" stop-color="#bc7836"/><stop offset=".57" stop-color="#ffe7b5"/><stop offset=".83" stop-color="#a16b29"/><stop offset="1" stop-color="#6c3b12"/></linearGradient>
+ <linearGradient id="steel"><stop stop-color="#0c566f"/><stop offset=".52" stop-color="#b8f4ff"/><stop offset="1" stop-color="#1f566c"/></linearGradient>
+ <radialGradient id="core"><stop stop-color="#f2c784" stop-opacity=".16"/><stop offset=".72" stop-color="#102634" stop-opacity=".08"/><stop offset="1" stop-color="#031421" stop-opacity="0"/></radialGradient>
+</defs>
+<circle cx="256" cy="256" r="227" stroke="url(#gold)" stroke-width="7" opacity=".81"/>
+<circle cx="256" cy="256" r="213" stroke="#71cde5" stroke-width="1.7" opacity=".49"/>
+<circle cx="256" cy="256" r="190" fill="url(#core)" stroke="#e6b572" stroke-width="1.8" stroke-opacity=".56"/>
+<g id="laurel-left" stroke="url(#gold)" stroke-width="4.7" stroke-linecap="round">
+ <path d="M219 427C157 411 114 372 89 315C68 266 71 212 98 159C122 109 158 82 202 70"/>
+ <path d="M177 403Q135 411 117 391Q155 370 177 403Z" fill="url(#gold)" opacity=".84"/>
+ <path d="M144 371Q103 374 88 349Q128 336 144 371Z" fill="url(#gold)" opacity=".87"/>
+ <path d="M119 331Q78 327 74 300Q117 298 119 331Z" fill="url(#gold)" opacity=".78"/>
+ <path d="M101 285Q61 272 63 246Q103 259 101 285Z" fill="url(#gold)" opacity=".84"/>
+ <path d="M94 232Q65 208 77 185Q107 211 94 232Z" fill="url(#gold)" opacity=".86"/>
+ <path d="M108 183Q87 146 106 127Q125 162 108 183Z" fill="url(#gold)" opacity=".82"/>
+ <path d="M133 137Q126 95 151 86Q158 125 133 137Z" fill="url(#gold)" opacity=".79"/>
+ <path d="M170 96Q172 62 203 62Q199 94 170 96Z" fill="url(#gold)" opacity=".8"/>
+</g>
+<use href="#laurel-left" transform="translate(512 0) scale(-1 1)"/>
+<path d="M256 105L286 129L279 163L300 190L290 258L256 306L222 258L212 190L233 163L226 129Z" fill="#021522" fill-opacity=".19" stroke="url(#gold)" stroke-width="5"/>
+<path d="M256 125V335M208 176H304" stroke="url(#gold)" stroke-width="9" stroke-linecap="round"/>
+<path d="M225 335H288M213 355H300" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>
+<path d="M256 158L224 177L184 177M256 158L288 177L328 177" stroke="url(#gold)" stroke-width="5" stroke-linecap="round"/>
+<path d="M184 178L168 244L201 244L184 178ZM328 178L311 244L344 244L328 178Z" stroke="url(#steel)" stroke-width="3.3" stroke-linejoin="round"/>
+<path d="M158 244Q184 274 211 244ZM302 244Q328 274 354 244Z" fill="url(#gold)" stroke="#f5d69d" stroke-width="3"/>
+<circle cx="256" cy="157" r="10" fill="url(#gold)" stroke="#ffe4b3" stroke-width="2"/>
+<path d="M232 383L256 395L280 383M231 407L256 419L281 407" stroke="#a9f1ff" stroke-opacity=".64" stroke-width="3"/>
+</svg>
