@@ -34,7 +34,8 @@ function FinishCard({player,rank,avatars}:{player:PublicPlayer|null;rank:number;
 export default function PodiumBoard({players,room,avatars={},onRestart,restarting=false}:Props){
  const ordered=[...players].sort((a,b)=>a.rank!=null&&b.rank!=null&&a.rank!==b.rank?Number(a.rank)-Number(b.rank):Number(b.score||0)-Number(a.score||0)||a.nickname.localeCompare(b.nickname,'pt-BR'));
  const total=ordered.reduce((s,p)=>s+answered(p),0),correct=ordered.reduce((s,p)=>s+hits(p),0),pct=total?Math.round(correct/total*100):null;
- return <div className="v6-final-board">
+ return <div className="v6-final-board v72-gm-finale">
+  <img className="v72-gm-justice" src="../assets/the-crimes-v72/props/justice-bronze-cutout.webp" alt="" aria-hidden="true" draggable={false}/>
   <div className="v62-award-sparks" aria-hidden="true">{Array.from({length:18},(_,i)=><i key={i} style={{left:((i*23+7)%96)+'%',animationDelay:(-(i%9)*.43)+'s',animationDuration:(4.2+(i%5)*.6)+'s'}}/>)}</div>
   <div className="v6-final-heading"><span className="v6-eyebrow"><Scale size={16}/> INVESTIGAÇÃO CONCLUÍDA</span><h1>RANKING <em>FINAL</em></h1><p>{room.case_title} • Sala {room.code}</p></div>
   <div className="v6-final-grid">

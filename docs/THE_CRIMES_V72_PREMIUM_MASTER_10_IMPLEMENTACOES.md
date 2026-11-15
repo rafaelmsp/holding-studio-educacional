@@ -112,3 +112,15 @@ Este documento define o escopo e a matriz de aceite; atualizar esta seção apó
 **Progressão comprovada: 80 + 15 + 5 = 100 pontos.** A suíte do GitHub incluiu os testes de integridade Premium, 37 capturas V7, Host touch, nove cenários V7.2 e o exercício de oito rodadas usando Supabase real. Artefato GitHub da execução: `the-crimes-v7-screenshots`, ID `14169055813` (65 PNGs no ZIP, incluindo as nove cenas e capturas do multiplayer).
 
 **Aceite visual não incluído no 100% técnico:** falta comparar presencialmente a composição contra as referências fotográficas aprovadas pelo autor, testar a câmera/QR em smartphone e observar a legibilidade no projetor físico. O PR #6 permanece **draft**, sem merge; a `main` pública permanece V7.1. As novas fotos integradas são **composições derivadas** do acervo V3/V6/V7, não a imagem inédita de Justiça gerada no ChatGPT (separada). Não afirmar fidelidade pixel-perfect antes desse aceite.
+
+## Homologação visual GM-01..GM-04 — revisão 15/11/2026
+
+O usuário anexou quatro **Golden Masters reais** desta conversa (respectivamente `1000287541.png`, `1000287542.png`, `1000287543.png`, `1000287544.png`). Ver especificação integral em `docs/THE_CRIMES_V72_GOLDEN_MASTERS_2026-11-15.md`.
+
+Implementação incremental sem modificar lógica:
+- `PodiumBoard.tsx`: Lady Justice do acervo como camada fotográfica independente (sem texto/medalhas fake), mascarando o retrato da mesma figura embutido no fundo quando necessário; hero cards 2–1–3 preservados.
+- `Screen.tsx`: nova faixa inferior dinâmica para GM-01 em projetores largos, com `Countdown`, recebimentos e estado do `room`; sem substituir as opções e controles reais. A telemetria interna duplicada fica oculta apenas nessa resolução.
+- `v72-premium.css`: hierarquia das quatro respostas em 1920×1080, header cinematográfico mobile com prop decorativa por trás do status, controles de Host com iluminação por ação; regras condicionadas à resolução para preservar 1280×720.
+- Testes de regressão: presença e carregamento da camada Justice, telemetria real 2/5 e não sobreposta, quatro respostas totalmente visíveis, header mobile sem sobreposição, 37 estados e cenários tradicionais.
+
+**Critérios ainda fora do QA:** identidade estética exata contra os quatro PNGs, aprovação subjetiva das artes e teste de QR/projetor físico. Os uploads originais continuam vinculados à conversa; o MD guarda o mapeamento sem declarar que os quatro PNGs foram comitados no repositório. A `main` pública V7.1 permanece intacta e o PR #6 segue draft.

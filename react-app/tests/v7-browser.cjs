@@ -104,6 +104,14 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
    const mobileOrnament=await page.locator('.player-question').evaluate(el=>getComputedStyle(el,'::after').display);
    assert.equal(mobileOrnament,'none',`${width}: decorative frame must not overlap answers on a phone`);
    await capture('player-question');
+   const heroHeader=await page.evaluate(()=>{
+    const box=s=>document.querySelector(s).getBoundingClientRect();
+    const header=box('.player-header'),brand=box('.player-header .brandmark'),state=box('.player-header .live-state');
+    const overlap=brand.left<state.right&&brand.right>state.left&&brand.top<state.bottom&&brand.bottom>state.top;
+    return {height:header.height,overlap};
+   });
+   assert.ok(heroHeader.height>=80,`${width}: GM-04 mobile cinematic header must have room for artwork`);
+   assert.ok(!heroHeader.overlap,`${width}: GM-04 player brand and live connection badge must not overlap`);
    assert.equal(await page.locator('.submit-answer').isDisabled(),true);
    await page.locator('.answer-row.interactive').nth(1).click();assert.equal(await page.locator('.answer-row.correct').count(),0);
    const selectedState=await page.evaluate(()=>{

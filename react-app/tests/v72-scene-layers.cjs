@@ -109,11 +109,32 @@ const tests=[
     assert.ok(await page.locator('.host-dock .cinema-button').count()>=1,'Host controls remain interactive');
    }
    if(t.status==='finished'){
+    assert.equal(await page.locator('.v72-gm-finale .v72-gm-justice').count(),1,'GM-02 podium retains decorative Lady Justice as a real layer');
+    const justice=await page.locator('.v72-gm-justice').evaluate(el=>({loaded:el.complete&&el.naturalWidth>0,visibility:getComputedStyle(el).display}));
+    assert.ok(justice.loaded,'GM-02 Lady Justice WebP should load');
+    if(t.width>=1500&&t.height!==720)assert.equal(justice.visibility,'block','GM-02 large-screen podium should show Lady Justice');
     assert.deepEqual(await page.locator('.v6-finish-medal b').allTextContents(),['2','1','3'],'podium order 2-1-3');
     const spotlight=await page.locator('.v6-podium-wrap').evaluate(el=>getComputedStyle(el,'::before').backgroundImage);
     assert.ok(spotlight.includes('podium-spotlights'),'finale must use independent premium lighting layer');
    }
-   if(t.view==='screen'&&t.status==='running')assert.equal(await page.locator('.answer-row').count(),4,'four live options');
+   if(t.view==='screen'&&t.status==='running'){
+    assert.equal(await page.locator('.answer-row').count(),4,'four live options');
+    const telemetry=await page.locator('.v72-gm-screen-telemetry').evaluate(el=>({visible:getComputedStyle(el).display,text:el.innerText,rect:el.getBoundingClientRect().toJSON()}));
+    assert.match(telemetry.text,/RESPOSTAS RECEBIDAS/,'GM-01 live telemetry is real DOM');
+    assert.match(telemetry.text,/2\/5/,'GM-01 reply count comes from room data');
+    if(t.width>=1500&&t.height!==720){
+     assert.equal(telemetry.visible,'grid','GM-01 large screen shows the lower live telemetry strip');
+     const main=await page.locator('.projector-main').boundingBox();
+     assert.ok(main.y+main.height<=telemetry.rect.y+3,'GM-01 telemetry does not overlap photo or answers');
+     const alternatives=await page.locator('.projector-question-copy').evaluate(el=>{
+      const copy=el.getBoundingClientRect(),list=[...el.querySelectorAll('.answer-row')].map(x=>x.getBoundingClientRect());
+      const internalStats=el.querySelector('.projector-stats');
+      return {copyBottom:copy.bottom,answerBottom:Math.max(...list.map(x=>x.bottom)),internalVisible:internalStats?getComputedStyle(internalStats).display:'missing'};
+     });
+     assert.ok(alternatives.answerBottom<=alternatives.copyBottom-4,'GM-01 all four alternatives must remain inside the question panel: '+JSON.stringify(alternatives));
+     assert.equal(alternatives.internalVisible,'none','GM-01 wide screen uses bottom ribbon, not duplicated question stats');
+    }else assert.equal(telemetry.visible,'none','GM-01 compact projection keeps original telemetry layout');
+   }
    if(t.height===720){
     await page.screenshot({path:path.join(out,t.name+'.png'),fullPage:true});
     const geometry=await page.evaluate(()=>{

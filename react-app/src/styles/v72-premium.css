@@ -491,3 +491,98 @@
  .cinema-join .persona-tile.selected,
  .cinema-join .persona-tile:hover{transform:none!important}
 }
+
+/* GOLDEN MASTERS 2026-11-15 — GM-01, GM-02, GM-03 and GM-04.
+   Reference specs: docs/THE_CRIMES_V72_GOLDEN_MASTERS_2026-11-15.md
+   The photographic layers are decorative. No room code, QR, answers, names,
+   score or timer are baked into assets. All buttons remain interactive. */
+
+/* GM-02 — monumental Lady Justice on the left of the dynamic 2-1-3 podium. */
+.cinema-shell .v72-gm-finale{position:relative;isolation:isolate}
+.cinema-shell .v72-gm-justice{display:none;position:absolute;z-index:0;left:-36px;bottom:8%;width:auto;max-width:23%;height:clamp(260px,26vw,460px);object-fit:contain;object-position:bottom left;opacity:.77;pointer-events:none;user-select:none;filter:drop-shadow(4px 5px 15px #08070ee0) drop-shadow(0 0 22px #d79a4a77);mask-image:linear-gradient(90deg,#000 68%,transparent 100%)}
+.cinema-shell .v72-gm-finale :is(.v6-final-heading,.v6-final-grid,.v6-class-summary,.v6-final-actions){position:relative;z-index:1}
+.cinema-shell .v72-gm-finale .v6-finish-medal{border:1px solid rgba(255,218,136,.83);background:radial-gradient(circle at 35% 24%,#ffedbf,#a56e26 65%,#33210a);box-shadow:inset 0 1px #fff9,0 0 19px rgba(241,183,80,.59)}
+.cinema-shell .v72-gm-finale .v6-finish-card.v6-finish-2 .v6-finish-medal{background:radial-gradient(circle at 35% 24%,#f3faff,#657f98 65%,#1d2e43)}
+.cinema-shell .v72-gm-finale .v6-finish-card.v6-finish-3 .v6-finish-medal{background:radial-gradient(circle at 35% 24%,#ffe0bf,#a35b32 65%,#352018)}
+.cinema-shell .v72-gm-finale .v6-finish-info{backdrop-filter:blur(8px);background:linear-gradient(180deg,rgba(6,12,23,.12),rgba(4,12,23,.94) 24%,rgba(4,10,20,.98))}
+.cinema-shell .v72-gm-finale .v6-finish-score{color:#ffdc96;text-shadow:0 0 12px #e9a74850}
+.cinema-shell .v72-gm-finale .v6-final-ranking{overflow-y:auto;min-height:0;scrollbar-color:#af8f58 #091523}
+@media(min-width:1500px) and (min-height:840px){
+ .cinema-shell .v72-gm-justice{display:block}
+ .cinema-shell .v72-gm-finale .v6-final-grid{padding-left:clamp(165px,13.8vw,262px);gap:clamp(10px,1.1vw,22px)}
+ .cinema-shell .v72-gm-finale .v6-final-heading h1{letter-spacing:.055em;text-shadow:0 0 26px #df9f4e55}
+ .cinema-shell .v72-gm-finale .v6-finish-card.v6-finish-1{box-shadow:0 0 0 2px #eabb6e,0 0 44px #db9b3a55,0 20px 38px #000e!important}
+}
+@media(max-width:1499px),(max-height:839px){
+ .cinema-shell .v72-gm-finale .v6-final-grid{padding-left:0}
+}
+/* GM-01 — use the entire 16:9 projector: central case and question, TOP 5
+   on the right, and a separate live-data ribbon below the stage. */
+.cinema-screen .v72-gm-screen-telemetry{display:none}
+@media(min-width:1500px) and (min-height:850px){
+ .cinema-screen .projector-side>.v7-telemetry,
+ .cinema-screen .projector-side>.class-progress{display:none!important}
+ .cinema-screen .projector-side>.rank-panel{flex:1;min-height:0;overflow:auto;padding:12px!important;border-color:#a58a56!important}
+ .cinema-screen .projector-side .rank-entry{min-height:clamp(62px,6.7vh,90px);padding:10px 6px!important}
+ .cinema-screen .projector-question-copy{border-color:#b17b66!important}
+ .cinema-screen .projector-question-copy h1{font-size:clamp(25px,1.9vw,37px)!important;line-height:1.18;text-align:left;margin:17px 0 22px}
+ .cinema-screen .projector-question-copy .answer-row{border:1px solid #567b9c!important;border-radius:5px!important;box-shadow:inset 0 1px #d6f5ff17,0 4px 14px #000b!important}
+ .cinema-screen .v72-gm-screen-telemetry{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;align-items:center;flex:none;min-height:73px;margin:7px 12px 0;border:1px solid #677b82;border-radius:3px;background:linear-gradient(95deg,#071423f1,#091728f7);box-shadow:inset 0 2px #b3cfe51a,0 6px 20px #0009}
+ .cinema-screen .v72-gm-screen-telemetry>div{display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 14px;min-width:0}
+ .cinema-screen .v72-gm-screen-telemetry>div+div{border-left:1px solid #385167}
+ .cinema-screen .v72-gm-screen-telemetry svg{flex:none;color:#dcb783}
+ .cinema-screen .v72-gm-screen-telemetry span{font-size:clamp(11px,.88vw,16px);font-weight:800;color:#d1dce7;white-space:nowrap}
+ .cinema-screen .v72-gm-screen-telemetry strong{font:900 clamp(23px,2.1vw,38px)/1.1 "Bahnschrift SemiCondensed",system-ui;color:#4af2ac;white-space:nowrap}
+ .cinema-screen .v72-gm-telemetry-clock .game-clock{font:900 clamp(24px,2.2vw,39px)/1.1 "Bahnschrift SemiCondensed",system-ui;color:#fff2ed;text-shadow:0 0 13px #da3d5a9b}
+ .cinema-screen .v72-gm-telemetry-status strong{font-size:clamp(17px,1.25vw,25px);color:#e0a65b}
+ .cinema-screen .projector-footer .cinema-button{min-height:62px;font-size:clamp(15px,1vw,20px);font-weight:900}
+}
+/* GM-03 — the Host's actions are prominent, illuminated and readable. */
+@media(min-width:1300px) and (min-height:800px){
+ .cinema-host.v7-phase-running .host-dock,
+ .cinema-host.v7-phase-paused .host-dock{gap:12px!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock>.cinema-button{min-height:66px!important;min-width:0;font-weight:900;font-size:clamp(13px,1.07vw,19px);box-shadow:inset 0 0 0 2px #010915,0 0 20px #4ad7f122,0 10px 20px #000b!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock>.cinema-button.cyan{border-color:#5cdaef;box-shadow:inset 0 0 0 2px #052439,0 0 22px #00baff78,0 10px 20px #000b!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock>.cinema-button.gold{border-color:#f5c56d;box-shadow:inset 0 0 0 2px #382309,0 0 22px #ffc14682,0 10px 20px #000b!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock>.cinema-button.danger{border-color:#f56980;box-shadow:inset 0 0 0 2px #32050c,0 0 22px #e32c537b,0 10px 20px #000b!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .round-bar{border-bottom:2px solid #4cc8e9}
+}
+/* GM-04 — game header as a cinematic composition with the LIVE marque and
+   dark hero art, while keeping the live connection badge above decoration. */
+@media(max-width:760px){
+ .cinema-player .player-header,.cinema-join .player-header{position:relative;isolation:isolate;overflow:hidden;min-height:91px!important;align-items:center;border-bottom:1px solid #be8742!important;padding:9px 13px!important}
+ .cinema-player .player-header::before,.cinema-join .player-header::before{content:"";position:absolute;z-index:-1;inset:-26px -15px -18px auto;width:150px;background:url('../../../assets/the-crimes-v7/props/detective.webp') center 36%/contain no-repeat;opacity:.42;filter:contrast(1.24) saturate(.7);pointer-events:none;mask-image:linear-gradient(90deg,transparent,#000 40%)}
+ .cinema-player .player-header .brandmark,.cinema-join .player-header .brandmark{min-width:0;position:relative;z-index:1}
+ .cinema-player .player-header .brandmark strong,.cinema-join .player-header .brandmark strong{font-size:clamp(19px,5.3vw,24px)!important;line-height:1;letter-spacing:-.035em}
+ .cinema-player .player-header .brandmark small,.cinema-join .player-header .brandmark small{letter-spacing:.06em;font-size:7px}
+ .cinema-player .player-header .live-state,.cinema-join .player-header .live-state{position:relative;z-index:1;max-width:33%;font-size:9px;white-space:normal}
+ .cinema-player .player-identity{border:1px solid #9fb5c6!important;border-top-color:#e5b266!important;box-shadow:inset 0 1px #fff4,0 0 24px #e7a84d20,0 10px 26px #0009!important}
+ .cinema-player .mobile-round-label{border-bottom:1px solid #52748b;font-weight:900}
+ .cinema-player .scene-media{border-color:#c79d5e!important}
+ .cinema-player .player-question h1{border-left:3px solid #f0bf77!important;background:linear-gradient(115deg,rgba(6,19,33,.95),rgba(3,9,21,.96))!important;font-size:clamp(19px,4.8vw,24px)!important}
+ .cinema-player .answer-row.interactive{border-radius:7px!important}
+ .cinema-player .submit-answer:not(:disabled){font-size:clamp(16px,4.2vw,21px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-shell .v72-gm-finale .v6-finish-card{transition:none!important}
+}
+
+/* GM-01 finishing pass: the wide projector already has a separate bottom
+   telemetry ribbon, so the old in-question status must not duplicate data or
+   overlap the fourth legal alternative. Compact question text without clipping. */
+@media(min-width:1500px) and (min-height:850px){
+ .cinema-screen .projector-question-copy .projector-stats{display:none!important}
+ .cinema-screen .projector-question-copy h1{font-size:clamp(25px,1.63vw,32px)!important;line-height:1.16;margin:12px 0 16px}
+ .cinema-screen .projector-question-copy .answer-rows{flex:1 1 auto;gap:9px;min-height:0}
+ .cinema-screen .projector-question-copy .answer-row{min-height:62px;max-height:92px;padding:8px 12px;flex:1 1 0}
+ .cinema-screen .projector-question-copy .answer-row>span{font-size:clamp(17px,1.1vw,22px)!important;line-height:1.25}
+}
+
+/* GM-02 duplicate-figure control: when the photographic stage already has
+   a faded Justice embedded in the background, mask that corner before
+   showing the standalone transparent art as the single foreground hero. */
+@media(min-width:1500px) and (min-height:840px){
+ .cinema-shell .v72-gm-finale::before{content:"";position:absolute;z-index:0;left:0;top:0;bottom:0;width:clamp(180px,16vw,320px);background:linear-gradient(90deg,rgba(2,8,19,.99) 8%,rgba(2,8,19,.92) 53%,rgba(2,8,19,0));pointer-events:none}
+ .cinema-shell .v72-gm-finale .v72-gm-justice{z-index:1;opacity:.92}
+ .cinema-shell .v72-gm-finale :is(.v6-final-heading,.v6-final-grid,.v6-class-summary,.v6-final-actions){z-index:2}
+}

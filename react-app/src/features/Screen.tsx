@@ -2,7 +2,7 @@ import RoundTelemetry from '../components/RoundTelemetry';
 import PodiumBoard from '../components/PodiumBoard';
 import {useEffect,useMemo,useState} from 'react';
 import {QRCodeSVG} from 'qrcode.react';
-import {Fullscreen,Eye,ChevronsRight,MonitorUp,Users,Crown,Play} from 'lucide-react';
+import {Fullscreen,Eye,ChevronsRight,MonitorUp,Users,Crown,Play,Clock3,ShieldCheck} from 'lucide-react';
 import {motion,AnimatePresence} from 'framer-motion';
 import {CinematicShell,Brand,LiveStatus,Countdown,ChapterCue,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
 import {useGame,adminStorage} from '../services/store';
@@ -96,6 +96,11 @@ export default function Screen(){
          <section className="rank-panel"><h2><Crown size={21}/> RANKING (TOP 5)</h2><RankList players={players} ids={ids} avatars={avatars}/></section>
        </aside>
       </div>
+      {room&&(room.status==='running'||room.status==='paused')&&<section className="v72-gm-screen-telemetry" aria-label="Indicadores ao vivo da rodada">
+        <div className="v72-gm-telemetry-clock"><Clock3 size={23}/><span>TEMPO RESTANTE</span><Countdown room={room}/></div>
+        <div className="v72-gm-telemetry-answers"><Users size={23}/><span>RESPOSTAS RECEBIDAS</span><strong>{room.responded}/{room.players_total}</strong></div>
+        <div className="v72-gm-telemetry-status"><ShieldCheck size={23}/><span>STATUS DA RODADA</span><strong>{room.status==='paused'?'PAUSADA':room.revealed?'RESPOSTA REVELADA':room.locked?'BLOQUEADA':'RESPONDENDO...'}</strong></div>
+       </section>}
       <RoundRail round={round} finished={room?.status==='finished'}/>
       <footer className="projector-footer"><span className="footer-room">SALA {code} <RoomBadge room={room}/></span>
        <div className="projector-controls">
