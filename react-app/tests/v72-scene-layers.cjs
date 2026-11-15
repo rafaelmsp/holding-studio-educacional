@@ -69,15 +69,26 @@ const tests=[
      return getComputedStyle(node,pseudo).backgroundImage;
      function assertNode(element,query){if(!element)throw Error('Missing ornamental host '+query);}
     },item);
-    assert.ok(cssImage.includes(item.expected),
-     t.name+' missing ornamental layer '+item.expected+': '+cssImage);
+    // Vite may inline small SVGs as escaped data:image/svg+xml URLs.
+    // Accept both valid delivery forms and verify the actual SVG markup.
+    const isInline=cssImage.includes('data:image/svg+xml');
+    assert.ok(isInline||cssImage.includes(item.expected),
+     t.name+' missing ornamental SVG layer '+item.expected+': '+cssImage.slice(0,160));
     const overlayUrl=[...cssImage.matchAll(/url\(([^)]+)\)/g)]
      .map(m=>m[1].replaceAll('"','').replaceAll("'",'')).at(-1);
     assert.ok(overlayUrl,t.name+' ornamental SVG URL not found');
-    const result=await page.request.get(overlayUrl);
-    assert.equal(result.status(),200,t.name+' missing ornament '+item.expected);
-    const bytes=await result.body();
-    assert.ok(bytes.toString('utf8').includes('<svg'),t.name+' expected a real SVG asset');
+    let markup;
+    if(isInline){
+     const comma=overlayUrl.indexOf(',');
+     assert.ok(comma>0,t.name+' invalid SVG data URI');
+     markup=decodeURIComponent(overlayUrl.slice(comma+1));
+    }else{
+     const result=await page.request.get(overlayUrl);
+     assert.equal(result.status(),200,t.name+' missing ornament '+item.expected);
+     markup=(await result.body()).toString('utf8');
+    }
+    assert.ok(markup.includes('<svg'),t.name+' expected real SVG markup');
+    assert.ok(!/<script\b/i.test(markup),t.name+' ornament must be script-free');
    }
    if(t.view==='screen'&&t.status==='running')assert.equal(await page.locator('.answer-row').count(),4,'four live options');
    if(t.status==='finished')assert.equal(await page.locator('.v6-finish-card').count(),3,'dynamic 2-1-3 podium');
