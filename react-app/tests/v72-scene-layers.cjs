@@ -54,6 +54,31 @@ const tests=[
    const body=await art.body();
    assert.equal(body.toString('ascii',0,4),'RIFF',t.name+' missing WEBP RIFF signature');
    assert.equal(body.toString('ascii',8,12),'WEBP',t.name+' must return actual WEBP bytes, not HTML');
+   // Verify each Premium ornamental SVG is actually loaded as an independent
+   // visual layer rather than a missing file or an HTML fallback.
+   const ornaments=t.name==='screen-round'
+    ?[{selector:'.projector-question-copy',pseudo:'::after',expected:'premium-frame-gold-cyan'}]
+    :t.status==='finished'
+     ?[{selector:'.v6-final-sidebar',pseudo:'::after',expected:'premium-frame-gold-cyan'},
+       {selector:'.v6-final-heading',pseudo:'::before',expected:'premium-justice-seal'}]
+     :[];
+   for(const item of ornaments){
+    const cssImage=await page.evaluate(({selector,pseudo})=>{
+     const node=document.querySelector(selector);
+     assertNode(node,selector);
+     return getComputedStyle(node,pseudo).backgroundImage;
+     function assertNode(element,query){if(!element)throw Error('Missing ornamental host '+query);}
+    },item);
+    assert.ok(cssImage.includes(item.expected),
+     t.name+' missing ornamental layer '+item.expected+': '+cssImage);
+    const overlayUrl=[...cssImage.matchAll(/url\(([^)]+)\)/g)]
+     .map(m=>m[1].replaceAll('"','').replaceAll("'",'')).at(-1);
+    assert.ok(overlayUrl,t.name+' ornamental SVG URL not found');
+    const result=await page.request.get(overlayUrl);
+    assert.equal(result.status(),200,t.name+' missing ornament '+item.expected);
+    const bytes=await result.body();
+    assert.ok(bytes.toString('utf8').includes('<svg'),t.name+' expected a real SVG asset');
+   }
    if(t.view==='screen'&&t.status==='running')assert.equal(await page.locator('.answer-row').count(),4,'four live options');
    if(t.status==='finished')assert.equal(await page.locator('.v6-finish-card').count(),3,'dynamic 2-1-3 podium');
    if(t.name==='screen-final'){
