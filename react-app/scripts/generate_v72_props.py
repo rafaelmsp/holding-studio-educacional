@@ -16,12 +16,17 @@ a = np.asarray(justice,dtype=np.float32).copy()
 height,width = a.shape[:2]
 r,g,b = a[:,:,0],a[:,:,1],a[:,:,2]
 lum = (0.23*r + 0.67*g + 0.10*b)
-warm = np.clip((g-b-8.0)/65,0,1)*np.clip((r-g+10)/65,0,1)
+warm = np.clip((g-b-3.0)/45,0,1)*np.clip((r-g+10)/55,0,1)
 shine = np.clip((lum-28)/145,0,1)
-opacity = np.clip(0.90*shine*warm + 0.27*shine,0,0.95)
+# Preserve the actual bronze reflections nearly opaque; curtain reds lack the
+# green/blue separation of polished bronze and therefore stay transparent.
+opacity = np.clip(0.98*np.sqrt(warm) + 0.10*shine,0,0.99)
 x=np.arange(width,dtype=np.float32)[None,:]
 y=np.arange(height,dtype=np.float32)[:,None]
-opacity *= np.clip((width-x)/55,0,1)*np.clip((height-28-y)/95,0,1)*np.clip((x+15)/55,0,1)
+opacity *= np.clip((width-x)/22,0,1)*np.clip((height-25-y)/60,0,1)*np.clip((x+10)/22,0,1)
+# Suppress the leather chair and desk, except for the statue's lower-left base.
+opacity *= np.where((y>375)&(x>268),0.03,1.0)
+opacity *= np.where((y>605)&(x>178),0.03,1.0)
 a[:,:,3]=np.clip(opacity*255,0,255)
 cutout=Image.fromarray(a.astype('uint8'),'RGBA')
 cutout.save(OUT/'justice-bronze-cutout.webp','WEBP',quality=88,method=6)
