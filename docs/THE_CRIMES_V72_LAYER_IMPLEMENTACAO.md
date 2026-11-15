@@ -62,3 +62,17 @@ O CSS `v72-premium.css` agora estiliza separadamente os cenários das rodadas do
 Novo teste `react-app/tests/v72-scene-layers.cjs` cobrindo `screen-round`, `screen-final`, `player-join` e `host-final`: confirma 200 e assinatura RIFF/WEBP dos quatro fundos, ausência de overflow horizontal e erros em console, 4 alternativas reais em DOM, pódio com 3 cartões e uso de ao menos 88% da largura na final do telão. Imagens/estados são de simulação QA; não representam dados reais de jogadores.
 
 **Pendente para homologação artística:** separar e otimizar props transparentes Premium novos, painel do Host com fidelidade às referências, aplicação das 48 cenas a layouts móveis reais, comparar cada modo com a referência original e teste QR com câmera no projetor. Sem aprovação visual do usuário, não promover o PR #6 à `main`.
+
+## Etapa 3 — ornamentação original Premium e arte conceitual da Justiça (15/11/2026)
+
+Foram criados **dois SVGs transparentes inéditos**, independentes do acervo recuperado do PR #5: `assets/the-crimes-v72/overlays/premium-frame-gold-cyan.svg` e `assets/the-crimes-v72/overlays/premium-justice-seal.svg`. São novas molduras com acabamentos dourado/ciano e um brasão de balança e louros, ambos sem palavras, QR, controles ou pontuações incorporados. A origem está descrita em `assets/the-crimes-v72/manifest.json`.
+
+A última seção de `react-app/src/styles/v72-premium.css` acopla esses visuais como pseudo-elementos não interativos nas molduras do lobby Host, nas perguntas do telão, nos painéis de ranking, na pergunta do jogador e no cabeçalho do pódio. `pointer-events:none` evita bloquear cliques; `prefers-reduced-motion` continua respeitado.
+
+O QA `react-app/tests/v72-scene-layers.cjs` agora checa a presença dessas imagens na propriedade `background-image`, o HTTP 200 e a entrega de SVG real, além das verificações já existentes de cenas, alternativas, avatares e geometria.
+
+Foi gerada nesta conversa uma **estátua nova de Justiça** em PNG RGBA de alta resolução e uma versão WebP otimizada. Esses arquivos estão no ambiente de trabalho da conversa, mas **não entraram no repositório**: o computador remoto está offline e ainda não foi possível transportar o binário sem perda para a branch. Não reportar essa arte fotográfica como implementada.
+
+**Restrição de release:** como a alteração de fonte CSS ocorreu via GitHub, os bundles versionados em `live/` e `react-live/` ainda precisam ser reconstruídos a partir do commit final e registrados no PR antes de mesclar. A workflow de PR executa o build e verifica o código-fonte, mas não publica os bundles automaticamente. O PR permanece draft; a V7.1 pública não foi alterada.
+
+Revisão pendente: fidelidade das molduras às referências conceituais em capturas mobile e telão, verificação física do QR, eventual substituição do elemento antigo pelo PNG Premium da Justiça, sem modificar as oito rodadas e as 48 cenas.
