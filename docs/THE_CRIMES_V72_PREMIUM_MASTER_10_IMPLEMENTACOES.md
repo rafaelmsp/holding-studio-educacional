@@ -99,3 +99,16 @@ Este documento define o escopo e a matriz de aceite; atualizar esta seção apó
 **Progresso Progress Tracker Pro:** I01–I10 = 80/100 pontos com evidência local; Q01 = 0/15 até terminar CI/QA remoto neste SHA; D01 = 0/5 até MD e PR publicados. **Progresso técnico comprovado no momento do registro: 80%.**
 
 **Limitações e aceite:** composição fotográfica derivada, não substituição pela arte inédita gerada na conversa, que continua separada. A nova montagem aproxima os conceitos sem prometer reprodução pixel-perfect; depende de comparação humana, câmera real lendo QR e observação no projetor da sala. O PR continua draft e `main` não será modificada.
+
+## 10. Relatório final do Progress Tracker Pro · 15/11/2026
+**PROG-FINAL · Escopo de implementação e automação: 100% validado.**
+
+| Pacote | Pontos | Estado | Evidência |
+| --- | ---: | --- | --- |
+| I01–I10: 5 cenários, layers e UX | 80/80 | 🟢 Concluídos e verificados | Build Vite, manifesto SHA-256, navegador, 9 estados novos + regressões V7 |
+| Q01: testes automatizados e multiplayer | 15/15 | 🟢 Concluído | [CI 43731262159](https://github.com/rafaelmsp/holding-studio-educacional/actions/runs/43731262159) e [browser QA 43731262147](https://github.com/rafaelmsp/holding-studio-educacional/actions/runs/43731262147), ambos **success** |
+| D01: documentação e evidências | 5/5 | 🟢 Concluído | Este MD, PR #6, scripts, manifesto, screenshots e relatório |
+
+**Progressão comprovada: 80 + 15 + 5 = 100 pontos.** A suíte do GitHub incluiu os testes de integridade Premium, 37 capturas V7, Host touch, nove cenários V7.2 e o exercício de oito rodadas usando Supabase real. Artefato GitHub da execução: `the-crimes-v7-screenshots`, ID `14169055813` (65 PNGs no ZIP, incluindo as nove cenas e capturas do multiplayer).
+
+**Aceite visual não incluído no 100% técnico:** falta comparar presencialmente a composição contra as referências fotográficas aprovadas pelo autor, testar a câmera/QR em smartphone e observar a legibilidade no projetor físico. O PR #6 permanece **draft**, sem merge; a `main` pública permanece V7.1. As novas fotos integradas são **composições derivadas** do acervo V3/V6/V7, não a imagem inédita de Justiça gerada no ChatGPT (separada). Não afirmar fidelidade pixel-perfect antes desse aceite.
