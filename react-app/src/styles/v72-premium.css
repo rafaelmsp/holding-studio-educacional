@@ -692,3 +692,59 @@
     drop-shadow(0 0 25px #d99c536e) saturate(1.12) contrast(1.09)!important;
  }
 }
+
+/* V7.2 GM-02 — real replay/reset actions in the cinematic finale.
+   Both are HTML controls; replay resets and starts while Lobby resets only. */
+.cinema-shell .v72-gm-finale .v6-final-actions{display:flex;justify-content:center;align-items:center;gap:clamp(8px,1.25vw,22px);min-height:62px}
+.cinema-shell .v72-gm-finale .v6-final-actions>.cinema-button{flex:0 1 370px;min-width:0;min-height:56px;font-size:clamp(13px,1.3vw,22px);font-weight:900;letter-spacing:.025em}
+.cinema-shell .v72-gm-finale .v6-final-actions>.v72-replay-action{background:linear-gradient(110deg,#81541d,#e6aa4c 45%,#81541d)!important;color:#180e09!important;border:1px solid #ffe3a0!important;box-shadow:inset 0 0 0 2px #4b310c,0 0 25px #e6aa4c75,0 8px 19px #000a!important}
+.cinema-shell .v72-gm-finale .v6-final-actions>.v72-lobby-action{background:linear-gradient(110deg,#0c1c2b,#254056 48%,#07131f)!important;border:1px solid #b2cfe5!important;box-shadow:inset 0 0 0 2px #08101c,0 0 19px #56bfe455,0 8px 19px #000a!important}
+.cinema-shell .v72-gm-finale .v6-final-actions>.cinema-button:disabled{filter:saturate(.38);opacity:.65;cursor:not-allowed}
+@media(max-width:760px){
+ .cinema-shell .v72-gm-finale .v6-final-actions{flex-direction:column;gap:9px}
+ .cinema-shell .v72-gm-finale .v6-final-actions>.cinema-button{flex:none;width:100%;min-height:50px;font-size:15px}
+}
+@media(min-width:1101px) and (max-height:800px){
+ .cinema-screen .v72-gm-finale .v6-final-actions{min-height:47px}
+ .cinema-screen .v72-gm-finale .v6-final-actions>.cinema-button{min-height:43px;font-size:14px}
+}
+/* GM-03 — integrated detective console; keep navigation visible on widescreen.
+   Premium overlays must never intercept clicks or cover QR/answers. */
+@media(min-width:1370px) and (min-height:800px){
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-body{display:grid;grid-template-columns:clamp(165px,12.5vw,218px) minmax(0,1fr);column-gap:14px}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-sidebar{display:flex!important;flex-direction:column;gap:8px;border:1px solid #6b8ba1!important;background:linear-gradient(145deg,#081827ec,#05101fcf)!important;box-shadow:inset 0 1px #d0ecff25,0 12px 30px #0008!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-sidebar .sidebar-label{color:#e4bf81;letter-spacing:.09em}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-sidebar button{border-radius:3px!important;min-height:46px;background:linear-gradient(105deg,#0a1e2e,#081323)}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-sidebar button.nav-current{border-color:#e35161;background:linear-gradient(105deg,#79101f,#3a101d);box-shadow:0 0 19px #e13b5061}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-main{min-width:0}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .live-layout{grid-template-columns:minmax(0,2.48fr) minmax(262px,1fr);gap:12px}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question{grid-template-columns:minmax(0,.91fr) minmax(0,1.12fr);gap:12px}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question>.scene-media{border-color:#e0b470!important;box-shadow:0 0 0 3px #06101e,0 0 25px #d9a95d40!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .question-copy{background:linear-gradient(120deg,#0b182af5,#061324f2)!important;border-color:#a58b6b!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .question-copy h1{font-family:"Bahnschrift SemiCondensed","Segoe UI",system-ui,sans-serif;font-weight:850;text-align:left;font-size:clamp(20px,1.6vw,31px)}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .rank-panel{border-color:#b89a68!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock>.cinema-button{flex:1 1 0;min-width:0}
+}
+/* Premium metal corners are separate transparent artwork, not a flattened UI. */
+@media(min-width:900px){
+ .cinema-host .question-copy::before,.cinema-screen .projector-question-copy::before{
+  content:"";position:absolute;inset:1px;z-index:0;pointer-events:none;opacity:.37;
+  background:url('../../../assets/the-crimes-v72/overlays/premium-frame-gold-cyan.svg') center/100% 100% no-repeat;
+ }
+ .cinema-host .question-copy>*,
+ .cinema-screen .projector-question-copy>*{position:relative;z-index:1}
+}
+
+/* GM-01/03 typography correction: reference uses bold condensed sans for
+   question headlines, not a traditional legal serif. Preserve live text. */
+@media(min-width:1370px){
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .question-copy h1{
+  font-family:"Arial Narrow","Bahnschrift SemiCondensed","Segoe UI",Arial,sans-serif!important;
+  font-weight:900!important;font-size:clamp(21px,1.55vw,30px)!important;
+  line-height:1.18!important;letter-spacing:-.02em;text-align:left!important;
+ }
+ .cinema-screen .projector-question-copy h1{
+  font-family:"Arial Narrow","Bahnschrift SemiCondensed","Segoe UI",Arial,sans-serif!important;
+  font-weight:900!important;letter-spacing:-.02em;text-align:left!important;
+ }
+}

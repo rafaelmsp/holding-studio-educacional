@@ -162,3 +162,22 @@ The separate Lady Justice portrait generated in an earlier iteration is still a 
 - Verified WebP HTTP 200, actual RIFF/WEBP bytes, dynamic order 2-1-3, and places 4-10 with ten mocked players; 720p remains readable.
 - Final mobile sans-serif question typography and the fixed red Responder action passed mobile tests; actual field test remains pending.
 - Art approval against four Golden Masters and live physical projector/QR testing remain mandatory before merge.
+
+## Etapa 9 — GM-02 / GM-03: dois comandos reais e Host cinematográfico (16/11/2026)
+
+**Base obrigatória:** as referências GM-01, GM-02, GM-03 e GM-04 anexadas nesta conversa, registradas em `docs/THE_CRIMES_V72_GOLDEN_MASTERS_2026-11-15.md`. Preservados o React funcional, os dados dinâmicos, os retratos/IDs de personagens, o Supabase e o fluxo das oito rodadas.
+
+### Implementado
+
+1. `PodiumBoard.tsx`: dois botões separados, **JOGAR NOVAMENTE** e **VOLTAR AO LOBBY**, somente nos painéis autorizados. Usuários sem token administrativo veem a mensagem para aguardar o professor.
+2. `services/replay.ts`: lógica transacional de interface em duas requisições protegidas por revisão da sala. Primeiro valida que a partida ainda está `finished`; chama `reset`; confirma `waiting`; chama `start` na revisão nova. O botão de lobby chama apenas o `reset` existente. Não repete reset automaticamente em erros de concorrência. Se o reset for concluído e o start falhar, a sala permanece em lobby e o erro explica a recuperação pelo Host.
+3. `Host.tsx` e `Screen.tsx`: confirmação explícita antes de reiniciar, indicação de ocupado e erros visíveis; mesmo controle nos dois papéis autorizados.
+4. `v72-premium.css`: botões dourado e azul-aço com bordas metálicas, manter fit em telão 720p, molduras transparentes de perguntas, layout widescreen do Host com sidebar e controles grandes; tipografia sem serifa nas perguntas GM-01/03.
+5. `tests/v72-replay-controls.cjs`: quatro cenários de navegador Playwright isolados, Host e Telão × Replay e Lobby, com Supabase mockado. Verifica autorização de botões, ordem `reset → start` versus `reset`, revisionamento e ausência de erros JS. Não depende de modificar contas ou salas reais.
+6. A workflow `.github/workflows/the-crimes-v7-qa.yml` passa a executar esse teste antes do cenário de multiplayer real com oito rodadas.
+
+### Limites de aprovação
+
+- O QA automatizado prova o funcionamento das transições no mock e preserva a suíte de partida real existente; não prova que a V7.2 é visualmente idêntica às imagens.
+- Ações administrativas requerem confirmação; o Replay zera pontuações e respostas antes de iniciar outra rodada para os mesmos participantes.
+- Não integrar automaticamente à `main`, nem concluir homologação artística sem comparar às GM-01 a GM-04 e validar em projetor e celular reais.

@@ -10,6 +10,7 @@ import {CASES,caseCover,avatar} from '../services/catalog';
 import {revision,requestId} from '../services/types';
 import {answeredAttempts} from '../services/score';
 import PodiumBoard from '../components/PodiumBoard';
+import {replayFinishedRoom} from '../services/replay';
 import {CinematicShell,Brand,LiveStatus,Countdown,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
 
 export default function Host(){
@@ -115,6 +116,14 @@ export default function Host(){
   finally{setBusy(false);}
  },[code,token,busy,room,admin,refresh,setError,setBusy]);
 
+ const replay=async()=>{
+  if(!code||!token||busy||room?.status!=='finished')return;
+  if(!confirm('Jogar novamente? A pontuação e as respostas anteriores serão zeradas; a mesma sala iniciará automaticamente a primeira rodada.'))return;
+  setBusy(true);setError(null);
+  try{await replayFinishedRoom(code,token);await refresh();}
+  catch(e){setError(e instanceof Error?e.message:'Não foi possível iniciar outra partida');await refresh();}
+  finally{setBusy(false);}
+ };
  const online=presenceIds.length||Number(room?.players_connected||0);
  const number=Number(room?.current_round||1),isLive=room?.status==='running';
  return <CinematicShell mode="host">
@@ -194,7 +203,7 @@ export default function Host(){
                <h1>{room.question.text}</h1><AnswerRows question={room.question} revealed={room.revealed}/>
                {room.revealed&&room.question.explanation&&<p className="explanation">{room.question.explanation}</p>}
              </div>
-           </div>:room?.status==='finished'?<section className="host-finale" aria-label="Pódio final da partida"><PodiumBoard players={players} room={room} avatars={avatars} onRestart={()=>void send('reset')} restarting={busy}/></section>:<div className="host-empty" style={{backgroundImage:'linear-gradient(#030b17aa,#050d1bea),url("'+caseCover(room?.case_key||selectedCase)+'")'}}>
+           </div>:room?.status==='finished'?<section className="host-finale" aria-label="Pódio final da partida"><PodiumBoard players={players} room={room} avatars={avatars} onRestart={()=>void send('reset')} onReplay={()=>void replay()} restarting={busy}/></section>:<div className="host-empty" style={{backgroundImage:'linear-gradient(#030b17aa,#050d1bea),url("'+caseCover(room?.case_key||selectedCase)+'")'}}>
              <h1>AGUARDANDO O INÍCIO DA INVESTIGAÇÃO</h1><p>Compartilhe o QR Code e inicie a partida quando a turma estiver pronta.</p>
              <button className="cinema-button gold" onClick={()=>void send('start')} disabled={busy}><Play size={21}/> INICIAR PARTIDA</button>
            </div>}

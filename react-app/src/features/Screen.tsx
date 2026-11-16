@@ -1,5 +1,6 @@
 import RoundTelemetry from '../components/RoundTelemetry';
 import PodiumBoard from '../components/PodiumBoard';
+import {replayFinishedRoom} from '../services/replay';
 import {useEffect,useMemo,useState} from 'react';
 import {QRCodeSVG} from 'qrcode.react';
 import {Fullscreen,Eye,ChevronsRight,MonitorUp,Users,Crown,Play,Clock3,ShieldCheck} from 'lucide-react';
@@ -39,7 +40,7 @@ export default function Screen(){
   const final=room.current_round>=8&&kind==='next';
   const actual=final?'finish':kind;
   const missing=Math.max(0,room.players_total-room.responded);
-  if((actual==='next'&&(!room.revealed||missing>0)&&!confirm(missing>0?'Há '+missing+' jogador(es) sem responder. Avançar?':'Avançar sem revelar?'))||(actual==='finish'&&!confirm('Encerrar a partida para todos os jogadores?')))return;
+  if((actual==='next'&&(!room.revealed||missing>0)&&!confirm(missing>0?'Há '+missing+' jogador(es) sem responder. Avançar?':'Avançar sem revelar?'))||(actual==='finish'&&!confirm('Encerrar a partida para todos os jogadores?'))||(actual==='reset'&&!confirm('Voltar ao lobby? As pontuações e respostas serão reiniciadas, mas os participantes continuarão na sala.')))return;
   setBusy(true);setError(null);
   try{
    const beforeRound=room.current_round,beforeStatus=room.status,beforeRevealed=room.revealed;
@@ -62,6 +63,14 @@ export default function Screen(){
   }catch(e){setError(e instanceof Error?e.message:'Falha no comando');}
   finally{setBusy(false);}
  };
+ const replay=async()=>{
+  if(!room||!screenToken||busy||room.status!=='finished')return;
+  if(!confirm('Jogar novamente? As pontuações serão zeradas e a primeira rodada será iniciada na mesma sala.'))return;
+  setBusy(true);setError(null);
+  try{await replayFinishedRoom(code,screenToken);await refresh();}
+  catch(e){setError(e instanceof Error?e.message:'Não foi possível iniciar outra partida');await refresh();}
+  finally{setBusy(false);}
+ };
  const online=ids.length||Number(room?.players_connected||0);
  const round=Math.max(1,Number(room?.current_round||1));
  return <CinematicShell mode="screen">
@@ -78,7 +87,7 @@ export default function Screen(){
            <div className="projector-qr"><QRCodeSVG value={playerUrl(code)} size={180} fgColor="#071421" bgColor="#fff"/></div>
            <strong>{online} jogadores online</strong>
          </motion.div>:room.status==='finished'?<motion.div key="final" className="projector-final v6-cinematic-final" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} style={{backgroundImage:'linear-gradient(#020b1a92,#040b19c7),url("'+BACKGROUNDS.final+'")'}}>
-           <PodiumBoard players={players} room={room} avatars={avatars} onRestart={screenToken?()=>void command('reset'):undefined} restarting={busy}/>
+           <PodiumBoard players={players} room={room} avatars={avatars} onRestart={screenToken?()=>void command('reset'):undefined} onReplay={screenToken?()=>void replay():undefined} restarting={busy}/>
          </motion.div>:room.question?<motion.div key={'round-'+round} className="projector-question" initial={{opacity:.45}} animate={{opacity:1}} exit={{opacity:0}}>
            <SceneMedia caseKey={room.case_key} caseTitle={room.case_title} round={round} large/>
            <section className="projector-question-copy">
