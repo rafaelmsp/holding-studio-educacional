@@ -135,8 +135,13 @@ Contratos visuais adotados: GM-02 (pódio) e GM-04 (jogador) conforme `docs/THE_
 - `react-app/tests/v72-scene-layers.cjs`: adiciona simulação de finalização com **10 jogadores reais de mock** (pódio de 3 + classificação visível 4–10, sem scroll em tela larga).
 - `react-app/tests/v7-browser.cjs`: verifica botão de resposta no **primeiro viewport mobile de 844px**, opção D clicável, seleção subsequente da opção B, envio real da ação simulada e oito rodadas.
 
-### Nova arte fotográfica proposta
-Foi criada nesta conversa uma fotografia de fundo noturno para o pódio, com Justiça bronze à esquerda, paisagem urbana à noite e espaço central para os personagens. Arquivo disponível como `the_crimes_v72_podium_cinematic.webp` no anexo gerado nesta conversa. **Ainda não integra o bundle da branch:** o CSS testado nesta etapa continua utilizando o cenário existente `podium-premium.webp`; não afirmar que a nova imagem foi publicada no GitHub.
+### Original cinematic podium background now integrated (V7.2)
+
+The originally generated concept `the_crimes_v72_podium_cinematic.webp` has been added as a REAL build asset at `assets/the-crimes-v72/premium/podium-cinematic-generated.webp` (1440x810, 111398 bytes). Transfer integrity was verified against the Git blob SHA `a44d87cbb06ed799c7e3edf10777e8c714b238ef`; the binary SHA-256 is recorded in `assets/the-crimes-v72/manifest.json`.
+
+The Host and Screen final states now use this generated photograph behind the live React podium. On large desktops, the independent Lady Justice cutout is composited in the foreground with a mask covering the distant statue in the backdrop. No player names, scores, ranking, QR, buttons or question text is encoded in the photograph. The previous `podium-premium.webp` remains preserved as legacy artwork but is not served as the active final background.
+
+The separate Lady Justice portrait generated in an earlier iteration is still a concept only. All changes remain in the draft PR #6; the published main branch is untouched.
 
 ### Limites
 - 10 jogadores e 8 rodadas são cenários de QA; não são dados reais dos participantes.
@@ -147,5 +152,13 @@ Foi criada nesta conversa uma fotografia de fundo noturno para o pódio, com Jus
 - A pergunta mobile passa a usar tipografia sans-serif de alto contraste como a referência GM-04, preservando legibilidade, seleção por teclado/toque e resposta real. O CTA vermelho utiliza gradiente CSS dinâmico, **não** a imagem dourada antiga, e mantém foco visível e área segura inferior.
 - O pódio 1920×1080 preserva a hierarquia 2–1–3 com retratos maiores e Justiça de bronze mais legível. Cenário de QA com dez personagens confirma a classificação complementar da 4ª à 10ª posição sem rolagem.
 - Testes Playwright verificam CTA visível na primeira janela mobile de 844 px, alternativa D selecionável, mudança para alternativa B e oito rodadas; também avaliam pódio com dez participantes e 720p.
-- A fotografia `the_crimes_v72_podium_cinematic.webp` criada na conversa está pronta para avaliação, mas **não foi copiada para `assets/the-crimes-v72`** neste commit. O ativo publicado no build da branch continua `podium-premium.webp`. Uma integração posterior deve preservar proveniência e gerar novo QA.
+- The new cinematic scene is NOW integrated in the V7.2 branch as `assets/the-crimes-v72/premium/podium-cinematic-generated.webp`, with verified Git and SHA-256 hashes and updated browser QA. It has NOT been merged to main.
 - O PR #6 continua draft e não autoriza merge antes da comparação visual com GM-01..04 e teste presencial.
+
+### QA follow-up for the integrated cinematic background (16 Nov 2026)
+
+- Real generated text-free photographic WebP is bundled and served in Host / Screen final states.
+- The independently layered foreground bronze figure is shown only on wide screens; old distant statue is masked out to avoid doubling.
+- Verified WebP HTTP 200, actual RIFF/WEBP bytes, dynamic order 2-1-3, and places 4-10 with ten mocked players; 720p remains readable.
+- Final mobile sans-serif question typography and the fixed red Responder action passed mobile tests; actual field test remains pending.
+- Art approval against four Golden Masters and live physical projector/QR testing remain mandatory before merge.

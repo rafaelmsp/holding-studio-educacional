@@ -86,7 +86,7 @@
 .cinema-screen .projector-side .rank-entry.champion{background:linear-gradient(95deg,#74502259,#091a2e)!important}
 /* I09 — final podium photo and original transparent light rays. */
 .cinema-host.v7-phase-finished>.cinema-background,.cinema-screen.v7-phase-finished>.cinema-background{
- background-image:linear-gradient(90deg,#030816b9,#0b0b1a58,#030817b2),url('../../../assets/the-crimes-v72/premium/podium-premium.webp')!important;
+ background-image:linear-gradient(90deg,#030816b9,#0b0b1a58,#030817b2),url('../../../assets/the-crimes-v72/premium/podium-cinematic-generated.webp')!important;
  background-position:center center!important;background-size:cover!important;
 }
 .cinema-shell .v6-podium-wrap{position:relative;isolation:isolate}
@@ -150,4 +150,39 @@
   line-height:1.2!important;
   color:#f7f7f8!important;
  }
+}
+
+/* GM-02 final original photographic backdrop. Bronze Lady Justice is now
+   already part of this clean image; hide the old cutout to prevent duplicates. */
+.cinema-shell.v7-phase-finished .v72-gm-finale .v72-gm-justice{display:none!important}
+@media(min-width:1500px) and (min-height:840px){
+ .cinema-shell.v7-phase-finished .v72-gm-finale::before{background:transparent!important}
+}
+
+/* GM-02 exposure correction for the newly generated original podium artwork.
+   Keep the left bronze monument luminous; darken only the panel region. */
+.cinema-host.v7-phase-finished>.cinema-background,
+.cinema-screen.v7-phase-finished>.cinema-background{
+ background-image:linear-gradient(90deg,rgba(2,7,18,.10) 0%,rgba(2,7,18,.15) 25%,rgba(2,7,18,.48) 52%,rgba(2,7,18,.66) 100%),url('../../../assets/the-crimes-v72/premium/podium-cinematic-generated.webp')!important;
+ filter:saturate(1.12) brightness(1.14)!important;
+}
+.cinema-shell.v7-phase-finished .v72-gm-finale{
+ background:linear-gradient(90deg,rgba(2,7,18,.08),rgba(2,7,18,.22) 35%,rgba(2,7,18,.36) 70%,rgba(2,7,18,.42))!important;
+}
+
+/* GM-02 theatrical composite on wide screens. The cinematic backdrop keeps
+   its city, marble and legal props; mask its dark distant statue and bring
+   the existing clean bronze cutout forward as a true separate visual layer. */
+@media(min-width:1500px) and (min-height:850px){
+ .cinema-shell.v7-phase-finished .v72-gm-finale::before{
+  background:linear-gradient(90deg,rgba(2,8,19,.98) 0%,rgba(2,8,19,.91) 52%,rgba(2,8,19,0) 100%)!important;
+  width:clamp(175px,16vw,298px);top:0;bottom:0;right:auto;left:0;
+ }
+ .cinema-shell.v7-phase-finished .v72-gm-finale .v72-gm-justice{
+  display:block!important;opacity:.97!important;z-index:1!important;
+  left:-22px;bottom:13%;height:clamp(390px,30vw,565px);max-width:24%;
+  filter:drop-shadow(0 7px 18px #000c) drop-shadow(0 0 27px #cc894f7a)
+    saturate(1.16) contrast(1.14)!important;
+ }
+ .cinema-shell.v7-phase-finished .v72-gm-finale :is(.v6-final-heading,.v6-final-grid,.v6-class-summary,.v6-final-actions){z-index:2}
 }

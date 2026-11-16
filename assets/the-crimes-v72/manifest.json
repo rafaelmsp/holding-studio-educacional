@@ -44,7 +44,7 @@
       "dynamic_content": "none"
     }
   },
-  "release_note": "The additional generated high-resolution photorealistic Lady Justice PNG is a local concept artifact only, not committed to this branch. Do not claim inclusion or deployment until the binary is uploaded and QA passes.",
+  "release_note": "The standalone Lady Justice portrait generated earlier remains a separate concept. The newly generated cinematic podium scene is now an integrated repository asset; all names, ranking, scores and controls remain dynamic React.",
   "props": {
     "justice-bronze-cutout.webp": {
       "source": "assets/the-crimes-v6/decor/lady-justice-bronze.webp",
@@ -62,7 +62,7 @@
     }
   },
   "premium_v72_master": {
-    "source_policy": "derived compositions of existing repository art, not newly AI-generated or a Golden Master screenshot",
+    "source_policy": "Six legacy Premium assets derived from repository art; the new cinematic podium WebP was generated in the ChatGPT conversation and added as an independent, text-free photographic backdrop.",
     "assets": {
       "lobby-premium.webp": {
         "source_files": [
@@ -136,6 +136,16 @@
         "sha256": "4698c0ba2a7d8ec99fef77641fcd1eb18f3ab9b3580f0dfa996e2e3ec5407ded",
         "dynamic_content": "none",
         "usage": "podium"
+      },
+      "podium-cinematic-generated.webp": {
+        "source_files": [],
+        "source": "Original cinematic image generated in ChatGPT conversation on 2026-11-15; converted to WebP without UI text",
+        "composition": "Full-body bronze Lady Justice at left, nocturnal skyline and dark open stage for live player cards",
+        "generator": "OpenAI image generation; export/resize to 1440x810 WebP",
+        "size": "1440x810",
+        "sha256": "9c4779048729f399c27c314fa369ceb134c4991fc29dd23053dd5efb0da02373",
+        "dynamic_content": "none",
+        "usage": "Host and Screen finished podium backdrop"
       }
     }
   }

@@ -11,8 +11,8 @@ const manifest=JSON.parse(get('assets/the-crimes-v72/manifest.json').toString('u
 const newArts=manifest.premium_v72_master?.assets;
 assert.ok(newArts&&typeof newArts==='object','Premium Master manifest must exist');
 const expected=['lobby-premium.webp','host-live-premium.webp','player-premium.webp',
- 'projector-premium.webp','podium-premium.webp','podium-spotlights.png'];
-assert.deepEqual(Object.keys(newArts).sort(),expected.sort(),'all five premium photos plus spotlight PNG');
+ 'projector-premium.webp','podium-premium.webp','podium-cinematic-generated.webp','podium-spotlights.png'];
+assert.deepEqual(Object.keys(newArts).sort(),expected.sort(),'all six Premium WebP photos including original podium plus spotlight PNG');
 const assetsDir='assets/the-crimes-v72/premium/';
 for(const [name,metadata] of Object.entries(newArts)){
  assert.equal(metadata.dynamic_content,'none',name+' cannot encode QR, stats or legal questions');
@@ -30,7 +30,8 @@ for(const [name,metadata] of Object.entries(newArts)){
  console.log('V72 MASTER ART PASS',name,(data.length/1024).toFixed(1)+' KiB');
 }
 const css=get('react-app/src/styles/v72-master.css').toString('utf8');
-for(const name of expected)assert.ok(css.includes(name),'Premium CSS is not using '+name);
+for(const name of expected.filter(x=>x!=='podium-premium.webp'))assert.ok(css.includes(name),'Premium CSS is not using '+name);
+assert.ok(!css.includes("url('../../../assets/the-crimes-v72/premium/podium-premium.webp')"),'Old podium art must not remain active in final background');
 const main=get('react-app/src/main.tsx').toString('utf8');
 assert.ok(main.includes("import './styles/v72-master.css'"),'master CSS not loaded after V7.2');
 assert.ok(main.lastIndexOf('v72-master.css')>main.lastIndexOf('v72-premium.css'),
@@ -43,4 +44,4 @@ for(const [key,value] of Object.entries(original.cases)){
 const catalog=get('react-app/src/services/catalog.ts').toString('utf8');
 const ids=['detetive','advogado','delegado','estrategista','perita','advogada','investigadora','analista','especialista','auditor','arquivista','mediador'];
 for(const id of ids)assert.ok(catalog.includes("id:'"+id+"'"),id+' persona id missing');
-console.log('V72 MASTER ACCEPTED: 5 Premium WebP, 1 transparent spotlight PNG, 48 legal scenes, 12 personas, CSS hierarchy');
+console.log('V72 MASTER ACCEPTED: 6 Premium WebP, 1 transparent spotlight PNG, 48 legal scenes, 12 personas, CSS hierarchy');

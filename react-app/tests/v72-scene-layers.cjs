@@ -13,11 +13,11 @@ const tests=[
  {name:'screen-wait-premium',view:'screen',status:'waiting',width:1920,selector:'.projector-waiting',art:'lobby-premium'},
  {name:'screen-round',view:'screen',status:'running',width:1920,selector:'.projector-question',art:'projector-premium'},
  {name:'screen-round-hd',view:'screen',status:'running',width:1280,height:720,selector:'.projector-question',art:'projector-premium'},
- {name:'screen-final',view:'screen',status:'finished',width:1920,selector:'.v6-final-board',art:'podium-premium'},
- {name:'screen-final-top10',view:'screen',status:'finished',width:1920,selector:'.v6-final-board',art:'podium-premium',tenPlayers:true},
- {name:'screen-final-hd',view:'screen',status:'finished',width:1280,height:720,selector:'.v6-final-board',art:'podium-premium'},
+ {name:'screen-final',view:'screen',status:'finished',width:1920,selector:'.v6-final-board',art:'podium-cinematic-generated'},
+ {name:'screen-final-top10',view:'screen',status:'finished',width:1920,selector:'.v6-final-board',art:'podium-cinematic-generated',tenPlayers:true},
+ {name:'screen-final-hd',view:'screen',status:'finished',width:1280,height:720,selector:'.v6-final-board',art:'podium-cinematic-generated'},
  {name:'player-join',view:'player',status:'waiting',width:390,selector:'.join-player',art:'player-premium'},
- {name:'host-final',view:'host',status:'finished',width:1672,selector:'.v6-final-board',art:'podium-premium'},
+ {name:'host-final',view:'host',status:'finished',width:1672,selector:'.v6-final-board',art:'podium-cinematic-generated'},
 ];
 (async()=>{
  fs.mkdirSync(out,{recursive:true});
@@ -114,7 +114,7 @@ const tests=[
     assert.equal(await page.locator('.v72-gm-finale .v72-gm-justice').count(),1,'GM-02 podium retains decorative Lady Justice as a real layer');
     const justice=await page.locator('.v72-gm-justice').evaluate(el=>({loaded:el.complete&&el.naturalWidth>0,visibility:getComputedStyle(el).display}));
     assert.ok(justice.loaded,'GM-02 Lady Justice WebP should load');
-    if(t.width>=1500&&t.height!==720)assert.equal(justice.visibility,'block','GM-02 large-screen podium should show Lady Justice');
+    if(t.width>=1500&&t.height!==720)assert.equal(justice.visibility,'block','GM-02 foreground bronze cutout must appear over masked photographic stage');
     assert.deepEqual(await page.locator('.v6-finish-medal b').allTextContents(),['2','1','3'],'podium order 2-1-3');
     const spotlight=await page.locator('.v6-podium-wrap').evaluate(el=>getComputedStyle(el,'::before').backgroundImage);
     assert.ok(spotlight.includes('podium-spotlights'),'finale must use independent premium lighting layer');
