@@ -80,7 +80,14 @@ fs.mkdirSync(OUT,{recursive:true});
   await snap(host,'07-host-rodada');
   await snap(screen,'08-telao-rodada');
   await snap(players[0],'09-mobile-pergunta');
-  assert.equal(await players[0].locator('.submit-answer').evaluate(el=>getComputedStyle(el).position),'sticky','Mobile action should stay reachable on scroll');
+  const mobileAction=players[0].locator('.submit-answer');
+  const mobileActionPosition=await mobileAction.evaluate(el=>getComputedStyle(el).position);
+  const mobileActionRect=await mobileAction.boundingBox();
+  const mobileViewport=players[0].viewportSize();
+  assert.ok(['sticky','fixed'].includes(mobileActionPosition),'Mobile action must remain sticky or fixed');
+  assert.ok(mobileActionRect&&mobileViewport&&mobileActionRect.y>=0&&mobileActionRect.y+mobileActionRect.height<=mobileViewport.height+2,
+    'Mobile Responder must be visible inside the first viewport: '+JSON.stringify(mobileActionRect));
+  await players[0].locator('.player-question .answer-row').nth(3).click();
   await players[0].locator('.player-question .answer-row').first().click();
   await players[0].locator('.submit-answer').click();
   await players[0].waitForSelector('.answered-notice',{timeout:35000});
