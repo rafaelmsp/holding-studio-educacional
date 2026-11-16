@@ -1,0 +1,750 @@
+/* THE CRIMES LIVE V7.2 — independent cinematic layers.
+   Artwork is strictly decorative: live QR, names, scores and buttons remain DOM.
+   Phase 1 uses existing verified premium V6/V7 artworks, never UI screenshots. */
+.cinema-host .v72-premium-art{position:fixed;inset:86px 0 0;z-index:0;pointer-events:none;overflow:hidden;isolation:isolate}
+.cinema-host .v72-premium-art::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 15% 80%,rgba(12,127,170,.13),transparent),radial-gradient(ellipse 54% 48% at 88% 30%,rgba(224,138,46,.11),transparent);z-index:0}
+.cinema-host .v72-premium-art img{position:absolute;display:block;object-fit:contain;pointer-events:none;user-select:none}
+.cinema-host .v72-art-justice{left:max(-52px,calc((100vw - 1920px)/2));bottom:clamp(5px,6vh,100px);height:clamp(330px,55vh,780px);max-width:28vw;opacity:.48;filter:drop-shadow(0 9px 30px rgba(250,179,65,.32)) contrast(1.15) saturate(1.08)}
+.cinema-host .v72-art-detective{right:max(-56px,calc((100vw - 1920px)/2));bottom:-12px;height:clamp(240px,45vh,610px);max-width:23vw;opacity:.28;filter:drop-shadow(0 10px 30px rgba(67,217,255,.26)) saturate(.75)}
+.cinema-host .game-header,.cinema-host .host-body,.cinema-host .setup-view{position:relative;z-index:2}
+.cinema-host .v6-lobby-hero{isolation:isolate;overflow:hidden;backdrop-filter:blur(9px);background:linear-gradient(148deg,rgba(4,18,32,.9),rgba(3,13,26,.76)),url('../../../assets/the-crimes-v7/backgrounds/desktop.webp') center/cover!important;border-image:none}
+.cinema-host .v6-lobby-hero::before{content:"";pointer-events:none;position:absolute;inset:0;z-index:0;background:linear-gradient(116deg,transparent 20%,rgba(67,217,255,.06) 56%,transparent 84%),radial-gradient(circle at 50% 0,rgba(246,188,91,.13),transparent 43%)}
+.cinema-host .v6-lobby-hero>*{position:relative;z-index:1}
+.cinema-host .v6-lobby-hero .v6-lobby-columns{border-color:#86714d;background:linear-gradient(90deg,rgba(2,10,19,.77),rgba(3,15,29,.5));box-shadow:0 9px 34px rgba(0,0,0,.24)}
+.cinema-host .v6-lobby-hero .v6-lobby-qr{border-color:#e7b55d;box-shadow:0 0 0 4px rgba(5,15,27,.8),0 0 29px rgba(235,165,62,.42)}
+.cinema-host .v6-lobby-hero .v6-lobby-case{border-color:#cb9656;background:linear-gradient(110deg,rgba(7,22,36,.94),rgba(8,23,35,.8));box-shadow:0 0 17px rgba(235,165,62,.18)}
+.cinema-host .v6-lobby-roster,.cinema-host .rank-panel{backdrop-filter:blur(8px);background:linear-gradient(148deg,rgba(10,30,47,.9),rgba(3,12,25,.82))!important}
+.cinema-host .host-dock{backdrop-filter:blur(8px);background:linear-gradient(90deg,rgba(4,13,27,.91),rgba(6,19,32,.8))}
+.cinema-host .v72-premium-identifier{color:#ecbd73;font:700 10px/1.35 Georgia,serif;letter-spacing:.19em;text-transform:uppercase;text-align:center;text-shadow:0 0 13px rgba(230,173,93,.32);margin:0}
+.cinema-host .v72-premium-identifier .v72-premium-marker{display:inline-block;width:24px;height:1px;background:linear-gradient(90deg,transparent,#edbc70);vertical-align:middle;margin-right:9px}
+.cinema-host .v72-premium-identifier .v72-premium-marker:last-child{margin-right:0;margin-left:9px;transform:rotate(180deg)}
+/* Phone/tablet browser 'desktop site' option can report ~980 CSS pixels.
+   A coarse primary pointer still deserves a usable Host layout. */
+@media(max-width:760px), (pointer:coarse) and (max-width:1100px){
+ .cinema-host .v72-premium-art{display:none}
+ .cinema-host .game-header:has(.v7-nav-toggle){display:grid;grid-template-columns:48px minmax(0,1fr);grid-template-rows:auto auto auto;gap:7px;padding:9px 11px;min-height:0;height:auto}
+ .cinema-host .game-header .v7-nav-toggle{display:grid;grid-column:1;grid-row:1;place-items:center;min-height:48px;min-width:48px}
+ .cinema-host .game-header:has(.v7-nav-toggle) .brandmark{grid-column:2;grid-row:1;min-width:0!important;width:100%;max-width:100%;transform:none!important}
+ .cinema-host .game-header .brandmark>div{min-width:0;margin-left:0}
+ .cinema-host .game-header .brandmark strong{font-size:clamp(17px,3.2vw,24px)!important}
+ .cinema-host .game-header .brandmark small{font-size:7px!important;letter-spacing:.04em!important}
+ .cinema-host .game-header .brandmark .brand-detective,.cinema-host .game-header .brand-fingerprint{display:none!important}
+ .cinema-host .game-header:has(.v7-nav-toggle) .live-state{grid-column:1/-1;grid-row:2;justify-self:end;min-height:30px;font-size:10px;white-space:normal}
+ .cinema-host .game-header:has(.v7-nav-toggle) .header-content{grid-column:1/-1;grid-row:3;min-width:0;order:unset}
+ .cinema-host .host-sidebar{display:none!important}
+ .cinema-host .host-body{display:block!important;padding:10px 10px 25px!important;min-height:0;height:auto!important}
+ .cinema-host .host-main{display:flex!important;flex-direction:column;min-width:0;height:auto!important;gap:11px}
+ .cinema-host .v6-host-lobby{display:flex!important;flex-direction:column;gap:12px;min-height:0}
+ .cinema-host .v6-lobby-hero{padding:18px 13px!important;gap:13px;min-height:0;background:linear-gradient(155deg,rgba(5,19,34,.92),rgba(4,14,25,.86)),url('../../../assets/the-crimes-v7/backgrounds/mobile.webp') top center/cover!important}
+ .cinema-host .v6-lobby-hero h1{font-size:clamp(37px,9vw,62px);overflow-wrap:anywhere}
+ .cinema-host .v6-lobby-columns{display:flex!important;flex-direction:column;gap:14px!important;align-items:center;padding:12px;width:100%}
+ .cinema-host .v6-lobby-guide{width:100%;padding:6px}
+ .cinema-host .v6-lobby-guide p{font-size:15px;line-height:1.42}
+ .cinema-host .v6-lobby-qr{order:0}
+ .cinema-host .v6-lobby-qr svg{height:min(208px,55vw);width:min(208px,55vw)}
+ .cinema-host .v7-share-link{display:flex;order:1;width:100%;min-height:52px;justify-content:center}
+ .cinema-host .v6-lobby-guide{order:2}
+ .cinema-host .v6-lobby-case{min-height:90px;margin:0}
+ .cinema-host .v6-lobby-case strong{font-size:16px;overflow-wrap:anywhere}
+ .cinema-host .v6-lobby-roster{min-height:220px}
+ .cinema-host .v6-roster-scroll{max-height:320px;overflow:auto}
+ .cinema-host .host-dock{position:sticky;bottom:0;z-index:30;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;padding:10px 8px calc(10px + env(safe-area-inset-bottom));margin:0}
+ .cinema-host .host-dock .cinema-button{min-width:0;min-height:52px;font-size:12px;white-space:normal}
+ .cinema-host .host-toolbox{grid-column:1/-1;min-width:0}
+ .cinema-host .v72-premium-identifier{font-size:9px;letter-spacing:.10em}
+ .cinema-host .v72-premium-identifier .v72-premium-marker{width:10px;margin-right:5px}
+ .cinema-host .v72-premium-identifier .v72-premium-marker:last-child{margin-left:5px}
+ .cinema-host .room-ribbon{display:flex;flex-wrap:wrap}
+ .cinema-host .live-layout{display:flex!important;flex-direction:column;height:auto!important;min-height:0}
+ .cinema-host .host-question{display:flex!important;flex-direction:column;height:auto!important;min-height:0!important}
+ .cinema-host .host-question .scene-media{min-height:220px!important;max-height:42dvh}
+ .cinema-host .host-aside{display:flex;flex-direction:column;overflow:visible}
+ .cinema-host .round-bar{flex-wrap:wrap;height:auto}
+ .cinema-host .host-finale{min-width:0}
+}
+@media(max-width:380px){
+ .cinema-host .game-header .brandmark strong{font-size:17px!important}
+ .cinema-host .v6-lobby-hero h1{font-size:36px}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-host .v72-premium-art{animation:none;transition:none}
+}
+
+/* V7.2 scene pack — four repurposed, text-free cinematic assets.
+   Source: PR #5 assets; provenance in assets/the-crimes-v72/manifest.json.
+   Never rasterize game data: question, clock, ranking and scores are live DOM. */
+.cinema-screen:is(.v7-phase-running,.v7-phase-paused) .cinema-background{
+ background-image:linear-gradient(100deg,rgba(2,8,19,.55),rgba(2,8,19,.48) 55%,rgba(1,8,20,.64)),url('../../../assets/the-crimes-v72/scenes/telao-rodada.webp')!important;
+ background-position:center 42%!important;background-size:cover!important;filter:saturate(1.05) contrast(1.09)!important;
+}
+.cinema-screen.v7-phase-finished .cinema-background{
+ background-image:linear-gradient(95deg,rgba(2,7,18,.66),rgba(2,8,20,.57)),url('../../../assets/the-crimes-v72/scenes/telao-final.webp')!important;
+ background-position:center 35%!important;filter:saturate(1.08) contrast(1.12)!important;
+}
+.cinema-player .cinema-background,.cinema-join .cinema-background{
+ background-image:linear-gradient(180deg,rgba(1,7,18,.56),rgba(1,7,18,.58) 46%,rgba(1,7,18,.81)),url('../../../assets/the-crimes-v72/scenes/jogador-mobile.webp')!important;
+ background-position:center top!important;background-size:cover!important;
+}
+.cinema-host.v7-phase-finished .cinema-background{
+ background-image:linear-gradient(100deg,rgba(2,8,19,.62),rgba(2,8,19,.46)),url('../../../assets/the-crimes-v72/scenes/podio-desktop.webp')!important;
+ background-position:center 36%!important;
+}
+.cinema-player.v7-phase-finished .cinema-background,.cinema-screen.v7-phase-finished .cinema-background{background-size:cover!important}
+.cinema-player .player-header,.cinema-join .player-header{
+ background:linear-gradient(110deg,rgba(2,9,21,.94),rgba(6,19,33,.79))!important;
+ border-bottom:1px solid rgba(227,177,92,.64);box-shadow:0 8px 25px #0009;
+}
+.cinema-player .player-identity{
+ background:linear-gradient(110deg,rgba(3,12,25,.96),rgba(8,30,44,.87))!important;
+ border:1px solid #a98651!important;box-shadow:inset 0 1px #f9d5a05c,0 8px 22px #0009,0 0 15px #a5732c24!important;
+}
+.cinema-player .player-question{isolation:isolate;position:relative}
+.cinema-player .player-question h1{
+ color:#f9f4ed!important;text-shadow:0 2px 12px #000b;max-width:42ch;
+ padding:13px 12px 14px;margin:15px 0!important;
+ background:linear-gradient(115deg,rgba(2,12,24,.93),rgba(4,19,32,.88));
+ border:1px solid #507992;border-left:3px solid #d8ac66;
+ box-shadow:inset 0 1px #bfe9ff22,0 8px 16px #0009;
+}
+.cinema-player .scene-media{border:1px solid #c49c5d!important;box-shadow:0 0 0 3px #051321,0 0 20px #cc965340,0 10px 26px #000b}
+.cinema-player .answer-row{border-radius:5px!important;min-height:70px;background:linear-gradient(115deg,rgba(8,27,43,.97),rgba(3,13,25,.97))!important;
+ border-color:#426e89!important;box-shadow:inset 0 1px #7ccdfd19,0 4px 12px #000b!important}
+.cinema-player .answer-row.interactive:hover{border-color:#5dd8ff!important;box-shadow:0 0 14px #4dd8ff44!important}
+.cinema-player .answer-row.selected:not(.correct){border-color:#4aeaff!important;background:linear-gradient(110deg,#125073,#061e35)!important;box-shadow:0 0 17px #43d9ff7a!important}
+.cinema-player .answer-row.correct{border-color:#38ed95!important;background:linear-gradient(100deg,#0d4b2c,#061b1c)!important}
+.cinema-player .answer-row.risky,.cinema-player .answer-row.criminal{border-color:#e85f68!important}
+.cinema-player .submit-answer{box-shadow:0 7px 28px #000a,0 0 16px #b8813466!important;border-radius:4px!important}
+.cinema-screen .projector-question{isolation:isolate;position:relative}
+.cinema-screen .projector-question>.scene-media{border:1px solid #ba965e;box-shadow:inset 0 0 0 3px #071826,0 0 24px #a778414d;overflow:hidden}
+.cinema-screen .projector-question-copy{
+ background:linear-gradient(123deg,rgba(5,17,30,.96),rgba(2,10,22,.93))!important;
+ border-color:#a88a5d!important;box-shadow:inset 0 1px rgba(238,202,151,.27),0 7px 24px #000a!important;
+}
+.cinema-screen .rank-panel,.cinema-screen .v7-telemetry{background:linear-gradient(145deg,rgba(8,27,40,.94),rgba(2,10,21,.9))!important}
+.cinema-screen .projector-side{backdrop-filter:blur(5px)}
+/* Finale: separate spotlight layer behind the dynamic trio of player cards. */
+.cinema-shell .v6-podium-wrap{isolation:isolate;overflow:hidden}
+.cinema-shell .v6-podium-wrap::before{
+ content:"";position:absolute;inset:4% 4% 0;z-index:0;pointer-events:none;
+ background:radial-gradient(ellipse 31% 75% at 50% 65%,rgba(255,192,83,.27),transparent 85%),
+ radial-gradient(ellipse 21% 65% at 18% 70%,rgba(157,202,241,.16),transparent 88%),
+ radial-gradient(ellipse 21% 65% at 82% 70%,rgba(255,138,75,.18),transparent 88%);
+ opacity:.94;
+}
+.cinema-shell .v6-podium-stage{position:relative;z-index:1}
+.cinema-shell .v6-finish-card.v6-finish-1{border-color:#ffd879!important;box-shadow:0 0 0 1px rgba(255,225,146,.63),0 0 40px rgba(248,174,56,.45),0 17px 31px #000c!important}
+.cinema-shell .v6-finish-card.v6-finish-2{border-color:#99c3da!important;box-shadow:0 0 17px rgba(154,207,234,.28),0 14px 27px #000b!important}
+.cinema-shell .v6-finish-card.v6-finish-3{border-color:#d59a73!important;box-shadow:0 0 17px rgba(226,141,90,.25),0 14px 27px #000b!important}
+.cinema-shell .v6-final-heading h1{text-shadow:0 2px 2px #000,0 0 27px rgba(231,167,73,.43)}
+@media(max-width:760px){
+ .cinema-screen .projector-question-copy{background:linear-gradient(145deg,rgba(4,17,29,.97),rgba(1,8,17,.95))!important}
+ .cinema-player .player-question h1{font-size:clamp(20px,5vw,25px)!important;padding:12px}
+ .cinema-player .answer-row{min-height:68px}
+ .cinema-shell .v6-podium-wrap::before{inset:0}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-shell .v6-podium-wrap::before{animation:none!important}
+}
+
+/* Projector finale occupies the whole projection surface.
+   Previous V7 grid reserved an invisible ranking sidebar column. */
+.cinema-screen .projector-main:has(.v6-cinematic-final){
+ display:block!important;width:100%;max-width:100%;grid-template-columns:minmax(0,1fr)!important;
+}
+.cinema-screen .projector-main:has(.v6-cinematic-final) .projector-side{display:none!important}
+.cinema-screen .projector-stage:has(.v6-cinematic-final){
+ display:block;width:100%;max-width:100%;min-width:0;min-height:0;
+}
+.cinema-screen .projector-final.v6-cinematic-final{width:100%;max-width:100%;min-height:0}
+@media(min-width:1200px){
+ .cinema-screen .v6-final-board{min-height:0;height:auto;min-height:690px;overflow:visible}
+ .cinema-screen .v6-final-grid{min-height:395px}
+ .cinema-screen .v6-podium-stage{height:390px;min-height:390px;padding:10px 0 0}
+ .cinema-screen .v6-finish-info{padding:13px 8px 10px;gap:5px}
+ .cinema-screen .v6-finish-info>strong{font-size:clamp(19px,1.45vw,26px)}
+ .cinema-screen .v6-finish-score{font-size:clamp(25px,1.9vw,33px)}
+ .cinema-screen .v6-finish-hits{font-size:clamp(11px,.95vw,16px)}
+ .cinema-screen .v6-finish-info>small{font-size:clamp(10px,.70vw,13px)}
+}
+
+/* V7.2 original transparent ornaments: independent visual layers, not a screenshot. 
+   SVG frame/seal have no text, controls or game values. Keep pointer targets unobstructed. */
+:root{
+ --v72-premium-frame:url('../../../assets/the-crimes-v72/overlays/premium-frame-gold-cyan.svg');
+ --v72-premium-seal:url('../../../assets/the-crimes-v72/overlays/premium-justice-seal.svg');
+}
+/* Overlay the existing pseudo-element frame instead of rasterizing the content. */
+.cinema-host .v6-lobby-hero::after,
+.cinema-screen .projector-question-copy::after,
+.cinema-screen .rank-panel::after,
+.cinema-shell .v6-final-sidebar::after{
+ background-image:var(--v72-premium-frame);
+ background-repeat:no-repeat;
+ background-size:100% 100%;
+ background-position:center;
+ border-color:transparent;
+ pointer-events:none!important;
+ opacity:.84;
+}
+/* The phone question has no preexisting ornamental overlay. */
+.cinema-player .player-question::after{
+ content:"";
+ position:absolute;
+ inset:2px;
+ z-index:2;
+ background-image:var(--v72-premium-frame);
+ background-repeat:no-repeat;
+ background-size:100% 100%;
+ pointer-events:none;
+ opacity:.68;
+}
+/* Gold legal crest is a faded watermark behind the result heading. */
+.cinema-shell .v6-final-heading{position:relative;isolation:isolate}
+.cinema-shell .v6-final-heading::before{
+ content:"";position:absolute;
+ top:0;right:clamp(8px,4vw,65px);
+ width:clamp(64px,7vw,128px);
+ aspect-ratio:1;
+ background:var(--v72-premium-seal) center/contain no-repeat;
+ opacity:.20;
+ pointer-events:none;
+ z-index:0;
+}
+.cinema-shell .v6-final-heading>*{position:relative;z-index:1}
+@media(max-width:760px){
+ .cinema-player .player-question::after{inset:2px;opacity:.56}
+ .cinema-shell .v6-final-heading::before{right:5px;top:5px;width:60px;opacity:.12}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-player .player-question::after,
+ .cinema-shell .v6-final-heading::before{transition:none;animation:none}
+}
+
+/* V7.2 visual QA adjustment: heavy corner artwork must never compete with
+   the text of legal questions, ranking scores or interactive answer rows. */
+.cinema-screen .projector-question-copy::after{
+ opacity:.20!important;
+}
+.cinema-screen .rank-panel::after,
+.cinema-shell .v6-final-sidebar::after{
+ opacity:.18!important;
+}
+.cinema-player .player-question::after{
+ opacity:.18;
+}
+@media(max-width:760px){
+ /* Full-height panel proportions distort the 16:9 engraving on phones.
+    Retain the premium question border, remove only its decorative overlay. */
+ .cinema-player .player-question::after{display:none}
+}
+
+/* V7.2.4: photorealistic foreground props as true transparent WebP layers.
+   Both derived from existing source photos, unlike flat UI screenshots. */
+.cinema-host .host-sidebar::after{
+ background-image:url('../../../assets/the-crimes-v72/props/justice-bronze-cutout.webp')!important;
+ background-position:center bottom!important;background-size:contain!important;
+ filter:drop-shadow(0 7px 20px rgba(231,169,83,.36))!important;
+ opacity:.94;
+}
+.cinema-host.v7-phase-waiting .v72-art-justice{display:none}
+.cinema-host .v72-art-justice{opacity:.72;filter:drop-shadow(0 8px 24px rgba(241,189,114,.3)) saturate(1.13) contrast(1.06)}
+.cinema-host .v6-roster-empty{
+ position:relative;isolation:isolate;overflow:hidden;
+}
+.cinema-host .v6-roster-empty::before{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:url('../../../assets/the-crimes-v72/props/evidence-lens-cutout.webp') center 70%/cover no-repeat;
+ opacity:.34;filter:contrast(1.13) saturate(.82);
+}
+.cinema-host .v6-roster-empty::after{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:linear-gradient(180deg,rgba(1,11,23,.55),rgba(1,11,23,.70));
+}
+.cinema-host .v6-roster-empty>*{position:relative;z-index:1}
+.cinema-screen .projector-waiting{position:relative;isolation:isolate}
+.cinema-screen .projector-waiting::after{
+ content:"";position:absolute;right:0;bottom:0;width:min(30vw,480px);height:min(33vh,280px);z-index:0;pointer-events:none;
+ background:url('../../../assets/the-crimes-v72/props/evidence-lens-cutout.webp') bottom right/contain no-repeat;
+ opacity:.28;
+}
+.cinema-screen .projector-waiting>*{position:relative;z-index:1}
+@media(max-width:760px), (pointer:coarse) and (max-width:1100px){
+ .cinema-host .v6-roster-empty::before{opacity:.12}
+ .cinema-screen .projector-waiting::after{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-host .host-sidebar::after,
+ .cinema-host .v6-roster-empty::before,
+ .cinema-screen .projector-waiting::after{animation:none;transition:none}
+}
+
+/* V7.2.5 — 720p projector safe composition: keep all four answers and Host
+   controls within the visible frame, rather than overflowing behind the footer.
+   Desktop cinema 1080p remains unchanged; preserve mobile stack styles. */
+@media (min-width:1101px) and (max-height:800px){
+ .cinema-screen .projector{height:100dvh;min-height:0!important;overflow:hidden;padding:0 16px 12px!important}
+ .cinema-screen .projector-header{height:78px!important;min-height:76px!important;grid-template-columns:minmax(245px,.67fr) minmax(0,1.63fr) auto!important;gap:11px!important;padding:3px 9px!important}
+ .cinema-screen .projector-header .brandmark{min-width:0;max-width:100%;gap:6px}
+ .cinema-screen .projector-header .brandmark .brand-detective{width:53px;height:61px;object-fit:contain;flex:none}
+ .cinema-screen .projector-header .brandmark strong{font-size:clamp(18px,1.8vw,26px)!important;letter-spacing:-.055em;white-space:nowrap}
+ .cinema-screen .projector-header .brandmark small{font-size:7px;letter-spacing:.02em}
+ .cinema-screen .projector-header .top-stats{min-width:0;gap:3px}
+ .cinema-screen .projector-main{flex:1 1 0;min-height:0!important;max-height:none!important;margin-top:7px!important;padding:5px 6px!important;gap:10px!important}
+ .cinema-screen .projector-stage{height:100%!important;min-height:0!important;overflow:hidden}
+ .cinema-screen .projector-question{height:100%!important;min-height:0!important;grid-template-columns:minmax(0,.80fr) minmax(0,1.47fr)!important;gap:9px!important}
+ .cinema-screen .projector-question>.scene-media{height:100%!important;min-height:0!important;max-height:none!important}
+ .cinema-screen .projector-question-copy{height:100%;min-height:0!important;padding:10px 11px!important;overflow:auto}
+ .cinema-screen .projector-question-copy h1{font-size:clamp(17px,1.5vw,22px)!important;line-height:1.14!important;margin:7px 0!important;max-width:none}
+ .cinema-screen .projector-question-copy .question-round{min-height:27px;margin-bottom:3px}
+ .cinema-screen .projector-question-copy .answer-rows{gap:5px!important;min-height:0}
+ .cinema-screen .projector-question-copy .answer-row{min-height:45px!important;max-height:72px!important;padding:5px 8px!important}
+ .cinema-screen .projector-question-copy .answer-row>span{font-size:clamp(12px,1.12vw,16px)!important;line-height:1.18}
+ .cinema-screen .projector-question-copy .answer-letter{font-size:21px!important}
+ .cinema-screen .projector-question-copy .projector-stats{margin-top:5px!important;min-height:25px}
+ .cinema-screen .projector-side{min-height:0;overflow:hidden}
+ .cinema-screen .projector-side .rank-panel{min-height:0;overflow:hidden}
+ .cinema-screen .projector-side .rank-entry{min-height:35px}
+ .cinema-screen .projector-footer{min-height:58px!important;margin-top:5px!important;padding:5px 9px!important;flex:none}
+ .cinema-screen .projector-footer .cinema-button{min-height:43px;font-size:12px}
+ .cinema-screen .round-rail{flex:none;min-height:34px}
+ .cinema-screen .projector-main:has(.v6-cinematic-final){display:block!important;overflow:auto;min-height:0!important}
+ .cinema-screen .projector-main:has(.v6-cinematic-final) .projector-stage{height:auto!important;min-height:0!important}
+ .cinema-screen .projector-final.v6-cinematic-final{min-height:0}
+ .cinema-screen .v6-final-board{min-height:0!important;height:auto;padding:7px 12px!important;gap:5px}
+ .cinema-screen .v6-final-heading h1{font-size:30px!important}
+ .cinema-screen .v6-final-grid{min-height:0;flex:0 0 auto}
+ .cinema-screen .v6-podium-stage{height:265px!important;min-height:265px!important;padding:7px 0 0}
+ .cinema-screen .v6-class-summary{min-height:49px}
+ .cinema-screen .v6-final-actions{min-height:47px}
+}
+
+/* V7.2.5 HD finale sizing: V7 fixed 350/390px cards must not extend
+   beyond the compact 265px stage at 720p. */
+@media(min-width:1101px) and (max-height:800px){
+ .cinema-screen .v6-podium-wrap{height:265px;min-height:0;overflow:hidden}
+ .cinema-screen .v6-finish-card{height:237px!important;min-height:0!important}
+ .cinema-screen .v6-finish-card.v6-finish-1{height:257px!important}
+ .cinema-screen .v6-finish-info{padding:7px 4px 8px!important;gap:3px!important}
+ .cinema-screen .v6-finish-info>strong{font-size:17px!important}
+ .cinema-screen .v6-finish-score{font-size:20px!important}
+ .cinema-screen .v6-finish-hits{font-size:10px!important;padding-top:4px}
+ .cinema-screen .v6-finish-info>small{font-size:9px!important}
+}
+
+/* V7.2.5 720p telemetry density — show all five ranking entries in one
+   projection frame without sacrificing the legal question or four answers. */
+@media(min-width:1101px) and (max-height:800px){
+ .cinema-screen .projector-side{gap:6px!important;display:flex!important}
+ .cinema-screen .projector-side .v7-telemetry{flex:0 0 auto;padding:7px 9px!important;margin:0!important}
+ .cinema-screen .projector-side .v7-telemetry h2{font-size:15px!important;margin:0 0 3px!important;line-height:1.1}
+ .cinema-screen .projector-side .v7-telemetry .game-clock{font-size:25px!important;padding:5px!important;min-height:33px}
+ .cinema-screen .projector-side .v7-telemetry p{margin:3px 0 0;font-size:9px}
+ .cinema-screen .projector-side .class-progress{flex:0 0 80px;min-height:0!important;height:80px;padding:5px 7px;gap:6px}
+ .cinema-screen .projector-side .progress-donut{width:58px;height:58px;min-width:58px;min-height:58px}
+ .cinema-screen .projector-side .class-progress h3{font-size:12px;margin:0}
+ .cinema-screen .projector-side .class-progress p{font-size:9px;line-height:1.25;margin:0}
+ .cinema-screen .projector-side .rank-panel{padding:6px!important;flex:1;min-height:0;overflow:hidden}
+ .cinema-screen .projector-side .rank-panel h2{font-size:14px!important;line-height:1.1;padding:5px!important;margin:0 0 4px}
+ .cinema-screen .projector-side .rank-entry{min-height:40px!important;height:40px;padding:2px 3px!important;grid-template-columns:23px 29px minmax(0,1fr) auto;gap:3px}
+ .cinema-screen .projector-side .rank-place{font-size:12px}
+ .cinema-screen .projector-side .rank-avatar{width:26px!important;height:28px!important}
+ .cinema-screen .projector-side .rank-person strong{font-size:11px!important}
+ .cinema-screen .projector-side .rank-person small{font-size:8px!important}
+ .cinema-screen .projector-side .rank-result strong{font-size:11px!important}
+ .cinema-screen .projector-side .rank-result small{font-size:8px!important}
+}
+
+/* V7.2.6: interactive mobile answer state faithful to the Premium concept.
+   Only active submit is red; disabled button retains clear non-interactive state. */
+.cinema-player .answer-row.interactive{
+ transition:border-color .18s ease,box-shadow .18s ease,background-color .18s ease,transform .18s ease;
+ touch-action:manipulation;
+}
+.cinema-player .answer-row.interactive:focus-visible{
+ outline:3px solid #b7f0ff;outline-offset:3px;
+}
+.cinema-player .answer-row.interactive.selected:not(.correct){
+ border:2px solid #4fe7ff!important;
+ background:linear-gradient(110deg,rgba(10,88,129,.98),rgba(5,27,53,.99))!important;
+ box-shadow:inset 0 0 0 2px #13364a,0 0 22px rgba(44,218,250,.44)!important;
+}
+.cinema-player .answer-row.interactive.selected .answer-letter{
+ background:linear-gradient(145deg,#075780,#08233b);
+ border-color:#8defff;
+ color:#fff;
+ box-shadow:0 0 14px rgba(71,221,255,.65);
+}
+.cinema-player .submit-answer:not(:disabled){
+ background-image:linear-gradient(115deg,#540714 0%,#a3132b 49%,#560614 100%)!important;
+ border:2px solid #f76d79!important;
+ color:#fff!important;
+ text-shadow:0 1px 7px #000b;
+ box-shadow:inset 0 2px 0 #ffafb4aa,inset 0 -3px 10px #25020bb0,0 0 0 3px #23030ad9,0 0 20px #fd314c95!important;
+ transition:filter .18s ease,box-shadow .18s ease;
+}
+.cinema-player .submit-answer:not(:disabled):focus-visible{
+ outline:3px solid #a6f8ff;outline-offset:5px;
+}
+.cinema-player .submit-answer:not(:disabled):active{filter:brightness(1.2)}
+.cinema-player .submit-answer:disabled{
+ opacity:.56;filter:saturate(.55);box-shadow:none!important;
+ cursor:not-allowed;
+}
+@media(max-width:760px){
+ .cinema-player .player-question .answer-row{min-height:68px;line-height:1.3}
+ .cinema-player .player-question .answer-row>span{font-size:clamp(14px,3.8vw,16px)}
+ .cinema-player .submit-answer{min-height:63px!important;border-radius:5px!important;letter-spacing:.035em}
+ .cinema-player .submit-answer:not(:disabled){box-shadow:inset 0 2px #ffc4ca77,0 0 19px #ed3c5b7d!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-player .answer-row.interactive,
+ .cinema-player .submit-answer:not(:disabled){transition:none!important}
+}
+
+/* V7.2.7 — premium selectable dossiers.
+   The portrait is a real image; badge/name/role remain selectable live DOM. */
+.cinema-join .persona-grid{align-items:stretch}
+.cinema-join .persona-tile{
+ position:relative;isolation:isolate;display:flex;flex-direction:column;
+ border:1px solid rgba(86,172,206,.7)!important;border-radius:5px!important;
+ padding:0 0 11px;background:linear-gradient(155deg,#092234,#040b16)!important;
+ box-shadow:inset 0 1px #c7edff1c,0 9px 21px #0009!important;
+ transition:transform .19s ease,border-color .19s ease,box-shadow .19s ease;
+ outline-offset:3px;
+}
+.cinema-join .persona-tile .persona-art{
+ position:relative;isolation:isolate;overflow:hidden;width:100%;aspect-ratio:4/4.6;
+ background:linear-gradient(160deg,#081927,#050a11);
+ border-bottom:1px solid #647f8e;
+}
+.cinema-join .persona-tile .persona-art img{
+ display:block;width:100%;height:100%;aspect-ratio:unset!important;
+ object-fit:cover;object-position:center 17%;
+ border:0!important;filter:saturate(.84) contrast(1.08);
+ transition:filter .19s ease,transform .3s ease;
+}
+.cinema-join .persona-tile .persona-art::after{
+ content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+ background:linear-gradient(180deg,rgba(5,9,18,.33),transparent 24%,transparent 47%,rgba(2,10,19,.91)),
+ linear-gradient(125deg,rgba(30,186,238,.07),transparent 55%,rgba(210,116,64,.09));
+}
+.cinema-join .persona-tile .persona-art-badge{
+ position:absolute;left:7px;top:8px;z-index:2;
+ display:flex;align-items:center;gap:3px;min-height:22px;padding:3px 7px;
+ font:800 9px/1.1 Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;
+ color:#d7e7ed;border:1px solid #4a879e;border-radius:3px;
+ background:linear-gradient(110deg,rgba(6,21,34,.97),rgba(4,10,19,.93));
+ text-shadow:0 1px 3px #000;box-shadow:0 3px 10px #0009;
+ width:max-content;max-width:calc(100% - 14px);
+}
+.cinema-join .persona-tile>strong{font-size:clamp(12px,1vw,16px);margin:10px 5px 2px;color:#f3f7f8}
+.cinema-join .persona-tile>span{font-size:10px;color:#a9c6d2;white-space:normal;overflow-wrap:anywhere}
+.cinema-join .persona-tile.selected{
+ border:2px solid #ffd27e!important;
+ background:linear-gradient(160deg,#3c2a1d,#080f19)!important;
+ box-shadow:0 0 0 2px #26170c,0 0 24px #f0ae4a65,inset 0 1px #ffda9b59!important;
+ transform:translateY(-2px);
+}
+.cinema-join .persona-tile.selected .persona-art img{filter:contrast(1.08) saturate(1.10)}
+.cinema-join .persona-tile.selected .persona-art-badge{
+ color:#1c1b16;border-color:#fff0bb;
+ background:linear-gradient(100deg,#f4cc79,#d99f50);
+ text-shadow:none;box-shadow:0 0 14px #d29a4d88;
+}
+.cinema-join .persona-tile:focus-visible{
+ outline:3px solid #7febff!important;outline-offset:4px;
+ box-shadow:0 0 0 6px rgba(33,164,211,.26),0 9px 21px #0009!important;
+}
+@media(hover:hover) and (pointer:fine){
+ .cinema-join .persona-tile:not(.selected):hover{
+  transform:translateY(-3px);border-color:#8de4ff!important;
+  box-shadow:0 0 19px rgba(51,181,218,.3),0 11px 24px #000a!important;
+ }
+ .cinema-join .persona-tile:hover .persona-art img{transform:scale(1.04)}
+}
+.cinema-join .persona-preview{
+ position:relative;isolation:isolate;overflow:hidden;
+ border:1px solid #c4a16a!important;border-radius:5px!important;
+ box-shadow:inset 0 0 0 2px #051424,inset 0 0 0 3px #8b6f48,0 12px 28px #0009!important;
+}
+.cinema-join .persona-preview::before{
+ content:"";position:absolute;left:8px;right:8px;top:8px;height:1px;
+ pointer-events:none;background:linear-gradient(90deg,transparent,#f8d89e,transparent);
+ opacity:.7;
+}
+.cinema-join .persona-preview>img{
+ border:1px solid #bc9b61!important;border-radius:3px!important;
+ box-shadow:0 0 0 3px #051522,0 0 25px rgba(216,172,104,.24),0 12px 23px #000b!important;
+}
+.cinema-join .persona-preview>span{font-size:11px;letter-spacing:.18em;color:#f4c681}
+@media(max-width:760px){
+ .cinema-join .persona-grid{gap:9px}
+ .cinema-join .persona-tile{min-height:0}
+ .cinema-join .persona-tile .persona-art-badge{font-size:8px;min-height:20px;left:5px;top:5px;padding:3px 5px}
+ .cinema-join .persona-tile.selected{transform:none}
+ .cinema-join .persona-preview{padding:15px}
+ .cinema-join .persona-preview>img{height:clamp(210px,57vw,295px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-join .persona-tile,
+ .cinema-join .persona-art img{transition:none!important;animation:none!important}
+ .cinema-join .persona-tile.selected,
+ .cinema-join .persona-tile:hover{transform:none!important}
+}
+
+/* GOLDEN MASTERS 2026-11-15 — GM-01, GM-02, GM-03 and GM-04.
+   Reference specs: docs/THE_CRIMES_V72_GOLDEN_MASTERS_2026-11-15.md
+   The photographic layers are decorative. No room code, QR, answers, names,
+   score or timer are baked into assets. All buttons remain interactive. */
+
+/* GM-02 — monumental Lady Justice on the left of the dynamic 2-1-3 podium. */
+.cinema-shell .v72-gm-finale{position:relative;isolation:isolate}
+.cinema-shell .v72-gm-justice{display:none;position:absolute;z-index:0;left:-36px;bottom:8%;width:auto;max-width:23%;height:clamp(260px,26vw,460px);object-fit:contain;object-position:bottom left;opacity:.77;pointer-events:none;user-select:none;filter:drop-shadow(4px 5px 15px #08070ee0) drop-shadow(0 0 22px #d79a4a77);mask-image:linear-gradient(90deg,#000 68%,transparent 100%)}
+.cinema-shell .v72-gm-finale :is(.v6-final-heading,.v6-final-grid,.v6-class-summary,.v6-final-actions){position:relative;z-index:1}
+.cinema-shell .v72-gm-finale .v6-finish-medal{border:1px solid rgba(255,218,136,.83);background:radial-gradient(circle at 35% 24%,#ffedbf,#a56e26 65%,#33210a);box-shadow:inset 0 1px #fff9,0 0 19px rgba(241,183,80,.59)}
+.cinema-shell .v72-gm-finale .v6-finish-card.v6-finish-2 .v6-finish-medal{background:radial-gradient(circle at 35% 24%,#f3faff,#657f98 65%,#1d2e43)}
+.cinema-shell .v72-gm-finale .v6-finish-card.v6-finish-3 .v6-finish-medal{background:radial-gradient(circle at 35% 24%,#ffe0bf,#a35b32 65%,#352018)}
+.cinema-shell .v72-gm-finale .v6-finish-info{backdrop-filter:blur(8px);background:linear-gradient(180deg,rgba(6,12,23,.12),rgba(4,12,23,.94) 24%,rgba(4,10,20,.98))}
+.cinema-shell .v72-gm-finale .v6-finish-score{color:#ffdc96;text-shadow:0 0 12px #e9a74850}
+.cinema-shell .v72-gm-finale .v6-final-ranking{overflow-y:auto;min-height:0;scrollbar-color:#af8f58 #091523}
+@media(min-width:1500px) and (min-height:840px){
+ .cinema-shell .v72-gm-justice{display:block}
+ .cinema-shell .v72-gm-finale .v6-final-grid{padding-left:clamp(165px,13.8vw,262px);gap:clamp(10px,1.1vw,22px)}
+ .cinema-shell .v72-gm-finale .v6-final-heading h1{letter-spacing:.055em;text-shadow:0 0 26px #df9f4e55}
+ .cinema-shell .v72-gm-finale .v6-finish-card.v6-finish-1{box-shadow:0 0 0 2px #eabb6e,0 0 44px #db9b3a55,0 20px 38px #000e!important}
+}
+@media(max-width:1499px),(max-height:839px){
+ .cinema-shell .v72-gm-finale .v6-final-grid{padding-left:0}
+}
+/* GM-01 — use the entire 16:9 projector: central case and question, TOP 5
+   on the right, and a separate live-data ribbon below the stage. */
+.cinema-screen .v72-gm-screen-telemetry{display:none}
+@media(min-width:1500px) and (min-height:850px){
+ .cinema-screen .projector-side>.v7-telemetry,
+ .cinema-screen .projector-side>.class-progress{display:none!important}
+ .cinema-screen .projector-side>.rank-panel{flex:1;min-height:0;overflow:auto;padding:12px!important;border-color:#a58a56!important}
+ .cinema-screen .projector-side .rank-entry{min-height:clamp(62px,6.7vh,90px);padding:10px 6px!important}
+ .cinema-screen .projector-question-copy{border-color:#b17b66!important}
+ .cinema-screen .projector-question-copy h1{font-size:clamp(25px,1.9vw,37px)!important;line-height:1.18;text-align:left;margin:17px 0 22px}
+ .cinema-screen .projector-question-copy .answer-row{border:1px solid #567b9c!important;border-radius:5px!important;box-shadow:inset 0 1px #d6f5ff17,0 4px 14px #000b!important}
+ .cinema-screen .v72-gm-screen-telemetry{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;align-items:center;flex:none;min-height:73px;margin:7px 12px 0;border:1px solid #677b82;border-radius:3px;background:linear-gradient(95deg,#071423f1,#091728f7);box-shadow:inset 0 2px #b3cfe51a,0 6px 20px #0009}
+ .cinema-screen .v72-gm-screen-telemetry>div{display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 14px;min-width:0}
+ .cinema-screen .v72-gm-screen-telemetry>div+div{border-left:1px solid #385167}
+ .cinema-screen .v72-gm-screen-telemetry svg{flex:none;color:#dcb783}
+ .cinema-screen .v72-gm-screen-telemetry span{font-size:clamp(11px,.88vw,16px);font-weight:800;color:#d1dce7;white-space:nowrap}
+ .cinema-screen .v72-gm-screen-telemetry strong{font:900 clamp(23px,2.1vw,38px)/1.1 "Bahnschrift SemiCondensed",system-ui;color:#4af2ac;white-space:nowrap}
+ .cinema-screen .v72-gm-telemetry-clock .game-clock{font:900 clamp(24px,2.2vw,39px)/1.1 "Bahnschrift SemiCondensed",system-ui;color:#fff2ed;text-shadow:0 0 13px #da3d5a9b}
+ .cinema-screen .v72-gm-telemetry-status strong{font-size:clamp(17px,1.25vw,25px);color:#e0a65b}
+ .cinema-screen .projector-footer .cinema-button{min-height:62px;font-size:clamp(15px,1vw,20px);font-weight:900}
+}
+/* GM-03 — the Host's actions are prominent, illuminated and readable. */
+@media(min-width:1300px) and (min-height:800px){
+ .cinema-host.v7-phase-running .host-dock,
+ .cinema-host.v7-phase-paused .host-dock{gap:12px!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock>.cinema-button{min-height:66px!important;min-width:0;font-weight:900;font-size:clamp(13px,1.07vw,19px);box-shadow:inset 0 0 0 2px #010915,0 0 20px #4ad7f122,0 10px 20px #000b!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock>.cinema-button.cyan{border-color:#5cdaef;box-shadow:inset 0 0 0 2px #052439,0 0 22px #00baff78,0 10px 20px #000b!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock>.cinema-button.gold{border-color:#f5c56d;box-shadow:inset 0 0 0 2px #382309,0 0 22px #ffc14682,0 10px 20px #000b!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock>.cinema-button.danger{border-color:#f56980;box-shadow:inset 0 0 0 2px #32050c,0 0 22px #e32c537b,0 10px 20px #000b!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .round-bar{border-bottom:2px solid #4cc8e9}
+}
+/* GM-04 — game header as a cinematic composition with the LIVE marque and
+   dark hero art, while keeping the live connection badge above decoration. */
+@media(max-width:760px){
+ .cinema-player .player-header,.cinema-join .player-header{position:relative;isolation:isolate;overflow:hidden;min-height:91px!important;align-items:center;border-bottom:1px solid #be8742!important;padding:9px 13px!important}
+ .cinema-player .player-header::before,.cinema-join .player-header::before{content:"";position:absolute;z-index:-1;inset:-26px -15px -18px auto;width:150px;background:url('../../../assets/the-crimes-v7/props/detective.webp') center 36%/contain no-repeat;opacity:.42;filter:contrast(1.24) saturate(.7);pointer-events:none;mask-image:linear-gradient(90deg,transparent,#000 40%)}
+ .cinema-player .player-header .brandmark,.cinema-join .player-header .brandmark{min-width:0;position:relative;z-index:1}
+ .cinema-player .player-header .brandmark strong,.cinema-join .player-header .brandmark strong{font-size:clamp(19px,5.3vw,24px)!important;line-height:1;letter-spacing:-.035em}
+ .cinema-player .player-header .brandmark small,.cinema-join .player-header .brandmark small{letter-spacing:.06em;font-size:7px}
+ .cinema-player .player-header .live-state,.cinema-join .player-header .live-state{position:relative;z-index:1;max-width:33%;font-size:9px;white-space:normal}
+ .cinema-player .player-identity{border:1px solid #9fb5c6!important;border-top-color:#e5b266!important;box-shadow:inset 0 1px #fff4,0 0 24px #e7a84d20,0 10px 26px #0009!important}
+ .cinema-player .mobile-round-label{border-bottom:1px solid #52748b;font-weight:900}
+ .cinema-player .scene-media{border-color:#c79d5e!important}
+ .cinema-player .player-question h1{border-left:3px solid #f0bf77!important;background:linear-gradient(115deg,rgba(6,19,33,.95),rgba(3,9,21,.96))!important;font-size:clamp(19px,4.8vw,24px)!important}
+ .cinema-player .answer-row.interactive{border-radius:7px!important}
+ .cinema-player .submit-answer:not(:disabled){font-size:clamp(16px,4.2vw,21px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-shell .v72-gm-finale .v6-finish-card{transition:none!important}
+}
+
+/* GM-01 finishing pass: the wide projector already has a separate bottom
+   telemetry ribbon, so the old in-question status must not duplicate data or
+   overlap the fourth legal alternative. Compact question text without clipping. */
+@media(min-width:1500px) and (min-height:850px){
+ .cinema-screen .projector-question-copy .projector-stats{display:none!important}
+ .cinema-screen .projector-question-copy h1{font-size:clamp(25px,1.63vw,32px)!important;line-height:1.16;margin:12px 0 16px}
+ .cinema-screen .projector-question-copy .answer-rows{flex:1 1 auto;gap:9px;min-height:0}
+ .cinema-screen .projector-question-copy .answer-row{min-height:62px;max-height:92px;padding:8px 12px;flex:1 1 0}
+ .cinema-screen .projector-question-copy .answer-row>span{font-size:clamp(17px,1.1vw,22px)!important;line-height:1.25}
+}
+
+/* GM-02 duplicate-figure control: when the photographic stage already has
+   a faded Justice embedded in the background, mask that corner before
+   showing the standalone transparent art as the single foreground hero. */
+@media(min-width:1500px) and (min-height:840px){
+ .cinema-shell .v72-gm-finale::before{content:"";position:absolute;z-index:0;left:0;top:0;bottom:0;width:clamp(180px,16vw,320px);background:linear-gradient(90deg,rgba(2,8,19,.99) 8%,rgba(2,8,19,.92) 53%,rgba(2,8,19,0));pointer-events:none}
+ .cinema-shell .v72-gm-finale .v72-gm-justice{z-index:1;opacity:.92}
+ .cinema-shell .v72-gm-finale :is(.v6-final-heading,.v6-final-grid,.v6-class-summary,.v6-final-actions){z-index:2}
+}
+
+/* GM-02 v7.2.9: theatrical podium composition (large-screen only).
+   All player portraits/names/points remain actual DOM from the live session. */
+@media (min-width:1500px) and (min-height:850px){
+  /* The Golden Master ends with the podium, not a duplicate progress rail. */
+  .cinema-screen.v7-phase-finished .round-rail{display:none!important}
+  .cinema-screen.v7-phase-finished .projector-main{margin-bottom:5px!important}
+  .cinema-screen .v72-gm-finale{gap:5px!important;padding:8px 13px 10px!important}
+  .cinema-screen .v72-gm-finale .v6-final-heading h1{font-size:clamp(39px,2.7vw,54px);margin:2px 0}
+  .cinema-screen .v72-gm-finale .v6-final-heading p{font-size:14px;margin:0}
+  .cinema-screen .v72-gm-finale .v6-final-grid{flex:1 1 0;min-height:0;grid-template-columns:minmax(0,1.89fr) minmax(335px,.69fr)}
+  .cinema-screen .v72-gm-finale .v6-podium-wrap{min-height:0;padding-bottom:2px}
+  .cinema-screen .v72-gm-finale .v6-podium-stage{height:100%;min-height:0;gap:14px;padding:0!important}
+  .cinema-screen .v72-gm-finale .v6-finish-card{height:91%;width:100%;min-width:0;max-width:none}
+  .cinema-screen .v72-gm-finale .v6-finish-card.v6-finish-1{height:100%}
+  .cinema-screen .v72-gm-finale .v6-finish-art{inset:0 0 19%;mask-image:linear-gradient(180deg,#000 72%,transparent 100%)}
+  .cinema-screen .v72-gm-finale .v6-character-face.hero img{object-position:50% 14%;filter:contrast(1.10) saturate(1.05)}
+  .cinema-screen .v72-gm-finale .v6-finish-medal{top:49%;height:70px;width:70px}
+  .cinema-screen .v72-gm-finale .v6-finish-info{padding:27px 7px 12px!important;gap:5px;min-height:34%}
+  .cinema-screen .v72-gm-finale .v6-finish-info>strong{font-size:clamp(22px,1.6vw,30px)!important}
+  .cinema-screen .v72-gm-finale .v6-finish-score{font-size:clamp(32px,2.2vw,43px)}
+  .cinema-screen .v72-gm-finale .v6-finish-hits{font-size:clamp(13px,.95vw,17px)}
+  .cinema-screen .v72-gm-finale .v6-final-sidebar h2{padding:10px 13px}
+  .cinema-screen .v72-gm-finale .v6-final-ranking{padding:4px}
+  .cinema-screen .v72-gm-finale .v6-final-rank-row{min-height:46px;margin-bottom:3px;padding:3px 6px}
+  .cinema-screen .v72-gm-finale .v6-class-summary{min-height:67px!important}
+  .cinema-screen .v72-gm-finale .v6-final-actions{min-height:54px!important}
+  .cinema-screen .v72-gm-finale .v72-gm-justice{height:min(550px,65vh);max-width:26%;left:-22px;bottom:12%;opacity:.93}
+  .cinema-screen .v72-gm-finale .v6-final-grid{padding-left:clamp(145px,12vw,225px)}
+}
+/* GM-04 v7.2.9: keep the real, enabled Responder action visible at the
+   bottom of the viewport without hiding option D or the confirmation text. */
+@media(max-width:760px){
+  .cinema-player .gameplay{padding:9px 10px calc(100px + env(safe-area-inset-bottom))!important}
+  .cinema-player .gameplay .player-identity{min-height:75px;padding:9px!important}
+  .cinema-player .gameplay .mobile-round-label{padding:8px 0!important;margin:7px 0!important}
+  .cinema-player .gameplay .mobile-round-label .round-rail{margin-top:4px;padding:5px!important}
+  .cinema-player .gameplay>.scene-media{margin-bottom:10px!important}
+  .cinema-player .player-question h1{margin:10px 0!important;line-height:1.19!important}
+  .cinema-player .player-question .answer-rows{gap:8px}
+  .cinema-player .player-question .answer-row{min-height:62px!important;padding:7px!important}
+  .cinema-player .submit-answer.v62-submit-answer{
+    position:fixed!important;
+    left:50%;bottom:calc(9px + env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    z-index:80!important;
+    margin:0!important;
+    width:calc(100vw - 24px);max-width:530px;
+    min-height:59px!important;
+    border:2px solid #f1a0a8!important;
+    background:linear-gradient(105deg,#430814f7,#9d122bea 46%,#400a15fa)!important;
+    box-shadow:0 0 0 5px #030d19e6,0 0 22px #ed45676b,0 12px 22px #000d!important;
+    backdrop-filter:blur(10px);
+  }
+  .cinema-player .submit-answer.v62-submit-answer:disabled{
+    background:linear-gradient(105deg,#1e1821ef,#3c2730ec 46%,#1c1822f6)!important;
+    border-color:#785f63!important;
+    opacity:.82!important;
+  }
+  .cinema-player .player-metrics{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;margin:12px 0!important}
+  .cinema-player .player-metrics>span:last-child{grid-column:auto!important}
+  .cinema-player .player-metrics>span{padding:9px 4px!important}
+  .cinema-player .player-metrics strong{font-size:clamp(10px,2.6vw,13px)!important;overflow-wrap:anywhere}
+  .cinema-player .answered-notice{min-height:60px}
+}
+
+/* V7.2.9 final screen fills the space above the fullscreen footer.
+   Earlier 690px min-height left an unused dark strip on 1080p projectors. */
+@media(min-width:1500px) and (min-height:850px){
+ .cinema-screen.v7-phase-finished .projector-main:has(.v6-cinematic-final){display:flex!important;flex-direction:column;flex:1 1 0;min-height:0;overflow:hidden!important}
+ .cinema-screen.v7-phase-finished .projector-stage:has(.v6-cinematic-final){flex:1 1 0;height:100%!important;min-height:0!important;overflow:hidden}
+ .cinema-screen.v7-phase-finished .projector-final.v6-cinematic-final{height:100%!important;min-height:0!important}
+ .cinema-screen.v7-phase-finished .v72-gm-finale{height:100%!important;min-height:0!important}
+}
+
+/* GM-04 cinema typography: the Golden Master uses strong sans-serif text in
+   the legal question, not editorial serif display lettering. Only the mobile
+   player view changes; labels/answers remain accessible DOM. */
+@media(max-width:760px){
+ .cinema-player .player-question h1{
+  font-family:"Bahnschrift SemiCondensed","Arial Narrow","Segoe UI",Arial,sans-serif!important;
+  font-weight:900!important;letter-spacing:-.025em!important;
+  font-size:clamp(20px,5.25vw,26px)!important;line-height:1.20!important;
+  color:#f6f7fa!important;
+  text-shadow:0 1px 9px #000d;
+ }
+ .cinema-player .player-question .answer-row>span{
+  font-family:"Segoe UI",Arial,sans-serif;
+  font-weight:740;line-height:1.28!important;
+ }
+ .cinema-player .submit-answer.v62-submit-answer:not(:disabled){
+  background-image:linear-gradient(105deg,#430814f7,#9d122bea 46%,#400a15fa)!important;
+  background-color:#851024!important;
+  text-shadow:0 1px 8px #ff6e88b8;
+ }
+ .cinema-player .submit-answer.v62-submit-answer:focus-visible{
+  outline:3px solid #9eefff!important;outline-offset:5px!important;
+ }
+}
+/* GM-02 podium spotlight: foreground bronze, never obscure player names. */
+@media(min-width:1500px) and (min-height:850px){
+ .cinema-screen .v72-gm-finale .v72-gm-justice{
+  opacity:1!important;filter:drop-shadow(3px 6px 12px #02050cd9)
+    drop-shadow(0 0 25px #d99c536e) saturate(1.12) contrast(1.09)!important;
+ }
+}
+
+/* V7.2 GM-02 — real replay/reset actions in the cinematic finale.
+   Both are HTML controls; replay resets and starts while Lobby resets only. */
+.cinema-shell .v72-gm-finale .v6-final-actions{display:flex;justify-content:center;align-items:center;gap:clamp(8px,1.25vw,22px);min-height:62px}
+.cinema-shell .v72-gm-finale .v6-final-actions>.cinema-button{flex:0 1 370px;min-width:0;min-height:56px;font-size:clamp(13px,1.3vw,22px);font-weight:900;letter-spacing:.025em}
+.cinema-shell .v72-gm-finale .v6-final-actions>.v72-replay-action{background:linear-gradient(110deg,#81541d,#e6aa4c 45%,#81541d)!important;color:#180e09!important;border:1px solid #ffe3a0!important;box-shadow:inset 0 0 0 2px #4b310c,0 0 25px #e6aa4c75,0 8px 19px #000a!important}
+.cinema-shell .v72-gm-finale .v6-final-actions>.v72-lobby-action{background:linear-gradient(110deg,#0c1c2b,#254056 48%,#07131f)!important;border:1px solid #b2cfe5!important;box-shadow:inset 0 0 0 2px #08101c,0 0 19px #56bfe455,0 8px 19px #000a!important}
+.cinema-shell .v72-gm-finale .v6-final-actions>.cinema-button:disabled{filter:saturate(.38);opacity:.65;cursor:not-allowed}
+@media(max-width:760px){
+ .cinema-shell .v72-gm-finale .v6-final-actions{flex-direction:column;gap:9px}
+ .cinema-shell .v72-gm-finale .v6-final-actions>.cinema-button{flex:none;width:100%;min-height:50px;font-size:15px}
+}
+@media(min-width:1101px) and (max-height:800px){
+ .cinema-screen .v72-gm-finale .v6-final-actions{min-height:47px}
+ .cinema-screen .v72-gm-finale .v6-final-actions>.cinema-button{min-height:43px;font-size:14px}
+}
+/* GM-03 — integrated detective console; keep navigation visible on widescreen.
+   Premium overlays must never intercept clicks or cover QR/answers. */
+@media(min-width:1370px) and (min-height:800px){
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-body{display:grid;grid-template-columns:clamp(165px,12.5vw,218px) minmax(0,1fr);column-gap:14px}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-sidebar{display:flex!important;flex-direction:column;gap:8px;border:1px solid #6b8ba1!important;background:linear-gradient(145deg,#081827ec,#05101fcf)!important;box-shadow:inset 0 1px #d0ecff25,0 12px 30px #0008!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-sidebar .sidebar-label{color:#e4bf81;letter-spacing:.09em}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-sidebar button{border-radius:3px!important;min-height:46px;background:linear-gradient(105deg,#0a1e2e,#081323)}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-sidebar button.nav-current{border-color:#e35161;background:linear-gradient(105deg,#79101f,#3a101d);box-shadow:0 0 19px #e13b5061}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-main{min-width:0}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .live-layout{grid-template-columns:minmax(0,2.48fr) minmax(262px,1fr);gap:12px}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question{grid-template-columns:minmax(0,.91fr) minmax(0,1.12fr);gap:12px}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-question>.scene-media{border-color:#e0b470!important;box-shadow:0 0 0 3px #06101e,0 0 25px #d9a95d40!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .question-copy{background:linear-gradient(120deg,#0b182af5,#061324f2)!important;border-color:#a58b6b!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .question-copy h1{font-family:"Bahnschrift SemiCondensed","Segoe UI",system-ui,sans-serif;font-weight:850;text-align:left;font-size:clamp(20px,1.6vw,31px)}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .rank-panel{border-color:#b89a68!important}
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .host-dock>.cinema-button{flex:1 1 0;min-width:0}
+}
+/* Premium metal corners are separate transparent artwork, not a flattened UI. */
+@media(min-width:900px){
+ .cinema-host .question-copy::before,.cinema-screen .projector-question-copy::before{
+  content:"";position:absolute;inset:1px;z-index:0;pointer-events:none;opacity:.37;
+  background:url('../../../assets/the-crimes-v72/overlays/premium-frame-gold-cyan.svg') center/100% 100% no-repeat;
+ }
+ .cinema-host .question-copy>*,
+ .cinema-screen .projector-question-copy>*{position:relative;z-index:1}
+}
+
+/* GM-01/03 typography correction: reference uses bold condensed sans for
+   question headlines, not a traditional legal serif. Preserve live text. */
+@media(min-width:1370px){
+ .cinema-host:is(.v7-phase-running,.v7-phase-paused) .question-copy h1{
+  font-family:"Arial Narrow","Bahnschrift SemiCondensed","Segoe UI",Arial,sans-serif!important;
+  font-weight:900!important;font-size:clamp(21px,1.55vw,30px)!important;
+  line-height:1.18!important;letter-spacing:-.02em;text-align:left!important;
+ }
+ .cinema-screen .projector-question-copy h1{
+  font-family:"Arial Narrow","Bahnschrift SemiCondensed","Segoe UI",Arial,sans-serif!important;
+  font-weight:900!important;letter-spacing:-.02em;text-align:left!important;
+ }
+}

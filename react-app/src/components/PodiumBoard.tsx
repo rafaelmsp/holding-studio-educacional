@@ -4,7 +4,7 @@ import type {PublicPlayer,PublicRoom} from '../services/types';
 import {avatar,characterPortrait,profileName} from '../services/catalog';
 import {answeredAttempts} from '../services/score';
 
-type Props={players:PublicPlayer[];room:PublicRoom;avatars?:Record<string,string>;onRestart?:()=>void;restarting?:boolean};
+type Props={players:PublicPlayer[];room:PublicRoom;avatars?:Record<string,string>;onRestart?:()=>void;onReplay?:()=>void;restarting?:boolean};
 const points=(n:number)=>new Intl.NumberFormat('pt-BR').format(n);
 const answered=(p:PublicPlayer)=>answeredAttempts(p.counters);
 const hits=(p:PublicPlayer)=>Number(p.counters?.correct||0);
@@ -31,10 +31,11 @@ function FinishCard({player,rank,avatars}:{player:PublicPlayer|null;rank:number;
   </div>
  </motion.article>;
 }
-export default function PodiumBoard({players,room,avatars={},onRestart,restarting=false}:Props){
+export default function PodiumBoard({players,room,avatars={},onRestart,onReplay,restarting=false}:Props){
  const ordered=[...players].sort((a,b)=>a.rank!=null&&b.rank!=null&&a.rank!==b.rank?Number(a.rank)-Number(b.rank):Number(b.score||0)-Number(a.score||0)||a.nickname.localeCompare(b.nickname,'pt-BR'));
  const total=ordered.reduce((s,p)=>s+answered(p),0),correct=ordered.reduce((s,p)=>s+hits(p),0),pct=total?Math.round(correct/total*100):null;
- return <div className="v6-final-board">
+ return <div className="v6-final-board v72-gm-finale">
+  <img className="v72-gm-justice" src="../assets/the-crimes-v72/props/justice-bronze-cutout.webp" alt="" aria-hidden="true" draggable={false}/>
   <div className="v62-award-sparks" aria-hidden="true">{Array.from({length:18},(_,i)=><i key={i} style={{left:((i*23+7)%96)+'%',animationDelay:(-(i%9)*.43)+'s',animationDuration:(4.2+(i%5)*.6)+'s'}}/>)}</div>
   <div className="v6-final-heading"><span className="v6-eyebrow"><Scale size={16}/> INVESTIGAÇÃO CONCLUÍDA</span><h1>RANKING <em>FINAL</em></h1><p>{room.case_title} • Sala {room.code}</p></div>
   <div className="v6-final-grid">
@@ -57,8 +58,10 @@ export default function PodiumBoard({players,room,avatars={},onRestart,restartin
    <div><ShieldCheck size={18}/><span>OCULTAÇÕES</span><b>{room.ocultou_bens_count??'—'}</b></div>
    <div><Target size={18}/><span>DESCOBERTAS</span><b>{room.ocultacao_descoberta_count??'—'}</b></div>
   </div>
-  <div className="v6-final-actions">{onRestart?<button type="button" className="cinema-button gold v6-restart" onClick={onRestart} disabled={restarting}>
-   <RotateCcw size={20}/> VOLTAR AO LOBBY
-  </button>:<p className="v6-wait-host">Aguarde o professor para iniciar uma nova partida.</p>}</div>
+  <div className="v6-final-actions" aria-label="Ações após a partida">{onReplay?<button type="button" className="cinema-button gold v6-restart v72-replay-action" onClick={onReplay} disabled={restarting} aria-label="Jogar novamente nesta sala e iniciar a primeira rodada">
+   <RotateCcw size={20}/> JOGAR NOVAMENTE
+  </button>:null}{onRestart?<button type="button" className="cinema-button secondary v72-lobby-action" onClick={onRestart} disabled={restarting} aria-label="Voltar ao lobby aguardando jogadores">
+   <Users size={20}/> VOLTAR AO LOBBY
+  </button>:null}{!onRestart&&!onReplay?<p className="v6-wait-host">Aguarde o professor para iniciar uma nova partida.</p>:null}</div>
  </div>;
 }

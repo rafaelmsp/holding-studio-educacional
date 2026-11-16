@@ -5,7 +5,7 @@
 .v7-mobile-nav button{min-height:48px;border:1px solid #386078;background:#102638;color:#f5f7fc;font:600 16px 'Segoe UI',sans-serif;display:flex;align-items:center;gap:12px;padding:12px;border-radius:5px}
 .v7-mobile-nav>button{width:100%;margin-bottom:12px;text-align:left}
 .v7-mobile-nav button:focus-visible,.v7-nav-toggle:focus-visible,.v7-share-link:focus-visible{outline:3px solid #43d9ff;outline-offset:3px}
-@media(max-width:760px){
+@media(max-width:760px), (pointer:coarse) and (max-width:1100px){
  .cinema-host .game-header{display:flex;flex-wrap:wrap;gap:10px;padding:12px;min-height:0}
  .v7-nav-toggle{display:grid;place-items:center;flex:0 0 48px;width:48px;height:48px;color:#43d9ff;background:#0a1b2c;border:1px solid #3f728a;border-radius:6px}
  .cinema-host .game-header .brandmark{flex:1;min-width:0}

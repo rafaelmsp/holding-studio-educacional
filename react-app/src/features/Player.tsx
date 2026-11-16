@@ -1,5 +1,5 @@
 import {useEffect,useState} from 'react';
-import {motion} from 'framer-motion';
+import {motion,useReducedMotion} from 'framer-motion';
 import {QRCodeSVG} from 'qrcode.react';
 import {ShieldCheck,Clock3,Crown,CheckCircle2,LogIn,LockKeyhole,AlertTriangle} from 'lucide-react';
 import {CinematicShell,Brand,LiveStatus,Countdown,RoundRail,AnswerRows,SceneMedia,ErrorLine} from '../components/Chrome';
@@ -13,6 +13,7 @@ import {exposureLabel,currentRound,roundKey,requestId} from '../services/types';
 import type {Session} from '../services/types';
 
 export default function Player(){
+ const reducedMotion=useReducedMotion();
  const code=useGame(s=>s.code),publicRoom=useGame(s=>s.room),players=useGame(s=>s.players);
  const snapshot=useGame(s=>s.player),busy=useGame(s=>s.busy),setBusy=useGame(s=>s.setBusy);
  const error=useGame(s=>s.error),setError=useGame(s=>s.setError);
@@ -72,12 +73,12 @@ export default function Player(){
          <h2><b>02</b> FILTRO DE PERSONAGENS</h2><div className="gender-filter">{(['masculino','feminino','neutro'] as const).map(g=><button type="button" className={gender===g?'active':''} onClick={()=>chooseGender(g)} key={g}>{g[0].toUpperCase()+g.slice(1)}</button>)}</div>
          <p className="join-help">O filtro visual não modifica suas respostas ou pontuação.</p>
          <h2><b>03</b> ESCOLHA SEU PERSONAGEM</h2><div className="persona-grid">{options.map(p=><button key={p.id} className={'persona-tile '+(persona===p.id?'selected':'')} aria-pressed={persona===p.id} type="button" onClick={()=>setPersona(p.id)}>
-           <img src={avatar(p.id)} alt=""/><strong>{p.name}</strong><span>{p.role}</span>
+           <div className="persona-art"><img src={avatar(p.id)} alt="" loading="lazy"/><span className="persona-art-badge" aria-hidden="true">{persona===p.id?<><CheckCircle2 size={12}/> SELECIONADO</>:'DOSSIÊ'}</span></div><strong>{p.name}</strong><span>{p.role}</span>
          </button>)}</div>
        </section>
        <aside className="persona-preview">
-         <span>PERFIL ESCOLHIDO</span><motion.img key={persona} src={avatar(profile.id)} alt={'Personagem '+profile.name} initial={{opacity:.7,x:6}} animate={{opacity:1,x:0}} transition={{duration:.2}}/>
-         <h2>{profile.name}</h2><p>{profile.description}</p><div className="persona-facts"><div><small>CLASSE</small><strong>{profile.role}</strong></div><div><small>ESTILO</small><strong>{profile.style}</strong></div><div><small>NÍVEL INICIAL</small><strong>01</strong></div></div>
+         <span>PERFIL ESCOLHIDO</span><motion.img key={persona} src={avatar(profile.id)} alt={'Personagem '+profile.name} initial={reducedMotion?false:{opacity:.7,x:6}} animate={{opacity:1,x:0}} transition={{duration:reducedMotion?0:.2}}/>
+         <h2 aria-live="polite">{profile.name}</h2><p>{profile.description}</p><div className="persona-facts"><div><small>CLASSE</small><strong>{profile.role}</strong></div><div><small>ESTILO</small><strong>{profile.style}</strong></div><div><small>NÍVEL INICIAL</small><strong>01</strong></div></div>
        </aside>
      </div>
      <footer className="join-footer"><div><strong><ShieldCheck size={19}/> COMO FUNCIONA</strong><p>O Host controla as rodadas. Responda no celular e acompanhe a revelação no telão.</p></div><button className="cinema-button danger join-cta" type="button" disabled={busy} onClick={join}><LogIn size={21}/> {busy?'CONECTANDO...':'ENTRAR NA PARTIDA'}</button></footer>

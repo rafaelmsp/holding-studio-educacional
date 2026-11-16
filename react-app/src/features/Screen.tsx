@@ -1,8 +1,9 @@
 import RoundTelemetry from '../components/RoundTelemetry';
 import PodiumBoard from '../components/PodiumBoard';
+import {replayFinishedRoom} from '../services/replay';
 import {useEffect,useMemo,useState} from 'react';
 import {QRCodeSVG} from 'qrcode.react';
-import {Fullscreen,Eye,ChevronsRight,MonitorUp,Users,Crown,Play} from 'lucide-react';
+import {Fullscreen,Eye,ChevronsRight,MonitorUp,Users,Crown,Play,Clock3,ShieldCheck} from 'lucide-react';
 import {motion,AnimatePresence} from 'framer-motion';
 import {CinematicShell,Brand,LiveStatus,Countdown,ChapterCue,RoundRail,AnswerRows,SceneMedia,RankList,ClassProgress,TopStats,RoomBadge,ErrorLine} from '../components/Chrome';
 import {useGame,adminStorage} from '../services/store';
@@ -39,7 +40,7 @@ export default function Screen(){
   const final=room.current_round>=8&&kind==='next';
   const actual=final?'finish':kind;
   const missing=Math.max(0,room.players_total-room.responded);
-  if((actual==='next'&&(!room.revealed||missing>0)&&!confirm(missing>0?'Há '+missing+' jogador(es) sem responder. Avançar?':'Avançar sem revelar?'))||(actual==='finish'&&!confirm('Encerrar a partida para todos os jogadores?')))return;
+  if((actual==='next'&&(!room.revealed||missing>0)&&!confirm(missing>0?'Há '+missing+' jogador(es) sem responder. Avançar?':'Avançar sem revelar?'))||(actual==='finish'&&!confirm('Encerrar a partida para todos os jogadores?'))||(actual==='reset'&&!confirm('Voltar ao lobby? As pontuações e respostas serão reiniciadas, mas os participantes continuarão na sala.')))return;
   setBusy(true);setError(null);
   try{
    const beforeRound=room.current_round,beforeStatus=room.status,beforeRevealed=room.revealed;
@@ -62,6 +63,14 @@ export default function Screen(){
   }catch(e){setError(e instanceof Error?e.message:'Falha no comando');}
   finally{setBusy(false);}
  };
+ const replay=async()=>{
+  if(!room||!screenToken||busy||room.status!=='finished')return;
+  if(!confirm('Jogar novamente? As pontuações serão zeradas e a primeira rodada será iniciada na mesma sala.'))return;
+  setBusy(true);setError(null);
+  try{await replayFinishedRoom(code,screenToken);await refresh();}
+  catch(e){setError(e instanceof Error?e.message:'Não foi possível iniciar outra partida');await refresh();}
+  finally{setBusy(false);}
+ };
  const online=ids.length||Number(room?.players_connected||0);
  const round=Math.max(1,Number(room?.current_round||1));
  return <CinematicShell mode="screen">
@@ -78,7 +87,7 @@ export default function Screen(){
            <div className="projector-qr"><QRCodeSVG value={playerUrl(code)} size={180} fgColor="#071421" bgColor="#fff"/></div>
            <strong>{online} jogadores online</strong>
          </motion.div>:room.status==='finished'?<motion.div key="final" className="projector-final v6-cinematic-final" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} style={{backgroundImage:'linear-gradient(#020b1a92,#040b19c7),url("'+BACKGROUNDS.final+'")'}}>
-           <PodiumBoard players={players} room={room} avatars={avatars} onRestart={screenToken?()=>void command('reset'):undefined} restarting={busy}/>
+           <PodiumBoard players={players} room={room} avatars={avatars} onRestart={screenToken?()=>void command('reset'):undefined} onReplay={screenToken?()=>void replay():undefined} restarting={busy}/>
          </motion.div>:room.question?<motion.div key={'round-'+round} className="projector-question" initial={{opacity:.45}} animate={{opacity:1}} exit={{opacity:0}}>
            <SceneMedia caseKey={room.case_key} caseTitle={room.case_title} round={round} large/>
            <section className="projector-question-copy">
@@ -96,6 +105,11 @@ export default function Screen(){
          <section className="rank-panel"><h2><Crown size={21}/> RANKING (TOP 5)</h2><RankList players={players} ids={ids} avatars={avatars}/></section>
        </aside>
       </div>
+      {room&&(room.status==='running'||room.status==='paused')&&<section className="v72-gm-screen-telemetry" aria-label="Indicadores ao vivo da rodada">
+        <div className="v72-gm-telemetry-clock"><Clock3 size={23}/><span>TEMPO RESTANTE</span><Countdown room={room}/></div>
+        <div className="v72-gm-telemetry-answers"><Users size={23}/><span>RESPOSTAS RECEBIDAS</span><strong>{room.responded}/{room.players_total}</strong></div>
+        <div className="v72-gm-telemetry-status"><ShieldCheck size={23}/><span>STATUS DA RODADA</span><strong>{room.status==='paused'?'PAUSADA':room.revealed?'RESPOSTA REVELADA':room.locked?'BLOQUEADA':'RESPONDENDO...'}</strong></div>
+       </section>}
       <RoundRail round={round} finished={room?.status==='finished'}/>
       <footer className="projector-footer"><span className="footer-room">SALA {code} <RoomBadge room={room}/></span>
        <div className="projector-controls">

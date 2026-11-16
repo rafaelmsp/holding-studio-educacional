@@ -84,10 +84,56 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
   if(width>=1672){state='running';round=3;revealed=false;await page.goto(base+'?view=screen&room=CRIM-1234');await page.locator('.projector-question').waitFor();await capture('screen-round');}
   else{
    state='running';round=1;revealed=false;
-   await page.goto(base+'?view=player&room=CRIM-1234');await page.locator('#nickname').fill('Teste Ana');await page.getByRole('button',{name:'Feminino',exact:true}).click();await page.getByRole('button',{name:/Perita/}).first().click();await capture('player-join');
-   await page.getByRole('button',{name:'ENTRAR NA PARTIDA',exact:true}).click();await page.locator('.gameplay').waitFor();await capture('player-question');
+   await page.goto(base+'?view=player&room=CRIM-1234');await page.locator('#nickname').fill('Teste Ana');
+   await page.getByRole('button',{name:'Feminino',exact:true}).click();
+   assert.equal(await page.locator('.persona-tile').count(),4,'Each persona category must show four portraits');
+   const perita=page.getByRole('button',{name:/Perita/}).first();
+   await perita.click();
+   assert.equal(await page.locator('.persona-tile.selected').count(),1,'Exactly one selected dossier');
+   assert.equal(await perita.getAttribute('aria-pressed'),'true','Selected dossier must announce pressed');
+   assert.match(await perita.locator('.persona-art-badge').innerText(),/SELECIONADO/,'Selected dossier has premium visual badge');
+   assert.equal(await page.locator('.persona-preview h2').innerText(),'Perita','Preview follows selection');
+   await page.getByRole('button',{name:/Advogada/}).first().click();
+   assert.equal(await page.locator('.persona-preview h2').innerText(),'Advogada','Preview updates for other character');
+   await perita.focus();await page.keyboard.press('Space');
+   assert.equal(await perita.getAttribute('aria-pressed'),'true','Keyboard Space must select persona');
+   assert.equal(await page.locator('.persona-preview h2').innerText(),'Perita','Keyboard selection updates preview');
+   assert.equal(await page.locator('.persona-tile.selected').count(),1,'Selection remains exclusive after keyboard');
+   await capture('player-join');
+   await page.getByRole('button',{name:'ENTRAR NA PARTIDA',exact:true}).click();await page.locator('.gameplay').waitFor();
+   const mobileOrnament=await page.locator('.player-question').evaluate(el=>getComputedStyle(el,'::after').display);
+   assert.equal(mobileOrnament,'none',`${width}: decorative frame must not overlap answers on a phone`);
+   await capture('player-question');
+   const questionFont=await page.locator('.player-question h1').evaluate(el=>getComputedStyle(el).fontFamily);
+   assert.ok(!questionFont.toLowerCase().includes('georgia'),`${width}: GM-04 question must use bold sans-serif, not Georgia: ${questionFont}`);
+   await page.evaluate(()=>window.scrollTo(0,0));
+   const ctaViewport=await page.locator('.submit-answer').boundingBox();
+   assert.ok(ctaViewport&&ctaViewport.y>=0&&ctaViewport.y+ctaViewport.height<=844,`${width}: GM-04 Responder must remain in first mobile viewport: ${JSON.stringify(ctaViewport)}`);
+   const heroHeader=await page.evaluate(()=>{
+    const box=s=>document.querySelector(s).getBoundingClientRect();
+    const header=box('.player-header'),brand=box('.player-header .brandmark'),state=box('.player-header .live-state');
+    const overlap=brand.left<state.right&&brand.right>state.left&&brand.top<state.bottom&&brand.bottom>state.top;
+    return {height:header.height,overlap};
+   });
+   assert.ok(heroHeader.height>=80,`${width}: GM-04 mobile cinematic header must have room for artwork`);
+   assert.ok(!heroHeader.overlap,`${width}: GM-04 player brand and live connection badge must not overlap`);
    assert.equal(await page.locator('.submit-answer').isDisabled(),true);
+   await page.locator('.answer-row.interactive').nth(3).click();
+   assert.equal(await page.locator('.answer-row.interactive.selected').count(),1,`${width}: fourth alternative must be selectable with sticky CTA`);
    await page.locator('.answer-row.interactive').nth(1).click();assert.equal(await page.locator('.answer-row.correct').count(),0);
+   const selectedState=await page.evaluate(()=>{
+    const answer=document.querySelector('.answer-row.interactive.selected');
+    const submit=document.querySelector('.submit-answer');
+    return {selected:!!answer,pressed:answer?.getAttribute('aria-pressed'),disabled:submit?.disabled,background:getComputedStyle(submit).backgroundImage,
+      viewport:document.documentElement.scrollWidth,width:innerWidth};
+   });
+   assert.equal(selectedState.selected,true,'Player selected answer must have an active skin');
+   assert.equal(selectedState.pressed,'true','Selected answer must expose aria-pressed');
+   assert.equal(selectedState.disabled,false,'Submit activates only after choosing an answer');
+   assert.ok(selectedState.background.includes('linear-gradient'),`Player active CTA must be Premium red, not the old static gold image: ${selectedState.background}`);
+   assert.ok(!selectedState.background.includes('gold-default'),'Active submit must not use the gold disabled bitmap');
+   assert.ok(selectedState.viewport<=selectedState.width+1,'Player selection must not cause horizontal overflow');
+   await capture('player-selected');
    await page.getByRole('button',{name:'RESPONDER',exact:true}).click();await page.locator('.answered-notice').waitFor();assert.equal(actionCalls.filter(x=>x.action==='answer').length,1);await capture('player-answered');
    for(round=2;round<=8;round++){answers=[];await page.reload();await page.locator('.gameplay').waitFor();await page.locator('.answer-row.interactive').nth(1).click();await page.getByRole('button',{name:'RESPONDER',exact:true}).click();await page.locator('.answered-notice').waitFor();}
    state='finished';round=8;await page.reload();await page.locator('.player-final').waitFor();await capture('player-final');
