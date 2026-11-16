@@ -104,6 +104,11 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
    const mobileOrnament=await page.locator('.player-question').evaluate(el=>getComputedStyle(el,'::after').display);
    assert.equal(mobileOrnament,'none',`${width}: decorative frame must not overlap answers on a phone`);
    await capture('player-question');
+   const questionFont=await page.locator('.player-question h1').evaluate(el=>getComputedStyle(el).fontFamily);
+   assert.ok(!questionFont.toLowerCase().includes('georgia'),`${width}: GM-04 question must use bold sans-serif, not Georgia: ${questionFont}`);
+   await page.evaluate(()=>window.scrollTo(0,0));
+   const ctaViewport=await page.locator('.submit-answer').boundingBox();
+   assert.ok(ctaViewport&&ctaViewport.y>=0&&ctaViewport.y+ctaViewport.height<=844,`${width}: GM-04 Responder must remain in first mobile viewport: ${JSON.stringify(ctaViewport)}`);
    const heroHeader=await page.evaluate(()=>{
     const box=s=>document.querySelector(s).getBoundingClientRect();
     const header=box('.player-header'),brand=box('.player-header .brandmark'),state=box('.player-header .live-state');
@@ -113,6 +118,8 @@ const makeQuestion=(round,revealed)=>({id:'q-'+round,round,text:'Qual conduta ca
    assert.ok(heroHeader.height>=80,`${width}: GM-04 mobile cinematic header must have room for artwork`);
    assert.ok(!heroHeader.overlap,`${width}: GM-04 player brand and live connection badge must not overlap`);
    assert.equal(await page.locator('.submit-answer').isDisabled(),true);
+   await page.locator('.answer-row.interactive').nth(3).click();
+   assert.equal(await page.locator('.answer-row.interactive.selected').count(),1,`${width}: fourth alternative must be selectable with sticky CTA`);
    await page.locator('.answer-row.interactive').nth(1).click();assert.equal(await page.locator('.answer-row.correct').count(),0);
    const selectedState=await page.evaluate(()=>{
     const answer=document.querySelector('.answer-row.interactive.selected');

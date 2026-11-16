@@ -137,3 +137,17 @@
 @media(prefers-reduced-motion:reduce){
  .cinema-shell .v6-podium-wrap::before,.cinema-player .answer-row.interactive{transition:none!important;animation:none!important}
 }
+
+/* GM-04 final cascade: v72-master.css loads after v72-premium.css.
+   Preserve the cinematic card but use the bold sans type of the approved
+   phone concept, not the old Georgia font.  */
+@media(max-width:760px){
+ .cinema-player .player-question h1{
+  font-family:"Bahnschrift SemiCondensed","Arial Narrow","Segoe UI",Arial,sans-serif!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+  font-size:clamp(20px,5.25vw,26px)!important;
+  line-height:1.2!important;
+  color:#f7f7f8!important;
+ }
+}

@@ -14,6 +14,7 @@ const tests=[
  {name:'screen-round',view:'screen',status:'running',width:1920,selector:'.projector-question',art:'projector-premium'},
  {name:'screen-round-hd',view:'screen',status:'running',width:1280,height:720,selector:'.projector-question',art:'projector-premium'},
  {name:'screen-final',view:'screen',status:'finished',width:1920,selector:'.v6-final-board',art:'podium-premium'},
+ {name:'screen-final-top10',view:'screen',status:'finished',width:1920,selector:'.v6-final-board',art:'podium-premium',tenPlayers:true},
  {name:'screen-final-hd',view:'screen',status:'finished',width:1280,height:720,selector:'.v6-final-board',art:'podium-premium'},
  {name:'player-join',view:'player',status:'waiting',width:390,selector:'.join-player',art:'player-premium'},
  {name:'host-final',view:'host',status:'finished',width:1672,selector:'.v6-final-board',art:'podium-premium'},
@@ -25,15 +26,16 @@ const tests=[
   for(const t of tests){
    const ctx=await browser.newContext({viewport:{width:t.width,height:t.height||(t.width>760?1080:844)},reducedMotion:'reduce'});
    await ctx.addInitScript(()=>localStorage.setItem('tc-admin-CRIM-1234','qa-admin'));
+   const extendedPlayers=t.tenPlayers?[...players,...Array.from({length:5},(_,i)=>({player_id:'p'+(i+5),room_id:'qa',nickname:['Felipe','Gabriela','Helena','Igor','Juliana'][i],score:1950-i*260,rank:i+6,avatar_id:'detetive',connected:true,counters:{correct:1,gray:1,risky:1,criminal:0}}))]:players;
    const room=()=>({room_id:'qa',code:'CRIM-1234',case_key:'credores',case_title:'Fraude contra credores',status:t.status,room_revision:3,current_round:3,round_key:'round-3',
-    question:t.status==='running'?question:null,question_time_sec:60,deadline_at:new Date(Date.now()+45000).toISOString(),locked:false,revealed:false,responded:2,players_total:5,players_connected:5,entry_open:true});
+    question:t.status==='running'?question:null,question_time_sec:60,deadline_at:new Date(Date.now()+45000).toISOString(),locked:false,revealed:false,responded:2,players_total:extendedPlayers.length,players_connected:extendedPlayers.length,entry_open:true});
    await ctx.route('https://*.supabase.co/**',async route=>{
     const url=route.request().url();let data={};
     if(url.includes('game_room_public'))data=room();
-    else if(url.includes('game_player_public'))data=players;
+    else if(url.includes('game_player_public'))data=extendedPlayers;
     else if(url.includes('/functions/v1/')){
      const b=route.request().postDataJSON();
-     if(b.action==='adminState')data={ok:true,code:'CRIM-1234',adminToken:'qa-admin',room:{...room(),maxPlayers:30},players};
+     if(b.action==='adminState')data={ok:true,code:'CRIM-1234',adminToken:'qa-admin',room:{...room(),maxPlayers:30},players:extendedPlayers};
      else data={ok:true};
     }
     await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(data)});
@@ -158,6 +160,16 @@ const tests=[
     }
    }
    if(t.status==='finished')assert.equal(await page.locator('.v6-finish-card').count(),3,'dynamic 2-1-3 podium');
+   if(t.tenPlayers){
+    assert.equal(await page.locator('.v6-final-rank-row').count(),7,'GM-02 ten players need ranks 4–10');
+    assert.match(await page.locator('.v6-final-rank-row').last().innerText(),/10º/,'GM-02 tenth place must be present');
+    const sidebar=await page.locator('.v6-final-ranking').evaluate(el=>{
+     const box=el.getBoundingClientRect(), last=el.querySelector('.v6-final-rank-row:last-child')?.getBoundingClientRect();
+     return {sidebarBottom:box.bottom,lastBottom:last?.bottom,scrollHeight:el.scrollHeight,clientHeight:el.clientHeight};
+    });
+    console.log('GM-02 TOP 10 RANKING',JSON.stringify(sidebar));
+    assert.ok(sidebar.lastBottom<=sidebar.sidebarBottom+3,'GM-02 rank ten must be visible without scroll on wide screen');
+   }
    if(t.name.startsWith('screen-final')){
     const layout=await page.evaluate(()=>{
      const b=s=>document.querySelector(s).getBoundingClientRect();

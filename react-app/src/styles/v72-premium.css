@@ -586,3 +586,109 @@
  .cinema-shell .v72-gm-finale .v72-gm-justice{z-index:1;opacity:.92}
  .cinema-shell .v72-gm-finale :is(.v6-final-heading,.v6-final-grid,.v6-class-summary,.v6-final-actions){z-index:2}
 }
+
+/* GM-02 v7.2.9: theatrical podium composition (large-screen only).
+   All player portraits/names/points remain actual DOM from the live session. */
+@media (min-width:1500px) and (min-height:850px){
+  /* The Golden Master ends with the podium, not a duplicate progress rail. */
+  .cinema-screen.v7-phase-finished .round-rail{display:none!important}
+  .cinema-screen.v7-phase-finished .projector-main{margin-bottom:5px!important}
+  .cinema-screen .v72-gm-finale{gap:5px!important;padding:8px 13px 10px!important}
+  .cinema-screen .v72-gm-finale .v6-final-heading h1{font-size:clamp(39px,2.7vw,54px);margin:2px 0}
+  .cinema-screen .v72-gm-finale .v6-final-heading p{font-size:14px;margin:0}
+  .cinema-screen .v72-gm-finale .v6-final-grid{flex:1 1 0;min-height:0;grid-template-columns:minmax(0,1.89fr) minmax(335px,.69fr)}
+  .cinema-screen .v72-gm-finale .v6-podium-wrap{min-height:0;padding-bottom:2px}
+  .cinema-screen .v72-gm-finale .v6-podium-stage{height:100%;min-height:0;gap:14px;padding:0!important}
+  .cinema-screen .v72-gm-finale .v6-finish-card{height:91%;width:100%;min-width:0;max-width:none}
+  .cinema-screen .v72-gm-finale .v6-finish-card.v6-finish-1{height:100%}
+  .cinema-screen .v72-gm-finale .v6-finish-art{inset:0 0 19%;mask-image:linear-gradient(180deg,#000 72%,transparent 100%)}
+  .cinema-screen .v72-gm-finale .v6-character-face.hero img{object-position:50% 14%;filter:contrast(1.10) saturate(1.05)}
+  .cinema-screen .v72-gm-finale .v6-finish-medal{top:49%;height:70px;width:70px}
+  .cinema-screen .v72-gm-finale .v6-finish-info{padding:27px 7px 12px!important;gap:5px;min-height:34%}
+  .cinema-screen .v72-gm-finale .v6-finish-info>strong{font-size:clamp(22px,1.6vw,30px)!important}
+  .cinema-screen .v72-gm-finale .v6-finish-score{font-size:clamp(32px,2.2vw,43px)}
+  .cinema-screen .v72-gm-finale .v6-finish-hits{font-size:clamp(13px,.95vw,17px)}
+  .cinema-screen .v72-gm-finale .v6-final-sidebar h2{padding:10px 13px}
+  .cinema-screen .v72-gm-finale .v6-final-ranking{padding:4px}
+  .cinema-screen .v72-gm-finale .v6-final-rank-row{min-height:46px;margin-bottom:3px;padding:3px 6px}
+  .cinema-screen .v72-gm-finale .v6-class-summary{min-height:67px!important}
+  .cinema-screen .v72-gm-finale .v6-final-actions{min-height:54px!important}
+  .cinema-screen .v72-gm-finale .v72-gm-justice{height:min(550px,65vh);max-width:26%;left:-22px;bottom:12%;opacity:.93}
+  .cinema-screen .v72-gm-finale .v6-final-grid{padding-left:clamp(145px,12vw,225px)}
+}
+/* GM-04 v7.2.9: keep the real, enabled Responder action visible at the
+   bottom of the viewport without hiding option D or the confirmation text. */
+@media(max-width:760px){
+  .cinema-player .gameplay{padding:9px 10px calc(100px + env(safe-area-inset-bottom))!important}
+  .cinema-player .gameplay .player-identity{min-height:75px;padding:9px!important}
+  .cinema-player .gameplay .mobile-round-label{padding:8px 0!important;margin:7px 0!important}
+  .cinema-player .gameplay .mobile-round-label .round-rail{margin-top:4px;padding:5px!important}
+  .cinema-player .gameplay>.scene-media{margin-bottom:10px!important}
+  .cinema-player .player-question h1{margin:10px 0!important;line-height:1.19!important}
+  .cinema-player .player-question .answer-rows{gap:8px}
+  .cinema-player .player-question .answer-row{min-height:62px!important;padding:7px!important}
+  .cinema-player .submit-answer.v62-submit-answer{
+    position:fixed!important;
+    left:50%;bottom:calc(9px + env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    z-index:80!important;
+    margin:0!important;
+    width:calc(100vw - 24px);max-width:530px;
+    min-height:59px!important;
+    border:2px solid #f1a0a8!important;
+    background:linear-gradient(105deg,#430814f7,#9d122bea 46%,#400a15fa)!important;
+    box-shadow:0 0 0 5px #030d19e6,0 0 22px #ed45676b,0 12px 22px #000d!important;
+    backdrop-filter:blur(10px);
+  }
+  .cinema-player .submit-answer.v62-submit-answer:disabled{
+    background:linear-gradient(105deg,#1e1821ef,#3c2730ec 46%,#1c1822f6)!important;
+    border-color:#785f63!important;
+    opacity:.82!important;
+  }
+  .cinema-player .player-metrics{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;margin:12px 0!important}
+  .cinema-player .player-metrics>span:last-child{grid-column:auto!important}
+  .cinema-player .player-metrics>span{padding:9px 4px!important}
+  .cinema-player .player-metrics strong{font-size:clamp(10px,2.6vw,13px)!important;overflow-wrap:anywhere}
+  .cinema-player .answered-notice{min-height:60px}
+}
+
+/* V7.2.9 final screen fills the space above the fullscreen footer.
+   Earlier 690px min-height left an unused dark strip on 1080p projectors. */
+@media(min-width:1500px) and (min-height:850px){
+ .cinema-screen.v7-phase-finished .projector-main:has(.v6-cinematic-final){display:flex!important;flex-direction:column;flex:1 1 0;min-height:0;overflow:hidden!important}
+ .cinema-screen.v7-phase-finished .projector-stage:has(.v6-cinematic-final){flex:1 1 0;height:100%!important;min-height:0!important;overflow:hidden}
+ .cinema-screen.v7-phase-finished .projector-final.v6-cinematic-final{height:100%!important;min-height:0!important}
+ .cinema-screen.v7-phase-finished .v72-gm-finale{height:100%!important;min-height:0!important}
+}
+
+/* GM-04 cinema typography: the Golden Master uses strong sans-serif text in
+   the legal question, not editorial serif display lettering. Only the mobile
+   player view changes; labels/answers remain accessible DOM. */
+@media(max-width:760px){
+ .cinema-player .player-question h1{
+  font-family:"Bahnschrift SemiCondensed","Arial Narrow","Segoe UI",Arial,sans-serif!important;
+  font-weight:900!important;letter-spacing:-.025em!important;
+  font-size:clamp(20px,5.25vw,26px)!important;line-height:1.20!important;
+  color:#f6f7fa!important;
+  text-shadow:0 1px 9px #000d;
+ }
+ .cinema-player .player-question .answer-row>span{
+  font-family:"Segoe UI",Arial,sans-serif;
+  font-weight:740;line-height:1.28!important;
+ }
+ .cinema-player .submit-answer.v62-submit-answer:not(:disabled){
+  background-image:linear-gradient(105deg,#430814f7,#9d122bea 46%,#400a15fa)!important;
+  background-color:#851024!important;
+  text-shadow:0 1px 8px #ff6e88b8;
+ }
+ .cinema-player .submit-answer.v62-submit-answer:focus-visible{
+  outline:3px solid #9eefff!important;outline-offset:5px!important;
+ }
+}
+/* GM-02 podium spotlight: foreground bronze, never obscure player names. */
+@media(min-width:1500px) and (min-height:850px){
+ .cinema-screen .v72-gm-finale .v72-gm-justice{
+  opacity:1!important;filter:drop-shadow(3px 6px 12px #02050cd9)
+    drop-shadow(0 0 25px #d99c536e) saturate(1.12) contrast(1.09)!important;
+ }
+}
